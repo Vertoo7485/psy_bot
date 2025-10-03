@@ -1,24 +1,54 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#     
-user = User.create(telegram_id: 123456789, first_name: "Test", last_name: "User", username: "testuser")
+# db/seeds.rb
 
-   test = Test.create(name: "Пример теста", description: "Это пример психологического теста.")
+# Создаем тест "Тревожности" (если его еще нет)
+test = Test.find_or_create_by(name: "Тест Тревожности", description: "Тест для оценки уровня тревожности")
 
-   question1 = Question.create(test: test, text: "Как вы себя чувствуете сегодня?")
-   AnswerOption.create(question: question1, text: "Отлично", value: 0)
-   AnswerOption.create(question: question1, text: "Хорошо", value: 1)
-   AnswerOption.create(question: question1, text: "Нормально", value: 2)
-   AnswerOption.create(question: question1, text: "Плохо", value: 3)
+# Часть 1: Оценка текущего состояния
+part1_questions = [
+  { text: "Я чувствую себя умиротворенно.", answer_options: ["Совершенно не соответствует", "Скорее не соответствует", "Скорее соответствует", "Полностью соответствует"] },
+  { text: "Я ощущаю беспокойство в теле.", answer_options: ["Совершенно не соответствует", "Скорее не соответствует", "Скорее соответствует", "Полностью соответствует"] },
+  { text: "Мне трудно сосредоточиться на происходящем.", answer_options: ["Совершенно не соответствует", "Скорее не соответствует", "Скорее соответствует", "Полностью соответствует"] },
+  { text: "Я чувствую, что могу контролировать свои эмоции.", answer_options: ["Совершенно не соответствует", "Скорее не соответствует", "Скорее соответствует", "Полностью соответствует"] },
+  { text: "Я взволнован(а) из-за неопределенности.", answer_options: ["Совершенно не соответствует", "Скорее не соответствует", "Скорее соответствует", "Полностью соответствует"] },
+  { text: "Я уверен(а) в себе.", answer_options: ["Совершенно не соответствует", "Скорее не соответствует", "Скорее соответствует", "Полностью соответствует"] },
+  { text: "Мои мысли путаются.", answer_options: ["Совершенно не соответствует", "Скорее не соответствует", "Скорее соответствует", "Полностью соответствует"] },
+  { text: "Я чувствую себя собранным(ой).", answer_options: ["Совершенно не соответствует", "Скорее не соответствует", "Скорее соответствует", "Полностью соответствует"] },
+  { text: "Я испытываю тревогу без видимой причины.", answer_options: ["Совершенно не соответствует", "Скорее не соответствует", "Скорее соответствует", "Полностью соответствует"] },
+  { text: "Мне легко расслабиться.", answer_options: ["Совершенно не соответствует", "Скорее не соответствует", "Скорее соответствует", "Полностью соответствует"] }
+]
 
-   question2 = Question.create(test: test, text: "Что вы планируете делать вечером?")
-   AnswerOption.create(question: question2, text: "Отдыхать", value: 0)
-   AnswerOption.create(question: question2, text: "Работать", value: 1)
-   AnswerOption.create(question: question2, text: "Заниматься спортом", value: 2)
-# end
+# Часть 2: Оценка обычного состояния
+part2_questions = [
+  { text: "Я склонен(а) к беспокойству даже без причины.", answer_options: ["Очень редко или никогда", "Иногда", "Часто", "Очень часто или всегда"] },
+  { text: "Я легко раздражаюсь по пустякам.", answer_options: ["Очень редко или никогда", "Иногда", "Часто", "Очень часто или всегда"] },
+  { text: "Мне сложно отключаться от проблем и переживаний.", answer_options: ["Очень редко или никогда", "Иногда", "Часто", "Очень часто или всегда"] },
+  { text: "Я обычно ощущаю внутреннее напряжение.", answer_options: ["Очень редко или никогда", "Иногда", "Часто", "Очень часто или всегда"] },
+  { text: "У меня часто бывают мрачные мысли.", answer_options: ["Очень редко или никогда", "Иногда", "Часто", "Очень часто или всегда"] },
+  { text: "Я верю в свои силы и возможности.", answer_options: ["Очень редко или никогда", "Иногда", "Часто", "Очень часто или всегда"] },
+  { text: "Я избегаю ситуаций, которые могут вызвать у меня тревогу.", answer_options: ["Очень редко или никогда", "Иногда", "Часто", "Очень часто или всегда"] },
+  { text: "Я склонен(а) преувеличивать трудности.", answer_options: ["Очень редко или никогда", "Иногда", "Часто", "Очень часто или всегда"] },
+  { text: "Мне сложно принимать решения.", answer_options: ["Очень редко или никогда", "Иногда", "Часто", "Очень часто или всегда"] },
+  { text: "Я в целом оптимистично смотрю в будущее.", answer_options: ["Очень редко или никогда", "Иногда", "Часто", "Очень часто или всегда"] }
+]
+
+# Функция для создания вопросов и вариантов ответов
+def create_question_with_answers(test, question_data, part)
+  question = test.questions.create(text: question_data[:text], part: part)
+  question_data[:answer_options].each_with_index do |text, index|
+    value = index + 1 # Значения ответов от 1 до 4
+    question.answer_options.create(text: text, value: value)
+  end
+end
+
+# Создаем вопросы для Части 1
+part1_questions.each do |question_data|
+  create_question_with_answers(test, question_data, 1)
+end
+
+# Создаем вопросы для Части 2
+part2_questions.each do |question_data|
+  create_question_with_answers(test, question_data, 2)
+end
+
+
+puts "Данные для теста 'Тревожности' успешно добавлены!"
