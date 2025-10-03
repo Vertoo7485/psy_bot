@@ -13357,3 +13357,32 @@ Part 2 Score: 20
 Completed 200 OK in 455ms (Views: 0.2ms | ActiveRecord: 11.5ms | Allocations: 13385)
 
 
+  [1m[36mQuestion Load (0.6ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mQuestion Update (1.4ms)[0m  [1m[33mUPDATE "questions" SET "text" = ?, "updated_at" = ? WHERE "questions"."id" = ?[0m  [["text", "Я не чувствую себя умиротворенно."], ["updated_at", "2025-10-03 14:54:40.545550"], ["id", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mQuestion Load (0.5ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mQuestion Update (1.1ms)[0m  [1m[33mUPDATE "questions" SET "text" = ?, "updated_at" = ? WHERE "questions"."id" = ?[0m  [["text", "Я чувствую, что не могу контролировать свои эмоции."], ["updated_at", "2025-10-03 14:56:14.911028"], ["id", 4]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mQuestion Update (4.2ms)[0m  [1m[33mUPDATE "questions" SET "text" = ?, "updated_at" = ? WHERE "questions"."id" = ?[0m  [["text", "Я не уверен(а) в себе."], ["updated_at", "2025-10-03 14:57:14.109459"], ["id", 6]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mQuestion Load (0.5ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mQuestion Update (1.1ms)[0m  [1m[33mUPDATE "questions" SET "text" = ?, "updated_at" = ? WHERE "questions"."id" = ?[0m  [["text", "Я не чувствую себя собранным(ой)."], ["updated_at", "2025-10-03 14:58:18.917475"], ["id", 8]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mQuestion Load (0.5ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mQuestion Update (1.2ms)[0m  [1m[33mUPDATE "questions" SET "text" = ?, "updated_at" = ? WHERE "questions"."id" = ?[0m  [["text", "Мне сложно расслабиться."], ["updated_at", "2025-10-03 14:59:11.942325"], ["id", 10]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mQuestion Load (0.5ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mQuestion Update (1.2ms)[0m  [1m[33mUPDATE "questions" SET "text" = ?, "updated_at" = ? WHERE "questions"."id" = ?[0m  [["text", "Я не верю в свои силы и возможности."], ["updated_at", "2025-10-03 15:00:53.377329"], ["id", 16]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mQuestion Update (1.7ms)[0m  [1m[33mUPDATE "questions" SET "text" = ?, "updated_at" = ? WHERE "questions"."id" = ?[0m  [["text", "Я в целом пессимистично смотрю в будущее."], ["updated_at", "2025-10-03 15:01:54.439104"], ["id", 20]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
