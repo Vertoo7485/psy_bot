@@ -20,9 +20,7 @@ class TelegramWebhooksController < ApplicationController
       when '/start'
         kb = {
           inline_keyboard: [
-            [{ text: 'Список тестов', callback_data: 'tests' }],
-            [{ text: 'Пройти тест тревожности', callback_data: 'start_anxiety_test' }],
-            [{ text: 'Пройти тест депрессии', callback_data: 'start_depression_test' }], # Новая кнопка
+            [{ text: 'Список тестов', callback_data: 'show_test_categories' }], # Изменено
             [{ text: 'Помощь', callback_data: 'help' }]
           ]
         }
@@ -58,13 +56,30 @@ class TelegramWebhooksController < ApplicationController
       when 'help'
         @bot.send_message(chat_id: message[:chat][:id], text: "Я умею показывать список тестов и начинать их. Ждите новых функций!")
 
+      when 'show_test_categories'
+        show_test_categories(@bot, message[:chat][:id], message[:message_id], user)
+
       when 'start_anxiety_test'
         start_anxiety_test(@bot, message[:chat][:id], user)
 
       when 'start_depression_test'
         start_depression_test(@bot, message[:chat][:id], user)
 
-      when /^answer_(\d+)_(\d+)_(\d+)$/  # answer_questionId_answerOptionId_testResultId
+      when 'start_eq_test'
+        start_eq_test(@bot, message[:chat][:id], user) # <--- Добавляем обработчик
+
+      when 'back_to_main_menu'
+        kb = {
+          inline_keyboard: [
+            [{ text: 'Список тестов', callback_data: 'show_test_categories' }],
+            [{ text: 'Помощь', callback_data: 'help' }]
+          ]
+        }
+        markup = kb.to_json
+
+        @bot.send_message(chat_id: message[:chat][:id], text: "Привет! Выберите действие:", reply_markup: markup)
+
+      when /^answer_(\d+)_(\d+)_(\d+)$/
         question_id = $1.to_i
         answer_option_id = $2.to_i
         test_result_id = $3.to_i
@@ -84,6 +99,31 @@ class TelegramWebhooksController < ApplicationController
 
   def start_test(bot, chat_id, test_id)
     bot.send_message(chat_id: chat_id, text: "Начинаем тест #{test_id}...")
+  end
+
+  def show_test_categories(bot, chat_id, message_id, user)
+    # Создаем кнопки для каждого теста
+    test_buttons = []
+    Test.all.each do |test|
+      case test.name
+      when "Тест Тревожности"
+        test_buttons << [{ text: test.name, callback_data: 'start_anxiety_test' }]
+      when "Тест Депрессии (PHQ-9)"
+        test_buttons << [{ text: test.name, callback_data: 'start_depression_test' }]
+      when "Тест EQ (Эмоциональный Интеллект)"
+        test_buttons << [{ text: test.name, callback_data: 'start_eq_test' }]
+      else
+        next
+      end
+    end
+
+    # Добавляем кнопку "Назад"
+    test_buttons << [{ text: 'Назад', callback_data: 'back_to_main_menu' }] # Кнопка "Назад"
+
+    markup = { inline_keyboard: test_buttons }.to_json
+
+    # Отправляем сообщение с кнопками тестов
+    bot.send_message(chat_id: chat_id, text: "Выберите тест:", reply_markup: markup)
   end
 
   def start_anxiety_test(bot, chat_id, user)
@@ -108,6 +148,24 @@ class TelegramWebhooksController < ApplicationController
   
   def start_depression_test(bot, chat_id, user)
     test = Test.find_by(name: "Тест Депрессии (PHQ-9)")
+    if test.nil?
+      bot.send_message(chat_id: chat_id, text: "Тест не найден.")
+      return
+    end
+
+    test_result = TestResult.new(user: user, test: test)
+
+    if test_result.save
+      question = test.questions.first
+      send_question(bot, chat_id, question, test_result.id)
+    else
+      Rails.logger.error "Ошибка при создании TestResult: #{test_result.errors.full_messages.join(', ')}"
+      bot.send_message(chat_id: chat_id, text: "Произошла ошибка при создании теста. Попробуйте позже.")
+    end
+  end
+
+  def start_eq_test(bot, chat_id, user)
+    test = Test.find_by(name: "Тест EQ (Эмоциональный Интеллект)")
     if test.nil?
       bot.send_message(chat_id: chat_id, text: "Тест не найден.")
       return
@@ -183,11 +241,11 @@ class TelegramWebhooksController < ApplicationController
   def calculate_and_send_results(bot, chat_id, test_result_id)
     test_result = TestResult.find(test_result_id)
     test = test_result.test
-  
+
     answers = test_result.answers.includes(:question, :answer_option)
-  
+
     total_score = answers.sum { |answer| answer.answer_option.value }
-  
+
     # Логика интерпретации результатов для теста тревожности
     if test.name == "Тест Тревожности"
       interpretation = case total_score
@@ -215,15 +273,28 @@ class TelegramWebhooksController < ApplicationController
                        else
                          "Невозможно определить уровень депрессии."  # Обработка неожиданных значений
                        end
+    # Логика интерпретации результатов для теста EQ
+    elsif test.name == "Тест EQ (Эмоциональный Интеллект)"
+      interpretation = case total_score
+                       when 10..25
+                         "Низкий уровень EQ. Вам может быть сложно понимать и управлять своими эмоциями, а также эмоциями других людей. Рекомендуется уделить внимание развитию эмоционального интеллекта."
+                       when 26..40
+                         "Средний уровень EQ. У вас есть определенные навыки в области эмоционального интеллекта, но есть области, в которых можно улучшить."
+                       when 41..50
+                         "Высокий уровень EQ. Вы хорошо понимаете и управляете своими эмоциями, а также эмпатичны к другим людям."
+                       else
+                         "Невозможно определить уровень EQ."
+                       end
+
     else
       interpretation = "Неизвестный тест. Невозможно определить результаты."
     end
-  
+
     message = "Результаты теста:\n"
     message += "Интерпретация: #{interpretation}"
-  
+
     test_result.update(score: total_score, completed_at: Time.now)
-  
+
     bot.send_message(chat_id: chat_id, text: message)
   end
   
