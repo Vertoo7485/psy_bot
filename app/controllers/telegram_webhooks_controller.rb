@@ -22,6 +22,7 @@ class TelegramWebhooksController < ApplicationController
           inline_keyboard: [
             [{ text: 'Список тестов', callback_data: 'tests' }],
             [{ text: 'Пройти тест тревожности', callback_data: 'start_anxiety_test' }],
+            [{ text: 'Пройти тест депрессии', callback_data: 'start_depression_test' }], # Новая кнопка
             [{ text: 'Помощь', callback_data: 'help' }]
           ]
         }
@@ -59,6 +60,9 @@ class TelegramWebhooksController < ApplicationController
 
       when 'start_anxiety_test'
         start_anxiety_test(@bot, message[:chat][:id], user)
+
+      when 'start_depression_test'
+        start_depression_test(@bot, message[:chat][:id], user)
 
       when /^answer_(\d+)_(\d+)_(\d+)$/  # answer_questionId_answerOptionId_testResultId
         question_id = $1.to_i
@@ -102,6 +106,23 @@ class TelegramWebhooksController < ApplicationController
     end
   end
   
+  def start_depression_test(bot, chat_id, user)
+    test = Test.find_by(name: "Тест Депрессии (PHQ-9)")
+    if test.nil?
+      bot.send_message(chat_id: chat_id, text: "Тест не найден.")
+      return
+    end
+
+    test_result = TestResult.new(user: user, test: test)
+
+    if test_result.save
+      question = test.questions.first
+      send_question(bot, chat_id, question, test_result.id)
+    else
+      Rails.logger.error "Ошибка при создании TestResult: #{test_result.errors.full_messages.join(', ')}"
+      bot.send_message(chat_id: chat_id, text: "Произошла ошибка при создании теста. Попробуйте позже.")
+    end
+  end
 
 
   def send_question(bot, chat_id, question, test_result_id)
@@ -161,48 +182,50 @@ class TelegramWebhooksController < ApplicationController
 
   def calculate_and_send_results(bot, chat_id, test_result_id)
     test_result = TestResult.find(test_result_id)
+    test = test_result.test
+  
     answers = test_result.answers.includes(:question, :answer_option)
   
-    part1_answers = answers.where(questions: { part: 1 })
-    part2_answers = answers.where(questions: { part: 2 })
+    total_score = answers.sum { |answer| answer.answer_option.value }
   
-    Rails.logger.debug "Part 1 Answers:"
-    part1_answers.each do |answer|
-      Rails.logger.debug "  Question: #{answer.question.text}, Answer: #{answer.answer_option.text}, Value: #{answer.answer_option.value}"
+    # Логика интерпретации результатов для теста тревожности
+    if test.name == "Тест Тревожности"
+      interpretation = case total_score
+                       when 20..40
+                         "Низкий уровень тревожности."
+                       when 41..60
+                         "Умеренный уровень тревожности."
+                       else
+                         "Высокий уровень тревожности."
+                       end
+    # Логика интерпретации результатов для теста депрессии
+    elsif test.name == "Тест Депрессии (PHQ-9)"
+      # Скорректированные диапазоны интерпретации
+      interpretation = case total_score
+                       when 0..4  #  0-4 + 9
+                         "Минимальная депрессия. Вам может не потребоваться лечение."
+                       when 5..9 # 5-9 + 9
+                         "Легкая депрессия. Может потребоваться наблюдение или легкие изменения в образе жизни."
+                       when 10..14 # 10-14 + 9
+                         "Умеренная депрессия. Рекомендуется обратиться к врачу для обсуждения возможных вариантов лечения, включая терапию и/или медикаменты."
+                       when 15..19 # 15-19 + 9
+                         "Умеренно тяжелая депрессия. Рекомендуется обратиться к врачу для обсуждения возможных вариантов лечения, включая терапию и/или медикаменты."
+                       when 20..27 # 20-27 + 9
+                         "Тяжелая депрессия. Необходима немедленная консультация с врачом. Важно рассмотреть терапию и/или медикаменты."
+                       else
+                         "Невозможно определить уровень депрессии."  # Обработка неожиданных значений
+                       end
+    else
+      interpretation = "Неизвестный тест. Невозможно определить результаты."
     end
-  
-    Rails.logger.debug "Part 2 Answers:"
-    part2_answers.each do |answer|
-      Rails.logger.debug "  Question: #{answer.question.text}, Answer: #{answer.answer_option.text}, Value: #{answer.answer_option.value}"
-    end
-  
-    #  Изменяем логику подсчета баллов:
-    part1_score = part1_answers.sum { |answer| answer.answer_option.value }
-    part2_score = part2_answers.sum { |answer| answer.answer_option.value }
-  
-    Rails.logger.debug "Part 1 Score: #{part1_score}"
-    Rails.logger.debug "Part 2 Score: #{part2_score}"
-  
-    total_score = part1_score + part2_score
-  
-    interpretation = case total_score
-                     when 0..30
-                       "Низкий уровень тревожности."
-                     when 31..50
-                       "Умеренный уровень тревожности."
-                     else
-                       "Высокий уровень тревожности."
-                     end
   
     message = "Результаты теста:\n"
-    message += "Часть 1 (Текущее состояние): #{part1_score}\n"
-    message += "Часть 2 (Обычное состояние): #{part2_score}\n"
-    message += "Общий балл: #{total_score}\n"
     message += "Интерпретация: #{interpretation}"
   
     test_result.update(score: total_score, completed_at: Time.now)
   
     bot.send_message(chat_id: chat_id, text: message)
   end
+  
   
 end
