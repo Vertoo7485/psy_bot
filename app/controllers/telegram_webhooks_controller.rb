@@ -16,17 +16,22 @@ class TelegramWebhooksController < ApplicationController
         u.username = message[:from][:username]
       end
 
+      if user.current_diary_step.present? # Проверяем, находится ли пользователь в процессе заполнения дневника
+            handle_diary_answer(@bot, message[:chat][:id], user, text)
+      else
+
       case text
       when '/start'
-        kb = {
-          inline_keyboard: [
-            [{ text: 'Список тестов', callback_data: 'show_test_categories' }], # Изменено
-            [{ text: 'Помощь', callback_data: 'help' }]
-          ]
-        }
-        markup = kb.to_json
+            kb = {
+              inline_keyboard: [
+                [{ text: 'Список тестов', callback_data: 'show_test_categories' }],
+                [{ text: 'Дневник эмоций', callback_data: 'start_emotion_diary' }], #  Новая кнопка
+                [{ text: 'Помощь', callback_data: 'help' }]
+              ]
+            }
+            markup = kb.to_json
 
-        @bot.send_message(chat_id: message[:chat][:id], text: "Привет! Выберите действие:", reply_markup: markup)
+            @bot.send_message(chat_id: message[:chat][:id], text: "Привет! Выберите действие:", reply_markup: markup)
       when '/help'
         @bot.send_message(chat_id: message[:chat][:id], text: "Я пока умею показывать список тестов и начинать их. Используйте кнопки.")
       when /^\/test_(\d+)$/
@@ -38,6 +43,7 @@ class TelegramWebhooksController < ApplicationController
       else
         @bot.send_message(chat_id: message[:chat][:id], text: "Я не понимаю эту команду. Напишите /help или используйте кнопки.")
       end
+    end
 
     elsif params[:callback_query]
       callback_query = params[:callback_query]
@@ -68,10 +74,20 @@ class TelegramWebhooksController < ApplicationController
       when 'start_eq_test'
         start_eq_test(@bot, message[:chat][:id], user) # <--- Добавляем обработчик
 
+      when 'start_emotion_diary'
+        start_emotion_diary(@bot, message[:chat][:id], user)
+
+      when 'new_emotion_diary_entry'
+        start_new_emotion_diary_entry(@bot, message[:chat][:id], user)
+
+      when 'show_emotion_diary_entries'
+        show_emotion_diary_entries(@bot, message[:chat][:id], user)
+
       when 'back_to_main_menu'
         kb = {
           inline_keyboard: [
             [{ text: 'Список тестов', callback_data: 'show_test_categories' }],
+            [{ text: 'Дневник эмоций', callback_data: 'start_emotion_diary' }],
             [{ text: 'Помощь', callback_data: 'help' }]
           ]
         }
@@ -124,6 +140,24 @@ class TelegramWebhooksController < ApplicationController
 
     # Отправляем сообщение с кнопками тестов
     bot.send_message(chat_id: chat_id, text: "Выберите тест:", reply_markup: markup)
+  end
+
+  def prepare_anxiety_test(bot, chat_id, user)
+    message = "Тест Тревожности поможет вам оценить уровень тревожности. Ответьте на вопросы, чтобы получить результат. Примерное время прохождения: 5-10 минут."
+    kb = { inline_keyboard: [[{ text: 'Начать тест', callback_data: 'start_anxiety_test' }]] }.to_json
+    bot.send_message(chat_id: chat_id, text: message, reply_markup: kb)
+  end
+
+  def prepare_depression_test(bot, chat_id, user)
+    message = "Тест Депрессии (PHQ-9) - это короткий опросник, который поможет оценить ваше состояние и выявить возможные признаки депрессии.  Примерное время прохождения: 3-5 минут."
+    kb = { inline_keyboard: [[{ text: 'Начать тест', callback_data: 'start_depression_test' }]] }.to_json
+    bot.send_message(chat_id: chat_id, text: message, reply_markup: kb)
+  end
+
+  def prepare_eq_test(bot, chat_id, user)
+    message = "Тест EQ (Эмоциональный Интеллект) поможет вам оценить вашу способность понимать и управлять своими эмоциями, а также понимать эмоции других людей. Примерное время прохождения: 7-12 минут."
+    kb = { inline_keyboard: [[{ text: 'Начать тест', callback_data: 'start_eq_test' }]] }.to_json
+    bot.send_message(chat_id: chat_id, text: message, reply_markup: kb)
   end
 
   def start_anxiety_test(bot, chat_id, user)
@@ -182,6 +216,100 @@ class TelegramWebhooksController < ApplicationController
     end
   end
 
+  def start_emotion_diary(bot, chat_id, user)
+        kb = {
+          inline_keyboard: [
+            [{ text: 'Новая запись', callback_data: 'new_emotion_diary_entry' }],
+            [{ text: 'Мои записи', callback_data: 'show_emotion_diary_entries' }], # Новая кнопка
+            [{ text: 'Назад', callback_data: 'back_to_main_menu' }]
+          ]
+        }
+        markup = kb.to_json
+        bot.send_message(chat_id: chat_id, text: "Выберите действие:", reply_markup: markup)
+  end
+
+  def start_new_emotion_diary_entry(bot, chat_id, user)
+        # Начинаем процесс заполнения дневника
+        user.update(current_diary_step: 'situation', diary_data: {})
+        bot.send_message(chat_id: chat_id, text: "Запись в дневник. Шаг 1: Опишите ситуацию (A).")
+  end
+
+  def show_emotion_diary_entries(bot, chat_id, user)
+        entries = user.emotion_diary_entries.order(date: :desc) # Получаем записи пользователя, отсортированные по дате
+
+        if entries.empty?
+          bot.send_message(chat_id: chat_id, text: "У вас пока нет записей в дневнике.")
+          return
+        end
+
+        # Формируем сообщение со списком записей
+        message = "Ваши записи в дневнике:\n\n"
+        entries.each_with_index do |entry, index|
+          message += "#{index + 1}. *#{entry.date.strftime('%d.%m.%Y')}*\n"  # Добавляем дату записи
+          message += "  - Ситуация: #{entry.situation.truncate(50)}\n" #Сокращаем текст записи
+          message += "  - Мысли: #{entry.thoughts.truncate(50)}\n" #Сокращаем текст записи
+          message += "  - Эмоции: #{entry.emotions.truncate(50)}\n" #Сокращаем текст записи
+          message += "  - Поведение: #{entry.behavior.truncate(50)}\n" #Сокращаем текст записи
+          message += "  - Доказательства против: #{entry.evidence_against.truncate(50)}\n" #Сокращаем текст записи
+          message += "  - Новые мысли: #{entry.new_thoughts.truncate(50)}\n" #Сокращаем текст записи
+          message += "\n"
+        end
+
+        bot.send_message(chat_id: chat_id, text: message, parse_mode: 'Markdown')
+  end
+
+  def handle_diary_answer(bot, chat_id, user, text)
+        case user.current_diary_step
+        when 'situation'
+          user.diary_data['situation'] = text
+          user.update(current_diary_step: 'thoughts', diary_data: user.diary_data)
+          bot.send_message(chat_id: chat_id, text: "Шаг 2: Что вы думали в тот момент? Какие мысли проносились у вас в голове?")
+        when 'thoughts'
+          user.diary_data['thoughts'] = text
+          user.update(current_diary_step: 'emotions', diary_data: user.diary_data)
+          bot.send_message(chat_id: chat_id, text: "Шаг 3: Какие чувства вы испытывали? (Например, грусть, злость, страх)")
+        when 'emotions'
+          user.diary_data['emotions'] = text
+          user.update(current_diary_step: 'behavior', diary_data: user.diary_data)
+          bot.send_message(chat_id: chat_id, text: "Шаг 4: Как вы себя вели или что сделали в этой ситуации? Что вы предприняли?")
+        when 'behavior'
+          user.diary_data['behavior'] = text
+          user.update(current_diary_step: 'evidence_against', diary_data: user.diary_data)
+          bot.send_message(chat_id: chat_id, text: "Шаг 5: Какие факты говорят о том, что ваши мысли (из шага 2) могут быть не совсем верными? Может, есть другая сторона медали?")
+        when 'evidence_against'
+          user.diary_data['evidence_against'] = text
+          user.update(current_diary_step: 'new_thoughts', diary_data: user.diary_data)
+          bot.send_message(chat_id: chat_id, text: "Шаг 6: Теперь попробуйте сформулировать новые, более сбалансированные и реалистичные мысли, учитывая факты, которые вы нашли на шаге 5.")
+        when 'new_thoughts'
+      user.diary_data['new_thoughts'] = text
+      # Сохраняем запись в базу данных
+      EmotionDiaryEntry.create(
+        user: user,
+        date: Date.today, # Или запросить у пользователя
+        situation: user.diary_data['situation'],
+        thoughts: user.diary_data['thoughts'],
+        emotions: user.diary_data['emotions'],
+        behavior: user.diary_data['behavior'],
+        evidence_against: user.diary_data['evidence_against'],
+        new_thoughts: user.diary_data['new_thoughts']
+      )
+      # Очищаем состояние
+      user.update(current_diary_step: nil, diary_data: {})
+
+      # Отправляем главное меню
+      kb = {
+        inline_keyboard: [
+          [{ text: 'Список тестов', callback_data: 'show_test_categories' }],
+          [{ text: 'Дневник эмоций', callback_data: 'start_emotion_diary' }],
+          [{ text: 'Помощь', callback_data: 'help' }]
+        ]
+      }
+      markup = kb.to_json
+      bot.send_message(chat_id: chat_id, text: "Дневник заполнен и сохранен! Выберите следующее действие:", reply_markup: markup) #изменено сообщение
+    else
+      bot.send_message(chat_id: chat_id, text: "Неизвестная команда.  Пожалуйста, начните заново с /start.")
+    end
+  end
 
   def send_question(bot, chat_id, question, test_result_id)
     # Создаем кнопки с вариантами ответов
