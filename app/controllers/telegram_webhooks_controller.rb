@@ -44,6 +44,7 @@ class TelegramWebhooksController < ApplicationController
         @bot.send_message(chat_id: message[:chat][:id], text: "Я не понимаю эту команду. Напишите /help или используйте кнопки.")
       end
     end
+    
 
     elsif params[:callback_query]
       callback_query = params[:callback_query]
@@ -231,7 +232,7 @@ class TelegramWebhooksController < ApplicationController
   def start_new_emotion_diary_entry(bot, chat_id, user)
         # Начинаем процесс заполнения дневника
         user.update(current_diary_step: 'situation', diary_data: {})
-        bot.send_message(chat_id: chat_id, text: "Запись в дневник. Шаг 1: Опишите ситуацию (A).")
+        bot.send_message(chat_id: chat_id, text: "Запись в дневник. Шаг 1: Опишите конкретную ситуацию, которая вызвала у вас негативные чувства. \nЭто может быть что-то, что произошло на работе, в личной жизни, или даже просто мысль, которая пришла в голову. \nБудьте максимально конкретны: кто, что, где, когда.\nПример: Я получил(а) отказ на собеседовании.")
   end
 
   def show_emotion_diary_entries(bot, chat_id, user)
@@ -263,23 +264,23 @@ class TelegramWebhooksController < ApplicationController
         when 'situation'
           user.diary_data['situation'] = text
           user.update(current_diary_step: 'thoughts', diary_data: user.diary_data)
-          bot.send_message(chat_id: chat_id, text: "Шаг 2: Что вы думали в тот момент? Какие мысли проносились у вас в голове?")
+          bot.send_message(chat_id: chat_id, text: "Шаг 2: Запишите мысли, которые возникли у вас в этой ситуации.\nЧто вы думали о себе, о других, о ситуации в целом?\nЭти мысли могут быть автоматическими, быстрыми и не всегда осознанными. Постарайтесь их выявить.\nПример: Я ни на что не гожусь. Я никогда не найду работу.")
         when 'thoughts'
           user.diary_data['thoughts'] = text
           user.update(current_diary_step: 'emotions', diary_data: user.diary_data)
-          bot.send_message(chat_id: chat_id, text: "Шаг 3: Какие чувства вы испытывали? (Например, грусть, злость, страх)")
+          bot.send_message(chat_id: chat_id, text: "Шаг 3: Опишите ваши чувства, которые были результатом этих мыслей.\nЧто вы чувствовали (например, тревогу, грусть, гнев)?")
         when 'emotions'
           user.diary_data['emotions'] = text
           user.update(current_diary_step: 'behavior', diary_data: user.diary_data)
-          bot.send_message(chat_id: chat_id, text: "Шаг 4: Как вы себя вели или что сделали в этой ситуации? Что вы предприняли?")
+          bot.send_message(chat_id: chat_id, text: "Шаг 4: Опишите ваши поведение.\nКак вы поступили (например, спорили, ушли в себя)?")
         when 'behavior'
           user.diary_data['behavior'] = text
           user.update(current_diary_step: 'evidence_against', diary_data: user.diary_data)
-          bot.send_message(chat_id: chat_id, text: "Шаг 5: Какие факты говорят о том, что ваши мысли (из шага 2) могут быть не совсем верными? Может, есть другая сторона медали?")
+          bot.send_message(chat_id: chat_id, text: "Шаг 5: Теперь постарайтесь оспорить свои мысли из шага 2. \nЗадайте себе вопросы: Есть ли доказательства, подтверждающие эту мысль? \nЕсть ли доказательства, опровергающие ее? \nКакие есть альтернативные способы взглянуть на эту ситуацию? \nЯвляется ли эта мысль полезной для меня? Помните, что цель - не заменить негативные мысли позитивными, а сделать их более реалистичными и сбалансированными.\nПример: Доказательства, подтверждающие: Я получила отказ.\nДоказательства, опровергающие: У меня есть опыт и навыки, которые соответствуют многим другим вакансиям. Это было только одно собеседование.\nАльтернативный взгляд: Возможно, я просто не подошла для этой конкретной компании, или у них были другие кандидаты, которые лучше соответствовали их требованиям.\nПолезность мысли: Эта мысль только заставляет меня чувствовать себя хуже и мешает мне продолжать поиск работы.")
         when 'evidence_against'
           user.diary_data['evidence_against'] = text
           user.update(current_diary_step: 'new_thoughts', diary_data: user.diary_data)
-          bot.send_message(chat_id: chat_id, text: "Шаг 6: Теперь попробуйте сформулировать новые, более сбалансированные и реалистичные мысли, учитывая факты, которые вы нашли на шаге 5.")
+          bot.send_message(chat_id: chat_id, text: "Шаг 6: Сформулируйте новую, более рациональную и полезную мысль, которая учитывает все ваши опровержения.\nЭта мысль должна быть более реалистичной и помогать вам чувствовать себя лучше и действовать более конструктивно.\nПример: Отказ на собеседовании - это неприятно, но это не значит, что я ни на что не гожусь. Я учту опыт этого собеседования и продолжу искать работу, которая мне подходит.")
         when 'new_thoughts'
       user.diary_data['new_thoughts'] = text
       # Сохраняем запись в базу данных
