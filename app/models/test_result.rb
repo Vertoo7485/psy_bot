@@ -2,5 +2,5 @@ class TestResult < ApplicationRecord
   belongs_to :user
   belongs_to :test
 
-  has_many :answers
+  has_many :answers, dependent: :destroy
 end

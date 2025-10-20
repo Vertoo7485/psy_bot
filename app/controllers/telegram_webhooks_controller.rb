@@ -1,4 +1,6 @@
 
+# app/controllers/telegram_webhooks_controller.rb
+
 require 'telegram/bot'
 require 'json'
 
@@ -65,6 +67,14 @@ class TelegramWebhooksController < ApplicationController
 
       when 'show_test_categories'
         show_test_categories(@bot, message[:chat][:id], message[:message_id], user)
+      when 'prepare_anxiety_test'
+        prepare_anxiety_test(@bot, message[:chat][:id], user)
+
+      when 'prepare_depression_test'
+        prepare_depression_test(@bot, message[:chat][:id], user)
+
+      when 'prepare_eq_test'
+        prepare_eq_test(@bot, message[:chat][:id], user)
 
       when 'start_anxiety_test'
         start_anxiety_test(@bot, message[:chat][:id], user)
@@ -124,11 +134,11 @@ class TelegramWebhooksController < ApplicationController
     Test.all.each do |test|
       case test.name
       when "Тест Тревожности"
-        test_buttons << [{ text: test.name, callback_data: 'start_anxiety_test' }]
+        test_buttons << [{ text: test.name, callback_data: 'prepare_anxiety_test' }]
       when "Тест Депрессии (PHQ-9)"
-        test_buttons << [{ text: test.name, callback_data: 'start_depression_test' }]
+        test_buttons << [{ text: test.name, callback_data: 'prepare_depression_test' }]
       when "Тест EQ (Эмоциональный Интеллект)"
-        test_buttons << [{ text: test.name, callback_data: 'start_eq_test' }]
+        test_buttons << [{ text: test.name, callback_data: 'prepare_eq_test' }]
       else
         next
       end
@@ -144,9 +154,11 @@ class TelegramWebhooksController < ApplicationController
   end
 
   def prepare_anxiety_test(bot, chat_id, user)
+    Rails.logger.debug "prepare_anxiety_test called (chat_id: #{chat_id}, user_id: #{user&.id})" # Добавили user&.id для избежания ошибки, если user == nil
     message = "Тест Тревожности поможет вам оценить уровень тревожности. Ответьте на вопросы, чтобы получить результат. Примерное время прохождения: 5-10 минут."
     kb = { inline_keyboard: [[{ text: 'Начать тест', callback_data: 'start_anxiety_test' }]] }.to_json
     bot.send_message(chat_id: chat_id, text: message, reply_markup: kb)
+    Rails.logger.debug "prepare_anxiety_test finished (chat_id: #{chat_id}, user_id: #{user&.id})"
   end
 
   def prepare_depression_test(bot, chat_id, user)
