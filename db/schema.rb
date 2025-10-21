@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_08_062622) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_20_145237) do
   create_table "answer_options", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "text"
@@ -61,6 +61,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_08_062622) do
     t.datetime "completed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "luscher_choices"
+    t.integer "luscher_stage"
     t.index ["test_id"], name: "index_test_results_on_test_id"
     t.index ["user_id"], name: "index_test_results_on_user_id"
   end
@@ -70,6 +72,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_08_062622) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "test_type"
   end
 
   create_table "users", force: :cascade do |t|

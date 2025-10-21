@@ -1,11 +1,19 @@
-
-# app/controllers/telegram_webhooks_controller.rb
-
 require 'telegram/bot'
 require 'json'
 
 class TelegramWebhooksController < ApplicationController
   before_action :set_bot
+
+  COLOURS = [
+    {name: 'Темно-синий', value: 1, code: 'dark_blue'},
+    {name: 'Сине-зеленый', value: 2, code: 'blue_green'},
+    {name: 'Зеленый', value: 3, code: 'green'},
+    {name: 'Красно-желтый', value: 4, code: 'red_yellow'},
+    {name: 'Желтый', value: 5, code: 'yellow'},
+    {name: 'Красный', value: 6, code: 'red'},
+    {name: 'Фиолетовый', value: 7, code: 'purple'},
+    {name: 'Коричневый', value: 8, code: 'brown'}
+  ].freeze
 
   def message
     if params[:message]
@@ -46,7 +54,7 @@ class TelegramWebhooksController < ApplicationController
         @bot.send_message(chat_id: message[:chat][:id], text: "Я не понимаю эту команду. Напишите /help или используйте кнопки.")
       end
     end
-    
+
 
     elsif params[:callback_query]
       callback_query = params[:callback_query]
@@ -76,6 +84,9 @@ class TelegramWebhooksController < ApplicationController
       when 'prepare_eq_test'
         prepare_eq_test(@bot, message[:chat][:id], user)
 
+      when 'prepare_luscher_test'
+        prepare_luscher_test(@bot, message[:chat][:id], user)
+
       when 'start_anxiety_test'
         start_anxiety_test(@bot, message[:chat][:id], user)
 
@@ -84,6 +95,15 @@ class TelegramWebhooksController < ApplicationController
 
       when 'start_eq_test'
         start_eq_test(@bot, message[:chat][:id], user) # <--- Добавляем обработчик
+
+      when 'start_luscher_test'
+        start_luscher_test(@bot, message[:chat][:id], user)
+
+      when 'start_luscher_stage_two'
+        start_luscher_stage_two(@bot, message[:chat][:id], user)
+
+      when 'show_luscher_interpretation'
+        show_luscher_interpretation(@bot, message[:chat][:id], user)
 
       when 'start_emotion_diary'
         start_emotion_diary(@bot, message[:chat][:id], user)
@@ -112,6 +132,10 @@ class TelegramWebhooksController < ApplicationController
         test_result_id = $3.to_i
         process_answer(@bot, message[:chat][:id], user, question_id, answer_option_id, test_result_id)
 
+      when /^luscher_choose_(.+)$/
+        color_code = $1
+        process_luscher_choice(@bot, message[:chat][:id], user, color_code, message[:message_id])
+
       end
     end
 
@@ -122,6 +146,25 @@ class TelegramWebhooksController < ApplicationController
 
   def set_bot
     @bot = Telegram::Bot::Client.new(ENV['TELEGRAM_BOT_TOKEN'])
+  end
+
+  def luscher_colors_keyboard(available_colors)
+    buttons = available_colors.map do |color|
+      [{ text: color[:name], callback_data: "luscher_choose_#{color[:code]}" }]
+    end
+    { inline_keyboard: buttons }.to_json
+  end
+
+  def show_luscher_results(first_stage, second_stage)
+      first_stage_names = first_stage.map { |color_code| COLOURS.find { |c| c[:code] == color_code }[:name] }
+      second_stage_names = second_stage.map { |color_code| COLOURS.find { |c| c[:code] == color_code }[:name] }
+
+      message = "Первый выбор:\n"
+      first_stage_names.each_with_index { |name, index| message += "#{index + 1}. #{name}\n" }
+      message += "\nВторой выбор:\n"
+      second_stage_names.each_with_index { |name, index| message += "#{index + 1}. #{name}\n" }
+
+      message
   end
 
   def start_test(bot, chat_id, test_id)
@@ -139,6 +182,8 @@ class TelegramWebhooksController < ApplicationController
         test_buttons << [{ text: test.name, callback_data: 'prepare_depression_test' }]
       when "Тест EQ (Эмоциональный Интеллект)"
         test_buttons << [{ text: test.name, callback_data: 'prepare_eq_test' }]
+      when "8-ми цветовой тест Люшера"
+        test_buttons << [{ text: test.name, callback_data: 'prepare_luscher_test' }] #  Добавили Люшера
       else
         next
       end
@@ -173,6 +218,12 @@ class TelegramWebhooksController < ApplicationController
     bot.send_message(chat_id: chat_id, text: message, reply_markup: kb)
   end
 
+  def prepare_luscher_test(bot, chat_id, user)
+    message = "8-ми цветовой тест Люшера поможет вам оценить ваше психоэмоциональное состояние. Тест состоит из двух этапов. Между этапами необходимо сделать небольшой перерыв. Готовы начать?"
+    kb = { inline_keyboard: [[{ text: 'Начать тест', callback_data: 'start_luscher_test' }]] }.to_json
+    bot.send_message(chat_id: chat_id, text: message, reply_markup: kb)
+  end
+
   def start_anxiety_test(bot, chat_id, user)
     test = Test.find_by(name: "Тест Тревожности")
     if test.nil?
@@ -182,7 +233,7 @@ class TelegramWebhooksController < ApplicationController
     Rails.logger.debug "Test ID: #{test.id}"
     Rails.logger.debug "User ID: #{user.id}"
     test_result = TestResult.new(user: user, test: test) # Создаем объект TestResult
-  
+
     if test_result.save # Пытаемся сохранить
       Rails.logger.debug "TestResult ID: #{test_result.id}"
       question = test.questions.first
@@ -192,7 +243,7 @@ class TelegramWebhooksController < ApplicationController
       bot.send_message(chat_id: chat_id, text: "Произошла ошибка при создании теста. Попробуйте позже.")
     end
   end
-  
+
   def start_depression_test(bot, chat_id, user)
     test = Test.find_by(name: "Тест Депрессии (PHQ-9)")
     if test.nil?
@@ -227,6 +278,144 @@ class TelegramWebhooksController < ApplicationController
       Rails.logger.error "Ошибка при создании TestResult: #{test_result.errors.full_messages.join(', ')}"
       bot.send_message(chat_id: chat_id, text: "Произошла ошибка при создании теста. Попробуйте позже.")
     end
+  end
+
+  def start_luscher_test(bot, chat_id, user)
+       test = Test.find_by(name: "8-ми цветовой тест Люшера")
+       if test.nil?
+         bot.send_message(chat_id: chat_id, text: "Тест не найден.")
+         return
+       end
+
+       #  Находим все незавершенные результаты теста Люшера для этого пользователя
+       #  и помечаем их как завершенные, чтобы они не мешали новому тесту.
+       TestResult.where(user: user, test: test, completed_at: nil).update_all(completed_at: Time.now, luscher_stage: :completed)
+
+       test_result = TestResult.create(user: user, test: test, luscher_stage: :stage_one, luscher_choices: []) # Убедитесь, что luscher_stage: :stage_one
+       available_colors = COLOURS.shuffle #  Перемешиваем цвета для первого выбора
+       markup = luscher_colors_keyboard(available_colors)
+
+       bot.send_message(chat_id: chat_id, text: "Этап 1: Выберите цвет, который вам сейчас больше всего нравится:", reply_markup: markup)
+     end
+
+  def start_luscher_stage_two(bot, chat_id, user)
+    test = Test.find_by(name: "8-ми цветовой тест Люшера")
+    test_result = TestResult.find_by(user: user, test: test, completed_at: nil)
+
+    # Очищаем luscher_choices для второго этапа
+    test_result.update(luscher_choices: [])
+
+    available_colors = COLOURS.shuffle # Перемешиваем цвета для второго выбора
+    markup = luscher_colors_keyboard(available_colors)
+
+    bot.send_message(chat_id: chat_id, text: "Этап 2: Выберите цвет, который вам сейчас больше всего нравится:", reply_markup: markup)
+  end
+
+  def process_luscher_choice(bot, chat_id, user, color_code, message_id)
+  test = Test.find_by(name: "8-ми цветовой тест Люшера")
+  test_result = TestResult.find_by(user: user, test: test, completed_at: nil)
+
+  current_choices = test_result.luscher_choices || []
+  current_choices << color_code
+  test_result.update(luscher_choices: current_choices)
+
+  test_result.reload
+
+  available_colors = COLOURS.reject { |c| current_choices.include?(c[:code]) }
+
+  Rails.logger.debug "Текущие выборы: #{current_choices.inspect}"
+  Rails.logger.debug "Доступные цвета: #{available_colors.count}"
+  Rails.logger.debug "luscher_stage (после перезагрузки): #{test_result.luscher_stage.inspect}"
+
+  if available_colors.empty?
+    Rails.logger.debug "Этап закончен"
+    if test_result.luscher_stage == "stage_one" # ИЗМЕНЕНО: Сравнение со строкой
+      Rails.logger.debug "Переход к этапу 2"
+      test_result.update(luscher_stage: :stage_two)
+      bot.send_message(chat_id: chat_id, text: "Ты выбрал все 8 цветов! Вот твой список в порядке убывания предпочтения:\n#{test_result.luscher_choices.map.with_index { |code, index| "#{index+1}. #{COLOURS.find { |c| c[:code] == code }[:name]}"}.join("\n")}\n\nТеперь сделай небольшой перерыв (5-10 минут). Когда будешь готов, нажми кнопку \"Начать второй этап\".",
+                       reply_markup: { inline_keyboard: [[{ text: 'Начать второй этап', callback_data: 'start_luscher_stage_two' }]] }.to_json)
+    elsif test_result.luscher_stage == "stage_two" # ИЗМЕНЕНО: Сравнение со строкой
+      Rails.logger.debug "Тест завершен"
+      test_result.update(luscher_stage: :completed, completed_at: Time.now)
+      bot.send_message(chat_id: chat_id, text: "Отлично! Ты завершил тест! Теперь я попробую дать тебе небольшую интерпретацию твоих результатов.",
+                       reply_markup: { inline_keyboard: [[{ text: 'Показать интерпретацию', callback_data: 'show_luscher_interpretation' }]] }.to_json)
+    else
+      Rails.logger.debug "Неизвестный luscher_stage (ошибка логики): #{test_result.luscher_stage.inspect}"
+      bot.send_message(chat_id: chat_id, text: "Произошла внутренняя ошибка теста. Пожалуйста, попробуйте начать тест заново.")
+    end
+  else
+    markup = luscher_colors_keyboard(available_colors.shuffle)
+    bot.send_message(chat_id: chat_id, text: "Выбери следующий цвет:", reply_markup: markup)
+  end
+end
+
+  def show_luscher_interpretation(bot, chat_id, user)
+    test = Test.find_by(name: "8-ми цветовой тест Люшера")
+    test_result = TestResult.find_by(user: user, test: test, completed_at: nil) || TestResult.find_by(user: user, test: test)
+    first_stage = test_result.luscher_choices.first(8)
+    second_stage = test_result.luscher_choices.last(8)
+
+    results_message = show_luscher_results(first_stage, second_stage)
+
+    # === Интерпретация на основе первого выбора (Этап 1) ===
+    first_color_code = first_stage.first
+    first_color = COLOURS.find { |c| c[:code] == first_color_code }
+    interpretation_first = case first_color[:code]
+                     when 'dark_blue'
+                       "Сейчас для вас главное – спокойствие, гармония и удовлетворение. Вы стремитесь к глубоким эмоциональным связям и стабильности в отношениях. Возможно, ищете утешение и расслабление."
+                     when 'blue_green'
+                       "Вы нуждаетесь в признании, уверенности и самооценке. Важно чувствовать себя значимым и компетентным. Стремитесь к контролю и обладанию."
+                     when 'green'
+                       "Вам важна безопасность, защита и уверенность в будущем. Вы цените стабильность и постоянство, стремитесь к гармонии с собой и окружающим миром."
+                     when 'red_yellow'
+                       "Вы полны энергии и оптимизма, стремитесь к новым впечатлениям и активной деятельности. Важно чувствовать себя свободным и независимым."
+                     when 'yellow'
+                       "Вы ищете радость, легкость и свободу от ограничений. Важно чувствовать себя открытым для новых возможностей и перемен."
+                     when 'red'
+                       "Вы стремитесь к интенсивным переживаниям, активности и успеху. Важно чувствовать себя сильным и влиятельным, достигать поставленных целей."
+                     when 'purple'
+                       "Вы нуждаетесь в признании своей уникальности и индивидуальности. Важно чувствовать себя особенным и неповторимым, выражать свою креативность и интуицию."
+                     when 'brown'
+                       "Вы ищете комфорт, безопасность и стабильность в материальном плане. Важно чувствовать себя защищенным от жизненных невзгод."
+                     else
+                       "Не удалось определить интерпретацию для первого выбора."
+                     end
+
+    # === Интерпретация на основе последнего выбора (отвергаемый цвет) (Этап 1) ===
+    last_color_code = first_stage.last
+    last_color = COLOURS.find { |c| c[:code] == last_color_code }
+    interpretation_last = case last_color[:code]
+                      when 'dark_blue'
+                        "Вы избегаете ситуаций, требующих эмоциональной вовлеченности и глубоких переживаний. Возможно, чувствуете усталость от рутины и ищете способы разнообразить свою жизнь."
+                      when 'blue_green'
+                        "Вы избегаете ситуаций, где необходимо проявлять настойчивость и бороться за свои интересы. Возможно, чувствуете неуверенность в своих силах и нуждаетесь в поддержке."
+                      when 'green'
+                        "Вы избегаете ситуаций, требующих ответственности и принятия решений. Возможно, чувствуете себя перегруженным обязательствами и ищете способы облегчить свою жизнь."
+                      when 'red_yellow'
+                        "Вы избегаете ситуаций, связанных с риском и неопределенностью. Возможно, чувствуете потребность в стабильности и безопасности."
+                      when 'yellow'
+                        "Вы избегаете ситуаций, требующих концентрации и внимания к деталям. Возможно, чувствуете потребность в отдыхе и расслаблении."
+                      when 'red'
+                        "Вы избегаете ситуаций, связанных с конфликтами и борьбой. Возможно, чувствуете потребность в гармонии и мире."
+                      when 'purple'
+                        "Вы избегаете ситуаций, требующих подчинения и компромиссов. Возможно, чувствуете потребность в самовыражении и независимости."
+                      when 'brown'
+                        "Вы избегаете ситуаций, связанных с финансовой нестабильностью и материальными трудностями. Возможно, чувствуете потребность в уверенности в завтрашнем дне."
+                      else
+                        "Не удалось определить интерпретацию для последнего выбора."
+                      end
+
+      # === Сравнение первого выбора между этапами ===
+      first_color_code_second = second_stage.first
+      comparison_message = if first_color_code == first_color_code_second
+                             "Ваша главная потребность осталась неизменной: вы по-прежнему стремитесь к #{first_color[:name]}."
+                           else
+                             "Ваши приоритеты изменились. Теперь вы стремитесь к #{COLOURS.find { |c| c[:code] == first_color_code_second }[:name]}, а не к #{first_color[:name]}, как раньше."
+                           end
+
+    message = "Важно: Помните, что это только общая информация, и она не может заменить профессиональный анализ.\n\n#{results_message}\n\nИнтерпретация на основе первого выбора (Этап 1):\n#{interpretation_first}\nИнтерпретация на основе последнего выбора (Этап 1):\n#{interpretation_last}\n\nСравнение первого выбора между этапами:\n#{comparison_message}"
+
+    bot.send_message(chat_id: chat_id, text: message)
   end
 
   def start_emotion_diary(bot, chat_id, user)
