@@ -2,6 +2,10 @@ require 'telegram/bot'
 require 'json'
 
 class TelegramWebhooksController < ApplicationController
+
+  include ActionView::Helpers::AssetUrlHelper # <<< ДОБАВЬТЕ ЭТУ СТРОКУ
+  include Rails.application.routes.url_helpers # Может понадобиться для asset_path в некоторых случаях
+
   before_action :set_bot
 
   COLOURS = [
@@ -150,10 +154,38 @@ class TelegramWebhooksController < ApplicationController
 
   def luscher_colors_keyboard(available_colors)
     buttons = available_colors.map do |color|
+      # InlineKeyboardButton принимает только текст и callback_data
       [{ text: color[:name], callback_data: "luscher_choose_#{color[:code]}" }]
     end
     { inline_keyboard: buttons }.to_json
   end
+
+  def send_color_image_with_name(bot, chat_id, color)
+      # Создаем маску для поиска файла в public/assets
+      # Ищем файл с именем color[:code], любым хэшем и расширением .jpeg
+      file_mask = Rails.root.join('public', 'assets', "#{color[:code]}-*.jpeg")
+
+      # Используем Dir.glob для поиска файлов, соответствующих маске
+      image_files = Dir.glob(file_mask)
+
+      if image_files.any?
+        # Если найдено несколько файлов, берем первый
+        image_path = image_files.first
+
+        Rails.logger.info "Найден файл изображения: #{image_path}"
+
+        # Открываем файл и отправляем его
+        File.open(image_path, 'r') do |file|
+          bot.send_photo(chat_id: chat_id, photo: file, caption: color[:name])
+        end
+      else
+        Rails.logger.error "Файл изображения не найден для цвета: #{color[:name]}"
+        bot.send_message(chat_id: chat_id, text: "Изображение для цвета '#{color[:name]}' не найдено.")
+      end
+    rescue => e
+      Rails.logger.error "Ошибка при отправке изображения: #{e.message}"
+      bot.send_message(chat_id: chat_id, text: "Произошла ошибка при отправке изображения для цвета '#{color[:name]}'.")
+    end
 
   def show_luscher_results(first_stage, second_stage)
       first_stage_names = first_stage.map { |color_code| COLOURS.find { |c| c[:code] == color_code }[:name] }
@@ -281,22 +313,30 @@ class TelegramWebhooksController < ApplicationController
   end
 
   def start_luscher_test(bot, chat_id, user)
-       test = Test.find_by(name: "8-ми цветовой тест Люшера")
-       if test.nil?
-         bot.send_message(chat_id: chat_id, text: "Тест не найден.")
-         return
-       end
+  test = Test.find_by(name: "8-ми цветовой тест Люшера")
+  if test.nil?
+    bot.send_message(chat_id: chat_id, text: "Тест не найден.")
+    return
+  end
 
-       #  Находим все незавершенные результаты теста Люшера для этого пользователя
-       #  и помечаем их как завершенные, чтобы они не мешали новому тесту.
-       TestResult.where(user: user, test: test, completed_at: nil).update_all(completed_at: Time.now, luscher_stage: :completed)
+  TestResult.where(user: user, test: test, completed_at: nil).update_all(completed_at: Time.now, luscher_stage: :completed)
 
-       test_result = TestResult.create(user: user, test: test, luscher_stage: :stage_one, luscher_choices: []) # Убедитесь, что luscher_stage: :stage_one
-       available_colors = COLOURS.shuffle #  Перемешиваем цвета для первого выбора
-       markup = luscher_colors_keyboard(available_colors)
+  test_result = TestResult.create(user: user, test: test, luscher_stage: :stage_one, luscher_choices: [])
+  available_colors = COLOURS.shuffle
+  Rails.logger.info "Начинаем отправку изображений..."
 
-       bot.send_message(chat_id: chat_id, text: "Этап 1: Выберите цвет, который вам сейчас больше всего нравится:", reply_markup: markup)
-     end
+  # Отправляем сообщение с просьбой выбрать цвет
+  bot.send_message(chat_id: chat_id, text: "Этап 1: Выберите цвет, который вам сейчас больше всего нравится:")
+  
+  # Отправляем изображения с названиями цветов по одному
+  available_colors.each do |color|
+    send_color_image_with_name(bot, chat_id, color)
+  end
+
+  # Создаем и отправляем клавиатуру после отправки всех изображений
+  markup = luscher_colors_keyboard(available_colors)
+  bot.send_message(chat_id: chat_id, text: "Выберите наиболее приятный для вам цвет, нажав на кнопку ниже:", reply_markup: markup)
+end
 
   def start_luscher_stage_two(bot, chat_id, user)
     test = Test.find_by(name: "8-ми цветовой тест Люшера")
@@ -332,20 +372,35 @@ class TelegramWebhooksController < ApplicationController
     if test_result.luscher_stage == "stage_one" # ИЗМЕНЕНО: Сравнение со строкой
       Rails.logger.debug "Переход к этапу 2"
       test_result.update(luscher_stage: :stage_two)
-      bot.send_message(chat_id: chat_id, text: "Ты выбрал все 8 цветов! Вот твой список в порядке убывания предпочтения:\n#{test_result.luscher_choices.map.with_index { |code, index| "#{index+1}. #{COLOURS.find { |c| c[:code] == code }[:name]}"}.join("\n")}\n\nТеперь сделай небольшой перерыв (5-10 минут). Когда будешь готов, нажми кнопку \"Начать второй этап\".",
-                       reply_markup: { inline_keyboard: [[{ text: 'Начать второй этап', callback_data: 'start_luscher_stage_two' }]] }.to_json)
+      bot.send_message(
+  chat_id: chat_id,
+  text: "Ты выбрал все 8 цветов!\nТеперь сделай небольшой перерыв (5-10 минут). Когда будешь готов, нажми кнопку \"Начать второй этап\".",
+  reply_markup: { inline_keyboard: [[{ text: 'Начать второй этап', callback_data: 'start_luscher_stage_two' }]] }.to_json
+)
     elsif test_result.luscher_stage == "stage_two" # ИЗМЕНЕНО: Сравнение со строкой
       Rails.logger.debug "Тест завершен"
       test_result.update(luscher_stage: :completed, completed_at: Time.now)
-      bot.send_message(chat_id: chat_id, text: "Отлично! Ты завершил тест! Теперь я попробую дать тебе небольшую интерпретацию твоих результатов.",
-                       reply_markup: { inline_keyboard: [[{ text: 'Показать интерпретацию', callback_data: 'show_luscher_interpretation' }]] }.to_json)
+      bot.send_message(
+  chat_id: chat_id,
+  text: "Отлично! Ты завершил тест! Теперь я попробую дать тебе небольшую интерпретацию твоих результатов.",
+  reply_markup: { inline_keyboard: [[{ text: 'Показать интерпретацию', callback_data: 'show_luscher_interpretation' }]] }.to_json
+)
     else
       Rails.logger.debug "Неизвестный luscher_stage (ошибка логики): #{test_result.luscher_stage.inspect}"
       bot.send_message(chat_id: chat_id, text: "Произошла внутренняя ошибка теста. Пожалуйста, попробуйте начать тест заново.")
     end
   else
+    # Отправляем сообщение с просьбой выбрать следующий цвет
+    bot.send_message(chat_id: chat_id, text: "Выбери следующий цвет:")
+
+    # Отправляем изображения с названиями цветов по одному
+    available_colors.each do |color|
+      send_color_image_with_name(bot, chat_id, color)
+    end
+
+    # Создаем и отправляем клавиатуру после отправки всех изображений
     markup = luscher_colors_keyboard(available_colors.shuffle)
-    bot.send_message(chat_id: chat_id, text: "Выбери следующий цвет:", reply_markup: markup)
+    bot.send_message(chat_id: chat_id, text: "Выберите цвет, нажав на кнопку ниже:", reply_markup: markup)
   end
 end
 
@@ -406,15 +461,8 @@ end
                       end
 
       # === Сравнение первого выбора между этапами ===
-      first_color_code_second = second_stage.first
-      comparison_message = if first_color_code == first_color_code_second
-                             "Ваша главная потребность осталась неизменной: вы по-прежнему стремитесь к #{first_color[:name]}."
-                           else
-                             "Ваши приоритеты изменились. Теперь вы стремитесь к #{COLOURS.find { |c| c[:code] == first_color_code_second }[:name]}, а не к #{first_color[:name]}, как раньше."
-                           end
 
-    message = "Важно: Помните, что это только общая информация, и она не может заменить профессиональный анализ.\n\n#{results_message}\n\nИнтерпретация на основе первого выбора (Этап 1):\n#{interpretation_first}\nИнтерпретация на основе последнего выбора (Этап 1):\n#{interpretation_last}\n\nСравнение первого выбора между этапами:\n#{comparison_message}"
-
+    message = "Важно: Помните, что это только общая информация, и она не может заменить профессиональный анализ.\nИнтерпретация на основе первого выбора:\n#{interpretation_first}\nИнтерпретация на основе второго выбора:\n#{interpretation_last}\n"
     bot.send_message(chat_id: chat_id, text: message)
   end
 
