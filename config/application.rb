@@ -23,7 +23,7 @@ module PsyBot
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
-
+    config.autoload_paths << Rails.root.join('app', 'services')
     config.assets.enabled = true
 
         # Добавляем путь к папке с изображениями в assets paths
