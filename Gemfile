@@ -33,6 +33,8 @@ gem 'telegram-bot'
 gem 'dotenv-rails'
 gem 'httparty'
 gem 'sprockets-rails'
+gem 'faraday'
+gem 'faraday-multipart'
     
 
 

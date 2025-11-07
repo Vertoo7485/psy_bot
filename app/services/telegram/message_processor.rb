@@ -12,7 +12,9 @@ module Telegram
     end
 
     def process
-      if @user.current_diary_step.present?
+      if @user.get_self_help_step == 'day_3_waiting_for_gratitude'
+        handle_self_help_input(@text)
+      elsif @user.current_diary_step.present?
         EmotionDiaryService.new(@bot, @user, @chat_id).handle_answer(@text)
       else
         case @text
@@ -34,6 +36,18 @@ module Telegram
 
     def send_main_menu(text)
       @bot.send_message(chat_id: @chat_id, text: text, reply_markup: main_menu_markup)
+    end
+
+    def handle_self_help_input(text)
+      current_step = @user.get_self_help_step
+
+      case current_step
+      when 'day_3_waiting_for_gratitude'
+        # --- ИЗМЕНЕНИЕ ЗДЕСЬ: Вызываем новый метод сервиса ---
+        SelfHelpService.new(@bot, @user, @chat_id).handle_gratitude_input(text)
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Я не уверен, что ты сейчас делаешь. Пожалуйста, используйте кнопки.")
+      end
     end
   end
 end

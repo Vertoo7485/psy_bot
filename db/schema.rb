@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_28_081722) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_07_124321) do
   create_table "answer_options", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "text"
@@ -45,6 +45,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_28_081722) do
     t.index ["user_id"], name: "index_emotion_diary_entries_on_user_id"
   end
 
+  create_table "gratitude_entries", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "entry_date"
+    t.text "entry_text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_gratitude_entries_on_user_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.integer "test_id", null: false
     t.text "text"
@@ -52,6 +61,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_28_081722) do
     t.datetime "updated_at", null: false
     t.integer "part"
     t.index ["test_id"], name: "index_questions_on_test_id"
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.string "key"
+    t.text "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "test_results", force: :cascade do |t|
@@ -83,6 +99,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_28_081722) do
     t.datetime "updated_at", null: false
     t.string "current_diary_step"
     t.json "diary_data"
+    t.string "self_help_program_step"
+    t.json "self_help_program_data", default: {}, null: false
     t.index ["telegram_id"], name: "index_users_on_telegram_id", unique: true
   end
 
@@ -91,6 +109,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_28_081722) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "test_results"
   add_foreign_key "emotion_diary_entries", "users"
+  add_foreign_key "gratitude_entries", "users"
   add_foreign_key "questions", "tests"
   add_foreign_key "test_results", "tests"
   add_foreign_key "test_results", "users"
