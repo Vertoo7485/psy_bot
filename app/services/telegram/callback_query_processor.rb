@@ -140,13 +140,42 @@ module Telegram
 
             when 'start_day_7_content'
               handle_start_day_7_content
-            when 'complete_day_7'
-              SelfHelpService.new(@bot, @user, @chat_id).complete_program
-          else
-            Rails.logger.warn "Неизвестный callback_data: #{@data}"
-            @bot.send_message(chat_id: @chat_id, text: "Извините, я не понял эту команду.")
-          end
-        end
+            when 'complete_day_7' # <--- ЭТОТ ОБРАБОТЧИК ДОЛЖЕН БЫТЬ
+        handle_complete_day_7 # Перенаправляем на новый хэндлер
+
+      when 'start_day_8_content' # <--- НОВЫЙ ОБРАБОТЧИК
+        handle_start_day_8_content
+
+      when 'day_8_confirm_exercise' # <--- НОВЫЙ ОБРАБОТЧИК (ответ "Да" на готовность)
+        handle_day_8_confirm_exercise
+
+      when 'day_8_decline_exercise' # <--- НОВЫЙ ОБРАБОТЧИК (ответ "Нет" на готовность)
+        handle_day_8_decline_exercise
+
+      when 'day_8_stopped_thought_first_try' # <--- НОВЫЙ ОБРАБОТЧИК (после первого "СТОП!")
+        handle_day_8_stopped_thought_first_try
+
+      when 'day_8_ready_for_distraction' # <--- НОВЫЙ ОБРАБОТЧИК (после второго "СТОП!")
+        handle_day_8_ready_for_distraction
+
+      when /^day_8_distraction_(music|video|friend|exercise|book)$/ # <--- НОВЫЕ ОБРАБОТЧИКИ для выбора отвлечения
+        distraction_type = $1
+        handle_day_8_distraction_choice(distraction_type)
+
+      when 'day_8_exercise_completed' # <--- НОВЫЙ ОБРАБОТЧИК (после завершения упражнения)
+        handle_day_8_exercise_completion
+
+     when 'complete_program_final' # Если у вас есть это, то, возможно, это финальное завершение
+        # Здесь может быть логика для завершения всей программы,
+        # например, отправка финального сообщения и возврат в главное меню
+        @bot.send_message(chat_id: @chat_id, text: "Программа полностью завершена! Возвращайтесь в любое время.", reply_markup: main_menu_markup)
+        @user.clear_self_help_program # Здесь можно сбросить, так как это финал.
+
+      else
+        Rails.logger.warn "Неизвестный callback_data: #{@callback_data}" # Исправлено на @callback_data
+        @bot.send_message(chat_id: @chat_id, text: "Извините, я не понял эту команду.")
+      end
+    end
 
     private
 
@@ -207,13 +236,82 @@ module Telegram
       end
     end
 
+    # Модифицируем этот метод для перехода к Дню 8
+    def handle_complete_day_7
+      if @user.get_self_help_step == 'day_7_completed'
+        SelfHelpService.new(@bot, @user, @chat_id).propose_day_8
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Ошибка состояния для завершения Дня 7. Начните /start.")
+        # @user.clear_self_help_program # <-- УБРАТЬ ОТСЮДА
+      end
+    end
+
+    def handle_start_day_8_content
+      # Здесь мы ожидаем, что пользовательский шаг УЖЕ 'day_8_intro',
+      # так как этот callback_data отправляется методом propose_day_8,
+      # который его и устанавливает.
+      if @user.get_self_help_step == 'day_8_intro'
+        SelfHelpService.new(@bot, @user, @chat_id).deliver_day_8_intro # Этот метод установит next_step 'day_8_waiting_for_consent'
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Вы пытаетесь начать День 8 из неправильного состояния. Напишите /start, чтобы вернуться в главное меню и начать заново.")
+        # @user.clear_self_help_program # <-- УБРАТЬ ОТСЮДА
+      end
+    end
+
+    def handle_day_8_confirm_exercise
+      if @user.get_self_help_step == 'day_8_waiting_for_consent'
+        SelfHelpService.new(@bot, @user, @chat_id).start_day_8_exercise_instructions
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Ошибка состояния. Начните /start.")
+      end
+    end
+
+    def handle_day_8_decline_exercise
+      if @user.get_self_help_step == 'day_8_waiting_for_consent'
+        @bot.send_message(chat_id: @chat_id, text: "Хорошо, мы можем попробовать эту технику позже. Возвращайтесь в главное меню.", reply_markup: main_menu_markup)
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Ошибка состояния. Начните /start.")
+      end
+    end
+
+    def handle_day_8_stopped_thought_first_try
+      if @user.get_self_help_step == 'day_8_first_try'
+        SelfHelpService.new(@bot, @user, @chat_id).continue_day_8_second_try
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Ошибка состояния. Начните /start.")
+      end
+    end
+
+    def handle_day_8_ready_for_distraction
+      if @user.get_self_help_step == 'day_8_second_try'
+        SelfHelpService.new(@bot, @user, @chat_id).ask_for_distraction_choice
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Ошибка состояния. Начните /start.")
+      end
+    end
+
+    def handle_day_8_distraction_choice(distraction_type)
+      if @user.get_self_help_step == 'day_8_choosing_distraction'
+        SelfHelpService.new(@bot, @user, @chat_id).guide_distraction(distraction_type)
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Ошибка состояния. Начните /start.")
+      end
+    end
+
+    def handle_day_8_exercise_completion
+      if @user.get_self_help_step == 'day_8_distraction_in_progress'
+        SelfHelpService.new(@bot, @user, @chat_id).handle_day_8_exercise_completion
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Ошибка состояния. Начните /start.")
+      end
+    end
+
     def handle_start_day_1_content
             if @user.get_self_help_step == 'day_1_content_intro'
               @user.set_self_help_step('day_1_content_delivered') # Это действие перемещаем сюда
               SelfHelpService.new(@bot, @user, @chat_id).deliver_day_1_content # <--- Вызываем метод из SelfHelpService
             else
               @bot.send_message(chat_id: @chat_id, text: "Что-то пошло не так при попытке начать день 1. Напишите /start для начала заново.")
-              @user.clear_self_help_program
             end
           end
 
@@ -223,7 +321,6 @@ module Telegram
               SelfHelpService.new(@bot, @user, @chat_id).send_day_1_exercise # <--- Запускаем упражнение или следующую часть контента
             else
               @bot.send_message(chat_id: @chat_id, text: "Что-то пошло не так при продолжении дня 1. Напишите /start для начала заново.")
-              @user.clear_self_help_program
             end
           end
 
@@ -242,7 +339,6 @@ module Telegram
           SelfHelpService.new(@bot, @user, @chat_id).handle_day_1_exercise_completion
         else
           @bot.send_message(chat_id: @chat_id, text: "Что-то пошло не так при завершении упражнения дня 1. Напишите /start для начала заново.")
-          @user.clear_self_help_program
         end
       end
 
@@ -253,7 +349,6 @@ module Telegram
           SelfHelpService.new(@bot, @user, @chat_id).deliver_day_2_content # <--- Запускаем доставку контента для Дня 2
         else
           @bot.send_message(chat_id: @chat_id, text: "Вы еще не завершили предыдущий день или что-то пошло не так. Напишите /start для начала заново.")
-          @user.clear_self_help_program
         end
       end
 
@@ -279,7 +374,6 @@ module Telegram
         SelfHelpService.new(@bot, @user, @chat_id).deliver_day_3_content
       else
         @bot.send_message(chat_id: @chat_id, text: "Вы еще не завершили предыдущий день или что-то пошло не так. Напишите /start для начала заново.")
-        @user.clear_self_help_program
       end
     end
 
@@ -295,7 +389,6 @@ module Telegram
         )
       else
         @bot.send_message(chat_id: @chat_id, text: "Что-то пошло не так в последовательности тестов. Напишите /start.")
-        @user.clear_self_help_program
       end
     end
 
@@ -306,14 +399,12 @@ module Telegram
         QuizRunner.new(@bot, @user, @chat_id).start_quiz('anxiety') # Запускаем тест на тревожность
       else
         @bot.send_message(chat_id: @chat_id, text: "Что-то пошло не так. Напишите /start для начала заново.")
-        @user.clear_self_help_program
       end
     end
 
     def handle_no_anxiety_test_sequence
       if @user.get_self_help_step == 'day_1_anxiety_intro'
         @bot.send_message(chat_id: @chat_id, text: "Хорошо, мы можем пройти тест позже. Возвращаемся в главное меню.", reply_markup: main_menu_markup)
-        @user.clear_self_help_program # Сбрасываем прогресс, если пользователь отказался от следующего теста
       else
         @bot.send_message(chat_id: @chat_id, text: "Пожалуйста, вернитесь в главное меню, нажав /start.")
       end
@@ -349,7 +440,6 @@ module Telegram
         def handle_no_response
           if @user.get_self_help_step == 'day_1_intro'
             @bot.send_message(chat_id: @chat_id, text: "Хорошо, мы можем начать в любой другой момент. Просто нажмите кнопку '⭐ Программа самопомощи ⭐' в главном меню.", reply_markup: TelegramMarkupHelper.main_menu_markup)
-            @user.clear_self_help_program # Сбрасываем прогресс, если пользователь отказывается
           elsif @user.get_self_help_step == 'day_2_intro'
             @bot.send_message(chat_id: @chat_id, text: "Хорошо, мы можем вернуться к упражнению позже. Нажмите /start, чтобы вернуться в главное меню.")
             @user.set_self_help_step('day_2_completed') # Отмечаем, что день 2 пройден, чтобы перейти к дню 3

@@ -51,6 +51,13 @@ class TelegramWebhooksController < ApplicationController
         handle_yes_response(user)
       when 'no'
         handle_no_response(user)
+      when 'complete_day_7' # <--- ЭТОТ ОБРАБОТЧИК УЖЕ ДОЛЖЕН БЫТЬ В CallbackQueryProcessor
+        Telegram::CallbackQueryProcessor.new(@bot, user, params[:callback_query]).process
+      when 'start_day_8_content', 'day_8_confirm_exercise', 'day_8_decline_exercise',
+           'day_8_stopped_thought_first_try', 'day_8_ready_for_distraction',
+           /^day_8_distraction_(music|video|friend|exercise|book)$/,
+           'day_8_exercise_completed', 'complete_program_final' # <--- Добавляем все новые callback_data
+        Telegram::CallbackQueryProcessor.new(@bot, user, params[:callback_query]).process
       else
         # Передаем управление CallbackQueryProcessor для остальных callback_data
         Telegram::CallbackQueryProcessor.new(@bot, user, params[:callback_query]).process

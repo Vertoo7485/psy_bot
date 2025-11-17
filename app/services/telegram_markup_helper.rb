@@ -184,12 +184,86 @@ module TelegramMarkupHelper
       ]
     }.to_json
   end
-
-  # Markup для завершения программы
   def complete_program_markup
     {
       inline_keyboard: [
-        [{ text: "Завершить программу", callback_data: 'complete_day_7' }]
+        [{ text: "Завершить неделю", callback_data: 'complete_day_7' }] # <-- Изменено название кнопки и callback
+      ]
+    }.to_json
+  end
+
+  # Markup для перехода ко Дню 8 (после завершения Дня 7)
+  def day_8_intro_markup
+    {
+      inline_keyboard: [
+        [{ text: "Начать День 8", callback_data: 'start_day_8_content' }]
+      ]
+    }.to_json
+  end
+
+  def day_8_intro_markup
+    {
+      inline_keyboard: [
+        [{ text: "Начать День 8", callback_data: 'start_day_8_content' }]
+      ]
+    }.to_json
+  end
+
+  # Markup для согласия/отказа начать упражнение дня 8
+  def day_8_consent_markup
+    {
+      inline_keyboard: [
+        [{ text: "Да, готов(а)!", callback_data: 'day_8_confirm_exercise' }],
+        [{ text: "Нет, позже", callback_data: 'day_8_decline_exercise' }]
+      ]
+    }.to_json
+  end
+
+  # Markup после первого "СТОП!"
+  def day_8_stopped_thought_first_try_markup
+    {
+      inline_keyboard: [
+        [{ text: "Я попробовал(а) остановить мысль", callback_data: 'day_8_stopped_thought_first_try' }]
+      ]
+    }.to_json
+  end
+
+  # Markup после второго "СТОП!"
+  def day_8_ready_for_distraction_markup
+    {
+      inline_keyboard: [
+        [{ text: "Я готов(а) переключиться", callback_data: 'day_8_ready_for_distraction' }]
+      ]
+    }.to_json
+  end
+
+  # Markup для выбора отвлечения
+  def day_8_distraction_options_markup
+    {
+      inline_keyboard: [
+        [{ text: "Послушать музыку", callback_data: 'day_8_distraction_music' }],
+        [{ text: "Посмотреть видео", callback_data: 'day_8_distraction_video' }],
+        [{ text: "Поговорить с другом", callback_data: 'day_8_distraction_friend' }],
+        [{ text: "Сделать упражнения", callback_data: 'day_8_distraction_exercise' }],
+        [{ text: "Почитать книгу", callback_data: 'day_8_distraction_book' }]
+      ]
+    }.to_json
+  end
+
+  # Markup для завершения упражнения Дня 8
+  def day_8_exercise_completed_markup
+    {
+      inline_keyboard: [
+        [{ text: "Я выполнил(а) упражнение", callback_data: 'day_8_exercise_completed' }]
+      ]
+    }.to_json
+  end
+
+  # Markup для завершения программы (после Дня 8)
+  def final_program_completion_markup
+    {
+      inline_keyboard: [
+        [{ text: "Вернуться в главное меню", callback_data: 'back_to_main_menu' }]
       ]
     }.to_json
   end
