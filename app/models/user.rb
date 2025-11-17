@@ -3,6 +3,7 @@
       has_many :tests, through: :test_results
       has_many :emotion_diary_entries, dependent: :destroy
       has_many :gratitude_entries, dependent: :destroy
+      has_many :reflection_entries, dependent: :destroy
 
       # Для дневника эмоций
       attribute :current_diary_step, :string, default: nil

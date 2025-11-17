@@ -255,7 +255,11 @@ end
   # --- НОВЫЙ МЕТОД: Завершение Дня 3 ---
   def complete_day_3
     @user.set_self_help_step('day_3_completed')
-    @bot.send_message(chat_id: @chat_id, text: "Поздравляю! Вы завершили третий день программы. Возвращайтесь завтра для продолжения!", reply_markup: back_to_main_menu_markup)
+    @bot.send_message(
+      chat_id: @chat_id, 
+      text: "Поздравляю! Вы завершили третий день программы. Отдохните и возвращайтесь для продолжения!", 
+      reply_markup: day_4_intro_markup # <-- Предлагаем День 4
+    )
   end
 
   def prepare_day_3
@@ -281,15 +285,145 @@ end
     end
   end
 
+  def deliver_day_4_content
+    @user.set_self_help_step('day_4_intro')
+    message_text = "Добро пожаловать в четвертый день программы!\n\nТема дня: Регуляция дыхания.\n\n" \
+                   "Давай попробуем дыхательное упражнение 'Квадратное дыхание'. Это поможет успокоить нервную систему и снизить тревожность. " \
+                   "Готовы?"
+
+    @bot.send_message(
+      chat_id: @chat_id, 
+      text: message_text, 
+      reply_markup: day_4_exercise_consent_markup
+    )
+  end
+
+  def start_day_4_exercise
+    @user.set_self_help_step('day_4_exercise_in_progress')
+    
+    # Отправляем инструкции по частям
+    @bot.send_message(chat_id: @chat_id, text: "Отлично! Найдите удобное положение сидя или лежа. Закройте глаза, если вам это комфортно.")
+    @bot.send_message(chat_id: @chat_id, text: "Представьте себе квадрат. Каждая сторона квадрата – это фаза дыхания.")
+    
+    # Полное описание упражнения
+    exercise_text = 
+      "**Упражнение 'Квадратное дыхание' (4-4-4-4):**\n\n" \
+      "1. **Вдох (4 секунды):** Медленно и глубоко вдохните через нос, считая до 4.\n" \
+      "2. **Задержка (4 секунды):** Задержите дыхание на 4 секунды.\n" \
+      "3. **Выдох (4 секунды):** Медленно и плавно выдохните через рот, считая до 4.\n" \
+      "4. **Задержка (4 секунды):** Задержите дыхание на 4 секунды.\n\n" \
+      "Продолжайте этот цикл в течение 4-5 минут. Сосредоточьтесь на счете и ощущениях."
+      
+    @bot.send_message(chat_id: @chat_id, text: exercise_text, parse_mode: 'Markdown')
+    
+    @bot.send_message(
+      chat_id: @chat_id, 
+      text: "Как только закончите, нажмите кнопку ниже.",
+      reply_markup: day_4_exercise_completed_markup
+    )
+  end
+
+  def handle_day_4_exercise_completion
+    @user.set_self_help_step('day_4_completed')
+    @bot.send_message(
+      chat_id: @chat_id,
+      text: "Прекрасно! Вы завершили упражнение. Как вы себя чувствуете? Надеюсь, более спокойно и расслабленно. На сегодня всё!",
+      reply_markup: day_5_intro_markup # <-- Предлагаем День 5
+    )
+  end
+
+  # --- ДЕНЬ 5: Физическая активность ---
+
+  def deliver_day_5_content
+    @user.set_self_help_step('day_5_intro')
+    message_text = "Добро пожаловать в пятый день программы!\n\nТема дня: Движение и настроение.\n\n" \
+                   "Сегодня предлагаю немного подвигаться. Физическая активность — отличный способ снизить уровень стресса и улучшить настроение.\n\n" \
+                   "**Задание:** Выберите любую физическую активность, которая вам нравится (прогулка, танцы, йога, зарядка), и уделите ей 15-20 минут."
+
+    @bot.send_message(
+      chat_id: @chat_id,
+      text: message_text,
+      reply_markup: { inline_keyboard: [[{ text: "Я выполнил(а) задание", callback_data: 'day_5_exercise_completed' }]] }.to_json
+    )
+  end
+
+  def handle_day_5_exercise_completion
+    @user.set_self_help_step('day_5_completed')
+    @bot.send_message(
+      chat_id: @chat_id,
+      text: "Отлично! Вы позаботились о своем теле. Это очень важный шаг к улучшению самочувствия. На сегодня всё!",
+      reply_markup: day_6_intro_markup # <-- Предлагаем День 6
+    )
+  end
+
+  # --- ДЕНЬ 6: Отдых и удовольствие ---
+
+  def deliver_day_6_content
+    @user.set_self_help_step('day_6_intro')
+    message_text = "Добро пожаловать в шестой день программы!\n\nТема дня: Забота о себе.\n\n" \
+                   "Сегодня просто отдохни и сделай что-то приятное для себя. Посмотри фильм, почитай книгу, послушай музыку, прими ванну. " \
+                   "Цель — дать себе время восстановиться и насладиться моментом, не испытывая чувства вины."
+
+    @bot.send_message(
+      chat_id: @chat_id,
+      text: message_text,
+      reply_markup: { inline_keyboard: [[{ text: "Я уделил(а) время себе", callback_data: 'day_6_exercise_completed' }]] }.to_json
+    )
+  end
+
+  def handle_day_6_exercise_completion
+    @user.set_self_help_step('day_6_completed')
+    @bot.send_message(
+      chat_id: @chat_id,
+      text: "Надеюсь, вы хорошо отдохнули! Забота о себе — это не роскошь, а необходимость. Завтра последний день первой недели программы.",
+      reply_markup: day_7_intro_markup # <-- Предлагаем День 7
+    )
+  end
+
+  # --- ДЕНЬ 7: Рефлексия и завершение недели ---
+
+  def deliver_day_7_content
+    @user.set_self_help_step('day_7_waiting_for_reflection')
+    message_text = "Добро пожаловать в седьмой день программы!\n\nТема дня: Рефлексия недели.\n\n" \
+                   "Как прошла первая неделя? Что было самым сложным? Что помогло тебе почувствовать себя лучше? " \
+                   "Напиши пару слов о своих впечатлениях в ответном сообщении. Это поможет тебе закрепить прогресс."
+
+    @bot.send_message(chat_id: @chat_id, text: message_text)
+  end
+
+  # Метод для обработки текстового ввода рефлексии (вызывается из MessageProcessor)
+  def handle_reflection_input(text)
+    # 1. Сохраняем запись
+    ReflectionEntry.create!(
+      user: @user,
+      entry_date: Date.current,
+      entry_text: text
+    )
+
+    # 2. Обновляем шаг пользователя
+    @user.set_self_help_step('day_7_completed')
+
+    # 3. Отправляем подтверждение и завершение
+    @bot.send_message(
+      chat_id: @chat_id, 
+      text: "Спасибо за твою искренность! Ты успешно завершил первую неделю программы самопомощи. Поздравляю!", 
+      reply_markup: complete_program_markup # <-- Предлагаем завершить программу
+    )
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.error "Ошибка при сохранении рефлексии: #{e.message}"
+    @bot.send_message(chat_id: @chat_id, text: "Произошла ошибка при сохранении записи. Пожалуйста, попробуйте еще раз.")
+  end
+
   # Завершение программы
   def complete_program
-    if @user.get_self_help_step == 'day_3_completed' || @user.get_self_help_step == 'program_completed'
-      @user.set_self_help_step('program_completed')
-      @bot.send_message(chat_id: @chat_id, text: "Поздравляю! Ты завершил первый этап программы самопомощи. Мы можем вернуться к нему позже, или ты можешь продолжить использовать другие функции бота.", reply_markup: TelegramMarkupHelper.back_to_main_menu_markup)
-    else
-      @bot.send_message(chat_id: @chat_id, text: "Произошла ошибка. Пожалуйста, начните программу заново.")
-    end
+    @user.set_self_help_step('program_completed')
+    @bot.send_message(
+      chat_id: @chat_id, 
+      text: "Программа завершена! Вы можете вернуться к ней в любое время. Продолжайте использовать дневник благодарности и другие инструменты.", 
+      reply_markup: back_to_main_menu_markup
+    )
   end
+
 
   # Обновленный метод `TestResultCalculator.calculate_and_send_results`
   # чтобы он мог возвращать интерпретацию без отправки сообщения

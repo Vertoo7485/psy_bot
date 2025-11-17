@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_07_124321) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_08_131854) do
   create_table "answer_options", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "text"
@@ -63,6 +63,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_07_124321) do
     t.index ["test_id"], name: "index_questions_on_test_id"
   end
 
+  create_table "reflection_entries", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "entry_date"
+    t.text "entry_text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_reflection_entries_on_user_id"
+  end
+
   create_table "settings", force: :cascade do |t|
     t.string "key"
     t.text "value"
@@ -111,6 +120,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_07_124321) do
   add_foreign_key "emotion_diary_entries", "users"
   add_foreign_key "gratitude_entries", "users"
   add_foreign_key "questions", "tests"
+  add_foreign_key "reflection_entries", "users"
   add_foreign_key "test_results", "tests"
   add_foreign_key "test_results", "users"
 end

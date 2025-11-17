@@ -130,4 +130,67 @@ module TelegramMarkupHelper
           ]
         }.to_json
       end
+
+      def day_4_intro_markup
+    {
+      inline_keyboard: [
+        [{ text: "Начать День 4", callback_data: 'start_day_4_content' }]
+      ]
+    }.to_json
+  end
+
+  # Markup для вопроса "Готовы к упражнению Дня 4?"
+  def day_4_exercise_consent_markup
+    {
+      inline_keyboard: [
+        [{ text: "Да, готов(а)!", callback_data: 'start_day_4_exercise' }],
+        [{ text: "Нет, позже", callback_data: 'back_to_main_menu' }]
+      ]
+    }.to_json
+  end
+  
+  # Markup для завершения упражнения Дня 4
+  def day_4_exercise_completed_markup
+    {
+      inline_keyboard: [
+        [{ text: "Я выполнил(а) упражнение", callback_data: 'day_4_exercise_completed' }]
+      ]
+    }.to_json
+  end
+
+  # Markup для перехода ко Дню 5
+  def day_5_intro_markup
+    {
+      inline_keyboard: [
+        [{ text: "Начать День 5", callback_data: 'start_day_5_content' }]
+      ]
+    }.to_json
+  end
+
+  # Markup для перехода ко Дню 6
+  def day_6_intro_markup
+    {
+      inline_keyboard: [
+        [{ text: "Начать День 6", callback_data: 'start_day_6_content' }]
+      ]
+    }.to_json
+  end
+
+  # Markup для перехода ко Дню 7
+  def day_7_intro_markup
+    {
+      inline_keyboard: [
+        [{ text: "Начать День 7", callback_data: 'start_day_7_content' }]
+      ]
+    }.to_json
+  end
+
+  # Markup для завершения программы
+  def complete_program_markup
+    {
+      inline_keyboard: [
+        [{ text: "Завершить программу", callback_data: 'complete_day_7' }]
+      ]
+    }.to_json
+  end
 end

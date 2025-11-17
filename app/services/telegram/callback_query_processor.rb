@@ -121,7 +121,27 @@ module Telegram
 
             when 'complete_day_3' # <--- НОВЫЙ ОБРАБОТЧИК
               SelfHelpService.new(@bot, @user, @chat_id).complete_day_3
+            when 'start_day_4_content'
+              handle_start_day_4_content
+            when 'start_day_4_exercise'
+              SelfHelpService.new(@bot, @user, @chat_id).start_day_4_exercise
+            when 'day_4_exercise_completed'
+              handle_day_4_exercise_completed
 
+            when 'start_day_5_content'
+              handle_start_day_5_content
+            when 'day_5_exercise_completed'
+              handle_day_5_exercise_completed
+
+            when 'start_day_6_content'
+              handle_start_day_6_content
+            when 'day_6_exercise_completed'
+              handle_day_6_exercise_completed
+
+            when 'start_day_7_content'
+              handle_start_day_7_content
+            when 'complete_day_7'
+              SelfHelpService.new(@bot, @user, @chat_id).complete_program
           else
             Rails.logger.warn "Неизвестный callback_data: #{@data}"
             @bot.send_message(chat_id: @chat_id, text: "Извините, я не понял эту команду.")
@@ -129,6 +149,63 @@ module Telegram
         end
 
     private
+
+
+    def handle_start_day_4_content
+      if @user.get_self_help_step == 'day_3_completed'
+        SelfHelpService.new(@bot, @user, @chat_id).deliver_day_4_content
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Вы еще не завершили предыдущий день.")
+      end
+    end
+
+    def handle_day_4_exercise_completed
+      if @user.get_self_help_step == 'day_4_exercise_in_progress'
+        SelfHelpService.new(@bot, @user, @chat_id).handle_day_4_exercise_completion
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Ошибка состояния. Начните /start.")
+      end
+    end
+
+    def handle_start_day_5_content
+      if @user.get_self_help_step == 'day_4_completed'
+        SelfHelpService.new(@bot, @user, @chat_id).deliver_day_5_content
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Вы еще не завершили предыдущий день.")
+      end
+    end
+
+    def handle_day_5_exercise_completed
+      if @user.get_self_help_step == 'day_5_intro' # Шаг 'day_5_intro' установлен в deliver_day_5_content
+        SelfHelpService.new(@bot, @user, @chat_id).handle_day_5_exercise_completion
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Ошибка состояния. Начните /start.")
+      end
+    end
+
+    def handle_start_day_6_content
+      if @user.get_self_help_step == 'day_5_completed'
+        SelfHelpService.new(@bot, @user, @chat_id).deliver_day_6_content
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Вы еще не завершили предыдущий день.")
+      end
+    end
+
+    def handle_day_6_exercise_completed
+      if @user.get_self_help_step == 'day_6_intro'
+        SelfHelpService.new(@bot, @user, @chat_id).handle_day_6_exercise_completion
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Ошибка состояния. Начните /start.")
+      end
+    end
+
+    def handle_start_day_7_content
+      if @user.get_self_help_step == 'day_6_completed'
+        SelfHelpService.new(@bot, @user, @chat_id).deliver_day_7_content
+      else
+        @bot.send_message(chat_id: @chat_id, text: "Вы еще не завершили предыдущий день.")
+      end
+    end
 
     def handle_start_day_1_content
             if @user.get_self_help_step == 'day_1_content_intro'
