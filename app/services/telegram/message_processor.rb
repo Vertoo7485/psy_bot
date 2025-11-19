@@ -7,52 +7,76 @@ module Telegram
       @bot = bot
       @user = user
       @message_data = message_data
-      @chat_id = message_data[:chat][:id]
-      @text = message_data[:text].to_s.strip
+      @chat_id = message_data.dig(:chat, :id)
+      @text = message_data.dig(:text).to_s.strip
     end
 
     def process
-      if @user.get_self_help_step == 'day_3_waiting_for_gratitude'
-        handle_self_help_input(@text)
-      
-      # 2. Проверяем, ждем ли мы рефлексию (День 7)
-      elsif @user.get_self_help_step == 'day_7_waiting_for_reflection' # <-- НОВЫЙ БЛОК
-        handle_self_help_input(@text)
-      elsif @user.current_diary_step.present?
-        EmotionDiaryService.new(@bot, @user, @chat_id).handle_answer(@text)
+      # Первым делом проверяем, не является ли сообщение ответом в рамках какого-то сценария.
+      # Это должно иметь приоритет над обычными командами.
+      if handle_contextual_input(@text)
+        # Если сообщение было обработано в контексте, завершаем работу.
+        return
+      end
+
+      # Если не контекстный ввод, обрабатываем как команду.
+      case @text
+      when '/start'
+        handle_start_command
+      when '/help'
+        handle_help_command
       else
-        case @text
-        when '/start'
-          send_main_menu("Привет! Выберите действие:")
-        when '/help'
-          @bot.send_message(chat_id: @chat_id, text: "Я пока умею показывать список тестов и начинать их. Используйте кнопки.")
-        when /^\/test_(\d+)$/, /^тест (\d+)$/i
-          test_id = $1
-          # Можно добавить логику для запуска теста по ID, если это необходимо
-          @bot.send_message(chat_id: @chat_id, text: "Запуск теста по ID #{test_id} пока не реализован через текстовую команду. Используйте кнопки.")
-        else
-          @bot.send_message(chat_id: @chat_id, text: "Я не понимаю эту команду. Напишите /help или используйте кнопки.")
-        end
+        handle_unknown_command
       end
     end
 
     private
 
-    def send_main_menu(text)
-      @bot.send_message(chat_id: @chat_id, text: text, reply_markup: main_menu_markup)
+    # Обрабатывает текстовый ввод, который является частью какого-то сценария (например, программы самопомощи).
+    # Возвращает true, если ввод был обработан, false - иначе.
+    def handle_contextual_input(text)
+      # 1. Проверяем, ждем ли мы ввод для дневника благодарности (День 3)
+      if @user.get_self_help_step == 'day_3_waiting_for_gratitude'
+        # Передаем текст в SelfHelpService для обработки.
+        return SelfHelpService.new(@bot, @user, @chat_id).handle_gratitude_input(text)
+      end
+
+      # 2. Проверяем, ждем ли мы рефлексию (День 7)
+      if @user.get_self_help_step == 'day_7_waiting_for_reflection'
+        # Передаем текст в SelfHelpService для обработки.
+        return SelfHelpService.new(@bot, @user, @chat_id).handle_reflection_input(text)
+      end
+
+      # 3. Проверяем, ждем ли мы ответ для дневника эмоций
+      if @user.current_diary_step.present?
+        # Используем EmotionDiaryService для обработки ответа.
+        return EmotionDiaryService.new(@bot, @user, @chat_id).handle_answer(text)
+      end
+
+      # Если ввод не относится ни к одному из активных сценариев.
+      false
     end
 
-    def handle_self_help_input(text)
-      current_step = @user.get_self_help_step
+    # Обработка команды /start
+    def handle_start_command
+      send_main_menu("Привет! Выберите действие:")
+    end
 
-      case current_step
-      when 'day_3_waiting_for_gratitude'
-        SelfHelpService.new(@bot, @user, @chat_id).handle_gratitude_input(text)
-      when 'day_7_waiting_for_reflection' # <-- НОВЫЙ БЛОК
-        SelfHelpService.new(@bot, @user, @chat_id).handle_reflection_input(text)
-      else
-        @bot.send_message(chat_id: @chat_id, text: "Я не уверен, что ты сейчас делаешь. Пожалуйста, используйте кнопки.")
-      end
+    # Обработка команды /help
+    def handle_help_command
+      @bot.send_message(chat_id: @chat_id, text: "Я умею показывать список тестов, вести дневник эмоций и помогать вам в программе самопомощи. Используйте кнопки для навигации.")
+    end
+
+    # Обработка неизвестных команд
+    def handle_unknown_command
+      @bot.send_message(chat_id: @chat_id, text: "Я не понимаю эту команду. Напишите /help или используйте кнопки.")
+    end
+
+    # Вспомогательный метод для отправки главного меню
+    def send_main_menu(text)
+      @bot.send_message(chat_id: @chat_id, text: text, reply_markup: TelegramMarkupHelper.main_menu_markup)
+    rescue Telegram::Bot::Error => e
+      Rails.logger.error "Failed to send main menu to user #{@user.telegram_id}: #{e.message}"
     end
   end
 end

@@ -1,5 +1,8 @@
+require 'telegram/bot'
 # app/services/telegram_markup_helper.rb
 module TelegramMarkupHelper
+  extend self
+  
       def main_menu_markup
         {
           inline_keyboard: [
@@ -10,6 +13,15 @@ module TelegramMarkupHelper
           ]
         }.to_json
       end
+
+      def luscher_test_completed_markup
+      {
+        inline_keyboard: [
+          [{ text: "Показать интерпретацию", callback_data: "show_luscher_interpretation" }],
+          [{ text: "⬅️ Назад в главное меню", callback_data: "back_to_main_menu" }]
+        ]
+      }.to_json
+    end
 
       def back_to_main_menu_markup
         {
@@ -90,36 +102,49 @@ module TelegramMarkupHelper
         markup = {
           inline_keyboard: [
             [{ text: "Продолжить изучение дня 1", callback_data: 'continue_day_1_content' }],
-            [{ text: "Завершить День 1", callback_data: 'complete_day_1' }],
             [{ text: "Вернуться в главное меню", callback_data: 'back_to_main_menu' }]
           ]
         }.to_json
       end
 
-      def day_2_intro_markup
-    {
+      def day_1_exercise_completed_markup
+    # Создаем две кнопки: "Продолжить" (переход к следующему шагу) и "Назад" (возврат к меню)
+    # Полагаем, что 'continue_day_2_content' - это callback_data для продолжения программы.
+    # Полагаем, что 'main_menu' - это callback_data для возврата в главное меню.
+    markup = {
       inline_keyboard: [
-        [{ text: "Начать День 2", callback_data: 'start_day_2_content' }]
+        [
+          { text: "Продолжить", callback_data: "day_1_exercise_completed" }, # Название callback_data может отличаться, проверь свои обработчики
+          { text: "Вернуться в меню", callback_data: "main_menu" } # Название callback_data может отличаться
+        ]
       ]
     }.to_json
   end
 
-  def day_2_continue_markup
+  def self.day_2_start_proposal_markup
+    { inline_keyboard: [[{ text: 'Начать День 2', callback_data: 'start_day_2_from_proposal' }]] }
+  end
+
+  def day_2_start_exercise_markup
     {
       inline_keyboard: [
-        [{ text: "Продолжить изучение дня 2", callback_data: 'continue_day_2_content' }],
-        [{ text: "Завершить День 2", callback_data: 'complete_day_2' }]
+        [{ text: 'Начать медитацию', callback_data: 'start_day_2_exercise_audio' }] # <-- ИЗМЕНЕНО: теперь ведет на запуск аудио
       ]
     }.to_json
   end
 
-      def day_2_exercise_markup
-        {
-          inline_keyboard: [
-            [{ text: 'Прослушал(а) аудио', callback_data: 'day_2_exercise_completed' }]
-          ]
-        }.to_json
-      end
+  # ПЕРЕИМЕНОВАННАЯ разметка: Кнопка для подтверждения завершения упражнения Дня 2
+  def day_2_exercise_completed_markup # <-- ИЗМЕНЕНО: переименовано
+    {
+      inline_keyboard: [
+        [{ text: 'Я завершил(а) упражнение', callback_data: 'day_2_exercise_completed' }] # <-- callback_data остается прежним, потому что оно для завершения
+      ]
+    }.to_json
+  end
+
+  def day_3_start_proposal_markup
+    { inline_keyboard: [[{ text: 'Начать День 3', callback_data: 'start_day_3_from_proposal' }]] }
+  end
 
       def day_3_menu_markup
         {
@@ -131,12 +156,8 @@ module TelegramMarkupHelper
         }.to_json
       end
 
-      def day_4_intro_markup
-    {
-      inline_keyboard: [
-        [{ text: "Начать День 4", callback_data: 'start_day_4_content' }]
-      ]
-    }.to_json
+  def day_4_start_proposal_markup
+    { inline_keyboard: [[{ text: 'Начать День 4', callback_data: 'start_day_4_from_proposal' }]] }
   end
 
   # Markup для вопроса "Готовы к упражнению Дня 4?"
@@ -158,32 +179,53 @@ module TelegramMarkupHelper
     }.to_json
   end
 
-  # Markup для перехода ко Дню 5
-  def day_5_intro_markup
+  def day_5_start_proposal_markup
+    { inline_keyboard: [[{ text: 'Начать День 5', callback_data: 'start_day_5_from_proposal' }]] }
+  end
+
+  def start_day_5_exercise_markup
     {
       inline_keyboard: [
-        [{ text: "Начать День 5", callback_data: 'start_day_5_content' }]
+        [{ text: 'Начать упражнение', callback_data: 'start_day_5_exercise' }]
       ]
     }.to_json
   end
 
-  # Markup для перехода ко Дню 6
-  def day_6_intro_markup
+  # Разметка для подтверждения завершения упражнения Дня 5
+  def day_5_exercise_completed_markup
     {
       inline_keyboard: [
-        [{ text: "Начать День 6", callback_data: 'start_day_6_content' }]
+        [{ text: "Я выполнил(а) упражнение", callback_data: 'day_5_exercise_completed' }]
       ]
     }.to_json
   end
 
-  # Markup для перехода ко Дню 7
-  def day_7_intro_markup
+
+  def day_6_start_proposal_markup
+    { inline_keyboard: [[{ text: 'Начать День 6', callback_data: 'start_day_6_from_proposal' }]] }
+  end
+
+  def day_6_start_exercise_markup
     {
       inline_keyboard: [
-        [{ text: "Начать День 7", callback_data: 'start_day_7_content' }]
+        [{ text: "Я отдохнул и готов продолжить", callback_data: 'day_6_exercise_completed' }]
       ]
     }.to_json
   end
+
+  def day_6_exercise_completed_markup
+    {
+      inline_keyboard: [
+        [{ text: "Продолжить", callback_data: 'day_6_exercise_completed' }]
+      ]
+    }.to_json
+  end
+
+
+  def day_7_start_proposal_markup
+    { inline_keyboard: [[{ text: 'Начать День 7', callback_data: 'start_day_7_from_proposal' }]] }
+  end
+
   def complete_program_markup
     {
       inline_keyboard: [
@@ -192,21 +234,8 @@ module TelegramMarkupHelper
     }.to_json
   end
 
-  # Markup для перехода ко Дню 8 (после завершения Дня 7)
-  def day_8_intro_markup
-    {
-      inline_keyboard: [
-        [{ text: "Начать День 8", callback_data: 'start_day_8_content' }]
-      ]
-    }.to_json
-  end
-
-  def day_8_intro_markup
-    {
-      inline_keyboard: [
-        [{ text: "Начать День 8", callback_data: 'start_day_8_content' }]
-      ]
-    }.to_json
+  def self.day_8_start_proposal_markup
+    { inline_keyboard: [[{ text: 'Начать День 8', callback_data: 'start_day_8_from_proposal' }]] }
   end
 
   # Markup для согласия/отказа начать упражнение дня 8

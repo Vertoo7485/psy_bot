@@ -1,9 +1,12 @@
 
 # app/services/luscher_test_service.rb
 class LuscherTestService
-  include TelegramMarkupHelper # Для генерации клавиатур
+  # Если ты хочешь использовать методы из TelegramMarkupHelper,
+  # их нужно вызывать через TelegramMarkupHelper.имя_метода
+  # Если ты хочешь, чтобы методы LuscherTestService были доступны через `include`,
+  # то можно убрать include и использовать `self.class.метод` для своих методов модуля.
 
-  # Константа COLOURS перенесена сюда
+  # Константа COLOURS
   COLOURS = [
     { code: "dark_blue", name: "Темно-синий", primary: true,
       first_interpretation: "Ваша потребность в покое и удовлетворенности реализована. Вы не стремитесь к изменениям и довольны существующим положением дел. Если этот цвет был выбран одним из первых, это указывает на стремление к комфорту, порядку и эмоциональной стабильности. Вы ищете гармонии и защищенности.",
@@ -39,70 +42,160 @@ class LuscherTestService
     }
   ].freeze
 
-  def initialize(bot, user, chat_id)
-    @bot = bot
+  # Метод для генерации клавиатуры с цветами (предполагаем, что он находится здесь)
+  def self.luscher_colors_keyboard(available_colors, test_result_id)
+    buttons = available_colors.map do |color|
+      # Формируем callback_data, который позволит идентифицировать цвет и результат теста
+      { text: color[:name], callback_data: "luscher_color_#{color[:code]}_#{test_result_id}" }
+    end
+    # Разбиваем кнопки на строки по 2
+    inline_keyboard = buttons.each_slice(2).map do |row_buttons|
+      row_buttons
+    end
+    { inline_keyboard: inline_keyboard }.to_json
+  end
+
+  # Метод для генерации кнопки "Назад" (или для возврата в главное меню)
+  def self.back_to_main_menu_markup
+    {
+      inline_keyboard: [
+        [{ text: "⬅️ Назад в главное меню", callback_data: "back_to_main_menu" }]
+      ]
+    }.to_json
+  end
+
+  def initialize(bot_service, user, chat_id)
+    @bot_service = bot_service
+    @bot = bot_service.bot
     @user = user
     @chat_id = chat_id
     @test = Test.luscher_test # Используем новый scope
+    @test_result = nil # Будет заполняться при старте теста
   end
 
   def start_test
-    return @bot.send_message(chat_id: @chat_id, text: "Тест Люшера не найден.") unless @test
+    return @bot_service.send_message(chat_id: @chat_id, text: "Тест Люшера не найден.") unless @test
 
-    # Удаляем все незаконченные тесты
+    # Удаляем все незаконченные тесты для этого пользователя и этого теста
     TestResult.where(user: @user, test: @test, completed_at: nil).destroy_all
 
-    test_result = TestResult.create(user: @user, test: @test, luscher_choices: [])
+    # Создаем новый результат теста
+    @test_result = TestResult.create!(user: @user, test: @test, luscher_choices: [])
+
+    # Отправляем первое сообщение с описанием
+    @bot_service.send_message(
+      chat_id: @chat_id,
+      text: "Начинаем 8-ми цветовой тест Люшера. Выберите цвет, который вам сейчас больше всего нравится:"
+    )
+
+    # Перемешиваем цвета для случайного порядка
     available_colors = COLOURS.shuffle
 
-    @bot.send_message(chat_id: @chat_id, text: "Начинаем 8-ми цветовой тест Люшера. Выберите цвет, который вам сейчас больше всего нравится:")
-
+    # Отправляем картинки цветов
     available_colors.each do |color|
       send_color_image_with_name(color)
     end
 
-    markup = luscher_colors_keyboard(available_colors)
-    @bot.send_message(chat_id: @chat_id, text: "Выберите наиболее приятный для вас цвет, нажав на кнопку ниже:", reply_markup: markup)
+    # Отправляем клавиатуру с кнопками выбора цветов
+    markup = self.class.luscher_colors_keyboard(available_colors, @test_result.id)
+    @bot_service.send_message(chat_id: @chat_id, text: "Выберите наиболее приятный для вас цвет, нажав на кнопку ниже:", reply_markup: markup)
   end
 
-  def process_choice(color_code, message_id)
-    test_result = TestResult.find_by(user: @user, test: @test, completed_at: nil)
-    return @bot.send_message(chat_id: @chat_id, text: "Тест Люшера не активен. Начните заново.") unless test_result
+  # Обработка выбора цвета пользователем
+  def process_choice(callback_data)
+        # Парсим callback_data, ожидаем формат "luscher_color_КОД_цвета_ID_результата"
+        # Пример: "luscher_color_brown_119" или "luscher_color_dark_blue_119"
+        parts = callback_data.split('_')
+        # parts будет: ["luscher", "color", "brown", "119"] (для "brown")
+        # или ["luscher", "color", "dark", "blue", "119"] (для "dark_blue") - вот тут проблема!
 
-    test_result.luscher_choices ||= [] # Инициализируем, если nil
-    test_result.luscher_choices << color_code
-    test_result.save!
+        # Учитываем, что code может содержать '_' (например, "dark_blue")
+        # Поэтому нужно найти test_result_id в конце и остальное считать кодом цвета.
+        # test_result_id всегда будет последним элементом.
+        test_result_id = parts.last.to_i
+        # color_code - это все, что между "luscher_color_" и "_#{test_result_id}"
+        # Например, для "luscher_color_dark_blue_119" -> "dark_blue"
+        # parts[0] == "luscher", parts[1] == "color"
+        # parts.slice(2...-1) соберет код цвета
+        color_code_parts = parts.slice(2...-1)
+        color_code = color_code_parts.join('_')
 
-    available_colors = COLOURS.reject { |c| test_result.luscher_choices.include?(c[:code]) }
+        # Теперь проверим, что парсинг успешен и соответствует ожиданиям.
+        unless parts[0] == "luscher" && parts[1] == "color" && test_result_id > 0 && !color_code.empty?
+          return send_error_message("Неверный формат callback_data для теста Люшера: #{callback_data}")
+        end
 
-    if available_colors.empty?
-      test_result.update(completed_at: Time.now)
-      @bot.send_message(
-        chat_id: @chat_id,
-        text: "Отлично! Ты завершил тест! Теперь я попробую дать тебе небольшую интерпретацию твоих результатов.",
-        reply_markup: luscher_interpretation_markup
-      )
-    else
-      @bot.send_message(chat_id: @chat_id, text: "Выбери следующий цвет:")
-      available_colors.each do |color|
-        send_color_image_with_name(color)
-      end
-      markup = luscher_colors_keyboard(available_colors.shuffle)
-      @bot.send_message(chat_id: @chat_id, text: "Выберите цвет, нажав на кнопку ниже:", reply_markup: markup)
+        @test_result = TestResult.find_by(id: test_result_id)
+
+    Rails.logger.debug "LuscherTestService: Debugging process_choice for test_result_id: #{test_result_id}"
+    Rails.logger.debug "  @test_result: #{@test_result.inspect}"
+    Rails.logger.debug "  @user: #{@user.inspect}"
+    Rails.logger.debug "  @test_result.user: #{@test_result&.user.inspect}"
+    Rails.logger.debug "  @test_result.test: #{@test_result&.test.inspect}"
+    Rails.logger.debug "  @test_result.test&.test_type: #{@test_result&.test&.test_type.inspect}" # Это "luscher"
+    Rails.logger.debug "  @test_result.completed_at: #{@test_result&.completed_at.inspect}"
+    Rails.logger.debug "  Comparison test_result.user == @user: #{(@test_result&.user == @user)}"
+    # ИЗМЕНЕНИЕ ЗДЕСЬ: сравниваем строку со строкой
+    Rails.logger.debug "  Comparison test_result.test&.test_type == 'luscher': #{(@test_result&.test&.test_type == 'luscher')}"
+    Rails.logger.debug "  Comparison test_result.completed_at.nil?: #{(@test_result&.completed_at.nil?)}"
+
+    unless @test_result &&
+           @test_result.user == @user &&
+           @test_result.test&.test_type == 'luscher' && # <-- ИЗМЕНЕНО: теперь сравниваем со строкой 'luscher'
+           @test_result.completed_at.nil?
+      Rails.logger.warn "LuscherTestService: TestResult #{test_result_id} is invalid for processing. One or more conditions failed."
+      return send_error_message("Тест Люшера неактивен или результат не найден. Пожалуйста, начните тест заново.")
     end
+
+        # Добавляем выбранный цвет, если его еще нет (защита от повторных нажатий)
+        @test_result.luscher_choices ||= []
+        unless @test_result.luscher_choices.include?(color_code)
+          @test_result.luscher_choices << color_code
+          @test_result.save!
+        end
+
+        available_colors = COLOURS.reject { |c| @test_result.luscher_choices.include?(c[:code]) }
+
+        if available_colors.empty?
+          # Тест завершен (выбраны все 8 цветов)
+          @test_result.update(completed_at: Time.now)
+          send_interpretation_intro
+        else
+          # Отправляем следующее сообщение с выбором следующих цветов
+          @bot_service.send_message(chat_id: @chat_id, text: "Выберите следующий наиболее приятный цвет:")
+
+          # Отправляем картинки только тех цветов, которые ЕЩЕ НЕ были выбраны
+          available_colors.each do |color|
+            send_color_image_with_name(color)
+          end
+
+          markup = self.class.luscher_colors_keyboard(available_colors, @test_result.id)
+          @bot_service.send_message(chat_id: @chat_id, text: "Выберите цвет, нажав на кнопку ниже:", reply_markup: markup)
+        end
   end
 
+  # Отправка сообщения перед показом интерпретации
+  def send_interpretation_intro
+    @bot_service.send_message(
+      chat_id: @chat_id,
+      text: "Отлично! Ты завершил выбор цветов. Теперь я попробую дать тебе небольшую интерпретацию твоих результатов.",
+      reply_markup: TelegramMarkupHelper.luscher_test_completed_markup # Возврат в главное меню
+    )
+  end
+
+  # Показывает интерпретацию результатов теста
   def show_interpretation
     test_result = TestResult.where(user: @user, test: @test).order(created_at: :desc).first
-    return @bot.send_message(chat_id: @chat_id, text: "Результаты теста не найдены.") unless test_result
+    return @bot_service.send_message(chat_id: @chat_id, text: "Результаты теста не найдены.") unless test_result
 
     choices = test_result.luscher_choices
 
     if choices.nil? || choices.length < COLOURS.length
-      @bot.send_message(chat_id: @chat_id, text: "Тест Люшера еще не завершен или данные повреждены. Недостаточно цветов для интерпретации.")
+      @bot_service.send_message(chat_id: @chat_id, text: "Тест Люшера еще не завершен или данные повреждены. Недостаточно цветов для интерпретации.")
       return
     end
 
+    # Находим данные для первого и последнего выбранных цветов
     first_color_data = COLOURS.find { |c| c[:code] == choices.first }
     last_color_data = COLOURS.find { |c| c[:code] == choices.last }
 
@@ -111,40 +204,43 @@ class LuscherTestService
       interpretation_message += "  _Интерпретация первого выбранного цвета:_ #{first_color_data[:first_interpretation]}\n\n"
       interpretation_message += "  _Интерпретация последнего выбранного цвета:_ #{last_color_data[:last_interpretation]}\n\n"
       interpretation_message += "---"
-      @bot.send_message(chat_id: @chat_id, text: interpretation_message, parse_mode: 'Markdown', reply_markup: back_to_main_menu_markup)
+      @bot_service.send_message(chat_id: @chat_id, text: interpretation_message, parse_mode: 'Markdown', reply_markup: self.class.back_to_main_menu_markup)
     else
-      @bot.send_message(chat_id: @chat_id, text: "Не удалось найти интерпретацию для выбранных цветов. Пожалуйста, попробуйте еще раз или свяжитесь с администратором.", reply_markup: back_to_main_menu_markup)
+      @bot_service.send_message(chat_id: @chat_id, text: "Не удалось найти интерпретацию для выбранных цветов. Пожалуйста, попробуйте еще раз или свяжитесь с администратором.", reply_markup: self.class.back_to_main_menu_markup)
     end
   end
 
   private
 
+  # Отправляет картинку цвета с его названием
   def send_color_image_with_name(color)
-    # Предполагаем, что изображения находятся в public/assets и их имена соответствуют color[:code]
-    # Например: public/assets/dark_blue-abcdef123.jpeg
-    # В production Rails обычно добавляет хэш к имени файла.
-    # Для простоты, мы ищем файл по маске. В реальном приложении лучше использовать CDN
-    # или более надежный способ получения URL ассета.
-
-    # Для локальной разработки, если файлы просто в public/images:
-    # image_path = Rails.root.join('public', 'images', "#{color[:code]}.jpeg")
-
-    # Для precompiled assets (как в вашем коде):
+    # Ищем файл изображения по маске в папке public/assets
+    # Пример: public/assets/dark_blue-abcdef123.jpeg
     file_mask = Rails.root.join('public', 'assets', "#{color[:code]}-*.jpeg")
     image_files = Dir.glob(file_mask)
 
     if image_files.any?
       image_path = image_files.first
       Rails.logger.info "Найден файл изображения: #{image_path}"
-      File.open(image_path, 'r') do |file|
-        @bot.send_photo(chat_id: @chat_id, photo: file, caption: color[:name])
+      begin
+        File.open(image_path, 'r') do |file|
+          @bot_service.bot.send_photo(chat_id: @chat_id, photo: file, caption: color[:name])
+        end
+      rescue Telegram::Bot::Error => e
+        Rails.logger.error "Telegram API Error при отправке изображения #{color[:name]}: #{e.message}"
+        @bot_service.send_message(chat_id: @chat_id, text: "Произошла ошибка при отправке изображения для цвета '#{color[:name]}'.")
+      rescue => e
+        Rails.logger.error "Неизвестная ошибка при отправке изображения #{color[:name]}: #{e.message}"
+        @bot_service.send_message(chat_id: @chat_id, text: "Произошла непредвиденная ошибка при отправке изображения для цвета '#{color[:name]}'.")
       end
     else
       Rails.logger.error "Файл изображения не найден для цвета: #{color[:name]} по маске #{file_mask}"
-      @bot.send_message(chat_id: @chat_id, text: "Изображение для цвета '#{color[:name]}' не найдено.")
+      @bot_service.send_message(chat_id: @chat_id, text: "Изображение для цвета '#{color[:name]}' не найдено. Возможно, файл отсутствует или имеет другое расширение.")
     end
-  rescue => e
-    Rails.logger.error "Ошибка при отправке изображения: #{e.message}"
-    @bot.send_message(chat_id: @chat_id, text: "Произошла ошибка при отправке изображения для цвета '#{color[:name]}'.")
+  end
+
+  # Вспомогательный метод для отправки сообщений об ошибках
+  def send_error_message(text)
+    @bot_service.send_message(chat_id: @chat_id, text: text)
   end
 end

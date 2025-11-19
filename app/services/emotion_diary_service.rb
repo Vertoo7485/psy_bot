@@ -13,8 +13,9 @@ class EmotionDiaryService
 
   DIARY_STEP_ORDER = %w[situation thoughts emotions behavior evidence_against new_thoughts].freeze
 
-  def initialize(bot, user, chat_id)
-    @bot = bot
+  def initialize(bot_service, user, chat_id)
+    @bot_service = bot_service # Теперь это экземпляр Telegram::TelegramBotService
+    @bot = bot_service     # И это правильно получает Telegram::Bot::Client
     @user = user
     @chat_id = chat_id
   end
