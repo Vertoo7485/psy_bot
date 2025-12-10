@@ -88,6 +88,16 @@ module TelegramMarkupHelper
         }.to_json
       end
 
+      # Разметка для возобновления программы
+      def self.resume_program_markup
+        {
+          inline_keyboard: [
+            [{ text: 'Продолжить программу', callback_data: 'start_self_help_program_tests' }], # Используем существующий callback, но SelfHelpService будет обрабатывать его иначе
+            [{ text: 'Вернуться в главное меню', callback_data: 'back_to_main_menu' }]
+          ]
+        }.to_json
+      end
+
       def day_1_content_markup
         markup = {
           inline_keyboard: [
@@ -114,7 +124,7 @@ module TelegramMarkupHelper
     markup = {
       inline_keyboard: [
         [
-          { text: "Продолжить", callback_data: "day_1_exercise_completed" }, # Название callback_data может отличаться, проверь свои обработчики
+          { text: "Завершить первый день", callback_data: "day_1_exercise_completed" }, # Название callback_data может отличаться, проверь свои обработчики
           { text: "Вернуться в меню", callback_data: "main_menu" } # Название callback_data может отличаться
         ]
       ]
@@ -292,6 +302,7 @@ module TelegramMarkupHelper
   def final_program_completion_markup
     {
       inline_keyboard: [
+        [{ text: 'Начать программу заново', callback_data: 'restart_self_help_program' }],
         [{ text: "Вернуться в главное меню", callback_data: 'back_to_main_menu' }]
       ]
     }.to_json

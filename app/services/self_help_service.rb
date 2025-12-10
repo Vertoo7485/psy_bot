@@ -16,12 +16,107 @@ class SelfHelpService
   # Запускает первый шаг: предложение начать программу.
   def start_program_initiation
     Rails.logger.debug "User #{@user.telegram_id} initiating self-help program."
+    
+    # Если пользователь уже находится в программе, возобновляем ее
+    if @user.get_self_help_step.present?
+      return resume_program
+    end
+
     @user.set_self_help_step('program_started') # Устанавливаем начальное состояние
     message_text = "Привет! Я твой бот для самопомощи. Начнем наше путешествие к улучшению самочувствия. " \
                    "Сейчас я попрошу тебя пройти несколько тестов, чтобы мы могли начать совместную работу! " \
                    "Спасибо, что присоединился. Все полностью анонимно и останется между нами."
     send_message(text: message_text, reply_markup: TelegramMarkupHelper.self_help_intro_markup)
   end
+
+  def resume_program
+  current_step = @user.get_self_help_step
+  Rails.logger.info "Resuming program for user #{@user.telegram_id} at step: #{current_step}"
+
+  case current_step
+  # --- Этап тестов ---
+  when 'program_started', 'taking_depression_test', 'awaiting_anxiety_test_completion', 'taking_anxiety_test'
+    send_message(
+      text: "Вы остановились на этапе прохождения тестов. Хотите продолжить?",
+      reply_markup: TelegramMarkupHelper.self_help_intro_markup # Используем markup, который ведет на start_self_help_program_tests
+    )
+
+  # --- День 1 ---
+  when 'day_1_intro', 'day_1_content_delivered', 'day_1_exercise_in_progress'
+    deliver_day_1_content # Метод теперь сам определит, что показать
+
+  when 'day_1_completed', 'awaiting_day_2_start'
+    send_message(text: "Вы завершили День 1. Готовы начать второй день программы?", reply_markup: TelegramMarkupHelper.day_2_start_proposal_markup)
+
+  # --- День 2 ---
+  when 'day_2_intro_delivered', 'day_2_exercise_in_progress'
+    deliver_day_2_content # Метод теперь сам определит, что показать
+
+  when 'day_2_completed', 'awaiting_day_3_start'
+    send_message(text: "Вы завершили День 2. Готовы начать третий день программы?", reply_markup: TelegramMarkupHelper.day_3_start_proposal_markup)
+
+  # --- День 3 ---
+  when 'day_3_intro', 'day_3_waiting_for_gratitude', 'day_3_entry_saved'
+    deliver_day_3_content # Метод теперь сам определит, что показать
+
+  when 'day_3_completed', 'awaiting_day_4_start'
+    send_message(text: "Вы завершили День 3. Готовы начать четвертый день программы?", reply_markup: TelegramMarkupHelper.day_4_start_proposal_markup)
+
+  # --- День 4 ---
+  when 'day_4_intro', 'day_4_exercise_in_progress'
+    deliver_day_4_content # Метод теперь сам определит, что показать
+
+  when 'day_4_completed', 'awaiting_day_5_start'
+    send_message(text: "Вы завершили День 4. Готовы начать пятый день программы?", reply_markup: TelegramMarkupHelper.day_5_start_proposal_markup)
+
+  # --- День 5 ---
+  when 'day_5_intro', 'day_5_exercise_in_progress'
+    deliver_day_5_content # Метод теперь сам определит, что показать
+
+  when 'day_5_completed', 'awaiting_day_6_start'
+    send_message(text: "Вы завершили День 5. Готовы начать шестой день программы?", reply_markup: TelegramMarkupHelper.day_6_start_proposal_markup)
+
+  # --- День 6 ---
+  when 'day_6_intro'
+    deliver_day_6_content # Метод теперь сам определит, что показать
+
+  when 'day_6_completed', 'awaiting_day_7_start'
+    send_message(text: "Вы завершили День 6. Готовы начать седьмой день программы?", reply_markup: TelegramMarkupHelper.day_7_start_proposal_markup)
+
+  # --- День 7 ---
+  when 'day_7_waiting_for_reflection'
+    deliver_day_7_content # Метод теперь сам определит, что показать (попросит ввести рефлексию)
+
+  when 'day_7_completed', 'awaiting_day_8_start'
+    send_message(text: "Вы завершили День 7. Готовы начать восьмой день программы?", reply_markup: TelegramMarkupHelper.day_8_start_proposal_markup)
+
+  # --- День 8 (Самый сложный, требует детального возобновления) ---
+  when 'day_8_waiting_for_consent'
+    deliver_day_8_content # Отправляет интро и кнопки согласия
+
+  when 'day_8_first_try'
+    # Пользователь нажал "согласен", но не нажал "Я попробовал(а) остановить мысль"
+    send_message(text: "Вы остановились после получения инструкций. Сделайте свою попытку 'СТОП!' и нажмите кнопку.",
+                 reply_markup: TelegramMarkupHelper.day_8_stopped_thought_first_try_markup)
+
+  when 'day_8_second_try', 'day_8_choosing_distraction'
+    # Пользователь остановился после первой попытки, но до выбора отвлечения
+    handle_day_8_ready_for_distraction # Повторно отправляет меню выбора отвлечения
+
+  when 'day_8_distraction_in_progress'
+    # Пользователь выбрал отвлечение, но не нажал "Я выполнил(а) упражнение"
+    send_message(text: "Вы сейчас выполняете упражнение на отвлечение. Как только закончите, нажмите кнопку ниже:",
+                 reply_markup: TelegramMarkupHelper.day_8_exercise_completed_markup)
+
+  when 'day_8_completed'
+    send_message(text: "Вы завершили всю программу! Продолжайте практиковать полученные навыки.", reply_markup: TelegramMarkupHelper.final_program_completion_markup)
+
+  else
+    # Если состояние не определено, но не nil, предлагаем начать заново (на всякий случай)
+    @user.clear_self_help_program
+    send_message(text: "Произошла ошибка в вашем прогрессе. Начните программу заново.")
+  end
+end
 
   # Обрабатывает ответы "Да" или "Нет" на начальные вопросы.
   def handle_response(response_type)
@@ -54,9 +149,9 @@ class SelfHelpService
 
   # Отменяет инициацию программы (если пользователь сказал "Нет").
   def cancel_program_initiation
-    @user.clear_self_help_program
-    send_message(text: "Хорошо, мы можем начать в любой другой момент. Просто нажмите кнопку '⭐️ Программа самопомощи ⭐️' в главном меню.", reply_markup: TelegramMarkupHelper.main_menu_markup)
-  end
+  @user.clear_self_help_program
+  send_message(text: "Хорошо, мы можем начать в любой другой момент. Просто нажмите кнопку '⭐️ Программа самопомощи ⭐️' в главном меню.", reply_markup: TelegramMarkupHelper.main_menu_markup)
+end
 
   # --- Запуск последовательности тестов ---
 
@@ -143,26 +238,39 @@ class SelfHelpService
 
   # Отправляет контент первого дня.
   def deliver_day_1_content
-    Rails.logger.debug "User #{@user.telegram_id} delivering Day 1 content. Current step: #{@user.get_self_help_step}."
-    if @user.get_self_help_step == 'day_1_intro'
-      @user.set_self_help_step('day_1_content_delivered') # Устанавливаем шаг, что контент показан
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 1 content. Current step: #{@user.get_self_help_step}."
+  current_step = @user.get_self_help_step
 
-      content_text = "Добро пожаловать в первый день программы!\n\n**Тема дня: Осознанность.**\n\n" \
-                     "Осознанность — это способность быть полностью присутствующим в текущем моменте, " \
-                     "без осуждения, просто наблюдая свои мысли, чувства и ощущения.\n\n" \
-                     "Это мощный инструмент для снижения стресса, улучшения эмоционального регулирования " \
-                     "и повышения общего благополучия."
-      send_message(text: content_text, parse_mode: 'Markdown')
-      send_message(
-        text: "Нажмите 'Продолжить', когда будете готовы к упражнению первого дня.",
-        reply_markup: TelegramMarkupHelper.day_1_continue_markup # Кнопка "Продолжить изучение дня 1"
-      )
-    else
-      Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 1 content from unexpected state: #{@user.get_self_help_step}."
-      send_message(text: "Что-то пошло не так при попытке начать день 1. Напишите /start для начала заново.")
-      @user.clear_self_help_program
-    end
+  if current_step == 'day_1_intro'
+    @user.set_self_help_step('day_1_content_delivered') # Устанавливаем шаг, что контент показан
+
+    content_text = "Добро пожаловать в первый день программы!\n\n**Тема дня: Осознанность.**\n\n" \
+                   "Осознанность — это способность быть полностью присутствующим в текущем моменте, " \
+                   "без осуждения, просто наблюдая свои мысли, чувства и ощущения.\n\n" \
+                   "Это мощный инструмент для снижения стресса, улучшения эмоционального регулирования " \
+                   "и повышения общего благополучия."
+    send_message(text: content_text, parse_mode: 'Markdown')
+    send_message(
+      text: "Нажмите 'Продолжить', когда будете готовы к упражнению первого дня.",
+      reply_markup: TelegramMarkupHelper.day_1_continue_markup # Кнопка "Продолжить изучение дня 1"
+    )
+  elsif current_step == 'day_1_content_delivered'
+    send_message(
+      text: "Вы остановились после прочтения вводного текста. Нажмите 'Продолжить', чтобы перейти к упражнению.",
+      reply_markup: TelegramMarkupHelper.day_1_continue_markup
+    )
+  elsif current_step == 'day_1_exercise_in_progress'
+    # Если упражнение уже начато, просто отправляем кнопку завершения
+    send_message(
+      text: "Вы сейчас выполняете упражнение на внимательное дыхание. Когда закончите, нажмите 'Я выполнил упражнение'.",
+      reply_markup: TelegramMarkupHelper.day_1_exercise_completed_markup
+    )
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 1 content from unexpected state: #{current_step}."
+    send_message(text: "Что-то пошло не так при попытке начать день 1. Напишите /start для начала заново.")
+    @user.clear_self_help_program
   end
+end
 
   # Запускает упражнение первого дня.
   def continue_day_1_content
@@ -222,25 +330,31 @@ class SelfHelpService
   # --- ДЕНЬ 2: Медитация "Сканирование тела" ---
 
   def deliver_day_2_content
-    Rails.logger.debug "User #{@user.telegram_id} delivering Day 2 content. Current step: #{@user.get_self_help_step}."
-    # ИЗМЕНЕНО: Теперь проверяем состояние ожидания перед началом дня 2
-    if @user.get_self_help_step == 'awaiting_day_2_start'
-      @user.set_self_help_step('day_2_intro_delivered') # Устанавливаем шаг, что интро доставлено
-      message_text = "Добро пожаловать во второй день программы!\n\n**Тема дня: Научиться лучше чувствовать свое тело.**\n\n" \
-                     "Сегодня мы сосредоточимся на развитии самосознания через собственные ощущения. " \
-                     "Это поможет вам лучше понимать свои чувства, их причины и реакции."
-      send_message(text: message_text, parse_mode: 'Markdown')
-      send_message(
-        text: "Нажмите 'Начать медитацию', когда будете готовы к медитации 'Сканирование тела'.",
-        reply_markup: TelegramMarkupHelper.day_2_start_exercise_markup
-      )
-      Rails.logger.debug "SelfHelpService: Day 2 intro delivered, waiting for user to start exercise."
-    else
-      Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 2 content from unexpected state: #{@user.get_self_help_step}."
-      send_message(text: "Вы еще не завершили предыдущий день или что-то пошло не так. Напишите /start для начала заново.")
-      @user.clear_self_help_program
-    end
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 2 content. Current step: #{@user.get_self_help_step}."
+  current_step = @user.get_self_help_step
+
+  if current_step == 'awaiting_day_2_start'
+    @user.set_self_help_step('day_2_intro_delivered') # Устанавливаем шаг, что интро доставлено
+    message_text = "Добро пожаловать во второй день программы!\n\n**Тема дня: Научиться лучше чувствовать свое тело.**\n\n" \
+                   "Сегодня мы сосредоточимся на развитии самосознания через собственные ощущения. " \
+                   "Это поможет вам лучше понимать свои чувства, их причины и реакции."
+    send_message(text: message_text, parse_mode: 'Markdown')
   end
+
+  if ['day_2_intro_delivered', 'awaiting_day_2_start'].include?(@user.get_self_help_step)
+    send_message(
+      text: "Нажмите 'Начать медитацию', когда будете готовы к медитации 'Сканирование тела'.",
+      reply_markup: TelegramMarkupHelper.day_2_start_exercise_markup
+    )
+  elsif current_step == 'day_2_exercise_in_progress'
+    send_message(text: "Вы сейчас выполняете упражнение. Нажмите 'Я завершил(а) упражнение', когда закончите медитацию.",
+                 reply_markup: TelegramMarkupHelper.day_2_exercise_completed_markup)
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 2 content from unexpected state: #{current_step}."
+    send_message(text: "Вы еще не завершили предыдущий день или что-то пошло не так. Напишите /start для начала заново.")
+    @user.clear_self_help_program
+  end
+end
 
   def send_day_2_exercise_audio
     Rails.logger.debug "User #{@user.telegram_id} sending Day 2 exercise audio. Current step: #{@user.get_self_help_step}."
@@ -316,21 +430,25 @@ class SelfHelpService
   # --- ДЕНЬ 3: Дневник благодарности ---
 
   def deliver_day_3_content
-    Rails.logger.debug "User #{@user.telegram_id} delivering Day 3 content. Current step: #{@user.get_self_help_step}."
-    # ИЗМЕНЕНО: Теперь проверяем состояние ожидания перед началом дня 3
-    if @user.get_self_help_step == 'awaiting_day_3_start'
-      @user.set_self_help_step('day_3_intro')
-      message_text = "Добро пожаловать в третий день программы!\n\n**Тема дня: Дневник благодарности.**\n\n" \
-                     "Практика благодарности — это один из самых эффективных способов переключить фокус внимания с негатива на позитив. " \
-                     "Это не значит игнорировать проблемы, а значит замечать хорошее, что уже есть в вашей жизни.\n\n" \
-                     "Сегодня мы начнем вести дневник благодарности. Выберите действие:"
-      send_message(text: message_text, reply_markup: TelegramMarkupHelper.day_3_menu_markup)
-    else
-      Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 3 content from unexpected state: #{@user.get_self_help_step}."
-      send_message(text: "Произошла ошибка. Пожалуйста, начните программу заново.")
-      @user.clear_self_help_program
-    end
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 3 content. Current step: #{@user.get_self_help_step}."
+  current_step = @user.get_self_help_step
+
+  if current_step == 'awaiting_day_3_start'
+    @user.set_self_help_step('day_3_intro')
+    message_text = "Добро пожаловать в третий день программы!\n\n**Тема дня: Дневник благодарности.**\n\n" \
+                   "Практика благодарности — это один из самых эффективных способов переключить фокус внимания с негатива на позитив. " \
+                   "Это не значит игнорировать проблемы, а значит замечать хорошее, что уже есть в вашей жизни.\n\n" \
+                   "Сегодня мы начнем вести дневник благодарности. Выберите действие:"
+    send_message(text: message_text, reply_markup: TelegramMarkupHelper.day_3_menu_markup)
+  elsif ['day_3_intro', 'day_3_waiting_for_gratitude', 'day_3_entry_saved'].include?(current_step)
+    # Если пользователь уже в процессе, просто возвращаем его в меню дня 3
+    send_message(text: "Вы вернулись в меню Дня 3. Выберите действие:", reply_markup: TelegramMarkupHelper.day_3_menu_markup)
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 3 content from unexpected state: #{current_step}."
+    send_message(text: "Произошла ошибка. Пожалуйста, начните программу заново.")
+    @user.clear_self_help_program
   end
+end
 
   # Запуск ввода новой благодарности
   def start_gratitude_entry
@@ -417,20 +535,26 @@ class SelfHelpService
   # --- ДЕНЬ 4: Квадратное дыхание ---
 
   def deliver_day_4_content
-    Rails.logger.debug "User #{@user.telegram_id} delivering Day 4 content. Current step: #{@user.get_self_help_step}."
-    # ИЗМЕНЕНО: Теперь проверяем состояние ожидания перед началом дня 4
-    if @user.get_self_help_step == 'awaiting_day_4_start'
-      @user.set_self_help_step('day_4_intro')
-      message_text = "Добро пожаловать в четвертый день программы!\n\n**Тема дня: Регуляция дыхания.**\n\n" \
-                     "Давай попробуем дыхательное упражнение 'Квадратное дыхание'. Это поможет успокоить нервную систему и снизить тревожность. " \
-                     "Готовы?"
-      send_message(text: message_text, reply_markup: TelegramMarkupHelper.day_4_exercise_consent_markup)
-    else
-      Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 4 content from unexpected state: #{@user.get_self_help_step}."
-      send_message(text: "Произошла ошибка. Пожалуйста, начните программу заново.")
-      @user.clear_self_help_program
-    end
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 4 content. Current step: #{@user.get_self_help_step}."
+  current_step = @user.get_self_help_step
+
+  if current_step == 'awaiting_day_4_start'
+    @user.set_self_help_step('day_4_intro')
+    message_text = "Добро пожаловать в четвертый день программы!\n\n**Тема дня: Регуляция дыхания.**\n\n" \
+                   "Давай попробуем дыхательное упражнение 'Квадратное дыхание'. Это поможет успокоить нервную систему и снизить тревожность. " \
+                   "Готовы?"
+    send_message(text: message_text, reply_markup: TelegramMarkupHelper.day_4_exercise_consent_markup)
+  elsif current_step == 'day_4_intro'
+    send_message(text: "Вы вернулись в меню Дня 4. Готовы начать упражнение?", reply_markup: TelegramMarkupHelper.day_4_exercise_consent_markup)
+  elsif current_step == 'day_4_exercise_in_progress'
+    send_message(text: "Вы сейчас выполняете упражнение 'Квадратное дыхание'. Как только закончите, нажмите кнопку ниже.",
+                 reply_markup: TelegramMarkupHelper.day_4_exercise_completed_markup)
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 4 content from unexpected state: #{current_step}."
+    send_message(text: "Произошла ошибка. Пожалуйста, начните программу заново.")
+    @user.clear_self_help_program
   end
+end
 
   def start_day_4_exercise
     Rails.logger.debug "User #{@user.telegram_id} starting Day 4 exercise. Current step: #{@user.get_self_help_step}."
@@ -480,23 +604,31 @@ class SelfHelpService
   # --- ДЕНЬ 5: Физическая активность ---
 
   def deliver_day_5_content
-    Rails.logger.debug "User #{@user.telegram_id} delivering Day 5 content. Current step: #{@user.get_self_help_step}."
-    # ИЗМЕНЕНО: Теперь проверяем состояние ожидания перед началом дня 5
-    if @user.get_self_help_step == 'awaiting_day_5_start'
-      @user.set_self_help_step('day_5_intro')
-      message_text = "Добро пожаловать в пятый день программы!\n\n**Тема дня: Движение и настроение.**\n\n" \
-                     "Сегодня предлагаю немного подвигаться. Физическая активность — отличный способ снизить уровень стресса и улучшить настроение.\n\n" \
-                     "**Задание:** Выберите любую физическую активность, которая вам нравится (прогулка, танцы, йога, зарядка), и уделите ей 15-20 минут."
-      send_message(
-        text: message_text,
-        reply_markup: TelegramMarkupHelper.start_day_5_exercise_markup
-      )
-    else
-      Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 5 content from unexpected state: #{@user.get_self_help_step}."
-      send_message(text: "Произошла ошибка. Пожалуйста, начните программу заново.")
-      @user.clear_self_help_program
-    end
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 5 content. Current step: #{@user.get_self_help_step}."
+  current_step = @user.get_self_help_step
+
+  if current_step == 'awaiting_day_5_start'
+    @user.set_self_help_step('day_5_intro')
+    message_text = "Добро пожаловать в пятый день программы!\n\n**Тема дня: Движение и настроение.**\n\n" \
+                   "Сегодня предлагаю немного подвигаться. Физическая активность — отличный способ снизить уровень стресса и улучшить настроение.\n\n" \
+                   "**Задание:** Выберите любую физическую активность, которая вам нравится (прогулка, танцы, йога, зарядка), и уделите ей 15-20 минут."
+    send_message(text: message_text, parse_mode: 'Markdown')
   end
+
+  if ['day_5_intro', 'awaiting_day_5_start'].include?(@user.get_self_help_step)
+    send_message(
+      text: "Нажмите 'Начать упражнение', чтобы получить инструкции по завершению дня.",
+      reply_markup: TelegramMarkupHelper.start_day_5_exercise_markup
+    )
+  elsif current_step == 'day_5_exercise_in_progress'
+    send_message(text: "Вы сейчас выполняете физическое упражнение. Когда закончите, нажмите кнопку ниже.",
+                 reply_markup: TelegramMarkupHelper.day_5_exercise_completed_markup)
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 5 content from unexpected state: #{current_step}."
+    send_message(text: "Произошла ошибка. Пожалуйста, начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
 
   def start_day_5_exercise
     Rails.logger.debug "User #{@user.telegram_id} starting Day 5 exercise. Current step: #{@user.get_self_help_step}."
@@ -539,23 +671,28 @@ class SelfHelpService
   # --- ДЕНЬ 6: Отдых и удовольствие ---
 
   def deliver_day_6_content
-    Rails.logger.debug "User #{@user.telegram_id} delivering Day 6 content. Current step: #{@user.get_self_help_step}."
-    # ИЗМЕНЕНО: Теперь проверяем состояние ожидания перед началом дня 6
-    if @user.get_self_help_step == 'awaiting_day_6_start'
-      @user.set_self_help_step('day_6_intro')
-      message_text = "Добро пожаловать в шестой день программы!\n\n**Тема дня: Забота о себе.**\n\n" \
-                     "Сегодня просто отдохни и сделай что-то приятное для себя. Посмотри фильм, почитай книгу, послушай музыку, прими ванну. " \
-                     "Цель — дать себе время восстановиться и насладиться моментом, не испытывая чувства вины."
-      send_message(
-        text: message_text,
-        reply_markup: TelegramMarkupHelper.day_6_exercise_completed_markup
-      )
-    else
-      Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 6 content from unexpected state: #{@user.get_self_help_step}."
-      send_message(text: "Произошла ошибка. Пожалуйста, начните программу заново.")
-      @user.clear_self_help_program
-    end
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 6 content. Current step: #{@user.get_self_help_step}."
+  current_step = @user.get_self_help_step
+
+  if current_step == 'awaiting_day_6_start'
+    @user.set_self_help_step('day_6_intro')
+    message_text = "Добро пожаловать в шестой день программы!\n\n**Тема дня: Забота о себе.**\n\n" \
+                   "Сегодня просто отдохни и сделай что-то приятное для себя. Посмотри фильм, почитай книгу, послушай музыку, прими ванну. " \
+                   "Цель — дать себе время восстановиться и насладиться моментом, не испытывая чувства вины."
+    send_message(text: message_text, parse_mode: 'Markdown')
   end
+
+  if current_step == 'day_6_intro' || current_step == 'awaiting_day_6_start'
+    send_message(
+      text: "Как только вы уделите себе время на отдых, нажмите 'Продолжить'.",
+      reply_markup: TelegramMarkupHelper.day_6_exercise_completed_markup
+    )
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 6 content from unexpected state: #{current_step}."
+    send_message(text: "Произошла ошибка. Пожалуйста, начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
 
   def handle_day_6_exercise_completion
     Rails.logger.debug "User #{@user.telegram_id} completing Day 6 exercise. Current step: #{@user.get_self_help_step}."
@@ -577,20 +714,26 @@ class SelfHelpService
   # --- ДЕНЬ 7: Рефлексия недели ---
 
   def deliver_day_7_content
-    Rails.logger.debug "User #{@user.telegram_id} delivering Day 7 content. Current step: #{@user.get_self_help_step}."
-    # ИЗМЕНЕНО: Теперь проверяем состояние ожидания перед началом дня 7
-    if @user.get_self_help_step == 'awaiting_day_7_start'
-      @user.set_self_help_step('day_7_waiting_for_reflection') # Устанавливаем шаг, что ожидаем рефлексию
-      message_text = "Добро пожаловать в седьмой день программы!\n\n**Тема дня: Рефлексия недели.**\n\n" \
-                     "Как прошла первая неделя? Что было самым сложным? Что помогло тебе почувствовать себя лучше? " \
-                     "Напиши пару слов о своих впечатлениях в ответном сообщении. Это поможет тебе закрепить прогресс."
-      send_message(text: message_text)
-    else
-      Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 7 content from unexpected state: #{@user.get_self_help_step}."
-      send_message(text: "Произошла ошибка. Пожалуйста, начните программу заново.")
-      @user.clear_self_help_program
-    end
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 7 content. Current step: #{@user.get_self_help_step}."
+  current_step = @user.get_self_help_step
+
+  if current_step == 'awaiting_day_7_start'
+    @user.set_self_help_step('day_7_waiting_for_reflection') # Устанавливаем шаг, что ожидаем рефлексию
   end
+
+  if current_step == 'day_7_waiting_for_reflection' || current_step == 'awaiting_day_7_start'
+    message_text = "Добро пожаловать в седьмой день программы!\n\n**Тема дня: Рефлексия недели.**\n\n" \
+                   "Как прошла первая неделя? Что было самым сложным? Что помогло тебе почувствовать себя лучше? " \
+                   "Напиши пару слов о своих впечатлениях в ответном сообщении. Это поможет тебе закрепить прогресс."
+    send_message(text: message_text)
+  elsif current_step == 'day_7_completed'
+    send_message(text: "Вы уже завершили рефлексию. Готовы перейти к следующему дню?", reply_markup: TelegramMarkupHelper.complete_program_markup)
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 7 content from unexpected state: #{current_step}."
+    send_message(text: "Произошла ошибка. Пожалуйста, начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
 
   # Обработка введенной рефлексии (вызывается из MessageProcessor)
   # Принимает текст от пользователя.
@@ -634,24 +777,26 @@ class SelfHelpService
   # --- ДЕНЬ 8: Техника "Остановка мыслей" ---
 
   def deliver_day_8_content
-    Rails.logger.debug "User #{@user.telegram_id} delivering Day 8 content. Current step: #{@user.get_self_help_step}."
-    if @user.get_self_help_step == 'awaiting_day_8_start'
-      @user.set_self_help_step('day_8_waiting_for_consent') # <--- ИЗМЕНЕНО ЗДЕСЬ
-      message_text = "Добро пожаловать в восьмой день программы!\n\n**Тема дня: Техника 'Остановка мыслей'.**\n\n" \
-                     "Сегодня попробуем очень полезную технику, которая поможет вам взять под контроль навязчивые, " \
-                     "негативные или тревожные мысли. Она требует практики, но со временем может стать очень эффективной.\n\n" \
-                     "**Готовы попробовать?**"
-      send_message(
-        text: message_text,
-        parse_mode: 'Markdown',
-        reply_markup: TelegramMarkupHelper.day_8_consent_markup
-      )
-    else
-      Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 8 content from unexpected state: #{@user.get_self_help_step}."
-      send_message(text: "Вы пытаетесь начать День 8 из неправильного состояния. Напишите /start, чтобы вернуться в главное меню и начать заново.")
-      @user.clear_self_help_program
-    end
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 8 content. Current step: #{@user.get_self_help_step}."
+  if @user.get_self_help_step == 'awaiting_day_8_start'
+    @user.set_self_help_step('day_8_waiting_for_consent')
+    message_text = "Добро пожаловать в восьмой день программы!\n\n**Тема дня: Техника 'Остановка мыслей'.**\n\n" \
+                   "Сегодня попробуем очень полезную технику, которая поможет вам взять под контроль навязчивые, " \
+                   "негативные или тревожные мысли. Она требует практики, но со временем может стать очень эффективной.\n\n" \
+                   "**Готовы попробовать?**"
+    send_message(
+      text: message_text,
+      parse_mode: 'Markdown',
+      reply_markup: TelegramMarkupHelper.day_8_consent_markup
+    )
+  elsif @user.get_self_help_step == 'day_8_waiting_for_consent'
+    send_message(text: "Вы вернулись в меню Дня 8. Готовы попробовать упражнение?", reply_markup: TelegramMarkupHelper.day_8_consent_markup)
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 8 content from unexpected state: #{@user.get_self_help_step}."
+    send_message(text: "Вы пытаетесь начать День 8 из неправильного состояния. Напишите /start, чтобы вернуться в главное меню и начать заново.")
+    @user.clear_self_help_program
   end
+end
 
   # Обрабатывает согласие/отказ пользователя начать упражнение Дня 8.
   def handle_day_8_consent(choice)
@@ -779,7 +924,7 @@ class SelfHelpService
   def handle_day_8_skip
     Rails.logger.debug "User #{@user.telegram_id} declined Day 8 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_8_waiting_for_consent'
-      @user.clear_self_help_program
+      deliver_day_8_content
       send_message(text: "Хорошо, мы можем попробовать эту технику позже. Возвращайтесь в главное меню.", reply_markup: TelegramMarkupHelper.main_menu_markup)
     else
       Rails.logger.warn "User #{@user.telegram_id} declined Day 8 from unexpected state: #{@user.get_self_help_step}."
@@ -790,12 +935,22 @@ class SelfHelpService
   def handle_day_4_skip
     Rails.logger.debug "User #{@user.telegram_id} declined Day 4 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_4_intro'
-      @user.clear_self_help_program
+      deliver_day_4_content
       send_message(text: "Хорошо, мы можем вернуться к упражнению позже. Нажмите /start, чтобы вернуться в главное меню.")
     else
       Rails.logger.warn "User #{@user.telegram_id} declined Day 4 from unexpected state: #{@user.get_self_help_step}."
       send_message(text: "Пожалуйста, вернитесь в главное меню, нажав /start.")
     end
+  end
+
+  def clear_and_restart_program
+    @user.clear_self_help_program
+    
+    # Отправляем подтверждение сброса
+    send_message(text: "Ваш прогресс в программе самопомощи был сброшен. Начинаем заново!")
+    
+    # Запускаем обычную инициацию, которая теперь увидит, что шаг пуст
+    start_program_initiation
   end
 
   def handle_complete_program_final

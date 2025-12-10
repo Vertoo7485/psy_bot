@@ -39,6 +39,7 @@ module Telegram
       # Все callback_data, связанные с программой, будут обрабатываться там.
       when 'start_self_help_program' then handle_start_self_help_program_intro
       when 'start_self_help_program_tests' then handle_start_self_help_program_tests
+      when 'restart_self_help_program' then handle_restart_self_help_program
       when 'yes' then handle_yes_response
       when 'no' then handle_no_response
       when 'test_completed_depression' then handle_test_completed_depression
@@ -92,6 +93,13 @@ module Telegram
     end
 
     private
+
+    # Новый обработчик для перезапуска программы
+    def handle_restart_self_help_program
+      self_help_service = SelfHelpService.new(@bot_service, @user, @chat_id)
+      self_help_service.clear_and_restart_program
+      answer_callback_query("Программа перезапущена!")
+    end
 
     # --- Обработчики общих функций ---
 
