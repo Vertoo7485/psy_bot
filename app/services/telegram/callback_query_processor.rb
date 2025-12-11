@@ -87,6 +87,7 @@ module Telegram
       when 'start_day_9_from_proposal' then handle_start_day_9_from_proposal
       when 'day_9_enter_thought' then handle_day_9_enter_thought
       when 'day_9_show_current' then handle_day_9_show_current
+      when 'show_all_anxious_thoughts' then handle_show_all_anxious_thoughts
       when 'complete_day_9' then handle_complete_day_9
 
       when 'complete_program_final' then handle_complete_program_final # Предполагаем, что это финальное завершение
@@ -98,6 +99,11 @@ module Telegram
     end
 
     private
+
+    def handle_show_all_anxious_thoughts
+      SelfHelpService.new(@bot_service, @user, @chat_id).show_all_anxious_thought_entries
+      answer_callback_query("Показываю все записи...")
+    end
 
     # Новый обработчик для перезапуска программы
     def handle_restart_self_help_program

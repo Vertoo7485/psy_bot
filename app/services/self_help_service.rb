@@ -1001,58 +1001,145 @@ end
     true
   end
 
-  # Обработка переформулировки (рефрейма)
   def handle_day_9_reframe_input(text)
+    # 1. Проверяем, что текст не пустой
     return send_message(text: "Пожалуйста, попробуй написать переформулировку в одно-два предложения.") if text.blank?
-
-    @user.store_self_help_data('day_9_reframe', text)
-    # отмечаем день как завершенный
-    @user.set_self_help_step('day_9_completed')
-
-    # Сохраняем (опционально: можно сохранять в отдельную модель, здесь — в self_help_program_data как история)
-    history = @user.get_self_help_data('day_9_history') || []
-    history << {
-      created_at: Time.current,
-      thought: @user.get_self_help_data('day_9_thought'),
-      probability: @user.get_self_help_data('day_9_probability'),
-      facts_pro: @user.get_self_help_data('day_9_facts_pro'),
-      facts_con: @user.get_self_help_data('day_9_facts_con'),
-      reframe: @user.get_self_help_data('day_9_reframe')
-    }
-    @user.store_self_help_data('day_9_history', history)
-
-    # Отправляем итоговое сообщение
-    summary = "Замечательно! Ты сделал(а) важный шаг.\n\n" \
-              "Вот краткая сводка:\n" \
-              "- Тревожная мысль: #{history.last[:thought]}\n" \
-              "- Оценка вероятности: #{history.last[:probability]}\n" \
-              "- Факты, подтверждающие: #{history.last[:facts_pro]}\n" \
-              "- Факты, опровергающие: #{history.last[:facts_con]}\n" \
-              "- Переформулировка: #{history.last[:reframe]}\n\n" \
-              "Это отличный материал для дальнейшей практики. Постарайся перечитывать свою переформулировку, когда тревога возвращается."
-
-    send_message(text: summary, reply_markup: TelegramMarkupHelper.day_9_back_to_menu_markup)
-
+    
+    # 2. Получаем временные данные из self_help_program_data
+    thought = @user.get_self_help_data('day_9_thought')
+    probability = @user.get_self_help_data('day_9_probability')
+    facts_pro = @user.get_self_help_data('day_9_facts_pro')
+    facts_con = @user.get_self_help_data('day_9_facts_con')
+    
+    # 3. Проверяем, что все необходимые данные есть
+    if thought.blank? || probability.blank? || facts_pro.blank? || facts_con.blank?
+      Rails.logger.error "Missing data for anxious thought entry for user #{@user.id}"
+      send_message(text: "Что-то пошло не так. Кажется, некоторые данные потерялись. Давай начнем день 9 заново.")
+      return start_day_9_thought_entry
+    end
+    
+    begin
+      # 4. СОХРАНЯЕМ В БАЗУ ДАННЫХ!
+      entry = AnxiousThoughtEntry.create!(
+        user: @user,
+        entry_date: Date.current,
+        thought: thought,
+        probability: probability,
+        facts_pro: facts_pro,
+        facts_con: facts_con,
+        reframe: text
+      )
+      
+      Rails.logger.info "AnxiousThoughtEntry saved for user #{@user.id}, entry ID: #{entry.id}"
+      
+      # 5. Очищаем временные данные (больше они не нужны)
+      ['day_9_thought', 'day_9_probability', 'day_9_facts_pro', 'day_9_facts_con', 'day_9_reframe'].each do |key|
+        @user.store_self_help_data(key, nil)
+      end
+      
+      # 6. Также очищаем историю из self_help_program_data (опционально)
+      @user.store_self_help_data('day_9_history', [])
+      
+      # 7. Устанавливаем шаг как завершенный
+      @user.set_self_help_step('day_9_completed')
+      
+      # 8. Формируем красивый ответ для пользователя
+      summary = "🎉 **Отличная работа! Ты проделал(а) важный анализ.**\n\n"
+      summary += "**Сводка твоего анализа:**\n"
+      summary += "• **Тревожная мысль:** #{thought.truncate(100)}\n"
+      summary += "• **Вероятность (от 1 до 10):** #{probability}\n"
+      summary += "• **Факты 'за':** #{facts_pro.truncate(80)}\n"
+      summary += "• **Факты 'против':** #{facts_con.truncate(80)}\n"
+      summary += "• **Переформулировка:** #{text.truncate(150)}\n\n"
+      summary += "Эта запись сохранена в твоем дневнике. Ты можешь вернуться к ней в любой момент!"
+      
+      send_message(text: summary, parse_mode: 'Markdown')
+      
+      # 9. Показываем меню дня 9
+      send_message(text: "Что дальше?", reply_markup: TelegramMarkupHelper.day_9_menu_markup)
+      
+    rescue ActiveRecord::RecordInvalid => e
+      # 10. Обработка ошибок валидации
+      Rails.logger.error "Failed to save AnxiousThoughtEntry for user #{@user.id}: #{e.message}"
+      send_message(text: "Произошла ошибка при сохранении записи: #{e.record.errors.full_messages.join(', ')}. Попробуй еще раз.")
+      
+    rescue => e
+      # 11. Обработка других ошибок
+      Rails.logger.error "Unexpected error saving AnxiousThoughtEntry for user #{@user.id}: #{e.message}"
+      send_message(text: "Произошла непредвиденная ошибка. Попробуй еще раз или начни день 9 заново.")
+    end
+    
     true
   end
 
   # Показать текущий прогресс дня 9 (если пользователь хочет посмотреть промежуточные ответы)
   def show_day_9_current_progress
+    # Показываем текущие НЕСОХРАНЕННЫЕ данные из self_help_program_data
     thought = @user.get_self_help_data('day_9_thought')
     prob = @user.get_self_help_data('day_9_probability')
     pro = @user.get_self_help_data('day_9_facts_pro')
     con = @user.get_self_help_data('day_9_facts_con')
     reframe = @user.get_self_help_data('day_9_reframe')
+    
+    message = "📝 **Текущий прогресс по Дню 9:**\n\n"
+    
+    if thought.present?
+      message += "• **Мысль:** #{thought.truncate(100)}\n"
+      message += "• **Вероятность:** #{prob || '—'}\n"
+      message += "• **Факты 'за':** #{pro || '—'}\n"
+      message += "• **Факты 'против':** #{con || '—'}\n"
+      message += "• **Переформулировка:** #{reframe || '—'}\n\n"
+      
+      if reframe.blank?
+        message += "Ты почти закончил(а)! Осталось только сделать переформулировку.\n"
+      else
+        message += "Все готово! Нажми 'Завершить День 9', чтобы сохранить запись.\n"
+      end
+    else
+      message += "Ты еще не начал(а) работу над тревожной мыслью.\n"
+    end
+    
+    # Показываем последние СОХРАНЕННЫЕ записи
+    saved_entries = @user.anxious_thought_entries.recent.limit(3)
+    
+    if saved_entries.any?
+      message += "\n---\n"
+      message += "📚 **Твои последние сохраненные записи:**\n"
+      saved_entries.each_with_index do |entry, index|
+        message += "#{index + 1}. *#{entry.entry_date.strftime('%d.%m.%Y')}*: "
+        message += "#{entry.thought.truncate(50)}\n"
+      end
+    end
+    
+    send_message(text: message, parse_mode: 'Markdown', reply_markup: TelegramMarkupHelper.day_9_menu_markup)
+  end
 
-    message = "Текущее состояние работы над мыслью:\n"
-    message += "- Мысль: #{thought || '—'}\n"
-    message += "- Вероятность: #{prob || '—'}\n"
-    message += "- Факты, подтверждающие: #{pro || '—'}\n"
-    message += "- Факты, опровергающие: #{con || '—'}\n"
-    message += "- Переформулировка: #{reframe || '—'}\n\n"
-    message += "Если хочешь продолжить, выбери 'Ввести тревожную мысль' или 'Завершить День 9'."
-
-    send_message(text: message, reply_markup: TelegramMarkupHelper.day_9_menu_markup)
+  def show_all_anxious_thought_entries
+    entries = @user.anxious_thought_entries.recent
+    
+    if entries.empty?
+      send_message(text: "У тебя пока нет сохраненных записей о тревожных мыслях.")
+      return
+    end
+    
+    # Показываем по 3 записи за раз
+    entries.each_slice(3).with_index do |batch, batch_index|
+      message = "📖 **Твои записи (часть #{batch_index + 1}):**\n\n"
+      
+      batch.each_with_index do |entry, index|
+        message += "**#{batch_index * 3 + index + 1}. #{entry.entry_date.strftime('%d.%m.%Y')}**\n"
+        message += "💭 *Мысль:* #{entry.thought.truncate(80)}\n"
+        message += "📊 *Вероятность:* #{entry.probability}/10\n"
+        message += "✅ *Факты 'за':* #{entry.facts_pro.truncate(60)}\n"
+        message += "❌ *Факты 'против':* #{entry.facts_con.truncate(60)}\n"
+        message += "🔄 *Переформулировка:* #{entry.reframe.truncate(80)}\n"
+        message += "---\n"
+      end
+      
+      send_message(text: message, parse_mode: 'Markdown')
+    end
+    
+    send_message(text: "Всего записей: #{entries.count}", reply_markup: TelegramMarkupHelper.day_9_menu_markup)
   end
 
   # Завершение дня, если пользователь нажал кнопку "Завершить"

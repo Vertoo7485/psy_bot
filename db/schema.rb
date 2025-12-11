@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_08_131854) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_11_142638) do
   create_table "answer_options", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "text"
@@ -29,6 +29,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_08_131854) do
     t.index ["answer_option_id"], name: "index_answers_on_answer_option_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["test_result_id"], name: "index_answers_on_test_result_id"
+  end
+
+  create_table "anxious_thought_entries", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "entry_date"
+    t.text "thought"
+    t.integer "probability"
+    t.text "facts_pro"
+    t.text "facts_con"
+    t.text "reframe"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "entry_date"], name: "index_anxious_thought_entries_on_user_id_and_entry_date"
+    t.index ["user_id"], name: "index_anxious_thought_entries_on_user_id"
   end
 
   create_table "emotion_diary_entries", force: :cascade do |t|
@@ -117,6 +131,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_08_131854) do
   add_foreign_key "answers", "answer_options"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "test_results"
+  add_foreign_key "anxious_thought_entries", "users"
   add_foreign_key "emotion_diary_entries", "users"
   add_foreign_key "gratitude_entries", "users"
   add_foreign_key "questions", "tests"

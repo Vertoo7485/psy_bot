@@ -306,7 +306,10 @@ module TelegramMarkupHelper
     {
       inline_keyboard: [
         [{ text: 'Ввести тревожную мысль', callback_data: 'day_9_enter_thought' }],
-        [{ text: 'Посмотреть текущую работу (если есть)', callback_data: 'day_9_show_current' }],
+        [{ text: 'Посмотреть текущий прогресс', callback_data: 'day_9_show_current' }],
+        # ↓↓↓ ДОБАВЬТЕ ЭТУ СТРОКУ ↓↓↓
+        [{ text: 'Все мои записи о мыслях', callback_data: 'show_all_anxious_thoughts' }],
+        # ↑↑↑ ДОБАВЬТЕ ЭТУ СТРОКУ ↑↑↑
         [{ text: 'Завершить День 9', callback_data: 'complete_day_9' }],
         [{ text: 'Вернуться в главное меню', callback_data: 'back_to_main_menu' }]
       ]
