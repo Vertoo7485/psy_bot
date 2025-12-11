@@ -84,6 +84,11 @@ module Telegram
       when 'day_8_ready_for_distraction' then handle_day_8_ready_for_distraction
       when /^day_8_distraction_(music|video|friend|exercise|book)$/ then handle_day_8_distraction_choice($1)
       when 'day_8_exercise_completed' then handle_day_8_exercise_completion
+      when 'start_day_9_from_proposal' then handle_start_day_9_from_proposal
+      when 'day_9_enter_thought' then handle_day_9_enter_thought
+      when 'day_9_show_current' then handle_day_9_show_current
+      when 'complete_day_9' then handle_complete_day_9
+
       when 'complete_program_final' then handle_complete_program_final # Предполагаем, что это финальное завершение
 
       else
@@ -311,6 +316,31 @@ module Telegram
         Rails.logger.warn "User #{@user.telegram_id} tried to start Day 8 from unexpected state: #{@user.get_self_help_step}."
         answer_callback_query("Ошибка. Попробуйте еще раз или начните /start.")
       end
+    end
+
+     def handle_start_day_9_from_proposal
+      if ['awaiting_day_9_start', 'tests_completed', 'day_8_completed', nil].include?(@user.get_self_help_step)
+        @user.set_self_help_step('awaiting_day_9_start')
+        SelfHelpService.new(@bot_service, @user, @chat_id).deliver_day_9_content
+        answer_callback_query("Начинаем День 9!")
+      else
+        Rails.logger.warn "User #{@user.telegram_id} tried to start Day 9 from unexpected state: #{@user.get_self_help_step}."
+        answer_callback_query("Невозможно начать День 9 сейчас. Попробуйте позже или начните /start.")
+      end
+    end
+
+    def handle_day_9_enter_thought
+      SelfHelpService.new(@bot_service, @user, @chat_id).start_day_9_thought_entry
+      answer_callback_query("Напишите вашу тревожную мысль в ответном сообщении.")
+    end
+
+    def handle_day_9_show_current
+      SelfHelpService.new(@bot_service, @user, @chat_id).show_day_9_current_progress
+    end
+
+    def handle_complete_day_9
+      SelfHelpService.new(@bot_service, @user, @chat_id).complete_day_9
+      answer_callback_query("День 9 завершен.")
     end
 
     def handle_start_day_2_content

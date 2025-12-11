@@ -298,6 +298,25 @@ module TelegramMarkupHelper
     }.to_json
   end
 
+  def day_9_start_proposal_markup
+  { inline_keyboard: [[{ text: 'Начать День 9: Работа с тревожной мыслью', callback_data: 'start_day_9_from_proposal' }]] }.to_json
+  end
+
+  def day_9_menu_markup
+    {
+      inline_keyboard: [
+        [{ text: 'Ввести тревожную мысль', callback_data: 'day_9_enter_thought' }],
+        [{ text: 'Посмотреть текущую работу (если есть)', callback_data: 'day_9_show_current' }],
+        [{ text: 'Завершить День 9', callback_data: 'complete_day_9' }],
+        [{ text: 'Вернуться в главное меню', callback_data: 'back_to_main_menu' }]
+      ]
+    }.to_json
+  end
+
+  def day_9_back_to_menu_markup
+    { inline_keyboard: [[{ text: 'Завершить День 9', callback_data: 'complete_day_9' }]]}.to_json
+  end
+
   # Markup для завершения программы (после Дня 8)
   def final_program_completion_markup
     {

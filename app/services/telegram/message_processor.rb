@@ -53,9 +53,23 @@ module Telegram
         return EmotionDiaryService.new(@bot, @user, @chat_id).handle_answer(text)
       end
 
+      # 4. День 9: Работа с тревожной мыслью
+      case @user.get_self_help_step
+      when 'day_9_waiting_for_thought'
+        return SelfHelpService.new(@bot, @user, @chat_id).handle_day_9_thought_input(text)
+      when 'day_9_waiting_for_probability'
+        return SelfHelpService.new(@bot, @user, @chat_id).handle_day_9_probability_input(text)
+      when 'day_9_waiting_for_facts_pro'
+        return SelfHelpService.new(@bot, @user, @chat_id).handle_day_9_facts_pro_input(text)
+      when 'day_9_waiting_for_facts_con'
+        return SelfHelpService.new(@bot, @user, @chat_id).handle_day_9_facts_con_input(text)
+      when 'day_9_waiting_for_reframe'
+        return SelfHelpService.new(@bot, @user, @chat_id).handle_day_9_reframe_input(text)
+      end
+
       # Если ввод не относится ни к одному из активных сценариев.
-      false
-    end
+        false
+      end
 
     # Обработка команды /start
     def handle_start_command

@@ -902,7 +902,7 @@ end
   def handle_day_8_exercise_completion
     Rails.logger.debug "User #{@user.telegram_id} completing Day 8 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_8_distraction_in_progress'
-      @user.set_self_help_step('day_8_completed')
+      @user.set_self_help_step('awaiting_day_9_start')
 
       message = "Отличная работа! Вы успешно попрактиковались в технике 'Остановка мыслей'.\n\n" \
                 "**Важные напоминания:**\n" \
@@ -913,13 +913,160 @@ end
       send_message(text: message) # Убрал chat_id: @chat_id
 
       final_message = "Поздравляю с завершением восьмого дня программы! Продолжайте практиковать эту технику. До новых встреч!"
-      send_message(text: final_message, reply_markup: TelegramMarkupHelper.final_program_completion_markup) # Убрал chat_id: @chat_id
+      send_message(text: "Хотите продолжить и поработать с тревожными мыслями (День 9)?", reply_markup: TelegramMarkupHelper.day_9_start_proposal_markup)
     else
       Rails.logger.warn "User #{@user.telegram_id} tried to complete Day 8 exercise from unexpected state: #{@user.get_self_help_step}."
       send_message(text: "Произошла ошибка. Пожалуйста, начните программу заново.")
       @user.clear_self_help_program
     end
   end
+
+# --- ДЕНЬ 9: Работа с тревожной мыслью ---
+
+  def deliver_day_9_content
+    Rails.logger.debug "User #{@user.telegram_id} delivering Day 9 content. Current step: #{@user.get_self_help_step}."
+    @user.set_self_help_step('day_9_intro')
+    message_text = "Добро пожаловать в девятый день программы!\n\n" \
+                  "**Тема дня: Работа с тревожной (тревожащей) мыслью.**\n\n" \
+                  "Мы пройдем простой процесс анализа: определим мысль, оценим вероятность, посмотрим факты 'за' и 'против' и попробуем переформулировать мысль на более реалистичную."
+    send_message(text: message_text, reply_markup: TelegramMarkupHelper.day_9_menu_markup)
+  end
+
+  # Запуск ввода тревожной мысли (вызывается из callback 'day_9_enter_thought')
+  def start_day_9_thought_entry
+    @user.set_self_help_step('day_9_waiting_for_thought')
+    # очищаем предыдущие временные данные для дня 9
+    @user.store_self_help_data('day_9_thought', nil)
+    @user.store_self_help_data('day_9_probability', nil)
+    @user.store_self_help_data('day_9_facts_pro', nil)
+    @user.store_self_help_data('day_9_facts_con', nil)
+    @user.store_self_help_data('day_9_reframe', nil)
+
+    send_message(text: "Шаг 1: Определи свою тревожную мысль.\n\nПожалуйста, напиши мысль, которая вызывает у тебя тревогу. Просто отправь её одним сообщением.")
+  end
+
+  # Обработка введённой тревожной мысли (текст)
+  def handle_day_9_thought_input(text)
+    return send_message(text: "Пожалуйста, напиши мысль (не пустое сообщение).") if text.blank?
+
+    @user.store_self_help_data('day_9_thought', text)
+    @user.set_self_help_step('day_9_waiting_for_probability')
+    send_message(text: "Спасибо, что поделился(лась). Теперь давай оценим вероятность.\n\nШаг 2: Насколько вероятно, что это произойдет? Оцени по шкале от 1 до 10 (где 1 — совсем не вероятно, 10 — очень вероятно).")
+    true
+  end
+
+  # Обработка вероятности (ожидаем число 1..10)
+  def handle_day_9_probability_input(text)
+    # пытаемся спарсить число
+    num = text.to_s.strip.to_i
+    if num < 1 || num > 10
+      send_message(text: "Пожалуйста, введи число от 1 до 10, где 1 — совсем не вероятно, а 10 — очень вероятно.")
+      return true
+    end
+
+    @user.store_self_help_data('day_9_probability', num)
+    @user.set_self_help_step('day_9_waiting_for_facts_pro')
+
+    send_message(text: "Хорошо, ты оценил(а) вероятность как #{num}.\n\nШаг 3: Факты. Ответь на два вопроса по очереди.\n\n1) Какие факты подтверждают эту мысль? Напиши в одном сообщении.")
+    true
+  end
+
+  # Обработка фактов, которые подтверждают мысль
+  def handle_day_9_facts_pro_input(text)
+    return send_message(text: "Пожалуйста, опиши факты, которые подтверждают мысль. Если их нет — просто напиши 'нет'.") if text.blank?
+
+    @user.store_self_help_data('day_9_facts_pro', text)
+    @user.set_self_help_step('day_9_waiting_for_facts_con')
+
+    send_message(text: "2) Есть ли факты, которые опровергают эту мысль? Напиши их (или 'нет', если таких фактов нет).")
+    true
+  end
+
+  # Обработка фактов, которые опровергают мысль
+  def handle_day_9_facts_con_input(text)
+    return send_message(text: "Пожалуйста, опиши факты, которые опровергают мысль, или напиши 'нет'.") if text.blank?
+
+    @user.store_self_help_data('day_9_facts_con', text)
+    @user.set_self_help_step('day_9_waiting_for_reframe')
+
+    # Отправляем промежуточный комментарий и просим переформулировать
+    send_message(text: "Отлично! У нас теперь есть:\n\n" \
+                      "— Твоя мысль: #{@user.get_self_help_data('day_9_thought')}\n" \
+                      "— Оценка вероятности: #{@user.get_self_help_data('day_9_probability')}\n" \
+                      "— Факты, подтверждающие: #{@user.get_self_help_data('day_9_facts_pro')}\n" \
+                      "— Факты, опровергающие: #{@user.get_self_help_data('day_9_facts_con')}\n\n" \
+                      "Шаг 4: Переосмысление.\n" \
+                      "Как бы ты мог(ла) переформулировать свою тревожную мысль так, чтобы она звучала менее пугающе и более реалистично?\n\n" \
+                      "Например: 'Это сложно, но я могу справляться по шагам.'")
+    true
+  end
+
+  # Обработка переформулировки (рефрейма)
+  def handle_day_9_reframe_input(text)
+    return send_message(text: "Пожалуйста, попробуй написать переформулировку в одно-два предложения.") if text.blank?
+
+    @user.store_self_help_data('day_9_reframe', text)
+    # отмечаем день как завершенный
+    @user.set_self_help_step('day_9_completed')
+
+    # Сохраняем (опционально: можно сохранять в отдельную модель, здесь — в self_help_program_data как история)
+    history = @user.get_self_help_data('day_9_history') || []
+    history << {
+      created_at: Time.current,
+      thought: @user.get_self_help_data('day_9_thought'),
+      probability: @user.get_self_help_data('day_9_probability'),
+      facts_pro: @user.get_self_help_data('day_9_facts_pro'),
+      facts_con: @user.get_self_help_data('day_9_facts_con'),
+      reframe: @user.get_self_help_data('day_9_reframe')
+    }
+    @user.store_self_help_data('day_9_history', history)
+
+    # Отправляем итоговое сообщение
+    summary = "Замечательно! Ты сделал(а) важный шаг.\n\n" \
+              "Вот краткая сводка:\n" \
+              "- Тревожная мысль: #{history.last[:thought]}\n" \
+              "- Оценка вероятности: #{history.last[:probability]}\n" \
+              "- Факты, подтверждающие: #{history.last[:facts_pro]}\n" \
+              "- Факты, опровергающие: #{history.last[:facts_con]}\n" \
+              "- Переформулировка: #{history.last[:reframe]}\n\n" \
+              "Это отличный материал для дальнейшей практики. Постарайся перечитывать свою переформулировку, когда тревога возвращается."
+
+    send_message(text: summary, reply_markup: TelegramMarkupHelper.day_9_back_to_menu_markup)
+
+    true
+  end
+
+  # Показать текущий прогресс дня 9 (если пользователь хочет посмотреть промежуточные ответы)
+  def show_day_9_current_progress
+    thought = @user.get_self_help_data('day_9_thought')
+    prob = @user.get_self_help_data('day_9_probability')
+    pro = @user.get_self_help_data('day_9_facts_pro')
+    con = @user.get_self_help_data('day_9_facts_con')
+    reframe = @user.get_self_help_data('day_9_reframe')
+
+    message = "Текущее состояние работы над мыслью:\n"
+    message += "- Мысль: #{thought || '—'}\n"
+    message += "- Вероятность: #{prob || '—'}\n"
+    message += "- Факты, подтверждающие: #{pro || '—'}\n"
+    message += "- Факты, опровергающие: #{con || '—'}\n"
+    message += "- Переформулировка: #{reframe || '—'}\n\n"
+    message += "Если хочешь продолжить, выбери 'Ввести тревожную мысль' или 'Завершить День 9'."
+
+    send_message(text: message, reply_markup: TelegramMarkupHelper.day_9_menu_markup)
+  end
+
+  # Завершение дня, если пользователь нажал кнопку "Завершить"
+  def complete_day_9
+    if @user.get_self_help_step == 'day_9_completed'
+      # Можно отдавать дополнительные рекомендации или предлагать вернуться в главное меню
+      send_message(text: "Поздравляю! Ты завершил(а) День 9. Отличная работа.", reply_markup: TelegramMarkupHelper.main_menu_markup)
+      # очищаем текущие шаги, если нужно
+      @user.set_self_help_step('program_progress_after_day_9') # или nil по логике
+    else
+      send_message(text: "Похоже, вы еще не завершили шаги Дня 9. Если хотите, перейдите в меню дня и завершите все пункты.", reply_markup: TelegramMarkupHelper.day_9_menu_markup)
+    end
+  end
+
 
   def handle_day_8_skip
     Rails.logger.debug "User #{@user.telegram_id} declined Day 8 exercise. Current step: #{@user.get_self_help_step}."
