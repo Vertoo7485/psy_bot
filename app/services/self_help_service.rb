@@ -9,6 +9,10 @@ class SelfHelpService
     @bot_service = bot_service # Теперь это экземпляр Telegram::TelegramBotService
     @user = user
     @chat_id = chat_id
+    @message_sender = Telegram::RobustMessageSender.new(bot_service, user, chat_id)
+    
+    # Автоматически создаем/восстанавливаем сессию
+    @session = @user.get_or_create_session('self_help', @user.get_self_help_step || 'start')
   end
 
   # --- Инициализация программы самопомощи ---
@@ -16,7 +20,7 @@ class SelfHelpService
   # Запускает первый шаг: предложение начать программу.
   def start_program_initiation
     Rails.logger.debug "User #{@user.telegram_id} initiating self-help program."
-    
+    save_current_progress
     # Если пользователь уже находится в программе, возобновляем ее
     if @user.get_self_help_step.present?
       return resume_program
@@ -30,6 +34,7 @@ class SelfHelpService
   end
 
   def resume_program
+    save_current_progress
   current_step = @user.get_self_help_step
   Rails.logger.info "Resuming program for user #{@user.telegram_id} at step: #{current_step}"
 
@@ -120,6 +125,7 @@ end
 
   # Обрабатывает ответы "Да" или "Нет" на начальные вопросы.
   def handle_response(response_type)
+    save_current_progress
     current_step = @user.get_self_help_step
 
     case current_step
@@ -149,6 +155,7 @@ end
 
   # Отменяет инициацию программы (если пользователь сказал "Нет").
   def cancel_program_initiation
+    save_current_progress
   @user.clear_self_help_program
   send_message(text: "Хорошо, мы можем начать в любой другой момент. Просто нажмите кнопку '⭐️ Программа самопомощи ⭐️' в главном меню.", reply_markup: TelegramMarkupHelper.main_menu_markup)
 end
@@ -156,6 +163,7 @@ end
   # --- Запуск последовательности тестов ---
 
   def start_tests_sequence
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} moving to start tests sequence."
     @user.set_self_help_step('taking_depression_test') # Более конкретный шаг
     send_message(text: "Отлично! Начнем с теста на депрессию.")
@@ -164,6 +172,7 @@ end
 
   # Обработчик завершения теста на депрессию.
   def handle_test_completion(test_type)
+    save_current_progress
     case test_type
     when 'depression'
       Rails.logger.debug "User #{@user.telegram_id} completed depression test. Current step: #{@user.get_self_help_step}."
@@ -197,6 +206,7 @@ end
 
   # Инициирует запуск теста на тревожность из последовательности.
   def start_anxiety_test_sequence
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} is starting anxiety test sequence."
     if @user.get_self_help_step == 'awaiting_anxiety_test_completion'
       @user.set_self_help_step('taking_anxiety_test') # Обновляем шаг пользователя
@@ -211,6 +221,7 @@ end
 
   # Обрабатывает отказ пользователя от теста на тревожность.
   def handle_no_anxiety_test_sequence
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} declined anxiety test sequence. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'awaiting_anxiety_test_completion'
       @user.clear_self_help_program # Сбрасываем прогресс, если пользователь отказался
@@ -225,6 +236,7 @@ end
 
   # Предлагает начать первый день после завершения тестов.
   def deliver_day_1_intro_message
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} starting Day 1 intro. Current step: #{@user.get_self_help_step}."
     # Этот метод вызывается после завершения всех тестов
     # Предполагается, что шаг пользователя уже 'tests_completed' или что-то подобное.
@@ -238,6 +250,7 @@ end
 
   # Отправляет контент первого дня.
   def deliver_day_1_content
+    save_current_progress
   Rails.logger.debug "User #{@user.telegram_id} delivering Day 1 content. Current step: #{@user.get_self_help_step}."
   current_step = @user.get_self_help_step
 
@@ -274,6 +287,7 @@ end
 
   # Запускает упражнение первого дня.
   def continue_day_1_content
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} continuing Day 1 content. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_1_content_delivered'
       send_day_1_exercise # Вызываем метод отправки упражнения
@@ -286,6 +300,7 @@ end
 
   # Отправляет упражнение первого дня.
   def send_day_1_exercise
+    save_current_progress
     @user.set_self_help_step('day_1_exercise_in_progress') # Устанавливаем шаг, что упражнение выполняется
 
     exercise_text = "Отлично! Наше первое упражнение - это простое упражнение на внимательное дыхание.\n\n" \
@@ -306,6 +321,7 @@ end
 
   # Обработчик завершения упражнения Дня 1.
   def handle_day_1_exercise_completion
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} completing Day 1 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_1_exercise_in_progress'
       @user.set_self_help_step('day_1_completed') # Отмечаем день 1 как завершенный
@@ -330,6 +346,7 @@ end
   # --- ДЕНЬ 2: Медитация "Сканирование тела" ---
 
   def deliver_day_2_content
+    save_current_progress
   Rails.logger.debug "User #{@user.telegram_id} delivering Day 2 content. Current step: #{@user.get_self_help_step}."
   current_step = @user.get_self_help_step
 
@@ -357,56 +374,144 @@ end
 end
 
   def send_day_2_exercise_audio
+    # Сохраняем прогресс перед началом отправки
+    save_current_progress
+    
     Rails.logger.debug "User #{@user.telegram_id} sending Day 2 exercise audio. Current step: #{@user.get_self_help_step}."
-    if @user.get_self_help_step == 'day_2_intro_delivered' # Проверяем, что пользователь на правильном шаге
-
-      audio_file_path = Rails.root.join('public', 'assets', 'audio', 'body_scan.mp3')
-      caption = "Медитация 'Сканирование тела'"
-
-      day2_audio_file_id = Setting.find_by(key: 'day2_exercise_audio_file_id')&.value
-
-      if day2_audio_file_id.present?
-        Rails.logger.info "Sending day_2_exercise audio using file_id: #{day2_audio_file_id}"
-        @bot_service.bot.send_audio(chat_id: @chat_id, audio: day2_audio_file_id, caption: caption) # Используем @bot_service.bot
-      else
-        if File.exist?(audio_file_path)
-          file_size_mb = File.size(audio_file_path).to_f / (1024 * 1024)
-          Rails.logger.info "Uploading day_2_exercise audio. Path: #{audio_file_path}, Size: #{file_size_mb.round(2)} MB"
-
-          if file_size_mb > 50
-            Rails.logger.error "Audio file is too large (#{file_size_mb.round(2)} MB). Telegram limit is 50MB."
-            send_message(text: "Произошла ошибка при отправке аудио: файл слишком большой.")
-            return
-          end
-
-          begin
-            @bot_service.bot.send_audio(chat_id: @chat_id, audio: File.open(audio_file_path), caption: caption) # Используем @bot_service.bot
-            Rails.logger.info "Audio sent successfully."
-          rescue Telegram::Bot::Error => e
-            Rails.logger.error "Error while uploading audio: #{e.message}"
-            send_message(text: "Произошла ошибка при отправке аудио: #{e.message}. Пожалуйста, попробуйте позже.")
-          rescue StandardError => e
-            Rails.logger.error "General Error while sending audio: #{e.message}"
-            send_message(text: "Произошла внутренняя ошибка при отправке аудио.")
-          end
-        else
-          Rails.logger.error "Audio file not found at specified path: #{audio_file_path}"
-          send_message(text: "Произошла ошибка: аудиофайл не найден.")
-        end
-      end
-
-      # Обновляем шаг пользователя, чтобы обозначить, что упражнение началось.
-      @user.set_self_help_step('day_2_exercise_in_progress')
-      send_message(text: "Нажмите 'Я завершил(а) упражнение', когда закончите медитацию.", # Убрал chat_id: @chat_id
-                   reply_markup: TelegramMarkupHelper.day_2_exercise_completed_markup) # <-- ИЗМЕНЕНО: Используем разметку для ЗАВЕРШЕНИЯ
-    else
+    
+    # Проверяем, что пользователь на правильном шаге
+    if @user.get_self_help_step != 'day_2_intro_delivered'
       Rails.logger.warn "User #{@user.telegram_id} tried to start Day 2 exercise from unexpected state: #{@user.get_self_help_step}."
       send_message(text: "Что-то пошло не так при запуске упражнения дня 2. Напишите /start для начала заново.")
       @user.clear_self_help_program
+      return
+    end
+
+    # Определяем путь к аудиофайлу
+    audio_file_path = Rails.root.join('public', 'assets', 'audio', 'body_scan.mp3')
+    caption = "Медитация 'Сканирование тела'"
+
+    # Пытаемся получить file_id из настроек (если уже загружали раньше)
+    day2_audio_file_id = Setting.find_by(key: 'day2_exercise_audio_file_id')&.value
+
+    success = false
+    audio_to_send = nil
+
+    # Определяем что отправлять: file_id или файл
+    if day2_audio_file_id.present?
+      Rails.logger.info "Sending day_2_exercise audio using file_id: #{day2_audio_file_id}"
+      audio_to_send = day2_audio_file_id
+    elsif File.exist?(audio_file_path)
+      # Проверяем размер файла
+      file_size_mb = File.size(audio_file_path).to_f / (1024 * 1024)
+      Rails.logger.info "Uploading day_2_exercise audio. Path: #{audio_file_path}, Size: #{file_size_mb.round(2)} MB"
+
+      if file_size_mb > 50
+        Rails.logger.error "Audio file is too large (#{file_size_mb.round(2)} MB). Telegram limit is 50MB."
+        send_message(text: "Произошла ошибка при отправке аудио: файл слишком большой.")
+        # Предлагаем альтернативу
+        offer_audio_alternative
+        return
+      end
+      
+      audio_to_send = File.open(audio_file_path)
+    else
+      Rails.logger.error "Audio file not found at specified path: #{audio_file_path}"
+      # Файл не найден, предлагаем альтернативу
+      offer_audio_alternative
+      return
+    end
+
+    # Используем надежную отправку через RobustMessageSender
+    if @message_sender && @message_sender.respond_to?(:send_audio_with_retry)
+      success = @message_sender.send_audio_with_retry(
+        audio: audio_to_send,
+        caption: caption
+      )
+    else
+      # Если RobustMessageSender еще не реализован, используем старый способ
+      success = send_audio_directly(audio_to_send, caption)
+    end
+
+    if success
+      # Обновляем шаг пользователя
+      @user.set_self_help_step('day_2_exercise_in_progress')
+      
+      # Сохраняем file_id в настройки для будущего использования
+      unless day2_audio_file_id.present?
+        save_audio_file_id(audio_to_send)
+      end
+      
+      # Отправляем инструкцию после аудио
+      send_message(
+        text: "Нажмите 'Я завершил(а) упражнение', когда закончите медитацию.",
+        reply_markup: TelegramMarkupHelper.day_2_exercise_completed_markup
+      )
+    else
+      # Если не удалось отправить аудио, предлагаем альтернативу
+      offer_audio_alternative
     end
   end
 
+  # Вспомогательный метод для прямой отправки аудио
+  def send_audio_directly(audio, caption)
+    begin
+      @bot_service.bot.send_audio(
+        chat_id: @chat_id,
+        audio: audio,
+        caption: caption
+      )
+      true
+    rescue Telegram::Bot::Error => e
+      Rails.logger.error "Error while uploading audio: #{e.message}"
+      false
+    rescue StandardError => e
+      Rails.logger.error "General Error while sending audio: #{e.message}"
+      false
+    ensure
+      # Закрываем файл если это был File.open
+      audio.close if audio.is_a?(File)
+    end
+  end
+
+  # Метод для предложения альтернативы если аудио не доступно
+  def offer_audio_alternative
+    send_message(
+      text: "Не удалось загрузить аудио. Вы можете сделать упражнение без аудио:",
+      save_progress: false
+    )
+    
+    send_message(
+      text: "**Медитация 'Сканирование тела' (альтернатива):**\n\n" \
+            "1. Сядьте или лягте удобно\n" \
+            "2. Закройте глаза, сделайте несколько глубоких вдохов\n" \
+            "3. Мысленно пройдитесь по всем частям тела:\n" \
+            "   - Начните с макушки головы\n" \
+            "   - Лицо, шея, плечи\n" \
+            "   - Руки, кисти, пальцы\n" \
+            "   - Грудь, живот, спина\n" \
+            "   - Ноги, стопы, пальцы ног\n" \
+            "4. В каждой части замечайте ощущения (тепло, холод, напряжение, расслабление)\n" \
+            "5. Не пытайтесь что-то изменить, просто наблюдайте\n" \
+            "6. Уделите 10-15 минут\n\n" \
+            "Когда закончите, нажмите кнопку ниже.",
+      reply_markup: TelegramMarkupHelper.day_2_exercise_completed_markup,
+      parse_mode: 'Markdown'
+    )
+    
+    # Обновляем шаг пользователя даже без аудио
+    @user.set_self_help_step('day_2_exercise_in_progress')
+  end
+
+  # Метод для сохранения file_id аудио (чтобы не загружать каждый раз)
+  def save_audio_file_id(audio_file)
+    # Этот метод можно реализовать позже
+    # Для этого нужно получить file_id из ответа Telegram API
+    Rails.logger.info "Audio file_id saving not implemented yet"
+  end
+
   def handle_day_2_exercise_completion
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} completing Day 2 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_2_exercise_in_progress'
       @user.set_self_help_step('day_2_completed')
@@ -430,6 +535,7 @@ end
   # --- ДЕНЬ 3: Дневник благодарности ---
 
   def deliver_day_3_content
+    save_current_progress
   Rails.logger.debug "User #{@user.telegram_id} delivering Day 3 content. Current step: #{@user.get_self_help_step}."
   current_step = @user.get_self_help_step
 
@@ -452,6 +558,7 @@ end
 
   # Запуск ввода новой благодарности
   def start_gratitude_entry
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} starting gratitude entry. Current step: #{@user.get_self_help_step}."
     # Проверка на то, что мы находимся в контексте Дня 3
     if @user.get_self_help_step.to_s.start_with?('day_3')
@@ -467,6 +574,7 @@ end
 
   # Обработка введенного текста благодарности
   def handle_gratitude_input(text)
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} submitting gratitude entry. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_3_waiting_for_gratitude'
       begin
@@ -490,6 +598,7 @@ end
 
   # Показ записей благодарности
   def show_gratitude_entries
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} requesting to show gratitude entries. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step.to_s.start_with?('day_3')
       entries = @user.gratitude_entries.order(entry_date: :desc).limit(5) # Показываем последние 5
@@ -516,6 +625,7 @@ end
 
   # Завершение Дня 3
   def complete_day_3
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} completing Day 3. Current step: #{@user.get_self_help_step}."
     if ['day_3_entry_saved', 'day_3_intro', 'day_3_waiting_for_gratitude'].include?(@user.get_self_help_step)
       @user.set_self_help_step('day_3_completed')
@@ -535,6 +645,7 @@ end
   # --- ДЕНЬ 4: Квадратное дыхание ---
 
   def deliver_day_4_content
+    save_current_progress
   Rails.logger.debug "User #{@user.telegram_id} delivering Day 4 content. Current step: #{@user.get_self_help_step}."
   current_step = @user.get_self_help_step
 
@@ -557,6 +668,7 @@ end
 end
 
   def start_day_4_exercise
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} starting Day 4 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_4_intro'
       @user.set_self_help_step('day_4_exercise_in_progress')
@@ -585,6 +697,7 @@ end
   end
 
   def handle_day_4_exercise_completion
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} completing Day 4 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_4_exercise_in_progress'
       @user.set_self_help_step('day_4_completed')
@@ -604,6 +717,7 @@ end
   # --- ДЕНЬ 5: Физическая активность ---
 
   def deliver_day_5_content
+    save_current_progress
   Rails.logger.debug "User #{@user.telegram_id} delivering Day 5 content. Current step: #{@user.get_self_help_step}."
   current_step = @user.get_self_help_step
 
@@ -631,6 +745,7 @@ end
 end
 
   def start_day_5_exercise
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} starting Day 5 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_5_intro' # Проверяем, что пользователь на шаге интро
       @user.set_self_help_step('day_5_exercise_in_progress') # Обновляем состояние
@@ -651,6 +766,7 @@ end
   end
 
   def handle_day_5_exercise_completion
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} completing Day 5 exercise. Current step: #{@user.get_self_help_step}."
     # ИЗМЕНЕНО: теперь проверяем состояние day_5_exercise_in_progress
     if @user.get_self_help_step == 'day_5_exercise_in_progress'
@@ -671,6 +787,7 @@ end
   # --- ДЕНЬ 6: Отдых и удовольствие ---
 
   def deliver_day_6_content
+    save_current_progress
   Rails.logger.debug "User #{@user.telegram_id} delivering Day 6 content. Current step: #{@user.get_self_help_step}."
   current_step = @user.get_self_help_step
 
@@ -695,6 +812,7 @@ end
 end
 
   def handle_day_6_exercise_completion
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} completing Day 6 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_6_intro'
       @user.set_self_help_step('day_6_completed')
@@ -714,6 +832,7 @@ end
   # --- ДЕНЬ 7: Рефлексия недели ---
 
   def deliver_day_7_content
+    save_current_progress
   Rails.logger.debug "User #{@user.telegram_id} delivering Day 7 content. Current step: #{@user.get_self_help_step}."
   current_step = @user.get_self_help_step
 
@@ -738,6 +857,7 @@ end
   # Обработка введенной рефлексии (вызывается из MessageProcessor)
   # Принимает текст от пользователя.
   def handle_reflection_input(text)
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} submitting reflection. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_7_waiting_for_reflection'
       begin
@@ -761,6 +881,7 @@ end
 
   # Обработчик для кнопки "Завершить неделю" (callback_data: 'complete_day_7')
   def complete_day_7_and_propose_next
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} completing Day 7. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_7_completed'
       # НОВОЕ: Предлагаем начать День 8
@@ -777,6 +898,7 @@ end
   # --- ДЕНЬ 8: Техника "Остановка мыслей" ---
 
   def deliver_day_8_content
+    save_current_progress
   Rails.logger.debug "User #{@user.telegram_id} delivering Day 8 content. Current step: #{@user.get_self_help_step}."
   if @user.get_self_help_step == 'awaiting_day_8_start'
     @user.set_self_help_step('day_8_waiting_for_consent')
@@ -800,6 +922,7 @@ end
 
   # Обрабатывает согласие/отказ пользователя начать упражнение Дня 8.
   def handle_day_8_consent(choice)
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} handled Day 8 consent: #{choice}. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_8_waiting_for_consent'
       if choice == 'confirm'
@@ -814,6 +937,7 @@ end
   end
 
   def start_day_8_exercise_instructions
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} starting Day 8 exercise instructions. Current step: #{@user.get_self_help_step}."
     @user.set_self_help_step('day_8_thought_stopping_instructions')
 
@@ -838,6 +962,7 @@ end
   end
 
   def handle_day_8_stopped_thought_first_try
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} finished first try of thought stopping. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_8_first_try'
       @user.set_self_help_step('day_8_second_try')
@@ -857,6 +982,7 @@ end
   end
 
   def handle_day_8_ready_for_distraction
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} is ready for distraction. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_8_second_try'
       @user.set_self_help_step('day_8_choosing_distraction')
@@ -872,6 +998,7 @@ end
   end
 
   def guide_distraction(distraction_type)
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} chose distraction: #{distraction_type}. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_8_choosing_distraction'
       @user.set_self_help_step('day_8_distraction_in_progress')
@@ -900,6 +1027,7 @@ end
   end
 
   def handle_day_8_exercise_completion
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} completing Day 8 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_8_distraction_in_progress'
       @user.set_self_help_step('awaiting_day_9_start')
@@ -924,6 +1052,7 @@ end
 # --- ДЕНЬ 9: Работа с тревожной мыслью ---
 
   def deliver_day_9_content
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} delivering Day 9 content. Current step: #{@user.get_self_help_step}."
     @user.set_self_help_step('day_9_intro')
     message_text = "Добро пожаловать в девятый день программы!\n\n" \
@@ -934,6 +1063,7 @@ end
 
   # Запуск ввода тревожной мысли (вызывается из callback 'day_9_enter_thought')
   def start_day_9_thought_entry
+    save_current_progress
     @user.set_self_help_step('day_9_waiting_for_thought')
     # очищаем предыдущие временные данные для дня 9
     @user.store_self_help_data('day_9_thought', nil)
@@ -947,6 +1077,7 @@ end
 
   # Обработка введённой тревожной мысли (текст)
   def handle_day_9_thought_input(text)
+    save_current_progress
     return send_message(text: "Пожалуйста, напиши мысль (не пустое сообщение).") if text.blank?
 
     @user.store_self_help_data('day_9_thought', text)
@@ -957,6 +1088,7 @@ end
 
   # Обработка вероятности (ожидаем число 1..10)
   def handle_day_9_probability_input(text)
+    save_current_progress
     # пытаемся спарсить число
     num = text.to_s.strip.to_i
     if num < 1 || num > 10
@@ -973,6 +1105,7 @@ end
 
   # Обработка фактов, которые подтверждают мысль
   def handle_day_9_facts_pro_input(text)
+    save_current_progress
     return send_message(text: "Пожалуйста, опиши факты, которые подтверждают мысль. Если их нет — просто напиши 'нет'.") if text.blank?
 
     @user.store_self_help_data('day_9_facts_pro', text)
@@ -984,6 +1117,7 @@ end
 
   # Обработка фактов, которые опровергают мысль
   def handle_day_9_facts_con_input(text)
+    save_current_progress
     return send_message(text: "Пожалуйста, опиши факты, которые опровергают мысль, или напиши 'нет'.") if text.blank?
 
     @user.store_self_help_data('day_9_facts_con', text)
@@ -1002,6 +1136,7 @@ end
   end
 
   def handle_day_9_reframe_input(text)
+    save_current_progress
     # 1. Проверяем, что текст не пустой
     return send_message(text: "Пожалуйста, попробуй написать переформулировку в одно-два предложения.") if text.blank?
     
@@ -1074,6 +1209,7 @@ end
 
   # Показать текущий прогресс дня 9 (если пользователь хочет посмотреть промежуточные ответы)
   def show_day_9_current_progress
+    save_current_progress
     # Показываем текущие НЕСОХРАНЕННЫЕ данные из self_help_program_data
     thought = @user.get_self_help_data('day_9_thought')
     prob = @user.get_self_help_data('day_9_probability')
@@ -1115,6 +1251,7 @@ end
   end
 
   def show_all_anxious_thought_entries
+    save_current_progress
     entries = @user.anxious_thought_entries.recent
     
     if entries.empty?
@@ -1144,6 +1281,7 @@ end
 
   # Завершение дня, если пользователь нажал кнопку "Завершить"
   def complete_day_9
+    save_current_progress
     if @user.get_self_help_step == 'day_9_completed'
       # Можно отдавать дополнительные рекомендации или предлагать вернуться в главное меню
       send_message(text: "Поздравляю! Ты завершил(а) День 9. Отличная работа.", reply_markup: TelegramMarkupHelper.main_menu_markup)
@@ -1156,6 +1294,7 @@ end
 
 
   def handle_day_8_skip
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} declined Day 8 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_8_waiting_for_consent'
       deliver_day_8_content
@@ -1167,6 +1306,7 @@ end
   end
 
   def handle_day_4_skip
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} declined Day 4 exercise. Current step: #{@user.get_self_help_step}."
     if @user.get_self_help_step == 'day_4_intro'
       deliver_day_4_content
@@ -1178,6 +1318,7 @@ end
   end
 
   def clear_and_restart_program
+    save_current_progress
     @user.clear_self_help_program
     
     # Отправляем подтверждение сброса
@@ -1188,6 +1329,7 @@ end
   end
 
   def handle_complete_program_final
+    save_current_progress
     Rails.logger.debug "User #{@user.telegram_id} is completing the entire program. Current step: #{@user.get_self_help_step}."
     # Предполагается, что это финальное действие после Дня 8.
     @user.clear_self_help_program # Очищаем состояние программы
@@ -1197,18 +1339,97 @@ end
     )
   end
 
+    # Метод восстановления сессии
+  def resume_from_last_step
+    progress = @user.current_progress
+    
+    return unless progress[:step]
+    
+    Rails.logger.info "Resuming user #{@user.id} from step: #{progress[:step]}"
+    
+    case progress[:step]
+    when 'day_1_intro', 'day_1_content_delivered', 'day_1_exercise_in_progress'
+      deliver_day_1_content
+    when 'day_2_intro_delivered', 'day_2_exercise_in_progress'
+      deliver_day_2_content
+    when 'day_3_intro', 'day_3_waiting_for_gratitude', 'day_3_entry_saved'
+      deliver_day_3_content
+    when 'day_4_intro', 'day_4_exercise_in_progress'
+      deliver_day_4_content
+    when 'day_5_intro', 'day_5_exercise_in_progress'
+      deliver_day_5_content
+    when 'day_6_intro'
+      deliver_day_6_content
+    when 'day_7_waiting_for_reflection'
+      deliver_day_7_content
+    when 'day_8_waiting_for_consent', 'day_8_first_try', 'day_8_second_try', 
+        'day_8_choosing_distraction', 'day_8_distraction_in_progress'
+      deliver_day_8_content
+    when 'day_9_intro', 'day_9_waiting_for_thought', 'day_9_waiting_for_probability',
+        'day_9_waiting_for_facts_pro', 'day_9_waiting_for_facts_con', 'day_9_waiting_for_reframe'
+      deliver_day_9_content
+      
+      # Восстанавливаем конкретный шаг дня 9
+      if @user.get_self_help_data('day_9_thought').present?
+        thought = @user.get_self_help_data('day_9_thought')
+        send_message(text: "Восстанавливаю вашу работу...")
+        send_message(text: "Ваша тревожная мысль: #{thought}")
+        
+        if @user.get_self_help_step == 'day_9_waiting_for_probability'
+          send_message(text: "Пожалуйста, оцените вероятность от 1 до 10:")
+        elsif @user.get_self_help_step == 'day_9_waiting_for_facts_pro'
+          send_message(text: "Какие факты подтверждают эту мысль?")
+        # ... и так далее для всех шагов
+        end
+      end
+      
+    else
+      # Если непонятное состояние, возвращаем в главное меню
+      send_message(text: "Добро пожаловать обратно! Что бы вы хотели сделать?", 
+                  reply_markup: TelegramMarkupHelper.main_menu_markup)
+    end
+    
+    # Обрабатываем очередь неотправленных сообщений
+    @message_sender.process_message_queue
+  end
+
   private
 
   # --- Вспомогательные методы ---
 
   # Этот метод принимает только text, reply_markup, parse_mode
   # и использует @chat_id, который уже известен из инициализатора класса.
-  def send_message(text:, reply_markup: nil, parse_mode: nil)
-    # Здесь @bot_service - это экземпляр Telegram::TelegramBotService.
-    # Поэтому вызываем его метод send_message, который уже принимает chat_id:
-    @bot_service.send_message(chat_id: @chat_id, text: text, reply_markup: reply_markup, parse_mode: parse_mode)
-  rescue Telegram::Bot::Error => e
-    Rails.logger.error "Telegram API Error sending message to #{@user.telegram_id}: #{e.message}"
-    # Можно добавить логику для уведомления пользователя об ошибке, но часто просто логирования достаточно.
+  def send_message(text:, reply_markup: nil, parse_mode: nil, save_progress: true)
+    # Отправляем с повторными попытками
+    success = @message_sender.send_with_retry(
+      text: text,
+      reply_markup: reply_markup,
+      parse_mode: parse_mode
+    )
+    
+    # Сохраняем прогресс если нужно
+    if success && save_progress
+      save_current_progress
+    end
+    
+    success
+  end
+  
+  # Метод для сохранения прогресса
+  def save_current_progress
+    current_step = @user.get_self_help_step
+    
+    # Сохраняем в сессию
+    @user.update_session_progress(
+      current_step,
+      {
+        day_9_thought: @user.get_self_help_data('day_9_thought'),
+        day_9_probability: @user.get_self_help_data('day_9_probability'),
+        # ... другие важные данные
+      }
+    )
+    
+    # Также обрабатываем очередь сообщений
+    @message_sender.process_message_queue
   end
 end

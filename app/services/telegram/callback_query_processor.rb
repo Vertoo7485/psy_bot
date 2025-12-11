@@ -89,6 +89,8 @@ module Telegram
       when 'day_9_show_current' then handle_day_9_show_current
       when 'show_all_anxious_thoughts' then handle_show_all_anxious_thoughts
       when 'complete_day_9' then handle_complete_day_9
+      when 'resume_session' then handle_resume_session
+      when 'start_fresh' then handle_start_fresh
 
       when 'complete_program_final' then handle_complete_program_final # Предполагаем, что это финальное завершение
 
@@ -484,6 +486,34 @@ module Telegram
       self_help_service = SelfHelpService.new(@bot_service, @user, @chat_id)
       self_help_service.handle_day_8_consent('decline')
       answer_callback_query("Хорошо, возможно, позже.")
+    end
+
+    def handle_resume_session
+      # Восстанавливаем конкретный тип сессии
+      case @user.active_session&.session_type
+      when 'self_help'
+        SelfHelpService.new(@bot_service, @user, @chat_id).resume_from_last_step
+      when 'test'
+        # Восстановление теста
+        test_result_id = @user.active_session.current_data['test_result_id']
+        if test_result_id
+          QuizRunner.new(@bot_service, @user, @chat_id).resume_test(test_result_id)
+        end
+      else
+        send_message_to_user("Не удалось восстановить сессию. Начнем заново.")
+        send_main_menu("Выберите действие:")
+      end
+      
+      answer_callback_query("Восстанавливаю...")
+    end
+
+    def handle_start_fresh
+      # Очищаем все сессии
+      @user.user_sessions.active.destroy_all
+      @user.clear_self_help_program
+      
+      send_main_menu("Начинаем заново! Выберите действие:")
+      answer_callback_query("Начинаем заново!")
     end
 
     # --- Метод для упрощенной отправки сообщений ---

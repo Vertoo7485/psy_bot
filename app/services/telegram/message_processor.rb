@@ -35,6 +35,7 @@ module Telegram
     # Обрабатывает текстовый ввод, который является частью какого-то сценария (например, программы самопомощи).
     # Возвращает true, если ввод был обработан, false - иначе.
     def handle_contextual_input(text)
+      @user.active_session&.touch_activity
       # 1. Проверяем, ждем ли мы ввод для дневника благодарности (День 3)
       if @user.get_self_help_step == 'day_3_waiting_for_gratitude'
         # Передаем текст в SelfHelpService для обработки.
@@ -73,7 +74,21 @@ module Telegram
 
     # Обработка команды /start
     def handle_start_command
-      send_main_menu("Привет! Выберите действие:")
+      # Проверяем, есть ли активная сессия для восстановления
+      if @user.active_session
+        send_message_with_retry(
+          chat_id: @chat_id,
+          text: "Найдена незавершенная сессия. Хотите продолжить с того места, где остановились?",
+          reply_markup: {
+            inline_keyboard: [
+              [{ text: 'Да, продолжить', callback_data: 'resume_session' }],
+              [{ text: 'Нет, начать заново', callback_data: 'start_fresh' }]
+            ]
+          }.to_json
+        )
+      else
+        send_main_menu("Привет! Выберите действие:")
+      end
     end
 
     # Обработка команды /help

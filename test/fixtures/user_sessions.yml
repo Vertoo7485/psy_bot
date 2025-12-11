@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  last_activity_at: 2025-12-11 20:08:06
+  last_successful_step: MyString
+  current_data: MyText
+  session_type: MyString
+  message_queue: MyText
+  retry_count: 1
+
+two:
+  user: two
+  last_activity_at: 2025-12-11 20:08:06
+  last_successful_step: MyString
+  current_data: MyText
+  session_type: MyString
+  message_queue: MyText
+  retry_count: 1

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_11_142638) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_11_150806) do
   create_table "answer_options", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "text"
@@ -113,6 +113,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_11_142638) do
     t.integer "test_type"
   end
 
+  create_table "user_sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.datetime "last_activity_at"
+    t.string "last_successful_step"
+    t.text "current_data"
+    t.string "session_type"
+    t.text "message_queue"
+    t.integer "retry_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_sessions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.integer "telegram_id"
     t.string "first_name"
@@ -138,4 +151,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_11_142638) do
   add_foreign_key "reflection_entries", "users"
   add_foreign_key "test_results", "tests"
   add_foreign_key "test_results", "users"
+  add_foreign_key "user_sessions", "users"
 end

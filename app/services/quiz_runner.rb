@@ -1,4 +1,3 @@
-# app/services/quiz_runner.rb
 class QuizRunner
   def initialize(bot_service, user, chat_id)
     @bot_service = bot_service
@@ -12,17 +11,29 @@ class QuizRunner
     return @bot_service.send_message(chat_id: @chat_id, text: "Тест '#{test_type}' не найден.") unless test
 
     # Удаляем все незаконченные тесты с этим же типом теста.
-    # Это предотвратит запуск нового теста, если предыдущий не был завершен.
     TestResult.where(user: @user, test: test, completed_at: nil).destroy_all
 
+    # ОБЪЯВЛЯЕМ ПЕРЕМЕННУЮ ДО IF
     test_result = TestResult.new(user: @user, test: test)
 
     if test_result.save
-      @user.store_self_help_data('current_test_result_id', test_result.id) # Сохраняем ID текущего теста
-      @user.store_self_help_data('current_test_type', test_type) # Сохраняем тип теста
+      @user.store_self_help_data('current_test_result_id', test_result.id)
+      @user.store_self_help_data('current_test_type', test_type)
 
-      question = test.questions.order(:id).first # Берем первый вопрос
-      send_question(question, test_result.id)
+      question = test.questions.order(:id).first
+      send_question(question, test_result.id) # ← теперь test_result доступна
+      
+      # СОХРАНЯЕМ СЕССИЮ ТОЛЬКО ПОСЛЕ УСПЕШНОГО СОХРАНЕНИЯ
+      begin
+        @user.get_or_create_session('test', 'started')
+        @user.update_session_progress('test_started', {
+          test_type: test_type,
+          test_result_id: test_result.id
+        })
+      rescue => e
+        Rails.logger.warn "Failed to save session for test: #{e.message}"
+        # Не прерываем тест из-за ошибки сессии
+      end
     else
       Rails.logger.error "QuizRunner: Failed to create TestResult for user #{@user.telegram_id}, test #{test.name}: #{test_result.errors.full_messages.join(', ')}"
       @bot_service.send_message(chat_id: @chat_id, text: "Произошла ошибка при создании теста. Попробуйте позже.")
@@ -58,8 +69,6 @@ class QuizRunner
       completed_test_type = test_result.test.test_type
 
       # TestResultCalculator сам отправит результаты и следующую кнопку.
-      # Если мы хотим, чтобы QuizRunner контролировал callback_data после завершения,
-      # то TestResultCalculator должен быть вызван здесь.
       TestResultCalculator.new(@bot_service, @chat_id, test_result).calculate_and_send_results
 
       # Очищаем временные данные о тесте у пользователя.
