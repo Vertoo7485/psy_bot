@@ -112,6 +112,11 @@ class SelfHelpService
     # Пользователь выбрал отвлечение, но не нажал "Я выполнил(а) упражнение"
     send_message(text: "Вы сейчас выполняете упражнение на отвлечение. Как только закончите, нажмите кнопку ниже:",
                  reply_markup: TelegramMarkupHelper.day_8_exercise_completed_markup)
+  when 'day_10_intro', 'day_10_exercise_in_progress'
+  deliver_day_10_content
+
+when 'day_10_completed', 'awaiting_day_11_start' # или program_completed
+  send_message(text: "Вы завершили День 10. Готовы завершить программу?", reply_markup: TelegramMarkupHelper.final_program_completion_markup)
 
   when 'day_8_completed'
     send_message(text: "Вы завершили всю программу! Продолжайте практиковать полученные навыки.", reply_markup: TelegramMarkupHelper.final_program_completion_markup)
@@ -152,6 +157,154 @@ end
       send_message(text: "Что-то пошло не так. Напишите /start, чтобы вернуться в главное меню.")
     end
   end
+
+  def deliver_day_10_content
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 10 content. Current step: #{@user.get_self_help_step}"
+  current_step = @user.get_self_help_step
+
+  if current_step == 'awaiting_day_10_start'
+    @user.set_self_help_step('day_10_intro')
+    message_text = "🎉 **Добро пожаловать в десятый день программы!** 🎉\n\n" \
+                   "**Тема дня: Работа с эмоциональными реакциями**\n\n" \
+                   "За эти 9 дней вы научились:\n" \
+                   "• Осознанности и внимательности\n" \
+                   "• Техникам дыхания и релаксации\n" \
+                   "• Работе с тревожными мыслями\n\n" \
+                   "Сегодня мы закрепим эти навыки с помощью **Дневника эмоций** - мощного инструмента для анализа своих эмоциональных реакций."
+    send_message(text: message_text, parse_mode: 'Markdown')
+  end
+
+  if ['day_10_intro', 'awaiting_day_10_start'].include?(@user.get_self_help_step)
+    send_message(
+      text: "**Задание на сегодня:**\n\n" \
+            "1. Вспомните недавнюю ситуацию, которая вызвала у вас сильную эмоциональную реакцию\n" \
+            "2. Заполните Дневник эмоций, используя все шаги\n" \
+            "3. Проанализируйте результат\n\n" \
+            "Это поможет вам лучше понимать связь между мыслями, эмоциями и поведением.",
+      parse_mode: 'Markdown',
+      reply_markup: TelegramMarkupHelper.day_10_start_exercise_markup
+    )
+  elsif current_step == 'day_10_exercise_in_progress'
+    send_message(text: "Вы сейчас заполняете Дневник эмоций. Нажмите 'Я завершил(а) упражнение', когда закончите.",
+                 reply_markup: TelegramMarkupHelper.day_10_exercise_completed_markup)
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 10 content from unexpected state: #{current_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def start_day_10_exercise
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} starting Day 10 exercise. Current step: #{@user.get_self_help_step}"
+  
+  if @user.get_self_help_step == 'day_10_intro'
+    @user.set_self_help_step('day_10_exercise_in_progress')
+    
+    # Запускаем Дневник эмоций через существующий сервис
+    EmotionDiaryService.new(@bot_service, @user, @chat_id).start_new_entry
+    
+    # УБИРАЕМ сообщение с советом здесь - оно будет показано ПОСЛЕ заполнения
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to start Day 10 exercise from unexpected state: #{@user.get_self_help_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def handle_day_10_exercise_completion
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} completing Day 10 exercise. Current step: #{@user.get_self_help_step}"
+  
+  if @user.get_self_help_step == 'day_10_exercise_in_progress'
+    # Показываем записи пользователя
+    show_day_10_diary_entries
+    
+    # Затем показываем совет и завершаем
+    show_day_10_advice_and_complete
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to complete Day 10 exercise from unexpected state: #{@user.get_self_help_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def show_day_10_diary_entries
+  # Используем существующий метод из EmotionDiaryService
+  diary_service = EmotionDiaryService.new(@bot_service, @user, @chat_id)
+  
+  # Добавляем заголовок для контекста программы
+  send_message(
+    text: "📖 **Ваши записи в Дневнике эмоций:**\n\n" \
+          "Вот все ваши сохраненные записи. Вы можете вернуться к ним в любое время для анализа.",
+    parse_mode: 'Markdown'
+  )
+  
+  # Вызываем метод показа записей (он сам проверит, есть ли записи)
+  diary_service.show_entries
+end
+
+def show_day_10_advice_and_complete
+  # Совет после заполнения
+  send_message(
+    text: "💡 **Совет по использованию Дневника эмоций:**\n\n" \
+          "1. **Будьте честны с собой** - цель не оценивать, а понимать\n" \
+          "2. **Заполняйте регулярно** - хотя бы раз в неделю\n" \
+          "3. **Анализируйте паттерны** - что чаще всего вызывает негативные эмоции?\n" \
+          "4. **Отмечайте прогресс** - как меняются ваши реакции со временем?\n\n" \
+          "Этот инструмент поможет вам лучше понимать связь между мыслями, эмоциями и поведением.",
+    parse_mode: 'Markdown'
+  )
+  
+  # Предложение посмотреть конкретную запись
+  latest_entry = @user.emotion_diary_entries.order(created_at: :desc).first
+  if latest_entry
+    send_message(
+      text: "🔍 **Только что заполненная запись:**\n\n" \
+            "*Ситуация:* #{latest_entry.situation.truncate(100)}\n" \
+            "*Мысли:* #{latest_entry.thoughts.truncate(100)}\n" \
+            "*Эмоции:* #{latest_entry.emotions}\n\n" \
+            "Запись сохранена ✅",
+      parse_mode: 'Markdown'
+    )
+  end
+  
+  # Завершаем день
+  @user.set_self_help_step('day_10_completed')
+  
+  message = "🌟 **Отличная работа! День 10 завершен.** 🌟\n\n" \
+            "Вы успешно:\n" \
+            "✅ Заполнили Дневник эмоций\n" \
+            "✅ Проанализировали свои записи\n" \
+            "✅ Получили практические советы\n\n" \
+            "Теперь у вас есть полный набор инструментов для работы с эмоциями!"
+  send_message(text: message, parse_mode: 'Markdown')
+  
+  # Предлагаем завершить программу
+  send_message(
+    text: "🎊 **Поздравляем! Вы завершили 10-дневную программу самопомощи!** 🎊\n\n" \
+          "Вы проделали огромную работу над собой. Что бы вы хотели сделать дальше?",
+    reply_markup: TelegramMarkupHelper.day_10_completion_options_markup
+  )
+end
+
+def complete_day_10
+  save_current_progress
+  @user.set_self_help_step('program_completed')
+  @user.clear_self_help_program
+  
+  send_message(
+    text: "🎉 **Программа полностью завершена!** 🎉\n\n" \
+          "Вы прошли 10-дневный путь самопомощи. Все инструменты теперь в вашем распоряжении:\n\n" \
+          "• Дневник эмоций\n" \
+          "• Дневник благодарности\n" \
+          "• Техники релаксации\n" \
+          "• Работа с тревожными мыслями\n\n" \
+          "Продолжайте практиковать и заботиться о себе!",
+    reply_markup: TelegramMarkupHelper.main_menu_markup
+  )
+end
 
   # Отменяет инициацию программы (если пользователь сказал "Нет").
   def cancel_program_initiation
@@ -1304,16 +1457,18 @@ end
 
   # Завершение дня, если пользователь нажал кнопку "Завершить"
   def complete_day_9
-    save_current_progress
-    if @user.get_self_help_step == 'day_9_completed'
-      # Можно отдавать дополнительные рекомендации или предлагать вернуться в главное меню
-      send_message(text: "Поздравляю! Ты завершил(а) День 9. Отличная работа.", reply_markup: TelegramMarkupHelper.main_menu_markup)
-      # очищаем текущие шаги, если нужно
-      @user.set_self_help_step('program_progress_after_day_9') # или nil по логике
-    else
-      send_message(text: "Похоже, вы еще не завершили шаги Дня 9. Если хотите, перейдите в меню дня и завершите все пункты.", reply_markup: TelegramMarkupHelper.day_9_menu_markup)
-    end
+  save_current_progress
+  if @user.get_self_help_step == 'day_9_completed'
+    # НОВОЕ: Предлагаем День 10
+    @user.set_self_help_step('awaiting_day_10_start')
+    send_message(
+      text: "Отлично! День 9 завершен. Хотите перейти к последнему, 10-му дню программы?",
+      reply_markup: TelegramMarkupHelper.day_10_start_proposal_markup
+    )
+  else
+    send_message(text: "Похоже, вы еще не завершили шаги Дня 9.")
   end
+end
 
 
   def handle_day_8_skip

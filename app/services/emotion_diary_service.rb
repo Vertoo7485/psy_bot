@@ -30,35 +30,53 @@ class EmotionDiaryService
   end
 
   def handle_answer(text)
-    current_step = @user.current_diary_step
-    return @bot.send_message(chat_id: @chat_id, text: "Неизвестный шаг дневника.") unless DIARY_STEPS.key?(current_step)
+  current_step = @user.current_diary_step
+  return @bot_service.send_message(chat_id: @chat_id, text: "Неизвестный шаг дневника.") unless DIARY_STEPS.key?(current_step)
 
-    @user.diary_data[current_step] = text
-    next_step_index = DIARY_STEP_ORDER.index(current_step) + 1
+  @user.diary_data[current_step] = text
+  next_step_index = DIARY_STEP_ORDER.index(current_step) + 1
 
-    if next_step_index < DIARY_STEP_ORDER.length
-      next_step = DIARY_STEP_ORDER[next_step_index]
-      @user.update(current_diary_step: next_step, diary_data: @user.diary_data)
-      @bot.send_message(chat_id: @chat_id, text: DIARY_STEPS[next_step])
-    else
-      # Последний шаг, сохраняем запись
-      EmotionDiaryEntry.create!(
-        user: @user,
-        date: Date.today,
-        situation: @user.diary_data['situation'],
-        thoughts: @user.diary_data['thoughts'],
-        emotions: @user.diary_data['emotions'],
-        behavior: @user.diary_data['behavior'],
-        evidence_against: @user.diary_data['evidence_against'],
-        new_thoughts: @user.diary_data['new_thoughts']
+  if next_step_index < DIARY_STEP_ORDER.length
+    next_step = DIARY_STEP_ORDER[next_step_index]
+    @user.update(current_diary_step: next_step, diary_data: @user.diary_data)
+    @bot_service.send_message(chat_id: @chat_id, text: DIARY_STEPS[next_step])
+  else
+    # Последний шаг, сохраняем запись
+    EmotionDiaryEntry.create!(
+      user: @user,
+      date: Date.today,
+      situation: @user.diary_data['situation'],
+      thoughts: @user.diary_data['thoughts'],
+      emotions: @user.diary_data['emotions'],
+      behavior: @user.diary_data['behavior'],
+      evidence_against: @user.diary_data['evidence_against'],
+      new_thoughts: @user.diary_data['new_thoughts']
+    )
+    
+    @user.update(current_diary_step: nil, diary_data: {})
+    
+    # ПРОВЕРКА: Если пользователь в программе самопомощи (День 10)
+    if @user.get_self_help_step == 'day_10_exercise_in_progress'
+      # Возвращаемся в контекст программы
+      @bot_service.send_message(
+        chat_id: @chat_id,
+        text: "✅ Дневник эмоций заполнен и сохранен!\n\n" \
+              "Вернемся к программе самопомощи...",
+        reply_markup: TelegramMarkupHelper.day_10_exercise_completed_markup
       )
-      @user.update(current_diary_step: nil, diary_data: {})
-      @bot.send_message(chat_id: @chat_id, text: "Дневник заполнен и сохранен! Выберите следующее действие:", reply_markup: main_menu_markup)
+    else
+      # Обычное поведение
+      @bot_service.send_message(
+        chat_id: @chat_id,
+        text: "Дневник заполнен и сохранен! Выберите следующее действие:",
+        reply_markup: TelegramMarkupHelper.main_menu_markup
+      )
     end
-  rescue ActiveRecord::RecordInvalid => e
-    Rails.logger.error "Ошибка при сохранении записи дневника: #{e.message}"
-    @bot.send_message(chat_id: @chat_id, text: "Произошла ошибка при сохранении записи. Попробуйте еще раз.")
   end
+rescue ActiveRecord::RecordInvalid => e
+  Rails.logger.error "Ошибка при сохранении записи дневника: #{e.message}"
+  @bot_service.send_message(chat_id: @chat_id, text: "Произошла ошибка при сохранении записи. Попробуйте еще раз.")
+end
 
   def show_entries
     entries = @user.emotion_diary_entries.order(date: :desc)

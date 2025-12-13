@@ -71,6 +71,67 @@ module TelegramMarkupHelper
         }.to_json
       end
 
+      # Разметка для предложения начать День 10
+def day_10_start_proposal_markup
+  {
+    inline_keyboard: [
+      [{ text: 'Начать День 10', callback_data: 'start_day_10_from_proposal' }]
+    ]
+  }.to_json
+end
+
+# Разметка для начала упражнения Дня 10
+def day_10_start_exercise_markup
+  {
+    inline_keyboard: [
+      [{ text: 'Начать заполнение Дневника эмоций', callback_data: 'start_day_10_exercise' }],
+      [{ text: 'Вернуться в главное меню', callback_data: 'back_to_main_menu' }]
+    ]
+  }.to_json
+end
+
+# Разметка для завершения упражнения Дня 10
+def day_10_exercise_completed_markup
+  {
+    inline_keyboard: [
+      [{ text: 'Я завершил(а) Дневник эмоций', callback_data: 'day_10_exercise_completed' }]
+    ]
+  }.to_json
+end
+
+# Варианты после завершения Дня 10
+def day_10_completion_options_markup
+  {
+    inline_keyboard: [
+      [{ text: '👀 Посмотреть все мои записи', callback_data: 'show_all_emotion_diaries' }],
+      [{ text: '➕ Создать новую запись', callback_data: 'new_emotion_diary_entry' }],
+      [{ text: '🎉 Завершить программу', callback_data: 'complete_day_10' }],
+      [{ text: '↩️ Вернуться в главное меню', callback_data: 'back_to_main_menu' }]
+    ]
+  }.to_json
+end
+
+# Кнопка для просмотра записей в контексте дня 10
+def day_10_view_entries_markup
+  {
+    inline_keyboard: [
+      [{ text: '📖 Посмотреть мои записи', callback_data: 'show_emotion_diary_entries' }],
+      [{ text: '✅ Я просмотрел(а) записи', callback_data: 'day_10_viewed_entries' }]
+    ]
+  }.to_json
+end
+
+# Обновленная финальная разметка программы
+def final_program_completion_markup
+  {
+    inline_keyboard: [
+      [{ text: '🎉 Завершить программу', callback_data: 'complete_day_10' }],
+      [{ text: 'Начать программу заново', callback_data: 'restart_self_help_program' }],
+      [{ text: 'Вернуться в главное меню', callback_data: 'back_to_main_menu' }]
+    ]
+  }.to_json
+end
+
   def self_help_intro_markup
         {
           inline_keyboard: [

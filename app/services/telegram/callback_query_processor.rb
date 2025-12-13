@@ -91,6 +91,18 @@ module Telegram
       when 'complete_day_9' then handle_complete_day_9
       when 'resume_session' then handle_resume_session
       when 'start_fresh' then handle_start_fresh
+      when 'start_day_10_from_proposal'
+        handle_start_day_10_from_proposal
+      when 'complete_day_10'
+        handle_complete_day_10
+      when 'day_10_exercise_completed'
+        handle_day_10_exercise_completed
+      when 'start_day_10_exercise'
+        handle_start_day_10_exercise
+      when 'show_all_emotion_diaries'
+        handle_show_all_emotion_diaries
+      when 'day_10_viewed_entries'
+        handle_day_10_viewed_entries
 
       when 'complete_program_final' then handle_complete_program_final # Предполагаем, что это финальное завершение
 
@@ -101,6 +113,47 @@ module Telegram
     end
 
     private
+
+    def handle_show_all_emotion_diaries
+  EmotionDiaryService.new(@bot_service, @user, @chat_id).show_entries
+  answer_callback_query("Показываю все записи...")
+end
+
+def handle_day_10_viewed_entries
+  if @user.get_self_help_step == 'day_10_exercise_in_progress'
+    # После просмотра записей показываем совет и завершаем
+    SelfHelpService.new(@bot_service, @user, @chat_id).show_day_10_advice_and_complete
+    answer_callback_query("Продолжаем...")
+  else
+    answer_callback_query("Неверный шаг программы.")
+  end
+end
+
+    def handle_start_day_10_exercise
+      SelfHelpService.new(@bot_service, @user, @chat_id).start_day_10_exercise
+      answer_callback_query("Начинаем упражнение Дня 10!")
+    end
+
+    def handle_start_day_10_from_proposal
+  if ['awaiting_day_10_start', 'day_9_completed'].include?(@user.get_self_help_step)
+    @user.set_self_help_step('awaiting_day_10_start')
+    SelfHelpService.new(@bot_service, @user, @chat_id).deliver_day_10_content
+    answer_callback_query("Начинаем День 10!")
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to start Day 10 from unexpected state: #{@user.get_self_help_step}."
+    answer_callback_query("Невозможно начать День 10 сейчас. Попробуйте позже или начните /start.")
+  end
+end
+
+def handle_complete_day_10
+  SelfHelpService.new(@bot_service, @user, @chat_id).complete_day_10
+  answer_callback_query("День 10 завершен.")
+end
+
+def handle_day_10_exercise_completed
+  SelfHelpService.new(@bot_service, @user, @chat_id).handle_day_10_exercise_completion
+  answer_callback_query("Упражнение Дня 10 завершено!")
+end
 
     def handle_show_all_anxious_thoughts
       SelfHelpService.new(@bot_service, @user, @chat_id).show_all_anxious_thought_entries
