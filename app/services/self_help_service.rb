@@ -1077,14 +1077,26 @@ end
 
   # Обработка введённой тревожной мысли (текст)
   def handle_day_9_thought_input(text)
-    save_current_progress
-    return send_message(text: "Пожалуйста, напиши мысль (не пустое сообщение).") if text.blank?
-
-    @user.store_self_help_data('day_9_thought', text)
-    @user.set_self_help_step('day_9_waiting_for_probability')
-    send_message(text: "Спасибо, что поделился(лась). Теперь давай оценим вероятность.\n\nШаг 2: Насколько вероятно, что это произойдет? Оцени по шкале от 1 до 10 (где 1 — совсем не вероятно, 10 — очень вероятно).")
-    true
+  save_current_progress
+  return send_message(text: "Пожалуйста, напиши мысль (не пустое сообщение).") if text.blank?
+  
+  # Проверяем, что это текст, а не только цифры
+  if text =~ /\A\d+\z/  # Если строка состоит только из цифр
+    send_message(text: "Пожалуйста, опиши мысль словами, а не только цифрами.")
+    return true
   end
+  
+  # Проверяем минимальную длину
+  if text.strip.length < 3
+    send_message(text: "Мысль должна содержать хотя бы 3 символа. Попробуй описать подробнее.")
+    return true
+  end
+  
+  @user.store_self_help_data('day_9_thought', text)
+  @user.set_self_help_step('day_9_waiting_for_probability')
+  send_message(text: "Спасибо, что поделился(лась). Теперь давай оценим вероятность.\n\nШаг 2: Насколько вероятно, что это произойдет? Оцени по шкале от 1 до 10.")
+  true
+end
 
   # Обработка вероятности (ожидаем число 1..10)
   def handle_day_9_probability_input(text)
@@ -1105,107 +1117,118 @@ end
 
   # Обработка фактов, которые подтверждают мысль
   def handle_day_9_facts_pro_input(text)
-    save_current_progress
-    return send_message(text: "Пожалуйста, опиши факты, которые подтверждают мысль. Если их нет — просто напиши 'нет'.") if text.blank?
-
-    @user.store_self_help_data('day_9_facts_pro', text)
-    @user.set_self_help_step('day_9_waiting_for_facts_con')
-
-    send_message(text: "2) Есть ли факты, которые опровергают эту мысль? Напиши их (или 'нет', если таких фактов нет).")
-    true
+  save_current_progress
+  return send_message(text: "Пожалуйста, опиши факты, которые подтверждают мысль. Если их нет — просто напиши 'нет'.") if text.blank?
+  
+  # Проверяем, что это не только цифры
+  if text =~ /\A\d+\z/  # Если строка состоит только из цифр
+    send_message(text: "Пожалуйста, опиши факты словами. Например: 'Я уже сталкивался с подобной ситуацией раньше'.")
+    return true
   end
+  
+  @user.store_self_help_data('day_9_facts_pro', text)
+  @user.set_self_help_step('day_9_waiting_for_facts_con')
+  send_message(text: "2) Есть ли факты, которые опровергают эту мысль? Напиши их (или 'нет', если таких фактов нет).")
+  true
+end
 
   # Обработка фактов, которые опровергают мысль
   def handle_day_9_facts_con_input(text)
-    save_current_progress
-    return send_message(text: "Пожалуйста, опиши факты, которые опровергают мысль, или напиши 'нет'.") if text.blank?
-
-    @user.store_self_help_data('day_9_facts_con', text)
-    @user.set_self_help_step('day_9_waiting_for_reframe')
-
-    # Отправляем промежуточный комментарий и просим переформулировать
-    send_message(text: "Отлично! У нас теперь есть:\n\n" \
-                      "— Твоя мысль: #{@user.get_self_help_data('day_9_thought')}\n" \
-                      "— Оценка вероятности: #{@user.get_self_help_data('day_9_probability')}\n" \
-                      "— Факты, подтверждающие: #{@user.get_self_help_data('day_9_facts_pro')}\n" \
-                      "— Факты, опровергающие: #{@user.get_self_help_data('day_9_facts_con')}\n\n" \
-                      "Шаг 4: Переосмысление.\n" \
-                      "Как бы ты мог(ла) переформулировать свою тревожную мысль так, чтобы она звучала менее пугающе и более реалистично?\n\n" \
-                      "Например: 'Это сложно, но я могу справляться по шагам.'")
-    true
+  save_current_progress
+  return send_message(text: "Пожалуйста, опиши факты, которые опровергают мысль, или напиши 'нет'.") if text.blank?
+  
+  # Проверяем, что это не только цифры
+  if text =~ /\A\d+\z/  # Если строка состоит только из цифр
+    send_message(text: "Пожалуйста, опиши факты словами. Например: 'У меня есть друзья, которые мне помогут'.")
+    return true
   end
+  
+  @user.store_self_help_data('day_9_facts_con', text)
+  @user.set_self_help_step('day_9_waiting_for_reframe')
+  
+  # Получаем все данные для промежуточного отчета
+  thought = @user.get_self_help_data('day_9_thought')
+  probability = @user.get_self_help_data('day_9_probability')
+  facts_pro = @user.get_self_help_data('day_9_facts_pro')
+  facts_con = @user.get_self_help_data('day_9_facts_con')
+  
+  send_message(text: "Отлично! У нас теперь есть:\n\n" \
+                    "— Твоя мысль: #{thought}\n" \
+                    "— Оценка вероятности: #{probability}\n" \
+                    "— Факты, подтверждающие: #{facts_pro}\n" \
+                    "— Факты, опровергающие: #{facts_con}\n\n" \
+                    "Шаг 4: Переосмысление.\n" \
+                    "Как бы ты мог(ла) переформулировать свою тревожную мысль так, чтобы она звучала менее пугающе и более реалистично?\n\n" \
+                    "Например: 'Это сложно, но я могу справляться по шагам.'")
+  true
+end
 
   def handle_day_9_reframe_input(text)
-    save_current_progress
-    # 1. Проверяем, что текст не пустой
-    return send_message(text: "Пожалуйста, попробуй написать переформулировку в одно-два предложения.") if text.blank?
+  save_current_progress
+  return send_message(text: "Пожалуйста, попробуй написать переформулировку в одно-два предложения.") if text.blank?
+  
+  # Проверяем, что это текст, а не только цифры
+  if text =~ /\A\d+\z/  # Если строка состоит только из цифр
+    send_message(text: "Переформулировка должна быть в виде предложения. Например: 'Я справлюсь с этим шаг за шагом'.")
+    return true
+  end
+  
+  # Проверяем минимальную длину
+  if text.strip.length < 3
+    send_message(text: "Переформулировка должна содержать хотя бы 3 символа. Попробуй сформулировать полнее.")
+    return true
+  end
+  
+  # Получаем данные
+  thought = @user.get_self_help_data('day_9_thought')
+  probability = @user.get_self_help_data('day_9_probability')
+  facts_pro = @user.get_self_help_data('day_9_facts_pro')
+  facts_con = @user.get_self_help_data('day_9_facts_con')
+  
+  # Дополнительная проверка на случай, если где-то данные потерялись
+  if thought.blank?
+    send_message(text: "Кажется, данные о твоей мысли потерялись. Давай начнем день 9 заново.")
+    return start_day_9_thought_entry
+  end
+  
+  begin
+    entry = AnxiousThoughtEntry.create!(
+      user: @user,
+      entry_date: Date.current,
+      thought: thought,
+      probability: probability.to_i,
+      facts_pro: facts_pro,
+      facts_con: facts_con,
+      reframe: text
+    )
     
-    # 2. Получаем временные данные из self_help_program_data
-    thought = @user.get_self_help_data('day_9_thought')
-    probability = @user.get_self_help_data('day_9_probability')
-    facts_pro = @user.get_self_help_data('day_9_facts_pro')
-    facts_con = @user.get_self_help_data('day_9_facts_con')
-    
-    # 3. Проверяем, что все необходимые данные есть
-    if thought.blank? || probability.blank? || facts_pro.blank? || facts_con.blank?
-      Rails.logger.error "Missing data for anxious thought entry for user #{@user.id}"
-      send_message(text: "Что-то пошло не так. Кажется, некоторые данные потерялись. Давай начнем день 9 заново.")
-      return start_day_9_thought_entry
+    # Очищаем временные данные
+    ['day_9_thought', 'day_9_probability', 'day_9_facts_pro', 'day_9_facts_con', 'day_9_reframe'].each do |key|
+      @user.store_self_help_data(key, nil)
     end
     
-    begin
-      # 4. СОХРАНЯЕМ В БАЗУ ДАННЫХ!
-      entry = AnxiousThoughtEntry.create!(
-        user: @user,
-        entry_date: Date.current,
-        thought: thought,
-        probability: probability,
-        facts_pro: facts_pro,
-        facts_con: facts_con,
-        reframe: text
-      )
-      
-      Rails.logger.info "AnxiousThoughtEntry saved for user #{@user.id}, entry ID: #{entry.id}"
-      
-      # 5. Очищаем временные данные (больше они не нужны)
-      ['day_9_thought', 'day_9_probability', 'day_9_facts_pro', 'day_9_facts_con', 'day_9_reframe'].each do |key|
-        @user.store_self_help_data(key, nil)
-      end
-      
-      # 6. Также очищаем историю из self_help_program_data (опционально)
-      @user.store_self_help_data('day_9_history', [])
-      
-      # 7. Устанавливаем шаг как завершенный
-      @user.set_self_help_step('day_9_completed')
-      
-      # 8. Формируем красивый ответ для пользователя
-      summary = "🎉 **Отличная работа! Ты проделал(а) важный анализ.**\n\n"
-      summary += "**Сводка твоего анализа:**\n"
-      summary += "• **Тревожная мысль:** #{thought.truncate(100)}\n"
-      summary += "• **Вероятность (от 1 до 10):** #{probability}\n"
-      summary += "• **Факты 'за':** #{facts_pro.truncate(80)}\n"
-      summary += "• **Факты 'против':** #{facts_con.truncate(80)}\n"
-      summary += "• **Переформулировка:** #{text.truncate(150)}\n\n"
-      summary += "Эта запись сохранена в твоем дневнике. Ты можешь вернуться к ней в любой момент!"
-      
-      send_message(text: summary, parse_mode: 'Markdown')
-      
-      # 9. Показываем меню дня 9
-      send_message(text: "Что дальше?", reply_markup: TelegramMarkupHelper.day_9_menu_markup)
-      
-    rescue ActiveRecord::RecordInvalid => e
-      # 10. Обработка ошибок валидации
-      Rails.logger.error "Failed to save AnxiousThoughtEntry for user #{@user.id}: #{e.message}"
-      send_message(text: "Произошла ошибка при сохранении записи: #{e.record.errors.full_messages.join(', ')}. Попробуй еще раз.")
-      
-    rescue => e
-      # 11. Обработка других ошибок
-      Rails.logger.error "Unexpected error saving AnxiousThoughtEntry for user #{@user.id}: #{e.message}"
-      send_message(text: "Произошла непредвиденная ошибка. Попробуй еще раз или начни день 9 заново.")
-    end
+    @user.set_self_help_step('day_9_completed')
+    
+    summary = "🎉 **Отличная работа! Ты проделал(а) важный анализ.**\n\n"
+    summary += "**Сводка твоего анализа:**\n"
+    summary += "• **Тревожная мысль:** #{thought.truncate(100)}\n"
+    summary += "• **Вероятность (от 1 до 10):** #{probability}\n"
+    summary += "• **Факты 'за':** #{facts_pro.truncate(80)}\n"
+    summary += "• **Факты 'против':** #{facts_con.truncate(80)}\n"
+    summary += "• **Переформулировка:** #{text.truncate(150)}\n\n"
+    summary += "Эта запись сохранена в твоем дневнике. Ты можешь вернуться к ней в любой момент!"
+    
+    send_message(text: summary, parse_mode: 'Markdown')
+    send_message(text: "Что дальше?", reply_markup: TelegramMarkupHelper.day_9_menu_markup)
     
     true
+    
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.error "Failed to save AnxiousThoughtEntry: #{e.message}"
+    send_message(text: "Произошла ошибка при сохранении: #{e.record.errors.full_messages.join(', ')}. Попробуй еще раз.")
+    false
   end
+end
 
   # Показать текущий прогресс дня 9 (если пользователь хочет посмотреть промежуточные ответы)
   def show_day_9_current_progress

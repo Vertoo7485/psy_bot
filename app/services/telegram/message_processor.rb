@@ -74,22 +74,31 @@ module Telegram
 
     # Обработка команды /start
     def handle_start_command
-      # Проверяем, есть ли активная сессия для восстановления
-      if @user.active_session
-        send_message_with_retry(
-          chat_id: @chat_id,
-          text: "Найдена незавершенная сессия. Хотите продолжить с того места, где остановились?",
-          reply_markup: {
-            inline_keyboard: [
-              [{ text: 'Да, продолжить', callback_data: 'resume_session' }],
-              [{ text: 'Нет, начать заново', callback_data: 'start_fresh' }]
-            ]
-          }.to_json
-        )
-      else
-        send_main_menu("Привет! Выберите действие:")
-      end
-    end
+  # ОЧИСТКА: При старте очищаем возможные некорректные данные дня 9
+  ['day_9_thought', 'day_9_probability', 'day_9_facts_pro', 'day_9_facts_con', 'day_9_reframe'].each do |key|
+    @user.store_self_help_data(key, nil) if @user.get_self_help_data(key).present?
+  end
+  
+  # Сбрасываем шаг программы
+  @user.set_self_help_step(nil) if @user.get_self_help_step&.start_with?('day_9')
+  
+  # Проверяем, есть ли активная сессия для восстановления
+  if @user.active_session
+    # Используем правильный метод отправки сообщения
+    @bot.send_message(
+      chat_id: @chat_id,
+      text: "Найдена незавершенная сессия. Хотите продолжить с того места, где остановились?",
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: 'Да, продолжить', callback_data: 'resume_session' }],
+          [{ text: 'Нет, начать заново', callback_data: 'start_fresh' }]
+        ]
+      }.to_json
+    )
+  else
+    send_main_menu("Привет! Выберите действие:")
+  end
+end
 
     # Обработка команды /help
     def handle_help_command
