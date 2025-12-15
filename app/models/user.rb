@@ -8,6 +8,8 @@
       has_many :user_sessions, dependent: :destroy
       has_one :active_session, -> { active }, class_name: 'UserSession'
       has_many :grounding_exercise_entries, dependent: :destroy
+      has_many :self_compassion_practices, dependent: :destroy
+      has_many :procrastination_tasks, dependent: :destroy
 
       # Для дневника эмоций
       attribute :current_diary_step, :string, default: nil

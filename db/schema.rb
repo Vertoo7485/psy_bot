@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_13_145159) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_15_130215) do
   create_table "answer_options", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "text"
@@ -82,6 +82,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_13_145159) do
     t.index ["user_id"], name: "index_grounding_exercise_entries_on_user_id"
   end
 
+  create_table "procrastination_tasks", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "entry_date"
+    t.text "task"
+    t.text "reason"
+    t.text "steps"
+    t.text "first_step"
+    t.boolean "completed"
+    t.text "feelings_after"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_procrastination_tasks_on_user_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.integer "test_id", null: false
     t.text "text"
@@ -98,6 +112,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_13_145159) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_reflection_entries_on_user_id"
+  end
+
+  create_table "self_compassion_practices", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "entry_date"
+    t.text "current_difficulty"
+    t.text "common_humanity"
+    t.text "kind_words"
+    t.text "physical_comfort"
+    t.text "mantra"
+    t.text "feelings_after"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_self_compassion_practices_on_user_id"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -162,8 +190,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_13_145159) do
   add_foreign_key "emotion_diary_entries", "users"
   add_foreign_key "gratitude_entries", "users"
   add_foreign_key "grounding_exercise_entries", "users"
+  add_foreign_key "procrastination_tasks", "users"
   add_foreign_key "questions", "tests"
   add_foreign_key "reflection_entries", "users"
+  add_foreign_key "self_compassion_practices", "users"
   add_foreign_key "test_results", "tests"
   add_foreign_key "test_results", "users"
   add_foreign_key "user_sessions", "users"

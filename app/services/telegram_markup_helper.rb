@@ -139,6 +139,112 @@ def day_11_start_exercise_markup
   }.to_json
 end
 
+# Предложение начать День 12
+def day_12_start_proposal_markup
+  {
+    inline_keyboard: [
+      [{ text: 'Начать День 12: Самосострадание', callback_data: 'start_day_12_from_proposal' }]
+    ]
+  }.to_json
+end
+
+# Начало упражнения
+def day_12_start_exercise_markup
+  {
+    inline_keyboard: [
+      [{ text: 'Начать медитацию на самосострадание', callback_data: 'start_self_compassion_exercise' }]
+    ]
+  }.to_json
+end
+
+# Завершение упражнения
+def self_compassion_exercise_completed_markup
+  {
+    inline_keyboard: [
+      [{ text: '✅ Я завершил(а) медитацию', callback_data: 'self_compassion_exercise_completed' }]
+    ]
+  }.to_json
+end
+
+# Меню после завершения дня 12
+def day_12_completion_markup
+  {
+    inline_keyboard: [
+      [{ text: '📖 Мои практики самосострадания', callback_data: 'view_self_compassion_practices' }],
+      [{ text: '🔄 Сделать еще одну практику', callback_data: 'start_self_compassion_exercise' }],
+      [{ text: '🏠 Вернуться в главное меню', callback_data: 'back_to_main_menu' }]
+    ]
+  }.to_json
+end
+
+# Меню для просмотра практик
+def self_compassion_practices_menu_markup
+  {
+    inline_keyboard: [
+      [{ text: '➕ Новая практика', callback_data: 'start_self_compassion_exercise' }],
+      [{ text: '🏠 Главное меню', callback_data: 'back_to_main_menu' }]
+    ]
+  }.to_json
+end
+
+def day_13_start_proposal_markup
+  {
+    inline_keyboard: [
+      [{ text: 'Начать День 13: Победи прокрастинацию', callback_data: 'start_day_13_from_proposal' }]
+    ]
+  }.to_json
+end
+
+# Начало упражнения
+def day_13_start_exercise_markup
+  {
+    inline_keyboard: [
+      [{ text: 'Начать работу с прокрастинацией', callback_data: 'start_procrastination_exercise' }]
+    ]
+  }.to_json
+end
+
+# Завершение первого шага
+def procrastination_first_step_completed_markup
+  {
+    inline_keyboard: [
+      [{ text: '✅ Я сделал(а) первый шаг', callback_data: 'procrastination_first_step_done' }]
+    ]
+  }.to_json
+end
+
+# Завершение упражнения
+def procrastination_exercise_completed_markup
+  {
+    inline_keyboard: [
+      [{ text: '✅ Завершить упражнение', callback_data: 'procrastination_exercise_completed' }]
+    ]
+  }.to_json
+end
+
+# Меню после завершения дня 13
+def day_13_completion_markup
+  {
+    inline_keyboard: [
+      [{ text: '📋 Мои задачи', callback_data: 'view_my_procrastination_tasks' }],
+      [{ text: '🔄 Новая задача', callback_data: 'start_procrastination_exercise' }],
+      [{ text: '✅ Отметить задачу выполненной', callback_data: 'mark_task_completed' }],
+      [{ text: '🏠 Главное меню', callback_data: 'back_to_main_menu' }]
+    ]
+  }.to_json
+end
+
+# Меню для просмотра задач
+def procrastination_tasks_menu_markup
+  {
+    inline_keyboard: [
+      [{ text: '➕ Новая задача', callback_data: 'start_procrastination_exercise' }],
+      [{ text: '✅ Отметить выполненной', callback_data: 'mark_task_completed' }],
+      [{ text: '🏠 Главное меню', callback_data: 'back_to_main_menu' }]
+    ]
+  }.to_json
+end
+
 # Завершение упражнения
 def grounding_exercise_completed_markup
   {

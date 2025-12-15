@@ -72,6 +72,13 @@ module Telegram
         return SelfHelpService.new(@bot, @user, @chat_id).handle_grounding_input(text)
       end
 
+      if @user.get_self_help_step == 'day_12_exercise_in_progress'
+        return SelfHelpService.new(@bot, @user, @chat_id).handle_self_compassion_input(text)
+      end
+
+      if @user.get_self_help_step == 'day_13_exercise_in_progress'
+        return SelfHelpService.new(@bot, @user, @chat_id).handle_procrastination_input(text)
+      end
       # Если ввод не относится ни к одному из активных сценариев.
         false
       end

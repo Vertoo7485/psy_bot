@@ -124,6 +124,12 @@ when 'day_11_intro', 'day_11_exercise_in_progress'
 when 'day_11_completed', 'awaiting_day_12_start' # или завершение программы
   send_message(text: "Вы завершили День 11. Готовы завершить программу?", reply_markup: TelegramMarkupHelper.final_program_completion_markup)  
 
+when 'day_12_intro', 'day_12_exercise_in_progress'
+  deliver_day_12_content
+
+when 'day_12_completed', 'awaiting_day_13_start' # если будут следующие дни
+  send_message(text: "Вы завершили День 12. Готовы продолжить?", reply_markup: TelegramMarkupHelper.day_12_completion_markup)
+
 when 'day_8_completed'
     send_message(text: "Вы завершили всю программу! Продолжайте практиковать полученные навыки.", reply_markup: TelegramMarkupHelper.final_program_completion_markup)
 
@@ -422,12 +428,239 @@ def complete_day_11
   send_message(
     text: "🎉 **День 11 завершен!** 🎉\n\n" \
           "Вы освоили технику 'Заземление 5-4-3-2-1'.\n\n" \
+          "Хотите перейти к 12-му дню программы: 'Медитация на самосострадание'?",
+    reply_markup: TelegramMarkupHelper.day_12_start_proposal_markup
+  )
+end
+
+# ДЕНЬ 12: Медитация на самосострадание
+def deliver_day_12_content
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 12 content. Current step: #{@user.get_self_help_step}"
+  current_step = @user.get_self_help_step
+
+  if current_step == 'awaiting_day_12_start'
+    @user.set_self_help_step('day_12_intro')
+    message_text = "🌟 **Добро пожаловать в двенадцатый день программы!** 🌟\n\n" \
+                   "**Тема дня: Медитация на самосострадание**\n\n" \
+                   "Самосострадание — это способность быть добрым и понимающим к себе в трудные моменты.\n\n" \
+                   "**Что дает эта практика:**\n" \
+                   "• Снижает самокритику\n" \
+                   "• Увеличивает эмоциональную устойчивость\n" \
+                   "• Помогает принимать свои несовершенства\n" \
+                   "• Развивает эмпатию к себе и другим"
+    send_message(text: message_text, parse_mode: 'Markdown')
+  end
+
+  if ['day_12_intro', 'awaiting_day_12_start'].include?(@user.get_self_help_step)
+    send_message(
+      text: "**Как проходит практика:**\n\n" \
+            "Мы пройдем 5 шагов, которые помогут развить доброе отношение к себе.\n\n" \
+            "Готовы начать?",
+      parse_mode: 'Markdown',
+      reply_markup: TelegramMarkupHelper.day_12_start_exercise_markup
+    )
+  elsif current_step == 'day_12_exercise_in_progress'
+    continue_self_compassion_exercise
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 12 content from unexpected state: #{current_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def start_self_compassion_exercise
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} starting self-compassion exercise."
+  
+  if @user.get_self_help_step == 'day_12_intro'
+    @user.set_self_help_step('day_12_exercise_in_progress')
+    
+    # Очищаем предыдущие данные
+    clear_self_compassion_data
+    
+    # Начинаем с первого шага
+    send_self_compassion_step('current_difficulty')
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to start self-compassion exercise from unexpected state: #{@user.get_self_help_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def handle_self_compassion_input(text)
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} handling self-compassion input: #{text}"
+  
+  current_step = @user.get_self_help_data('current_self_compassion_step')
+  
+  case current_step
+  when 'current_difficulty'
+    handle_current_difficulty_input(text)
+  when 'common_humanity'
+    handle_common_humanity_input(text)
+  when 'kind_words'
+    handle_kind_words_input(text)
+  when 'physical_comfort'
+    handle_physical_comfort_input(text)
+  when 'mantra'
+    handle_mantra_input(text)
+  when 'feelings_after'
+    handle_feelings_after_input(text)
+  else
+    Rails.logger.warn "Unknown self-compassion step: #{current_step}"
+    send_message(text: "Что-то пошло не так. Начните упражнение заново.")
+    start_self_compassion_exercise
+  end
+  
+  true
+end
+
+def handle_self_compassion_exercise_completion
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} completing self-compassion exercise."
+  
+  if @user.get_self_help_step == 'day_12_exercise_in_progress'
+    # Сохраняем результат
+    save_self_compassion_practice
+    
+    # Показываем результат и завершаем
+    show_self_compassion_result
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to complete self-compassion exercise from unexpected state: #{@user.get_self_help_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def complete_day_12
+  save_current_progress
+  @user.set_self_help_step('day_12_completed')
+  
+  send_message(
+    text: "🎉 **День 12 завершен!** 🎉\n\n" \
+          "Вы освоили практику самосострадания.\n\n" \
+          "Хотите перейти к 13-му дню программы: 'Победи прокрастинацию'?",
+    reply_markup: TelegramMarkupHelper.day_13_start_proposal_markup
+  )
+end
+
+# ДЕНЬ 13: Победи прокрастинацию
+def deliver_day_13_content
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 13 content. Current step: #{@user.get_self_help_step}"
+  current_step = @user.get_self_help_step
+
+  if current_step == 'awaiting_day_13_start'
+    @user.set_self_help_step('day_13_intro')
+    message_text = "🚀 **Добро пожаловать в тринадцатый день программы!** 🚀\n\n" \
+                   "**Тема дня: Победи прокрастинацию**\n\n" \
+                   "Прокрастинация — это не лень, а **сопротивление**. Чаще всего мы откладываем дела из-за:\n\n" \
+                   "• Страха неудачи\n" \
+                   "• Перфекционизма\n" \
+                   "• Неопределенности\n" \
+                   "• Перегруженности\n\n" \
+                   "Сегодня мы научимся делать **первый шаг**, который запускает процесс."
+    send_message(text: message_text, parse_mode: 'Markdown')
+  end
+
+  if ['day_13_intro', 'awaiting_day_13_start'].include?(@user.get_self_help_step)
+    send_message(
+      text: "**Что мы сделаем:**\n\n" \
+            "1. Выберем одну задачу, которую откладываете\n" \
+            "2. Поймем, что мешает её начать\n" \
+            "3. Разобьем на маленькие шаги\n" \
+            "4. Сделаем первый шаг (5-15 минут)\n\n" \
+            "Готовы начать?",
+      parse_mode: 'Markdown',
+      reply_markup: TelegramMarkupHelper.day_13_start_exercise_markup
+    )
+  elsif current_step == 'day_13_exercise_in_progress'
+    continue_procrastination_exercise
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 13 content from unexpected state: #{current_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def start_procrastination_exercise
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} starting procrastination exercise."
+  
+  allowed_states = ['day_13_intro', 'day_13_completed', nil]
+  
+  if allowed_states.include?(@user.get_self_help_step)
+    @user.set_self_help_step('day_13_exercise_in_progress')
+    
+    # Очищаем предыдущие данные
+    clear_procrastination_data
+    
+    # Начинаем с первого шага
+    send_procrastination_step('task')
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to start procrastination exercise from unexpected state: #{@user.get_self_help_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def handle_procrastination_input(text)
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} handling procrastination input: #{text}"
+  
+  current_step = @user.get_self_help_data('current_procrastination_step')
+  
+  case current_step
+  when 'task'
+    handle_task_input(text)
+  when 'reason'
+    handle_reason_input(text)
+  when 'steps'
+    handle_steps_input(text)
+  when 'first_step'
+    handle_first_step_input(text)
+  when 'feelings_after'
+    handle_feelings_after_input(text)
+  else
+    Rails.logger.warn "Unknown procrastination step: #{current_step}"
+    send_message(text: "Что-то пошло не так. Начните упражнение заново.")
+    start_procrastination_exercise
+  end
+  
+  true
+end
+
+def handle_procrastination_exercise_completion
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} completing procrastination exercise."
+  
+  if @user.get_self_help_step == 'day_13_exercise_in_progress'
+    # Сохраняем результат
+    save_procrastination_task
+    
+    # Показываем результат и завершаем
+    show_procrastination_result
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to complete procrastination exercise from unexpected state: #{@user.get_self_help_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def complete_day_13
+  save_current_progress
+  @user.set_self_help_step('day_13_completed')
+  
+  send_message(
+    text: "🎉 **День 13 завершен!** 🎉\n\n" \
+          "Вы освоили технику борьбы с прокрастинацией.\n\n" \
           "**Помните:**\n" \
-          "• Используйте технику при первых признаках тревоги\n" \
-          "• Чем чаще практикуете, тем быстрее сработает\n" \
-          "• Можно адаптировать под разные ситуации",
+          "• Первый шаг — самый важный\n" \
+          "• 5 минут действия лучше, чем час планирования\n" \
+          "• Неидеальное действие лучше идеального бездействия",
     parse_mode: 'Markdown',
-    reply_markup: TelegramMarkupHelper.final_program_completion_markup
+    reply_markup: TelegramMarkupHelper.day_13_completion_markup
   )
 end
 
@@ -1703,8 +1936,452 @@ end
     # Обрабатываем очередь неотправленных сообщений
     @message_sender.process_message_queue
   end
+  
+def handle_procrastination_first_step_done
+  # Используем публичный метод
+  send_procrastination_step_public('feelings_after')
+  
+  # Если нужно ответить на callback_query, добавьте:
+  # Но учтите, что в SelfHelpService нет доступа к callback_query_id
+  # Лучше отвечать из CallbackQueryProcessor
+end
+
+  def show_self_compassion_practices
+  practices = @user.self_compassion_practices.recent.limit(5)
+  
+  if practices.empty?
+    send_message(text: "У вас пока нет сохраненных практик самосострадания.")
+    return
+  end
+  
+  practices.each_with_index do |practice, index|
+    message = "📝 **Практика #{index + 1} от #{practice.entry_date.strftime('%d.%m.%Y')}**\n\n"
+    message += "• *Трудность:* #{practice.current_difficulty.truncate(80)}\n"
+    message += "• *Общечеловеческое:* #{practice.common_humanity.truncate(80)}\n"
+    message += "• *Добрые слова:* #{practice.kind_words.truncate(80)}\n"
+    message += "• *Мантра:* #{practice.mantra.truncate(80)}\n\n"
+    
+    send_message(text: message, parse_mode: 'Markdown')
+  end
+  
+  send_message(
+    text: "Всего практик: #{@user.self_compassion_practices.count}",
+    reply_markup: TelegramMarkupHelper.self_compassion_practices_menu_markup
+  )
+end
+
+def send_procrastination_step_public(step_type)
+  send_procrastination_step(step_type)
+end
 
   private
+
+  def clear_procrastination_data
+  ['procrastination_task', 'procrastination_reason', 'procrastination_steps',
+   'procrastination_first_step', 'procrastination_feelings'].each do |key|
+    @user.store_self_help_data(key, nil)
+  end
+end
+
+def send_procrastination_step(step_type)
+  @user.store_self_help_data('current_procrastination_step', step_type)
+  
+  messages = {
+    'task' => {
+      title: "📝 **Шаг 1: Выбор задачи**",
+      instruction: "**Какое дело вы давно откладываете?**\n\n" \
+                   "Это может быть:\n" \
+                   "• Рабочая задача\n" \
+                   "• Бытовое дело\n" \
+                   "• Личный проект\n" \
+                   "• Здоровье/спорт\n" \
+                   "• Обучение\n\n" \
+                   "Опишите задачу одной фразой."
+    },
+    'reason' => {
+      title: "🤔 **Шаг 2: Анализ сопротивления**",
+      instruction: "**Почему вы откладываете эту задачу?**\n\n" \
+                   "Что именно мешает начать?\n" \
+                   "• Страх неудачи?\n" \
+                   "• Не знаете, с чего начать?\n" \
+                   "• Кажется слишком сложной?\n" \
+                   "• Нет времени/энергии?\n\n" \
+                   "Будьте честны с собой."
+    },
+    'steps' => {
+      title: "🔨 **Шаг 3: Разбивка на шаги**",
+      instruction: "**Разбейте задачу на 3 маленьких шага.**\n\n" \
+                   "Пример для 'Написать отчет':\n" \
+                   "1. Открыть документ и создать структуру\n" \
+                   "2. Написать введение (1-2 абзаца)\n" \
+                   "3. Добавить основные данные\n\n" \
+                   "**Напишите ваши 3 шага через запятую.**"
+    },
+    'first_step' => {
+      title: "🎯 **Шаг 4: Первый шаг**",
+      instruction: "**Какой самый первый, самый маленький шаг?**\n\n" \
+                   "Это должно быть действие на **5-15 минут**.\n\n" \
+                   "Примеры:\n" \
+                   "• 'Открыть документ и написать заголовок'\n" \
+                   "• 'Собрать материалы в одну папку'\n" \
+                   "• 'Найти 3 источника информации'\n\n" \
+                   "**Сделайте этот шаг прямо сейчас!**"
+    },
+    'feelings_after' => {
+      title: "💭 **Шаг 5: Рефлексия**",
+      instruction: "**Вы сделали первый шаг?**\n\n" \
+                   "Как вы себя чувствуете теперь?\n\n" \
+                   "• Чувствуете облегчение?\n" \
+                   "• Появилась энергия продолжать?\n" \
+                   "• Стало понятнее, что делать дальше?\n\n" \
+                   "Опишите свои ощущения."
+    }
+  }
+  
+  message = messages[step_type]
+  send_message(text: message[:title], parse_mode: 'Markdown')
+  
+  # Для шага 4 добавляем дополнительную мотивацию
+  if step_type == 'first_step'
+    send_message(text: "⏰ **Таймер на 15 минут:**\nПоставьте таймер и работайте только 15 минут. После можно остановиться без чувства вины.")
+  end
+  
+  send_message(text: message[:instruction])
+end
+
+def handle_task_input(text)
+  return send_message(text: "Пожалуйста, опишите задачу, которую откладываете.") if text.blank?
+  
+  @user.store_self_help_data('procrastination_task', text)
+  send_procrastination_step('reason')
+end
+
+def handle_reason_input(text)
+  return send_message(text: "Пожалуйста, напишите, что мешает начать.") if text.blank?
+  
+  @user.store_self_help_data('procrastination_reason', text)
+  send_procrastination_step('steps')
+end
+
+def handle_steps_input(text)
+  return send_message(text: "Пожалуйста, напишите 3 шага через запятую.") if text.blank?
+  
+  # Разбиваем на массив шагов
+  steps = text.split(',').map(&:strip)
+  
+  if steps.length < 3
+    send_message(text: "Пожалуйста, напишите минимум 3 шага. Пример: 'шаг 1, шаг 2, шаг 3'")
+    return
+  end
+  
+  @user.store_self_help_data('procrastination_steps', steps)
+  send_procrastination_step('first_step')
+end
+
+def handle_first_step_input(text)
+  return send_message(text: "Пожалуйста, опишите первый шаг (5-15 минут).") if text.blank?
+  
+  @user.store_self_help_data('procrastination_first_step', text)
+  
+  # Отправляем новое сообщение вместо старого
+  send_message(
+    text: "⏳ **Время действовать!**\n\n" \
+          "Сделайте ваш первый шаг прямо сейчас:\n" \
+          "**#{text}**\n\n" \
+          "Поставьте таймер на 15 минут. Работайте только это время.\n\n" \
+          "Когда закончите, напишите в чат, как вы себя чувствуете.",
+    parse_mode: 'Markdown'
+  )
+  
+  # Автоматически переходим к ожиданию рефлексии
+  @user.store_self_help_data('current_procrastination_step', 'feelings_after')
+  
+  true
+end
+
+def handle_feelings_after_input(text)
+  return send_message(text: "Пожалуйста, опишите свои ощущения после выполнения шага.") if text.blank?
+  
+  @user.store_self_help_data('procrastination_feelings', text)
+  
+  send_message(
+    text: "✅ **Отлично! Первый шаг сделан!**\n\n" \
+          "Нажмите кнопку ниже, чтобы завершить упражнение.",
+    reply_markup: TelegramMarkupHelper.procrastination_exercise_completed_markup
+  )
+end
+
+def save_procrastination_task
+  begin
+    task = ProcrastinationTask.create!(
+      user: @user,
+      entry_date: Date.current,
+      task: @user.get_self_help_data('procrastination_task'),
+      reason: @user.get_self_help_data('procrastination_reason'),
+      steps: @user.get_self_help_data('procrastination_steps'),
+      first_step: @user.get_self_help_data('procrastination_first_step'),
+      feelings_after: @user.get_self_help_data('procrastination_feelings'),
+      completed: true # Помечаем как выполненную, так как первый шаг сделан
+    )
+    Rails.logger.info "ProcrastinationTask saved: #{task.id}"
+  rescue => e
+    Rails.logger.error "Error saving procrastination task: #{e.message}"
+  end
+end
+
+def show_procrastination_result
+  # Показываем результат
+  task = @user.get_self_help_data('procrastination_task')
+  steps = @user.get_self_help_data('procrastination_steps')
+  first_step = @user.get_self_help_data('procrastination_first_step')
+  feelings = @user.get_self_help_data('procrastination_feelings')
+  
+  message = "🌟 **Упражнение завершено!** 🌟\n\n"
+  message += "**Ваш прогресс:**\n\n"
+  message += "📋 *Задача:* #{task}\n"
+  message += "🎯 *Первый шаг:* #{first_step}\n"
+  message += "💭 *Ощущения:* #{feelings}\n\n"
+  
+  if steps && steps.is_a?(Array) && steps.any?
+    message += "📝 *Весь план:*\n"
+    steps.each_with_index do |step, index|
+      check = index == 0 ? "✅" : "⬜"
+      message += "#{check} #{step}\n"
+    end
+  end
+  
+  send_message(text: message, parse_mode: 'Markdown')
+  
+  # Советы для продолжения
+  send_message(
+    text: "💡 **Как продолжать:**\n\n" \
+          "1. **Завтра** — сделайте второй шаг (тоже 15 минут)\n" \
+          "2. **Празднуйте маленькие победы** — каждый шаг важен\n" \
+          "3. **Используйте технику 'помидора'** — 25 минут работа, 5 отдых\n" \
+          "4. **Не ругайте себя** за срывы, просто начните снова",
+    parse_mode: 'Markdown'
+  )
+  
+  # Завершаем день
+  complete_day_13
+end
+
+def continue_procrastination_exercise
+  current_step = @user.get_self_help_data('current_procrastination_step')
+  if current_step
+    send_procrastination_step(current_step)
+  else
+    send_message(
+      text: "Продолжим работу с прокрастинацией?",
+      reply_markup: TelegramMarkupHelper.day_13_start_exercise_markup
+    )
+  end
+end
+
+def show_procrastination_tasks
+  tasks = @user.procrastination_tasks.recent.limit(5)
+  
+  if tasks.empty?
+    send_message(text: "У вас пока нет сохраненных задач по прокрастинации.")
+    return
+  end
+  
+  tasks.each_with_index do |task, index|
+    message = "📋 **Задача #{index + 1} от #{task.entry_date.strftime('%d.%m.%Y')}**\n\n"
+    message += "• *Что:* #{task.task.truncate(80)}\n"
+    message += "• *Почему откладывали:* #{task.reason.truncate(80)}\n"
+    message += "• *Первый шаг:* #{task.first_step.truncate(80)}\n"
+    message += "• *Статус:* #{task.completed ? '✅ Выполнен' : '⏳ В процессе'}\n\n"
+    
+    send_message(text: message, parse_mode: 'Markdown')
+  end
+  
+  send_message(
+    text: "Всего задач: #{@user.procrastination_tasks.count}",
+    reply_markup: TelegramMarkupHelper.procrastination_tasks_menu_markup
+  )
+end
+
+
+
+def mark_task_completed
+  # Находим последнюю задачу
+  task = @user.procrastination_tasks.recent.first
+  if task
+    task.update(completed: true)
+    send_message(text: "✅ Задача отмечена как выполненная! Отличная работа!")
+  else
+    send_message(text: "Не найдено задач для отметки.")
+  end
+end
+
+  def clear_self_compassion_data
+  ['self_compassion_difficulty', 'self_compassion_humanity', 'self_compassion_kind_words',
+   'self_compassion_comfort', 'self_compassion_mantra', 'self_compassion_feelings'].each do |key|
+    @user.store_self_help_data(key, nil)
+  end
+end
+
+def send_self_compassion_step(step_type)
+  @user.store_self_help_data('current_self_compassion_step', step_type)
+  
+  messages = {
+    'current_difficulty' => {
+      title: "🕊️ **Шаг 1: Осознание трудности**",
+      instruction: "Признайте, что вам сейчас тяжело.\n\n" \
+                   "**Что вызывает у вас дискомфорт, боль или трудность в настоящий момент?**\n\n" \
+                   "Это может быть что угодно: физическая боль, эмоциональное страдание, стресс, неуверенность.\n\n" \
+                   "Просто опишите это в одном-двух предложениях."
+    },
+    'common_humanity' => {
+      title: "🤝 **Шаг 2: Общечеловеческий опыт**",
+      instruction: "Вспомните, что страдание — часть человеческого опыта.\n\n" \
+                   "**Как эта трудность связывает вас с другими людьми?**\n\n" \
+                   "Миллионы людей прямо сейчас испытывают что-то подобное.\n\n" \
+                   "Напишите, как это знание помогает вам чувствовать себя менее одиноким."
+    },
+    'kind_words' => {
+      title: "💝 **Шаг 3: Добрые слова к себе**",
+      instruction: "Представьте, что ваш лучший друг переживает то же самое.\n\n" \
+                   "**Что бы вы сказали другу в этой ситуации?**\n\n" \
+                   "А теперь скажите эти же слова себе.\n\n" \
+                   "Напишите 2-3 добрых, поддерживающих фразы, которые вы можете сказать себе прямо сейчас."
+    },
+    'physical_comfort' => {
+      title: "🤗 **Шаг 4: Физическое утешение**",
+      instruction: "Проявите заботу к своему телу.\n\n" \
+                   "**Как вы можете физически утешить себя прямо сейчас?**\n\n" \
+                   "Например:\n" \
+                   "• Положить руку на сердце\n" \
+                   "• Обнять себя\n" \
+                   "• Сделать глубокий вдох\n" \
+                   "• Укрыться пледом\n\n" \
+                   "Опишите, что вы сделаете и какие ощущения это принесет."
+    },
+    'mantra' => {
+      title: "✨ **Шаг 5: Мантра самосострадания**",
+      instruction: "Создайте свою мантру доброты к себе.\n\n" \
+                   "**Повторите про себя (или напишите):**\n\n" \
+                   "1. 'Это момент страдания'\n" \
+                   "2. 'Страдание — часть жизни'\n" \
+                   "3. 'Пусть я буду добр к себе'\n\n" \
+                   "А теперь создайте свою собственную фразу. Например: 'Я принимаю себя таким, какой я есть'."
+    },
+    'feelings_after' => {
+      title: "🌻 **Шаг 6: Ощущения после практики**",
+      instruction: "Прислушайтесь к своим чувствам.\n\n" \
+                   "**Как вы себя чувствуете после этой практики?**\n\n" \
+                   "Опишите свои ощущения в теле и эмоции.\n\n" \
+                   "Не нужно оценивать — просто заметьте, что изменилось."
+    }
+  }
+  
+  message = messages[step_type]
+  send_message(text: message[:title], parse_mode: 'Markdown')
+  send_message(text: message[:instruction])
+end
+
+def handle_current_difficulty_input(text)
+  return send_message(text: "Пожалуйста, опишите, что сейчас тяжело.") if text.blank?
+  
+  @user.store_self_help_data('self_compassion_difficulty', text)
+  send_self_compassion_step('common_humanity')
+end
+
+def handle_common_humanity_input(text)
+  return send_message(text: "Пожалуйста, напишите, как эта трудность связывает вас с другими.") if text.blank?
+  
+  @user.store_self_help_data('self_compassion_humanity', text)
+  send_self_compassion_step('kind_words')
+end
+
+def handle_kind_words_input(text)
+  return send_message(text: "Пожалуйста, напишите добрые слова, которые вы бы сказали другу.") if text.blank?
+  
+  @user.store_self_help_data('self_compassion_kind_words', text)
+  send_self_compassion_step('physical_comfort')
+end
+
+def handle_physical_comfort_input(text)
+  return send_message(text: "Пожалуйста, опишите, как вы можете физически позаботиться о себе.") if text.blank?
+  
+  @user.store_self_help_data('self_compassion_comfort', text)
+  send_self_compassion_step('mantra')
+end
+
+def handle_mantra_input(text)
+  return send_message(text: "Пожалуйста, создайте свою мантру доброты к себе.") if text.blank?
+  
+  @user.store_self_help_data('self_compassion_mantra', text)
+  send_self_compassion_step('feelings_after')
+end
+
+def handle_feelings_after_input(text)
+  return send_message(text: "Пожалуйста, опишите свои ощущения после практики.") if text.blank?
+  
+  @user.store_self_help_data('self_compassion_feelings', text)
+  
+  send_message(
+    text: "✅ **Все шаги выполнены!**\n\n" \
+          "Нажмите кнопку ниже, чтобы завершить медитацию.",
+    reply_markup: TelegramMarkupHelper.self_compassion_exercise_completed_markup
+  )
+end
+
+def save_self_compassion_practice
+  begin
+    SelfCompassionPractice.create!(
+      user: @user,
+      entry_date: Date.current,
+      current_difficulty: @user.get_self_help_data('self_compassion_difficulty'),
+      common_humanity: @user.get_self_help_data('self_compassion_humanity'),
+      kind_words: @user.get_self_help_data('self_compassion_kind_words'),
+      physical_comfort: @user.get_self_help_data('self_compassion_comfort'),
+      mantra: @user.get_self_help_data('self_compassion_mantra'),
+      feelings_after: @user.get_self_help_data('self_compassion_feelings')
+    )
+  rescue => e
+    Rails.logger.error "Error saving self-compassion practice: #{e.message}"
+  end
+end
+
+def show_self_compassion_result
+  # Показываем результат
+  send_message(
+    text: "🌟 **Медитация на самосострадание завершена!** 🌟\n\n" \
+          "Вы проделали важную работу по развитию доброты к себе.\n\n" \
+          "**Напоминание:**\n" \
+          "• Практикуйте самосострадание ежедневно\n" \
+          "• Особенно в моменты самокритики\n" \
+          "• Относитесь к себе как к лучшему другу",
+    parse_mode: 'Markdown'
+  )
+  
+  # Советы для ежедневной практики
+  send_message(
+    text: "💡 **Как практиковать ежедневно:**\n\n" \
+          "1. **Утренний ритуал:** Скажите себе доброе слово\n" \
+          "2. **В моменты стресса:** Положите руку на сердце\n" \
+          "3. **Перед сном:** Поблагодарите себя за сегодня\n" \
+          "4. **При ошибках:** Вспомните: 'Я делаю лучшее, что могу'",
+    parse_mode: 'Markdown'
+  )
+  
+  # Завершаем день
+  complete_day_12
+end
+
+def continue_self_compassion_exercise
+  current_step = @user.get_self_help_data('current_self_compassion_step')
+  if current_step
+    send_self_compassion_step(current_step)
+  else
+    send_message(
+      text: "Продолжим медитацию на самосострадание?",
+      reply_markup: TelegramMarkupHelper.day_12_start_exercise_markup
+    )
+  end
+end
 
   def clear_grounding_exercise_data
   ['grounding_seen', 'grounding_touched', 'grounding_heard', 'grounding_smelled', 'grounding_tasted'].each do |key|

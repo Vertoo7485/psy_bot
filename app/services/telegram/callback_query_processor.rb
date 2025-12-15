@@ -111,6 +111,30 @@ module Telegram
         handle_grounding_exercise_completed
       when 'complete_day_11'
         handle_complete_day_11
+      when 'start_day_12_from_proposal'
+        handle_start_day_12_from_proposal
+      when 'start_self_compassion_exercise'
+        handle_start_self_compassion_exercise
+      when 'self_compassion_exercise_completed'
+        handle_self_compassion_exercise_completed
+      when 'complete_day_12'
+        handle_complete_day_12
+      when 'view_self_compassion_practices'
+        handle_view_self_compassion_practices
+      when 'start_day_13_from_proposal'
+        handle_start_day_13_from_proposal
+      when 'start_procrastination_exercise'
+        handle_start_procrastination_exercise
+      when 'procrastination_exercise_completed'
+        handle_procrastination_exercise_completed
+      when 'complete_day_13'
+        handle_complete_day_13
+      when 'view_my_procrastination_tasks'
+        handle_view_my_procrastination_tasks
+      when 'mark_task_completed'
+        handle_mark_task_completed
+      when 'procrastination_first_step_done'
+        handle_procrastination_first_step_done
 
       when 'complete_program_final' then handle_complete_program_final # Предполагаем, что это финальное завершение
 
@@ -120,7 +144,85 @@ module Telegram
       end
     end
 
+   def handle_procrastination_first_step_done
+  Rails.logger.info "Processing procrastination_first_step_done for user #{@user.id}"
+  
+  # Создаем экземпляр SelfHelpService и вызываем метод
+  SelfHelpService.new(@bot_service, @user, @chat_id).handle_procrastination_first_step_done
+  
+  # Отвечаем на callback_query
+  answer_callback_query("✅ Первый шаг выполнен! Теперь опишите свои ощущения.")
+end
+    
     private
+
+
+    def handle_start_day_13_from_proposal
+  if ['awaiting_day_13_start', 'day_12_completed'].include?(@user.get_self_help_step)
+    @user.set_self_help_step('awaiting_day_13_start')
+    SelfHelpService.new(@bot_service, @user, @chat_id).deliver_day_13_content
+    answer_callback_query("Начинаем День 13!")
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to start Day 13 from unexpected state: #{@user.get_self_help_step}."
+    answer_callback_query("Невозможно начать День 13 сейчас.")
+  end
+end
+
+def handle_start_procrastination_exercise
+  SelfHelpService.new(@bot_service, @user, @chat_id).start_procrastination_exercise
+  answer_callback_query("Начинаем работу с прокрастинацией!")
+end
+
+def handle_procrastination_exercise_completed
+  SelfHelpService.new(@bot_service, @user, @chat_id).handle_procrastination_exercise_completion
+  answer_callback_query("Упражнение завершено!")
+end
+
+def handle_complete_day_13
+  SelfHelpService.new(@bot_service, @user, @chat_id).complete_day_13
+  answer_callback_query("День 13 завершен.")
+end
+
+def handle_view_my_procrastination_tasks
+  SelfHelpService.new(@bot_service, @user, @chat_id).show_procrastination_tasks
+  answer_callback_query("Показываю ваши задачи...")
+end
+
+def handle_mark_task_completed
+  SelfHelpService.new(@bot_service, @user, @chat_id).mark_task_completed
+  answer_callback_query("Задача отмечена как выполненная!")
+end
+
+    def handle_start_day_12_from_proposal
+  if ['awaiting_day_12_start', 'day_11_completed'].include?(@user.get_self_help_step)
+    @user.set_self_help_step('awaiting_day_12_start')
+    SelfHelpService.new(@bot_service, @user, @chat_id).deliver_day_12_content
+    answer_callback_query("Начинаем День 12!")
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to start Day 12 from unexpected state: #{@user.get_self_help_step}."
+    answer_callback_query("Невозможно начать День 12 сейчас.")
+  end
+end
+
+def handle_start_self_compassion_exercise
+  SelfHelpService.new(@bot_service, @user, @chat_id).start_self_compassion_exercise
+  answer_callback_query("Начинаем медитацию на самосострадание!")
+end
+
+def handle_self_compassion_exercise_completed
+  SelfHelpService.new(@bot_service, @user, @chat_id).handle_self_compassion_exercise_completion
+  answer_callback_query("Медитация завершена!")
+end
+
+def handle_complete_day_12
+  SelfHelpService.new(@bot_service, @user, @chat_id).complete_day_12
+  answer_callback_query("День 12 завершен.")
+end
+
+def handle_view_self_compassion_practices
+  SelfHelpService.new(@bot_service, @user, @chat_id).show_self_compassion_practices
+  answer_callback_query("Показываю ваши практики...")
+end
 
     def handle_start_day_11_from_proposal
   if ['awaiting_day_11_start', 'day_10_completed'].include?(@user.get_self_help_step)
