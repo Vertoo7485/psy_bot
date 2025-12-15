@@ -118,7 +118,13 @@ class SelfHelpService
 when 'day_10_completed', 'awaiting_day_11_start' # или program_completed
   send_message(text: "Вы завершили День 10. Готовы завершить программу?", reply_markup: TelegramMarkupHelper.final_program_completion_markup)
 
-  when 'day_8_completed'
+when 'day_11_intro', 'day_11_exercise_in_progress'
+  deliver_day_11_content
+
+when 'day_11_completed', 'awaiting_day_12_start' # или завершение программы
+  send_message(text: "Вы завершили День 11. Готовы завершить программу?", reply_markup: TelegramMarkupHelper.final_program_completion_markup)  
+
+when 'day_8_completed'
     send_message(text: "Вы завершили всю программу! Продолжайте практиковать полученные навыки.", reply_markup: TelegramMarkupHelper.final_program_completion_markup)
 
   else
@@ -221,8 +227,26 @@ def handle_day_10_exercise_completion
     # Показываем записи пользователя
     show_day_10_diary_entries
     
-    # Затем показываем совет и завершаем
-    show_day_10_advice_and_complete
+    # Показываем совет
+    send_message(
+      text: "💡 **Совет по использованию Дневника эмоций:**\n\n" \
+            "1. **Будьте честны с собой** - цель не оценивать, а понимать\n" \
+            "2. **Заполняйте регулярно** - хотя бы раз в неделю\n" \
+            "3. **Анализируйте паттерны** - что чаще всего вызывает негативные эмоции?\n" \
+            "4. **Отмечайте прогресс** - как меняются ваши реакции со временем?\n\n" \
+            "Этот инструмент поможет вам лучше понимать связь между мыслями, эмоциями и поведением.",
+      parse_mode: 'Markdown'
+    )
+    
+    # Сразу предлагаем 11-й день
+    @user.set_self_help_step('awaiting_day_11_start')
+    
+    send_message(
+      text: "🎉 **Отличная работа! День 10 завершен.** 🎉\n\n" \
+            "Вы успешно освоили работу с Дневником эмоций.\n\n" \
+            "Хотите перейти к следующему, 11-му дню программы?",
+      reply_markup: TelegramMarkupHelper.day_11_start_proposal_markup
+    )
   else
     Rails.logger.warn "User #{@user.telegram_id} tried to complete Day 10 exercise from unexpected state: #{@user.get_self_help_step}."
     send_message(text: "Что-то пошло не так. Начните программу заново.")
@@ -289,20 +313,121 @@ def show_day_10_advice_and_complete
   )
 end
 
-def complete_day_10
+
+
+# ДЕНЬ 11: Техника "Заземление 5-4-3-2-1"
+def deliver_day_11_content
   save_current_progress
-  @user.set_self_help_step('program_completed')
-  @user.clear_self_help_program
+  Rails.logger.debug "User #{@user.telegram_id} delivering Day 11 content. Current step: #{@user.get_self_help_step}"
+  current_step = @user.get_self_help_step
+
+  if current_step == 'awaiting_day_11_start'
+    @user.set_self_help_step('day_11_intro')
+    message_text = "🌟 **Добро пожаловать в одиннадцатый день программы!** 🌟\n\n" \
+                   "**Тема дня: Техника 'Заземление 5-4-3-2-1'**\n\n" \
+                   "Эта техника поможет вам быстро вернуться в настоящее и снизить чувство тревоги или паники.\n\n" \
+                   "**Как это работает:**\n" \
+                   "Мы последовательно фокусируемся на каждом из 5 чувств, чтобы 'заземлиться' в реальности."
+    send_message(text: message_text, parse_mode: 'Markdown')
+  end
+
+  if ['day_11_intro', 'awaiting_day_11_start'].include?(@user.get_self_help_step)
+    send_message(
+      text: "**Инструкция:**\n\n" \
+            "1. Назовите 5 вещей, которые вы видите\n" \
+            "2. Найдите 4 вещи, которые можете потрогать\n" \
+            "3. Прислушайтесь к 3 звукам\n" \
+            "4. Почувствуйте 2 запаха\n" \
+            "5. Попробуйте 1 вещь на вкус\n\n" \
+            "Готовы начать?",
+      parse_mode: 'Markdown',
+      reply_markup: TelegramMarkupHelper.day_11_start_exercise_markup
+    )
+  elsif current_step == 'day_11_exercise_in_progress'
+    # Продолжаем упражнение с того места, где остановились
+    continue_grounding_exercise
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to deliver Day 11 content from unexpected state: #{current_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def start_grounding_exercise
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} starting grounding exercise."
+  
+  if @user.get_self_help_step == 'day_11_intro'
+    @user.set_self_help_step('day_11_exercise_in_progress')
+    
+    # Очищаем предыдущие данные
+    clear_grounding_exercise_data
+    
+    # Начинаем с первого шага
+    send_grounding_step('seen')
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to start grounding exercise from unexpected state: #{@user.get_self_help_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def handle_grounding_input(text)
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} handling grounding input: #{text}"
+  
+  current_step = @user.get_self_help_data('current_grounding_step')
+  
+  case current_step
+  when 'seen'
+    handle_seen_input(text)
+  when 'touched'
+    handle_touched_input(text)
+  when 'heard'
+    handle_heard_input(text)
+  when 'smelled'
+    handle_smelled_input(text)
+  when 'tasted'
+    handle_tasted_input(text)
+  else
+    Rails.logger.warn "Unknown grounding step: #{current_step}"
+    send_message(text: "Что-то пошло не так. Начните упражнение заново.")
+    start_grounding_exercise
+  end
+  
+  true
+end
+
+def handle_grounding_exercise_completion
+  save_current_progress
+  Rails.logger.debug "User #{@user.telegram_id} completing grounding exercise."
+  
+  if @user.get_self_help_step == 'day_11_exercise_in_progress'
+    # Сохраняем результат
+    save_grounding_exercise_entry
+    
+    # Показываем результат и завершаем
+    show_grounding_exercise_result
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to complete grounding exercise from unexpected state: #{@user.get_self_help_step}."
+    send_message(text: "Что-то пошло не так. Начните программу заново.")
+    @user.clear_self_help_program
+  end
+end
+
+def complete_day_11
+  save_current_progress
+  @user.set_self_help_step('day_11_completed')
   
   send_message(
-    text: "🎉 **Программа полностью завершена!** 🎉\n\n" \
-          "Вы прошли 10-дневный путь самопомощи. Все инструменты теперь в вашем распоряжении:\n\n" \
-          "• Дневник эмоций\n" \
-          "• Дневник благодарности\n" \
-          "• Техники релаксации\n" \
-          "• Работа с тревожными мыслями\n\n" \
-          "Продолжайте практиковать и заботиться о себе!",
-    reply_markup: TelegramMarkupHelper.main_menu_markup
+    text: "🎉 **День 11 завершен!** 🎉\n\n" \
+          "Вы освоили технику 'Заземление 5-4-3-2-1'.\n\n" \
+          "**Помните:**\n" \
+          "• Используйте технику при первых признаках тревоги\n" \
+          "• Чем чаще практикуете, тем быстрее сработает\n" \
+          "• Можно адаптировать под разные ситуации",
+    parse_mode: 'Markdown',
+    reply_markup: TelegramMarkupHelper.final_program_completion_markup
   )
 end
 
@@ -1506,16 +1631,24 @@ end
     start_program_initiation
   end
 
-  def handle_complete_program_final
-    save_current_progress
-    Rails.logger.debug "User #{@user.telegram_id} is completing the entire program. Current step: #{@user.get_self_help_step}."
-    # Предполагается, что это финальное действие после Дня 8.
-    @user.clear_self_help_program # Очищаем состояние программы
-    send_message(
-      text: "Программа полностью завершена! Вы молодец! Вы можете вернуться к материалам в любое время. Продолжайте использовать дневник благодарности и другие инструменты.", # Убрал chat_id: @chat_id
-      reply_markup: TelegramMarkupHelper.main_menu_markup # Возвращаем в главное меню
-    )
-  end
+  def complete_program_final
+  save_current_progress
+  @user.clear_self_help_program
+  
+  send_message(
+    text: "🎊 **Программа самопомощи полностью завершена!** 🎊\n\n" \
+          "Вы прошли 11-дневный путь развития навыков эмоциональной регуляции.\n\n" \
+          "**Освоенные техники:**\n" \
+          "• Осознанность и медитация\n" \
+          "• Дневники (эмоций, благодарности, тревожных мыслей)\n" \
+          "• Дыхательные упражнения\n" \
+          "• Техника 'Остановка мыслей'\n" \
+          "• Заземление 5-4-3-2-1\n\n" \
+          "**Продолжайте практиковать!** Все инструменты остаются в вашем распоряжении.",
+    parse_mode: 'Markdown',
+    reply_markup: TelegramMarkupHelper.main_menu_markup
+  )
+end
 
     # Метод восстановления сессии
   def resume_from_last_step
@@ -1572,6 +1705,180 @@ end
   end
 
   private
+
+  def clear_grounding_exercise_data
+  ['grounding_seen', 'grounding_touched', 'grounding_heard', 'grounding_smelled', 'grounding_tasted'].each do |key|
+    @user.store_self_help_data(key, [])
+  end
+end
+
+def send_grounding_step(step_type)
+  @user.store_self_help_data('current_grounding_step', step_type)
+  
+  messages = {
+    'seen' => {
+      title: "👀 **Шаг 1: 5 вещей, которые вы видите**",
+      instruction: "Остановитесь на мгновение и оглядитесь вокруг.\n\n" \
+                   "Назовите **5 вещей**, которые вы видите прямо сейчас.\n" \
+                   "Это могут быть предметы, цвета, формы – что угодно.\n\n" \
+                   "**Просто перечислите их через запятую.**\n" \
+                   "Например: 'стол, компьютер, книга, окно, цветок'"
+    },
+    'touched' => {
+      title: "✋ **Шаг 2: 4 вещи, которые вы можете потрогать**",
+      instruction: "Найдите **4 вещи**, которые вы можете потрогать прямо сейчас.\n\n" \
+                   "Обратите внимание на текстуру, температуру, форму.\n\n" \
+                   "**Перечислите их через запятую и опишите ощущения.**\n" \
+                   "Например: 'стол - гладкий, чашка - теплая, одежда - мягкая, кожа - прохладная'"
+    },
+    'heard' => {
+      title: "👂 **Шаг 3: 3 вещи, которые вы слышите**",
+      instruction: "Прислушайтесь и назовите **3 звука**, которые слышите прямо сейчас.\n\n" \
+                   "Это могут быть звуки окружающей среды, голоса, музыка.\n\n" \
+                   "**Перечислите через запятую.**\n" \
+                   "Например: 'тиканье часов, шум машин за окном, мой голос'"
+    },
+    'smelled' => {
+      title: "👃 **Шаг 4: 2 вещи, запах которых вы чувствуете**",
+      instruction: "Постарайтесь почувствовать **2 разных запаха**.\n\n" \
+                   "Если рядом нет сильных запахов, попробуйте почувствовать запах одежды, волос, кожи.\n\n" \
+                   "**Перечислите через запятую.**\n" \
+                   "Например: 'запах кофе, запах свежего воздуха'"
+    },
+    'tasted' => {
+      title: "👅 **Шаг 5: 1 вещь, которую вы можете попробовать на вкус**",
+      instruction: "Найдите **1 вещь**, которую можете попробовать на вкус прямо сейчас.\n\n" \
+                   "Это может быть еда, напиток, жевательная резинка – что угодно.\n\n" \
+                   "**Опишите вкус и текстуру.**\n" \
+                   "Например: 'чай - горьковатый, теплый'"
+    }
+  }
+  
+  message = messages[step_type]
+  send_message(text: message[:title], parse_mode: 'Markdown')
+  send_message(text: message[:instruction])
+end
+
+def handle_seen_input(text)
+  # Сохраняем видимые вещи
+  items = text.split(',').map(&:strip)
+  
+  if items.length < 5
+    send_message(text: "Пожалуйста, назовите минимум 5 вещей. Попробуйте еще раз.")
+    return
+  end
+  
+  @user.store_self_help_data('grounding_seen', items)
+  send_grounding_step('touched')
+end
+
+def handle_touched_input(text)
+  # Сохраняем ощущаемые вещи
+  items = text.split(',').map(&:strip)
+  
+  if items.length < 4
+    send_message(text: "Пожалуйста, назовите минимум 4 вещи. Попробуйте еще раз.")
+    return
+  end
+  
+  @user.store_self_help_data('grounding_touched', items)
+  send_grounding_step('heard')
+end
+
+def handle_heard_input(text)
+  # Сохраняем слышимые звуки
+  items = text.split(',').map(&:strip)
+  
+  if items.length < 3
+    send_message(text: "Пожалуйста, назовите минимум 3 звука. Попробуйте еще раз.")
+    return
+  end
+  
+  @user.store_self_help_data('grounding_heard', items)
+  send_grounding_step('smelled')
+end
+
+def handle_smelled_input(text)
+  # Сохраняем запахи
+  items = text.split(',').map(&:strip)
+  
+  if items.length < 2
+    send_message(text: "Пожалуйста, назовите минимум 2 запаха. Попробуйте еще раз.")
+    return
+  end
+  
+  @user.store_self_help_data('grounding_smelled', items)
+  send_grounding_step('tasted')
+end
+
+def handle_tasted_input(text)
+  # Сохраняем вкус
+  @user.store_self_help_data('grounding_tasted', [text.strip])
+  
+  # Переходим к завершению
+  send_message(
+    text: "✅ **Все шаги выполнены!**\n\n" \
+          "Как вы себя чувствуете сейчас? Нажмите кнопку ниже, чтобы завершить упражнение.",
+    reply_markup: TelegramMarkupHelper.grounding_exercise_completed_markup
+  )
+end
+
+def save_grounding_exercise_entry
+  begin
+    GroundingExerciseEntry.create!(
+      user: @user,
+      entry_date: Date.current,
+      seen: @user.get_self_help_data('grounding_seen'),
+      touched: @user.get_self_help_data('grounding_touched'),
+      heard: @user.get_self_help_data('grounding_heard'),
+      smelled: @user.get_self_help_data('grounding_smelled'),
+      tasted: @user.get_self_help_data('grounding_tasted')
+    )
+  rescue => e
+    Rails.logger.error "Error saving grounding exercise entry: #{e.message}"
+  end
+end
+
+def show_grounding_exercise_result
+  # Показываем результат
+  send_message(
+    text: "🌟 **Упражнение 'Заземление' завершено!** 🌟\n\n" \
+          "**Ваш результат:**\n\n" \
+          "👀 *Вижу:* #{@user.get_self_help_data('grounding_seen')&.join(', ')}\n" \
+          "✋ *Чувствую:* #{@user.get_self_help_data('grounding_touched')&.join(', ')}\n" \
+          "👂 *Слышу:* #{@user.get_self_help_data('grounding_heard')&.join(', ')}\n" \
+          "👃 *Обоняю:* #{@user.get_self_help_data('grounding_smelled')&.join(', ')}\n" \
+          "👅 *Пробую:* #{@user.get_self_help_data('grounding_tasted')&.first}\n\n" \
+          "Запись сохранена в вашем дневнике.",
+    parse_mode: 'Markdown'
+  )
+  
+  # Советы
+  send_message(
+    text: "💡 **Как использовать эту технику:**\n\n" \
+          "• При первых признаках тревоги или паники\n" \
+          "• Когда чувствуете отрыв от реальности\n" \
+          "• Перед важными событиями для успокоения\n" \
+          "• Как ежедневную практику осознанности\n\n" \
+          "Чем чаще практикуете, тем быстрее техника будет работать в критических ситуациях.",
+    parse_mode: 'Markdown'
+  )
+  
+  # Завершаем день
+  complete_day_11
+end
+
+def continue_grounding_exercise
+  current_step = @user.get_self_help_data('current_grounding_step')
+  if current_step
+    send_grounding_step(current_step)
+  else
+    send_message(
+      text: "Продолжим упражнение?",
+      reply_markup: TelegramMarkupHelper.day_11_start_exercise_markup
+    )
+  end
+end
 
   # --- Вспомогательные методы ---
 

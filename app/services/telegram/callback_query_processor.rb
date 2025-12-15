@@ -103,6 +103,14 @@ module Telegram
         handle_show_all_emotion_diaries
       when 'day_10_viewed_entries'
         handle_day_10_viewed_entries
+      when 'start_day_11_from_proposal'
+        handle_start_day_11_from_proposal
+      when 'start_grounding_exercise'
+        handle_start_grounding_exercise
+      when 'grounding_exercise_completed'
+        handle_grounding_exercise_completed
+      when 'complete_day_11'
+        handle_complete_day_11
 
       when 'complete_program_final' then handle_complete_program_final # Предполагаем, что это финальное завершение
 
@@ -113,6 +121,32 @@ module Telegram
     end
 
     private
+
+    def handle_start_day_11_from_proposal
+  if ['awaiting_day_11_start', 'day_10_completed'].include?(@user.get_self_help_step)
+    @user.set_self_help_step('awaiting_day_11_start')
+    SelfHelpService.new(@bot_service, @user, @chat_id).deliver_day_11_content
+    answer_callback_query("Начинаем День 11!")
+  else
+    Rails.logger.warn "User #{@user.telegram_id} tried to start Day 11 from unexpected state: #{@user.get_self_help_step}."
+    answer_callback_query("Невозможно начать День 11 сейчас.")
+  end
+end
+
+def handle_start_grounding_exercise
+  SelfHelpService.new(@bot_service, @user, @chat_id).start_grounding_exercise
+  answer_callback_query("Начинаем технику заземления!")
+end
+
+def handle_grounding_exercise_completed
+  SelfHelpService.new(@bot_service, @user, @chat_id).handle_grounding_exercise_completion
+  answer_callback_query("Упражнение завершено!")
+end
+
+def handle_complete_day_11
+  SelfHelpService.new(@bot_service, @user, @chat_id).complete_day_11
+  answer_callback_query("День 11 завершен.")
+end
 
     def handle_show_all_emotion_diaries
   EmotionDiaryService.new(@bot_service, @user, @chat_id).show_entries
@@ -145,10 +179,6 @@ end
   end
 end
 
-def handle_complete_day_10
-  SelfHelpService.new(@bot_service, @user, @chat_id).complete_day_10
-  answer_callback_query("День 10 завершен.")
-end
 
 def handle_day_10_exercise_completed
   SelfHelpService.new(@bot_service, @user, @chat_id).handle_day_10_exercise_completion

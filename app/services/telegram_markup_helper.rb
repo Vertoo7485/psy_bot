@@ -121,6 +121,60 @@ def day_10_view_entries_markup
   }.to_json
 end
 
+# Предложение начать День 11
+def day_11_start_proposal_markup
+  {
+    inline_keyboard: [
+      [{ text: 'Начать День 11: Техника "Заземление"', callback_data: 'start_day_11_from_proposal' }]
+    ]
+  }.to_json
+end
+
+# Начало упражнения
+def day_11_start_exercise_markup
+  {
+    inline_keyboard: [
+      [{ text: 'Начать упражнение "Заземление 5-4-3-2-1"', callback_data: 'start_grounding_exercise' }]
+    ]
+  }.to_json
+end
+
+# Завершение упражнения
+def grounding_exercise_completed_markup
+  {
+    inline_keyboard: [
+      [{ text: '✅ Я завершил(а) упражнение', callback_data: 'grounding_exercise_completed' }]
+    ]
+  }.to_json
+end
+
+def day_11_start_proposal_markup
+  {
+    inline_keyboard: [
+      [{ text: 'Да, начать День 11', callback_data: 'start_day_11_from_proposal' }],
+      [{ text: 'Нет, завершить программу', callback_data: 'complete_day_10' }]
+    ]
+  }.to_json
+end
+
+def complete_program_final
+  save_current_progress
+  @user.clear_self_help_program
+  
+  send_message(
+    text: "🎊 **Программа самопомощи полностью завершена!** 🎊\n\n" \
+          "Вы прошли 11-дневный путь развития навыков эмоциональной регуляции.\n\n" \
+          "**Освоенные техники:**\n" \
+          "• Осознанность и медитация\n" \
+          "• Дневники (эмоций, благодарности, тревожных мыслей)\n" \
+          "• Дыхательные упражнения\n" \
+          "• Техника 'Остановка мыслей'\n" \
+          "• Заземление 5-4-3-2-1\n\n" \
+          "**Продолжайте практиковать!** Все инструменты остаются в вашем распоряжении.",
+    parse_mode: 'Markdown',
+    reply_markup: TelegramMarkupHelper.main_menu_markup
+  )
+end
 # Обновленная финальная разметка программы
 def final_program_completion_markup
   {

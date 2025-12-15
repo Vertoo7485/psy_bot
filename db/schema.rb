@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_11_150806) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_13_145159) do
   create_table "answer_options", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "text"
@@ -66,6 +66,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_11_150806) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_gratitude_entries_on_user_id"
+  end
+
+  create_table "grounding_exercise_entries", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "entry_date"
+    t.text "seen"
+    t.text "touched"
+    t.text "heard"
+    t.text "smelled"
+    t.text "tasted"
+    t.text "feelings"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_grounding_exercise_entries_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -147,6 +161,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_11_150806) do
   add_foreign_key "anxious_thought_entries", "users"
   add_foreign_key "emotion_diary_entries", "users"
   add_foreign_key "gratitude_entries", "users"
+  add_foreign_key "grounding_exercise_entries", "users"
   add_foreign_key "questions", "tests"
   add_foreign_key "reflection_entries", "users"
   add_foreign_key "test_results", "tests"
