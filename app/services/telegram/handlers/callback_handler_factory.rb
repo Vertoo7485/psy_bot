@@ -1,0 +1,156 @@
+# app/services/telegram/handlers/callback_handler_factory.rb
+module Telegram
+  module Handlers
+    class CallbackHandlerFactory
+      # Карта сопоставления callback_data с обработчиками
+      HANDLERS_MAP = {
+        # Главное меню и общие действия
+        'back_to_main_menu' => 'MainMenuHandler',
+        'resume_session' => 'ResumeSessionHandler',
+        'start_fresh' => 'StartFreshHandler',
+        'help' => 'HelpHandler',
+        
+        # Тесты
+        'show_test_categories' => 'TestManagerHandler',
+        /^prepare_(anxiety|depression|eq|luscher)_test$/ => 'TestPreparationHandler',
+        /^start_(anxiety|depression|eq)_test$/ => 'TestStartHandler',
+        'start_luscher_test' => 'LuscherTestStartHandler',
+        'show_luscher_interpretation' => 'LuscherInterpretationHandler',
+        /^luscher_color_([a-z_]+)_(\d+)$/ => 'LuscherColorHandler',
+        /^answer_(\d+)_(\d+)_(\d+)$/ => 'QuizAnswerHandler',
+        /^self_help_start_(\w+)_test$/ => 'SelfHelpTestHandler',
+        
+        # Дневник эмоций
+        'start_emotion_diary' => 'EmotionDiaryStartHandler',
+        'new_emotion_diary_entry' => 'EmotionDiaryNewEntryHandler',
+        'show_emotion_diary_entries' => 'EmotionDiaryShowHandler',
+        'show_all_emotion_diaries' => 'EmotionDiaryShowAllHandler',
+        
+        # Программа самопомощи - общие
+        'start_self_help_program' => 'SelfHelpProgramStartHandler',
+        'start_self_help_program_tests' => 'SelfHelpTestsStartHandler',
+        'restart_self_help_program' => 'RestartProgramHandler',
+        
+        # Ответы да/нет
+        'yes' => 'YesResponseHandler',
+        'no' => 'NoResponseHandler',
+        
+        # Завершение тестов (для программы)
+        'test_completed_depression' => 'TestCompletedHandler',
+        'start_anxiety_test_from_sequence' => 'AnxietyTestSequenceHandler',
+        'test_completed_anxiety' => 'TestCompletedHandler',
+        'no_anxiety_test_sequence' => 'NoAnxietyTestHandler',
+        
+        # Дни программы - запуск
+        /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
+        /^start_day_(\d+)_content$/ => 'DayStartHandler',
+        /^start_day_(\d+)_exercise$/ => 'DayStartHandler',
+        'day_8_stopped_thought_first_try' => 'Day8Handler',
+        /^day_8_distraction_(music|video|friend|exercise|book)$/ => 'Day8Handler',
+        'day_8_exercise_completed' => 'Day8Handler',
+        
+        # Дни программы - продолжение/завершение
+        /^continue_day_(\d+)_content$/ => 'DayContinueHandler',
+        /^complete_day_(\d+)$/ => 'DayCompleteHandler',
+        /^day_(\d+)_exercise_completed$/ => 'DayExerciseCompleteHandler',
+        'start_grounding_exercise' => 'DayStartHandler',
+        'start_self_compassion_exercise' => 'DayStartHandler',
+        'grounding_exercise_completed' => 'DayExerciseCompleteHandler',
+        'self_compassion_exercise_completed' => 'DayExerciseCompleteHandler',
+        'start_procrastination_exercise' => 'DayStartHandler',
+        'procrastination_exercise_completed' => 'DayExerciseCompleteHandler',
+        
+        # Специфичные действия дней
+        'start_day_2_exercise_audio' => 'Day2ExerciseAudioHandler',
+        /^day_(\d+)_enter_gratitude$/ => 'DayGratitudeHandler',
+        'show_gratitude_entries' => 'ShowGratitudeEntriesHandler',
+        'back_to_day_3_menu' => 'Day3MenuHandler',
+        'day_9_enter_thought' => 'Day9Handler',
+        'day_9_show_current' => 'Day9Handler',
+        'show_all_anxious_thoughts' => 'Day9Handler',
+        'complete_day_9' => 'Day9Handler',
+        /^day_(\d+)_distraction_(music|video|friend|exercise|book)$/ => 'DayDistractionHandler',
+        /^day_(\d+)_viewed_entries$/ => 'DayViewedEntriesHandler',
+        /^view_self_compassion_practices$/ => 'DaySelfCompassionHandler',
+        /^view_my_procrastination_tasks$/ => 'DayProcrastinationHandler',
+        'mark_task_completed' => 'MarkTaskCompletedHandler',
+        'procrastination_first_step_done' => 'ProcrastinationFirstStepHandler',
+        
+        # Финальное завершение
+        'complete_program_final' => 'ProgramCompleteHandler',
+        'complete_day_10' => 'ProgramCompleteHandler',
+        'complete_day_7' => 'DayCompleteHandler'
+      }.freeze
+      
+      class << self
+        # Найти обработчик для callback_data
+        def handler_for(callback_data, params)
+          handler_class_name = nil
+          matches = nil
+          
+          # Ищем подходящий обработчик
+          HANDLERS_MAP.each do |pattern, handler_name|
+            if pattern.is_a?(String)
+              if callback_data == pattern
+                handler_class_name = handler_name
+                break
+              end
+            elsif pattern.is_a?(Regexp)
+              match = callback_data.match(pattern)
+              if match
+                handler_class_name = handler_name
+                matches = match
+                break
+              end
+            end
+          end
+          
+          # Если не нашли обработчик
+          if handler_class_name.nil?
+            Rails.logger.warn "[CallbackHandlerFactory] No handler found for: #{callback_data}"
+            handler_class_name = 'UnknownHandler'
+          end
+          
+          # Получаем класс по имени
+          handler_class = get_handler_class(handler_class_name)
+          
+          # Создаем обработчик
+          handler = handler_class.new(*params)
+          handler.matches = matches if matches && handler.respond_to?(:matches=)
+          handler
+        end
+        
+        private
+        
+        def get_handler_class(handler_name)
+          # Пробуем найти класс в разных namespace
+          possible_paths = [
+            "Telegram::Handlers::#{handler_name}",
+            "Telegram::Handlers::GeneralHandlers::#{handler_name}",
+            "Telegram::Handlers::TestHandlers::#{handler_name}",
+            "Telegram::Handlers::SelfHelpHandlers::#{handler_name}",
+            "Telegram::Handlers::EmotionDiaryHandlers::#{handler_name}"
+          ]
+          
+          possible_paths.each do |class_path|
+            begin
+              return class_path.constantize
+            rescue NameError
+              next
+            end
+          end
+          
+          # Если не нашли, возвращаем UnknownHandler
+          "Telegram::Handlers::UnknownHandler".constantize
+        rescue NameError => e
+          Rails.logger.error "[CallbackHandlerFactory] Error finding handler class #{handler_name}: #{e.message}"
+          # Если даже UnknownHandler не найден, создаем простой заглушечный класс
+          Class.new do
+            def initialize(*args); end
+            def process; end
+          end
+        end
+      end
+    end
+  end
+end

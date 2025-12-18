@@ -1,131 +1,251 @@
 # app/services/telegram/message_processor.rb
 module Telegram
   class MessageProcessor
-    include TelegramMarkupHelper # Для генерации клавиатур
-
+    # Константы
+    COMMANDS = {
+      '/start' => :handle_start,
+      '/menu' => :handle_menu,
+      '/help' => :handle_help,
+      '/tests' => :handle_tests,
+      '/diary' => :handle_diary,
+      '/program' => :handle_program
+    }.freeze
+    
+    attr_reader :bot, :user, :message_data
+    
     def initialize(bot, user, message_data)
       @bot = bot
       @user = user
       @message_data = message_data
-      @chat_id = message_data.dig(:chat, :id)
-      @text = message_data.dig(:text).to_s.strip
+      @chat_id = message_data[:chat][:id]
+      @text = message_data[:text].to_s.strip
     end
-
+    
     def process
-      # Первым делом проверяем, не является ли сообщение ответом в рамках какого-то сценария.
-      # Это должно иметь приоритет над обычными командами.
-      if handle_contextual_input(@text)
-        # Если сообщение было обработано в контексте, завершаем работу.
-        return
+      log_info("Processing message: #{@text.truncate(50)}")
+      
+      if command?
+        process_command
+      else
+        process_text_message
       end
-
-      # Если не контекстный ввод, обрабатываем как команду.
-      case @text
-      when '/start'
-        handle_start_command
-      when '/help'
-        handle_help_command
+      
+      true
+    rescue => e
+      log_error("Error processing message", e)
+      send_error_message
+      false
+    end
+    
+    private
+    
+    def create_temp_bot_service(bot)
+      Class.new do
+        def initialize(bot)
+          @bot = bot
+        end
+        
+        attr_reader :bot
+        
+        def send_message(chat_id:, text:, reply_markup: nil, parse_mode: nil)
+          @bot.send_message(
+            chat_id: chat_id,
+            text: text,
+            reply_markup: reply_markup,
+            parse_mode: parse_mode
+          )
+        end
+        
+        # Добавляем другие методы, если нужны
+        def answer_callback_query(callback_query_id:, text: nil, show_alert: false)
+          @bot.answer_callback_query(
+            callback_query_id: callback_query_id,
+            text: text,
+            show_alert: show_alert
+          )
+        end
+      end.new(bot)
+    end
+    # Проверка, является ли сообщение командой
+    def command?
+      @text.start_with?('/')
+    end
+    
+    # Обработка команд
+    def process_command
+      command_key = @text.split(' ').first.downcase
+      handler_method = COMMANDS[command_key]
+      
+      if handler_method
+        send(handler_method)
       else
         handle_unknown_command
       end
     end
-
-    private
-
-    # Обрабатывает текстовый ввод, который является частью какого-то сценария (например, программы самопомощи).
-    # Возвращает true, если ввод был обработан, false - иначе.
-    def handle_contextual_input(text)
-      @user.active_session&.touch_activity
-      # 1. Проверяем, ждем ли мы ввод для дневника благодарности (День 3)
-      if @user.get_self_help_step == 'day_3_waiting_for_gratitude'
-        # Передаем текст в SelfHelpService для обработки.
-        return SelfHelpService.new(@bot, @user, @chat_id).handle_gratitude_input(text)
+    
+    # Обработка текстовых сообщений
+    def process_text_message
+      # Проверяем активные сессии пользователя
+      if handle_active_sessions
+        return
       end
-
-      # 2. Проверяем, ждем ли мы рефлексию (День 7)
-      if @user.get_self_help_step == 'day_7_waiting_for_reflection'
-        # Передаем текст в SelfHelpService для обработки.
-        return SelfHelpService.new(@bot, @user, @chat_id).handle_reflection_input(text)
-      end
-
-      # 3. Проверяем, ждем ли мы ответ для дневника эмоций
+      
+      # Обработка по контексту
+      handle_context_message
+    end
+    
+    # Обработка активных сессий
+    def handle_active_sessions
+      # Проверяем дневник эмоций
       if @user.current_diary_step.present?
-        # Используем EmotionDiaryService для обработки ответа.
-        return EmotionDiaryService.new(@bot, @user, @chat_id).handle_answer(text)
+        handle_emotion_diary_input
+        return true
       end
-
-      # 4. День 9: Работа с тревожной мыслью
-      case @user.get_self_help_step
-      when 'day_9_waiting_for_thought'
-        return SelfHelpService.new(@bot, @user, @chat_id).handle_day_9_thought_input(text)
-      when 'day_9_waiting_for_probability'
-        return SelfHelpService.new(@bot, @user, @chat_id).handle_day_9_probability_input(text)
-      when 'day_9_waiting_for_facts_pro'
-        return SelfHelpService.new(@bot, @user, @chat_id).handle_day_9_facts_pro_input(text)
-      when 'day_9_waiting_for_facts_con'
-        return SelfHelpService.new(@bot, @user, @chat_id).handle_day_9_facts_con_input(text)
-      when 'day_9_waiting_for_reframe'
-        return SelfHelpService.new(@bot, @user, @chat_id).handle_day_9_reframe_input(text)
+      
+      # Проверяем программу самопомощи
+      if @user.self_help_state.present?
+        handle_self_help_input
+        return true
       end
-
-      if @user.get_self_help_step == 'day_11_exercise_in_progress'
-        return SelfHelpService.new(@bot, @user, @chat_id).handle_grounding_input(text)
-      end
-
-      if @user.get_self_help_step == 'day_12_exercise_in_progress'
-        return SelfHelpService.new(@bot, @user, @chat_id).handle_self_compassion_input(text)
-      end
-
-      if @user.get_self_help_step == 'day_13_exercise_in_progress'
-        return SelfHelpService.new(@bot, @user, @chat_id).handle_procrastination_input(text)
-      end
-      # Если ввод не относится ни к одному из активных сценариев.
-        false
-      end
-
-    # Обработка команды /start
-    def handle_start_command
-  # ОЧИСТКА: При старте очищаем возможные некорректные данные дня 9
-  ['day_9_thought', 'day_9_probability', 'day_9_facts_pro', 'day_9_facts_con', 'day_9_reframe'].each do |key|
-    @user.store_self_help_data(key, nil) if @user.get_self_help_data(key).present?
-  end
-  
-  # Сбрасываем шаг программы
-  @user.set_self_help_step(nil) if @user.get_self_help_step&.start_with?('day_9')
-  
-  # Проверяем, есть ли активная сессия для восстановления
-  if @user.active_session
-    # Используем правильный метод отправки сообщения
-    @bot.send_message(
-      chat_id: @chat_id,
-      text: "Найдена незавершенная сессия. Хотите продолжить с того места, где остановились?",
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: 'Да, продолжить', callback_data: 'resume_session' }],
-          [{ text: 'Нет, начать заново', callback_data: 'start_fresh' }]
-        ]
-      }.to_json
-    )
-  else
-    send_main_menu("Привет! Выберите действие:")
-  end
-end
-
-    # Обработка команды /help
-    def handle_help_command
-      @bot.send_message(chat_id: @chat_id, text: "Я умею показывать список тестов, вести дневник эмоций и помогать вам в программе самопомощи. Используйте кнопки для навигации.")
+      
+      false
     end
-
-    # Обработка неизвестных команд
+    
+    # Обработка ввода для дневника эмоций
+    def handle_emotion_diary_input
+      # Создаем временный bot_service
+      temp_bot_service = create_temp_bot_service(@bot)
+      EmotionDiaryService.new(temp_bot_service, @user, @chat_id).handle_answer(@text)
+    end
+    
+    # Обработка ввода для программы самопомощи
+    def handle_self_help_input
+      facade = SelfHelp::Facade::SelfHelpFacade.new(@bot, @user, @chat_id)
+      facade.handle_day_input(@text, @user.self_help_state)
+    end
+    
+    # Обработка контекстных сообщений
+    def handle_context_message
+      send_message(
+        text: "Не совсем понял ваше сообщение. Пожалуйста, используйте команды меню."
+      )
+    end
+    
+    # Обработчики команд
+    
+    def handle_start
+      send_welcome_message
+      handle_menu
+    end
+    
+    def handle_menu
+      show_main_menu
+    end
+    
+    def handle_help
+      send_help_message
+    end
+    
+    def handle_tests
+      TestManager.new(@bot, @user, @chat_id).show_categories
+    end
+    
+    def handle_diary
+      EmotionDiaryService.new(@bot, @user, @chat_id).start_diary_menu
+    end
+    
+    def handle_program
+      facade = SelfHelp::Facade::SelfHelpFacade.new(@bot, @user, @chat_id)
+      facade.start_program
+    end
+    
     def handle_unknown_command
-      @bot.send_message(chat_id: @chat_id, text: "Я не понимаю эту команду. Напишите /help или используйте кнопки.")
+      send_message(
+        text: "Неизвестная команда. Используйте /help для списка доступных команд."
+      )
     end
+    
+    # Вспомогательные методы
+    
+    def send_welcome_message
+      message = <<~MARKDOWN
+        👋 *Добро пожаловать!*
 
-    # Вспомогательный метод для отправки главного меню
-    def send_main_menu(text)
-      @bot.send_message(chat_id: @chat_id, text: text, reply_markup: TelegramMarkupHelper.main_menu_markup)
+        Я — бот для психологической поддержки и самопомощи.
+
+        Я помогу вам:
+        • Пройти психологические тесты
+        • Вести дневник эмоций
+        • Пройти программу самопомощи
+        • Освоить техники управления эмоциями
+
+        Используйте команду /menu для навигации.
+      MARKDOWN
+      
+      send_message(text: message, parse_mode: 'Markdown')
+    end
+    
+    def show_main_menu
+      send_message(
+        text: "Главное меню. Выберите действие:",
+        reply_markup: TelegramMarkupHelper.main_menu_markup
+      )
+    end
+    
+    def send_help_message
+      message = <<~MARKDOWN
+        🆘 *Справка*
+
+        Доступные команды:
+
+        *Основные команды:*
+        /start — начать работу с ботом
+        /menu — показать главное меню
+        /help — показать эту справку
+
+        *Основные функции:*
+        /tests — список психологических тестов
+        /diary — дневник эмоций
+        /program — программа самопомощи
+
+        *Как использовать:*
+        1. Выберите нужный раздел из меню
+        2. Следуйте инструкциям на экране
+        3. Используйте кнопки для навигации
+
+        Если возникли проблемы, попробуйте перезапустить бот командой /start.
+      MARKDOWN
+      
+      send_message(text: message, parse_mode: 'Markdown')
+    end
+    
+    def send_error_message
+      send_message(
+        text: "Произошла ошибка при обработке вашего сообщения. Пожалуйста, попробуйте еще раз или используйте команду /menu."
+      )
+    end
+    
+    # Отправка сообщения через бота
+    def send_message(text:, reply_markup: nil, parse_mode: nil)
+      @bot.send_message(
+        chat_id: @chat_id,
+        text: text,
+        reply_markup: reply_markup,
+        parse_mode: parse_mode
+      )
     rescue Telegram::Bot::Error => e
-      Rails.logger.error "Failed to send main menu to user #{@user.telegram_id}: #{e.message}"
+      log_error("Failed to send message", e)
+    end
+    
+    # Логирование
+    def log_info(message)
+      Rails.logger.info "[MessageProcessor] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}"
+    end
+    
+    def log_error(message, error = nil)
+      Rails.logger.error "[MessageProcessor] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}"
+      Rails.logger.error error.message if error
+      Rails.logger.error error.backtrace.join("\n") if error.respond_to?(:backtrace)
     end
   end
 end

@@ -23,18 +23,21 @@ module PsyBot
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
-    config.autoload_paths << Rails.root.join('app', 'services')
+    
+    # Автозагрузка сервисов (простая настройка)
+    config.autoload_paths << Rails.root.join('app/services')
+    
+    # Для development загружаем сразу
+    if Rails.env.development?
+      config.eager_load_paths << Rails.root.join('app/services')
+    end
+    
+    # Настройки assets
     config.assets.enabled = true
+    config.assets.paths << Rails.root.join('app', 'assets', 'images')
+    config.assets.precompile += %w(*.jpg *.jpeg *.png *.gif)
 
-        # Добавляем путь к папке с изображениями в assets paths
-        config.assets.paths << Rails.root.join('app', 'assets', 'images')
-
-        # Предкомпилируем assets (важно для production)
-        config.assets.precompile += %w(*.jpg *.jpeg *.png *.gif)
-
-    # Please, add to the `ignore` list any other `lib` subdirectories that do
-    # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    # Автозагрузка lib
     config.autoload_lib(ignore: %w(assets tasks))
 
     # Configuration for the application, engines, and railties goes here.

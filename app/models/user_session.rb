@@ -1,33 +1,42 @@
+# app/models/user_session.rb
 class UserSession < ApplicationRecord
-  belongs_to :user
-  
-  # Типы сессий
+  # Константы
   SESSION_TYPES = ['test', 'self_help', 'emotion_diary', 'gratitude', 'reflection', 'anxious_thought'].freeze
-  
+  SESSION_TIMEOUT_MINUTES = 10
+
+  # Связи
+  belongs_to :user
+
+  # Валидации
   validates :session_type, inclusion: { in: SESSION_TYPES }
   validates :last_successful_step, presence: true
-  
-  # Сериализация JSON полей
+  validates :last_activity_at, presence: true
+
+  # Сериализация
   serialize :current_data, JSON
   serialize :message_queue, JSON
-  
-  # По умолчанию пустые массивы/хэши
+
+  # Атрибуты по умолчанию
   attribute :current_data, default: {}
   attribute :message_queue, default: []
-  
-  # Scope для поиска активных сессий (менее 10 минут назад)
-  scope :active, -> { where('last_activity_at > ?', 10.minutes.ago) }
+  attribute :retry_count, default: 0
+
+  # Scopes
+  scope :active, -> { where('last_activity_at > ?', SESSION_TIMEOUT_MINUTES.minutes.ago) }
   scope :for_user, ->(user) { where(user: user) }
   scope :by_type, ->(type) { where(session_type: type) }
-  
-  # Обновить активность
+  scope :recent, -> { order(last_activity_at: :desc) }
+
+  # Callbacks
+  before_validation :set_initial_last_activity, on: :create
+
+  # Методы
   def touch_activity
     update(last_activity_at: Time.current)
   end
-  
-  # Добавить сообщение в очередь на повторную отправку
+
   def add_to_queue(message_data)
-    queue = message_queue || []
+    queue = message_queue_array
     queue << {
       message: message_data,
       created_at: Time.current,
@@ -35,46 +44,62 @@ class UserSession < ApplicationRecord
     }
     update(message_queue: queue)
   end
-  
-  # Очистить очередь
+
   def clear_queue
     update(message_queue: [])
   end
-  
-  # Получить следующее сообщение для повторной отправки
+
   def next_queued_message
-    return nil if message_queue.blank?
-    
-    message_queue.min_by { |m| m['retry_count'] }
+    return nil if message_queue_array.empty?
+
+    message_queue_array.min_by { |m| m['retry_count'] }
   end
-  
-  # Инкрементировать счетчик попыток для сообщения
+
   def increment_retry(message_index)
-    queue = message_queue
+    queue = message_queue_array
     return if queue[message_index].nil?
-    
+
     queue[message_index]['retry_count'] += 1
     update(message_queue: queue)
   end
-  
-  # Удалить сообщение из очереди (после успешной отправки)
+
   def remove_from_queue(message_index)
-    queue = message_queue
+    queue = message_queue_array
     queue.delete_at(message_index)
     update(message_queue: queue)
   end
-  
-  # Проверить, активна ли сессия
+
   def active?
-    last_activity_at > 10.minutes.ago
+    last_activity_at > SESSION_TIMEOUT_MINUTES.minutes.ago
   end
-  
-  # Завершить сессию
+
   def complete
     update(
       last_successful_step: 'completed',
       current_data: {},
       message_queue: []
     )
+  end
+
+  def update_progress(step, data = {})
+    update(
+      last_successful_step: step,
+      last_activity_at: Time.current,
+      current_data: current_data.merge(data)
+    )
+  end
+
+  def merge_data(new_data)
+    update(current_data: current_data.merge(new_data))
+  end
+
+  private
+
+  def set_initial_last_activity
+    self.last_activity_at ||= Time.current
+  end
+
+  def message_queue_array
+    message_queue.is_a?(Array) ? message_queue : []
   end
 end
