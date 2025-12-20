@@ -184,7 +184,7 @@ module SelfHelp
       def propose_next_day
         next_day = self.class::DAY_NUMBER + 1
         
-        if next_day <= 13
+        if next_day <= 28
           @user.set_self_help_step("awaiting_day_#{next_day}_start")
           
           message = "Готовы начать День #{next_day}?"

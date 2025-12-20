@@ -16,6 +16,8 @@ module Telegram
           handle_day_10_exercise_completed
         when 'day_8_stopped_thought_first_try'
           handle_day_8_stopped_thought
+        when 'reflection_exercise_completed'
+          handle_reflection_exercise_completed
         else
           # Пробуем извлечь номер дня для других callbacks
           day_number = extract_day_number
@@ -36,6 +38,18 @@ module Telegram
       end
       
       private
+
+      def handle_reflection_exercise_completed
+        log_info("Completing reflection exercise (day 14)")
+        
+        if @user.self_help_state == "day_14_exercise_in_progress"
+          service = SelfHelp::Days::Day14Service.new(@bot_service, @user, @chat_id)
+          service.complete_exercise
+          answer_callback_query("Рефлексия завершена!")
+        else
+          answer_callback_query("Сначала начните рефлексию")
+        end
+      end
       
       # ИСПРАВЛЕНИЕ: Добавляем метод для grounding_exercise_completed
       def handle_grounding_exercise_completed

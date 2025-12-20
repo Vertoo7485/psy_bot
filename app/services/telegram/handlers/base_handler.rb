@@ -91,24 +91,28 @@ module Telegram
         matches[index] if matches
       end
       
-      # Логирование
-      def log_info(message, extra = {})
-        Rails.logger.info "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}"
-        Rails.logger.info "Extra: #{extra.to_json}" unless extra.empty?
+      # ====== ИСПРАВЛЕННЫЕ МЕТОДЫ ЛОГИРОВАНИЯ ======
+      
+      def log_info(message, context = {})
+        context_str = context.any? ? " #{context}" : ""
+        Rails.logger.info "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}#{context_str}"
       end
       
-      def log_error(message, error = nil)
-        Rails.logger.error "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}"
+      def log_error(message, error = nil, context = {})
+        context_str = context.any? ? " #{context}" : ""
+        Rails.logger.error "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}#{context_str}"
         Rails.logger.error error.message if error
         Rails.logger.error error.backtrace.join("\n") if error.respond_to?(:backtrace)
       end
       
-      def log_warn(message)
-        Rails.logger.warn "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}"
+      def log_warn(message, context = {})
+        context_str = context.any? ? " #{context}" : ""
+        Rails.logger.warn "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}#{context_str}"
       end
       
-      def log_debug(message)
-        Rails.logger.debug "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}"
+      def log_debug(message, context = {})
+        context_str = context.any? ? " #{context}" : ""
+        Rails.logger.debug "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}#{context_str}"
       end
     end
   end

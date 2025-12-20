@@ -518,6 +518,34 @@ module TelegramMarkupHelper
       ]
     }.to_json
   end
+
+      # День 14
+    def day_14_start_exercise_markup
+      {
+        inline_keyboard: [
+          [
+            { text: "#{EMOJI[:reflection]} Начать рефлексию", 
+              callback_data: 'start_day_14_exercise' }
+          ]
+        ]
+      }.to_json
+    end
+
+    def reflection_exercise_completed_markup
+      {
+        inline_keyboard: [
+          [
+            { text: "#{EMOJI[:check]} Завершить рефлексию", 
+              callback_data: 'reflection_exercise_completed' }
+          ]
+        ]
+      }.to_json
+    end
+
+    # Метод для предложения дня 14
+    def self.day_14_start_proposal_markup
+      { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 14", callback_data: 'start_day_14_from_proposal' }]] }.to_json
+    end
   
   def procrastination_exercise_completed_markup
     {
@@ -689,5 +717,9 @@ module TelegramMarkupHelper
   # День 13 предложение
   def self.day_13_start_proposal_markup
     { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 13", callback_data: 'start_day_13_from_proposal' }]] }.to_json
+  end
+
+  def self.day_15_start_proposal_markup
+    { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 15", callback_data: 'start_day_15_from_proposal' }]] }.to_json
   end
 end

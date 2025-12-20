@@ -16,11 +16,13 @@ module SelfHelp
         10 => Days::Day10Service,
         11 => Days::Day11Service,
         12 => Days::Day12Service,
-        13 => Days::Day13Service
+        13 => Days::Day13Service,
+        14 => Days::Day14Service,
+        15 => Days::Day15Service
       }.freeze
       
       # Максимальное количество дней в программе
-      MAX_DAYS = 13
+      MAX_DAYS = 28
       
       attr_reader :bot_service, :bot, :user, :chat_id
       
@@ -322,6 +324,20 @@ module SelfHelp
           service.handle_self_compassion_input(text)
         when 'day_13_exercise_in_progress'
           service.handle_procrastination_input(text)
+        when 'day_14_exercise_in_progress'
+          if service.respond_to?(:handle_reflection_input)
+            service.handle_reflection_input(text)
+          else
+            log_error("Day 14 service doesn't have handle_reflection_input method")
+            false
+          end
+        when 'day_15_exercise_in_progress'
+          if service.respond_to?(:handle_kindness_input)
+            service.handle_kindness_input(text)
+          else
+            log_error("Day 15 service doesn't have handle_kindness_input method")
+            false
+          end
         
         # ИЗМЕНЕНИЕ 1: Добавляем обработку для дня 10
         when 'day_10_exercise_in_progress'
@@ -339,19 +355,9 @@ module SelfHelp
       # ИЗМЕНЕНИЕ 2: Новый метод для обработки ввода дневника эмоций в день 10
       def handle_day_10_emotion_diary_input(text, day_service)
         # Проверяем, есть ли последовательный сервис для дня 10
-        if defined?(Days::EmotionDiarySequenceService)
-          sequence_service = Days::EmotionDiarySequenceService.new(@bot_service, @user, @chat_id)
-          sequence_service.handle_answer(text)
-          true
-        else
-          # Если нет последовательного сервиса, используем стандартный
-          if day_service.respond_to?(:handle_text_input)
-            day_service.handle_text_input(text)
-          else
-            log_error("Day10Service doesn't have handle_text_input method")
-            false
-          end
-        end
+        sequence_service = SelfHelp::Days::EmotionDiarySequenceService.new(@bot_service, @user, @chat_id)
+        sequence_service.handle_answer(text)
+        true
       rescue => e
         log_error("Failed to handle day 10 emotion diary input", e)
         false

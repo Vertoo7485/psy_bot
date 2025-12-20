@@ -13,7 +13,7 @@ class ProcrastinationTask < ApplicationRecord
   validates :first_step, presence: true, length: { minimum: MIN_STEP_LENGTH }
 
   # Сериализация
-  serialize :steps, Array
+  serialize :steps, type: Array, coder: JSON
 
   # Scopes
   scope :completed, -> { where(completed: true) }

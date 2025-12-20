@@ -177,8 +177,8 @@ module SelfHelp
       def handle_text_input(text)
         # Проверяем, заполняем ли мы дневник
         if @user.get_self_help_data('is_filling_emotion_diary') == true
-          # Используем последовательный сервис
-          sequence_service = EmotionDiarySequenceService.new(@bot_service, @user, @chat_id)
+          # Используем последовательный сервис с правильным неймспейсом
+          sequence_service = SelfHelp::Days::EmotionDiarySequenceService.new(@bot_service, @user, @chat_id)
           sequence_service.handle_answer(text)
         end
       end

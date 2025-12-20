@@ -75,6 +75,11 @@ module Telegram
         /^view_my_procrastination_tasks$/ => 'DayProcrastinationHandler',
         'mark_task_completed' => 'MarkTaskCompletedHandler',
         'procrastination_first_step_done' => 'ProcrastinationFirstStepHandler',
+        'start_day_14_exercise' => 'DayStartHandler',
+        'reflection_exercise_completed' => 'DayExerciseCompleteHandler',
+        /^start_day_14_/ => 'DayStartHandler',
+        /^start_day_15_/ => 'DayStartHandler',
+        /^day_15_exercise_completed$/ => 'DayExerciseCompleteHandler',
         
         # Финальное завершение
         'complete_program_final' => 'ProgramCompleteHandler',
