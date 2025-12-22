@@ -18,7 +18,8 @@ module SelfHelp
         12 => Days::Day12Service,
         13 => Days::Day13Service,
         14 => Days::Day14Service,
-        15 => Days::Day15Service
+        15 => Days::Day15Service,
+        16 => Days::Day16Service
       }.freeze
       
       # Максимальное количество дней в программе
@@ -338,6 +339,13 @@ module SelfHelp
             log_error("Day 15 service doesn't have handle_kindness_input method")
             false
           end
+        when 'day_16_exercise_in_progress'
+    if service.respond_to?(:handle_connection_input)
+      service.handle_connection_input(text)
+    else
+      log_error("Day 16 service doesn't have handle_connection_input method")
+      false
+    end
         
         # ИЗМЕНЕНИЕ 1: Добавляем обработку для дня 10
         when 'day_10_exercise_in_progress'

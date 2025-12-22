@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :grounding_exercise_entries, dependent: :destroy
   has_many :self_compassion_practices, dependent: :destroy
   has_many :procrastination_tasks, dependent: :destroy
+  has_many :reconnection_practices, dependent: :destroy
 
   # Атрибуты
   attribute :current_diary_step, :string, default: nil
@@ -32,6 +33,17 @@ class User < ApplicationRecord
       user.username = from_data[:username]
     end
   end
+
+  def reconnection_stats
+  {
+    total: reconnection_practices.count,
+    calls: reconnection_practices.by_format('звонок').count,
+    messages: reconnection_practices.by_format('сообщение').count,
+    letters: reconnection_practices.by_format('письмо').count,
+    this_month: reconnection_practices.this_month.count,
+    success_rate: calculate_success_rate
+  }
+end
 
   # Методы для работы с дневником эмоций
   def start_diary_entry
@@ -141,4 +153,12 @@ class User < ApplicationRecord
   def self_help_program_data
     super || {}
   end
+
+  def calculate_success_rate
+  total = reconnection_practices.count
+  return 0 if total.zero?
+  
+  successful = reconnection_practices.select { |p| p.success_score >= 2 }.count
+  (successful.to_f / total * 100).round
+end
 end

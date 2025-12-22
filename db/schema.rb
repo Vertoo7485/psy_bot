@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_15_130215) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_21_053902) do
   create_table "answer_options", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "text"
@@ -105,6 +105,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_15_130215) do
     t.index ["test_id"], name: "index_questions_on_test_id"
   end
 
+  create_table "reconnection_practices", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "entry_date"
+    t.string "reconnected_person"
+    t.string "communication_format"
+    t.text "conversation_start"
+    t.text "reflection_text"
+    t.text "integration_plan"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_reconnection_practices_on_user_id"
+  end
+
   create_table "reflection_entries", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "entry_date"
@@ -192,6 +205,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_15_130215) do
   add_foreign_key "grounding_exercise_entries", "users"
   add_foreign_key "procrastination_tasks", "users"
   add_foreign_key "questions", "tests"
+  add_foreign_key "reconnection_practices", "users"
   add_foreign_key "reflection_entries", "users"
   add_foreign_key "self_compassion_practices", "users"
   add_foreign_key "test_results", "tests"

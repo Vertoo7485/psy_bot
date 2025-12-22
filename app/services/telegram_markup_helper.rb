@@ -722,4 +722,77 @@ module TelegramMarkupHelper
   def self.day_15_start_proposal_markup
     { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 15", callback_data: 'start_day_15_from_proposal' }]] }.to_json
   end
+
+def self.day_16_start_proposal_markup
+  day_start_proposal_markup(16)
+end
+
+def day_16_start_exercise_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "#{EMOJI[:check]} Начать упражнение", callback_data: 'start_day_16_exercise' }
+      ]
+    ]
+  }.to_json
+end
+
+def day_16_exercise_completed_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "#{EMOJI[:check]} Завершить упражнение", callback_data: 'day_16_exercise_completed' }
+      ]
+    ]
+  }.to_json
+end
+
+def day_16_menu_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "#{EMOJI[:calendar]} Мои восстановленные связи", callback_data: 'view_reconnection_history' }
+      ],
+      [
+        { text: "#{EMOJI[:back]} Главное меню", callback_data: 'back_to_main_menu' }
+      ]
+    ]
+  }.to_json
+end
+
+# Для истории восстановления связей
+def reconnection_history_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "#{EMOJI[:calendar]} Все записи", callback_data: 'reconnection_history_all' },
+        { text: "#{EMOJI[:brain]} Статистика", callback_data: 'reconnection_stats' }
+      ],
+      [
+        { text: "#{EMOJI[:check]} Новая запись", callback_data: 'start_day_16_exercise' }
+      ],
+      [
+        { text: "#{EMOJI[:back]} Назад", callback_data: 'back_to_day_16_menu' }
+      ]
+    ]
+  }.to_json
+end
+
+def reconnection_stats_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "#{EMOJI[:brain]} Общая статистика", callback_data: 'reconnection_general_stats' },
+        { text: "#{EMOJI[:calendar]} По месяцам", callback_data: 'reconnection_monthly_stats' }
+      ],
+      [
+        { text: "#{EMOJI[:info]} Форматы общения", callback_data: 'reconnection_format_stats' },
+        { text: "#{EMOJI[:check]} Успешность", callback_data: 'reconnection_success_stats' }
+      ],
+      [
+        { text: "#{EMOJI[:back]} Назад к записям", callback_data: 'view_reconnection_history' }
+      ]
+    ]
+  }.to_json
+end
 end

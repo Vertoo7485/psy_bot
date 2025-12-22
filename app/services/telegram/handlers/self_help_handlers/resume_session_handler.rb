@@ -89,29 +89,26 @@ module Telegram
       end
       
       def handle_day_resumption(day_number)
-        log_info("Resuming day #{day_number}")
-        
-        # Пытаемся использовать фасад
-        begin
-          require Rails.root.join('app/services/self_help/facade/self_help_facade') unless defined?(SelfHelp::Facade::SelfHelpFacade)
-          
-          facade = SelfHelp::Facade::SelfHelpFacade.new(@bot_service, @user, @chat_id)
-          
-          if facade.respond_to?(:deliver_day) && facade.deliver_day(day_number)
-            log_info("Successfully resumed day #{day_number} via facade")
-            return
-          end
-        rescue => e
-          log_error("Failed to use facade for day #{day_number}", e)
-        end
-        
-        # Если фасад не сработал, используем прямой подход
-        send_message(
-          text: "📅 *День #{day_number}*\n\nПродолжаем с того места, где остановились...",
-          parse_mode: 'Markdown',
-          reply_markup: TelegramMarkupHelper.day_start_proposal_markup(day_number)
-        )
-      end
+  log_info("Resuming day #{day_number}")
+  
+  # Прямой вызов сервиса дня
+  service_class = "SelfHelp::Days::Day#{day_number}Service".constantize
+  service = service_class.new(@bot_service, @user, @chat_id)
+  
+  # Используем resume_session вместо deliver_content
+  service.resume_session
+  
+  log_info("Successfully resumed day #{day_number}")
+rescue => e
+  log_error("Failed to resume day #{day_number}", e)
+  
+  # Фолбэк
+  send_message(
+    text: "Продолжаем День #{day_number}...",
+    reply_markup: TelegramMarkupHelper.back_to_main_menu_markup
+  )
+end
+
       
       def start_program_fresh
         log_info("Starting program fresh after failed resumption")

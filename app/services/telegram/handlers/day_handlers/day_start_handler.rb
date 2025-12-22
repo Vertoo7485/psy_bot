@@ -26,6 +26,15 @@ module Telegram
       end
       
       private
+
+      def day_service_for(day_number)
+  # Определяем класс сервиса для дня
+  service_class = "SelfHelp::Days::Day#{day_number}Service".constantize
+  service_class.new(@bot_service, @user, @chat_id)
+rescue NameError => e
+  log_error("Failed to find service for day #{day_number}", e)
+  nil
+end
       
       def handle_grounding_exercise_start
         log_info("Starting grounding exercise (day 11)")
@@ -109,18 +118,33 @@ module Telegram
       end
       
       def handle_day_start(day_number, facade)
-        if facade.can_start_day?(day_number)
-          if facade.deliver_day(day_number)
-            answer_callback_query("Начинаем День #{day_number}!")
-          else
-            log_error("Failed to deliver day #{day_number}")
-            answer_callback_query("Ошибка при запуске дня")
-          end
-        else
-          log_warn("User cannot start day #{day_number}", state: @user.self_help_state)
-          answer_callback_query("Сначала завершите предыдущие этапы")
-        end
-      end
+  # Проверяем, находится ли пользователь уже в этом дне
+  if @user.self_help_state&.include?("day_#{day_number}")
+    # Пользователь уже находится в этом дне, продолжаем
+    log_info("Continuing day #{day_number} from state: #{@user.self_help_state}")
+    
+    # Восстанавливаем сессию
+    service = day_service_for(day_number)
+    if service
+      service.resume_session
+      answer_callback_query("Продолжаем день #{day_number}!")
+    else
+      log_error("Failed to create service for day #{day_number}")
+      answer_callback_query("Ошибка при продолжении дня")
+    end
+  elsif facade.can_start_day?(day_number)
+    # Новый день - можем начать
+    if facade.deliver_day(day_number)
+      answer_callback_query("Начинаем День #{day_number}!")
+    else
+      log_error("Failed to deliver day #{day_number}")
+      answer_callback_query("Ошибка при запуске дня")
+    end
+  else
+    log_warn("User cannot start day #{day_number}", state: @user.self_help_state)
+    answer_callback_query("Сначала завершите предыдущие этапы")
+  end
+end
       
       def handle_exercise_start(day_number, facade)
         # Проверяем, что пользователь находится на правильном шаге

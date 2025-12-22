@@ -80,7 +80,12 @@ module Telegram
         /^start_day_14_/ => 'DayStartHandler',
         /^start_day_15_/ => 'DayStartHandler',
         /^day_15_exercise_completed$/ => 'DayExerciseCompleteHandler',
-        
+        /^start_day_16_/ => 'DayStartHandler',
+        /^day_16_exercise_completed$/ => 'DayExerciseCompleteHandler',
+        'view_reconnection_history' => 'ReconnectionHistoryHandler',
+        /^reconnection_/ => 'ReconnectionHistoryHandler',
+        'back_to_day_16_menu' => 'MainMenuHandler',
+     
         # Финальное завершение
         'complete_program_final' => 'ProgramCompleteHandler',
         'complete_day_10' => 'ProgramCompleteHandler',
