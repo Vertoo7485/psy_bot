@@ -19,7 +19,9 @@ module SelfHelp
         13 => Days::Day13Service,
         14 => Days::Day14Service,
         15 => Days::Day15Service,
-        16 => Days::Day16Service
+        16 => Days::Day16Service,
+        17 => Days::Day17Service,
+        18 => Days::Day18Service
       }.freeze
       
       # Максимальное количество дней в программе
@@ -304,6 +306,8 @@ module SelfHelp
       
       # Обработка ввода для конкретного дня
       def handle_day_specific_input(service, text, state)
+        log_info("Handling day specific input - State: #{state}, Text: #{text.truncate(50)}")
+        
         case state
         when 'day_3_waiting_for_gratitude'
           service.handle_gratitude_input(text)
@@ -340,12 +344,25 @@ module SelfHelp
             false
           end
         when 'day_16_exercise_in_progress'
-    if service.respond_to?(:handle_connection_input)
-      service.handle_connection_input(text)
-    else
-      log_error("Day 16 service doesn't have handle_connection_input method")
-      false
-    end
+          if service.respond_to?(:handle_connection_input)
+            service.handle_connection_input(text)
+          else
+            log_error("Day 16 service doesn't have handle_connection_input method")
+            false
+          end
+        # День 17
+        when 'day_17_exercise_in_progress'
+          current_step = @user.get_self_help_data('day_17_current_step')
+          if service.respond_to?(:handle_compassion_input)
+            service.handle_compassion_input(text, current_step)
+          else
+            log_error("Day 17 service doesn't have handle_compassion_input method")
+            false
+          end
+        
+        # День 18 - ДОБАВЛЯЕМ ЭТУ СЕКЦИЮ
+        when 'day_18_exercise_in_progress'
+          handle_day_18_input(text, service)
         
         # ИЗМЕНЕНИЕ 1: Добавляем обработку для дня 10
         when 'day_10_exercise_in_progress'
@@ -355,10 +372,100 @@ module SelfHelp
           if @user.get_self_help_data('is_filling_emotion_diary') == true
             handle_day_10_emotion_diary_input(text, service)
           else
-            false
+            # Проверяем, не день ли 18
+            if state&.start_with?('day_18_')
+              handle_day_18_input(text, service)
+            else
+              log_info("No handler for state: #{state}")
+              false
+            end
           end
         end
       end
+      
+      # Новый метод для обработки ввода дня 18
+      # app/services/self_help/facade/self_help_facade.rb
+
+def handle_day_18_input(text, day_service)
+  log_info("=== HANDLING DAY 18 INPUT ===")
+  log_info("Input text: #{text}")
+  log_info("User state BEFORE: #{@user.self_help_state}")
+  log_info("User self_help_program_step: #{@user.self_help_program_step}")
+  log_info("Day 18 current step from data: #{@user.get_self_help_data('day_18_current_step')}")
+  
+  # Проверяем на пустой ввод
+  if text.strip.empty?
+    log_warn("Empty input received for day 18")
+    @bot_service.send_message(
+      chat_id: @chat_id,
+      text: "Пожалуйста, напишите ваш ответ. Если не знаете что написать, просто опишите ваши мысли."
+    )
+    return true
+  end
+  
+  # Получаем текущий шаг из данных пользователя
+  current_step = @user.get_self_help_data('day_18_current_step')
+  log_info("Current step from data: #{current_step}")
+  
+  # Также проверяем состояние пользователя
+  user_state = @user.self_help_state
+  log_info("User state: #{user_state}")
+  
+  # Определяем, какой шаг сейчас активен
+  if user_state == 'day_18_planning_activity' || current_step == 'planning_details'
+    log_info("Processing as activity plan input")
+    if day_service.respond_to?(:handle_activity_plan_input)
+      result = day_service.handle_activity_plan_input(text)
+      log_info("handle_activity_plan_input returned: #{result}")
+      log_info("User state AFTER: #{@user.self_help_state}")
+      return result
+    else
+      log_error("Day 18 service doesn't have handle_activity_plan_input method")
+      return false
+    end
+    
+  elsif user_state == 'day_18_planning_time' || current_step == 'planning_time'
+    log_info("Processing as time plan input")
+    if day_service.respond_to?(:handle_time_plan_input)
+      result = day_service.handle_time_plan_input(text)
+      log_info("handle_time_plan_input returned: #{result}")
+      log_info("User state AFTER: #{@user.self_help_state}")
+      return result
+    else
+      log_error("Day 18 service doesn't have handle_time_plan_input method")
+      return false
+    end
+    
+  elsif user_state == 'day_18_activity_planned' || current_step == 'reflection'
+    log_info("Processing as reflection input")
+    if day_service.respond_to?(:handle_reflection_input)
+      result = day_service.handle_reflection_input(text)
+      log_info("handle_reflection_input returned: #{result}")
+      return result
+    else
+      log_error("Day 18 service doesn't have handle_reflection_input method")
+      return false
+    end
+    
+  else
+    log_warn("Unknown state for day 18 input: user_state=#{user_state}, current_step=#{current_step}")
+    log_info("Available user data: #{@user.self_help_program_data.inspect}")
+    
+    # Пробуем определить состояние по данным
+    if @user.get_self_help_data('day_18_activity_plan').present? && @user.get_self_help_data('day_18_planned_time').blank?
+      log_info("Detected: has activity plan but no time, so should be planning_time")
+      @user.set_self_help_step("day_18_planning_time")
+      store_day_data('current_step', 'planning_time')
+      return handle_day_18_input(text, day_service) # Рекурсивно обработаем с новым состоянием
+    end
+    
+    return false
+  end
+  
+rescue => e
+  log_error("Failed to handle day 18 input", e)
+  false
+end
 
       # ИЗМЕНЕНИЕ 2: Новый метод для обработки ввода дневника эмоций в день 10
       def handle_day_10_emotion_diary_input(text, day_service)
@@ -396,6 +503,10 @@ module SelfHelp
         Rails.logger.error "[SelfHelpFacade] #{message} - User: #{@user.telegram_id}"
         Rails.logger.error error.message if error
         Rails.logger.error error.backtrace.join("\n") if error
+      end
+      
+      def log_warn(message)
+        Rails.logger.warn "[SelfHelpFacade] #{message} - User: #{@user.telegram_id}"
       end
     end
   end

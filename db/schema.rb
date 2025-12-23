@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_21_053902) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_23_083428) do
   create_table "answer_options", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "text"
@@ -43,6 +43,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_21_053902) do
     t.datetime "updated_at", null: false
     t.index ["user_id", "entry_date"], name: "index_anxious_thought_entries_on_user_id_and_entry_date"
     t.index ["user_id"], name: "index_anxious_thought_entries_on_user_id"
+  end
+
+  create_table "compassion_letters", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "entry_date"
+    t.text "situation_text"
+    t.text "understanding_text"
+    t.text "kindness_text"
+    t.text "advice_text"
+    t.text "closure_text"
+    t.text "full_text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_compassion_letters_on_user_id"
   end
 
   create_table "emotion_diary_entries", force: :cascade do |t|
@@ -80,6 +94,21 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_21_053902) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_grounding_exercise_entries_on_user_id"
+  end
+
+  create_table "pleasure_activities", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "title"
+    t.text "description"
+    t.string "activity_type"
+    t.integer "duration"
+    t.boolean "completed"
+    t.datetime "completed_at"
+    t.integer "feelings_before"
+    t.integer "feelings_after"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_pleasure_activities_on_user_id"
   end
 
   create_table "procrastination_tasks", force: :cascade do |t|
@@ -200,9 +229,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_21_053902) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "test_results"
   add_foreign_key "anxious_thought_entries", "users"
+  add_foreign_key "compassion_letters", "users"
   add_foreign_key "emotion_diary_entries", "users"
   add_foreign_key "gratitude_entries", "users"
   add_foreign_key "grounding_exercise_entries", "users"
+  add_foreign_key "pleasure_activities", "users"
   add_foreign_key "procrastination_tasks", "users"
   add_foreign_key "questions", "tests"
   add_foreign_key "reconnection_practices", "users"

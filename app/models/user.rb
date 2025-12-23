@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :self_compassion_practices, dependent: :destroy
   has_many :procrastination_tasks, dependent: :destroy
   has_many :reconnection_practices, dependent: :destroy
+  has_many :compassion_letters, dependent: :destroy
+  has_many :pleasure_activities, dependent: :destroy
 
   # Атрибуты
   attribute :current_diary_step, :string, default: nil
@@ -33,6 +35,53 @@ class User < ApplicationRecord
       user.username = from_data[:username]
     end
   end
+
+  def pleasure_stats
+    total = pleasure_activities.count
+    completed = pleasure_activities.completed.count
+    
+    {
+      total: total,
+      completed: completed,
+      completion_rate: total > 0 ? (completed.to_f / total * 100).round : 0
+    }
+  end
+  
+  # Получить рекомендации на основе истории
+  def activity_recommendations
+  # Получаем все завершенные активности
+  completed_activities = pleasure_activities.completed
+  
+  if completed_activities.any?
+    # Получаем самые частые типы активностей
+    activity_types = completed_activities.pluck(:activity_type).compact
+    
+    if activity_types.any?
+      most_common = activity_types.group_by(&:itself).transform_values(&:count).max_by(&:last)
+      
+      # Рекомендуем похожие активности
+      similar_activities = {
+        'reading' => ['art', 'learning', 'relaxation'],
+        'music' => ['art', 'relaxation', 'nature'],
+        'art' => ['music', 'reading', 'cooking'],
+        'sports' => ['nature', 'games', 'relaxation'],
+        'nature' => ['sports', 'relaxation', 'social'],
+        'cooking' => ['art', 'social', 'games'],
+        'games' => ['sports', 'social', 'learning'],
+        'learning' => ['reading', 'games', 'art'],
+        'social' => ['nature', 'games', 'cooking'],
+        'relaxation' => ['nature', 'music', 'reading']
+      }
+      
+      if most_common && similar_activities[most_common[0]]
+        return similar_activities[most_common[0]].first(3)
+      end
+    end
+  end
+  
+  # Дефолтные рекомендации
+  ['reading', 'nature', 'relaxation']
+end
 
   def reconnection_stats
   {

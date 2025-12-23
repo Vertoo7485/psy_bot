@@ -795,4 +795,150 @@ def reconnection_stats_markup
     ]
   }.to_json
 end
+
+# День 17 - Письмо самосострадания
+def day_17_start_exercise_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "#{EMOJI[:check]} Начать упражнение", callback_data: 'start_day_17_exercise' }
+      ]
+    ]
+  }.to_json
+end
+
+def day_17_exercise_completed_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "#{EMOJI[:check]} Завершить упражнение", callback_data: 'day_17_exercise_completed' }
+      ]
+    ]
+  }.to_json
+end
+
+def day_17_menu_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "📚 Мои письма самосострадания", callback_data: 'view_compassion_letters' }
+      ],
+      [
+        { text: "✍️ Написать новое письмо", callback_data: 'start_day_17_exercise' }
+      ],
+      [
+        { text: "➡️ Продолжить программу", callback_data: 'continue_after_day_17' }
+      ],
+      [
+        { text: "#{EMOJI[:back]} Главное меню", callback_data: 'back_to_main_menu' }
+      ]
+    ]
+  }.to_json
+end
+
+# Добавьте разметку для продолжения после дня 17
+def continue_after_day_17_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "✅ Начать День 18", callback_data: 'start_day_18_from_proposal' }
+      ],
+      [
+        { text: "📚 Вернуться к письмам", callback_data: 'back_to_day_17_menu' }
+      ]
+    ]
+  }.to_json
+end
+
+# Метод для предложения дня 17
+def self.day_17_start_proposal_markup
+  { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 17", callback_data: 'start_day_17_from_proposal' }]] }.to_json
+end
+
+def day_17_full_menu_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "#{EMOJI[:book]} Все письма", callback_data: 'view_compassion_letters' },
+        { text: "#{EMOJI[:calendar]} По дате", callback_data: 'compassion_by_date' }
+      ],
+      [
+        { text: "#{EMOJI[:star]} Лучшие письма", callback_data: 'compassion_best' },
+        { text: "#{EMOJI[:check]} Новое письмо", callback_data: 'start_day_17_exercise' }
+      ],
+      [
+        { text: "#{EMOJI[:check]} Следующий день (18)", callback_data: 'start_day_18_from_proposal' }
+      ],
+      [
+        { text: "#{EMOJI[:back]} Главное меню", callback_data: 'back_to_main_menu' }
+      ]
+    ]
+  }.to_json
+end
+
+# День 18
+  def self.day_18_start_proposal_markup
+    { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 18", callback_data: 'start_day_18_from_proposal' }]] }.to_json
+  end
+  
+  def day_18_start_exercise_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "#{EMOJI[:pleasure]} Начать упражнение", callback_data: 'start_day_18_exercise' }
+        ]
+      ]
+    }.to_json
+  end
+  
+  def day_18_exercise_completed_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "#{EMOJI[:check]} Завершить упражнение", callback_data: 'day_18_exercise_completed' }
+        ]
+      ]
+    }.to_json
+  end
+  
+  def day_18_menu_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "#{EMOJI[:book]} Мои активности", callback_data: 'view_pleasure_activities' },
+          { text: "#{EMOJI[:lightbulb]} Идеи", callback_data: 'view_activity_ideas' }
+        ],
+        [
+          { text: "#{EMOJI[:plus]} Новая активность", callback_data: 'start_day_18_exercise' }
+        ],
+        [
+          { text: "#{EMOJI[:back]} Главное меню", callback_data: 'back_to_main_menu' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def handle_self_help_input(state)
+      log_info("Handling self-help input for state: #{state}")
+      
+      # Проверяем, не день ли 18
+      if state&.start_with?('day_18')
+        # Используем специальный обработчик для дня 18
+        handler = Telegram::Handlers::Day18TextHandler.new(@bot, @user, @chat_id, @text)
+        handler.process
+        return
+      end
+      
+      # Для остальных дней используем фасад
+      facade = SelfHelp::Facade::SelfHelpFacade.new(@bot, @user, @chat_id)
+      handled = facade.handle_day_input(@text, state)
+      
+      unless handled
+        send_message(
+          text: "Извините, я не понял ваш ответ. Пожалуйста, используйте кнопки меню.",
+          reply_markup: TelegramMarkupHelper.back_to_main_menu_markup
+        )
+      end
+    end
+
 end

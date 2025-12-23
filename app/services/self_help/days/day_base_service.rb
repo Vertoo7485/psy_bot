@@ -107,43 +107,6 @@ module SelfHelp
         send_message(text: message, parse_mode: 'Markdown')
       end
       
-      def propose_next_day
-        next_day = self.class::DAY_NUMBER + 1
-        
-        if next_day <= 13
-          @user.set_self_help_step("awaiting_day_#{next_day}_start")
-          
-          message = "Готовы начать День #{next_day}?"
-          
-          begin
-            # Пробуем получить разметку
-            markup_method = "day_#{next_day}_start_proposal_markup"
-            if TelegramMarkupHelper.respond_to?(markup_method)
-              markup = TelegramMarkupHelper.send(markup_method)
-            else
-              # Запасной вариант
-              markup = {
-                inline_keyboard: [
-                  [{ text: "✅ Начать День #{next_day}", callback_data: "start_day_#{next_day}_from_proposal" }]
-                ]
-              }.to_json
-            end
-          rescue => e
-            log_error("Failed to get markup for day #{next_day}", e)
-            markup = {
-              inline_keyboard: [
-                [{ text: "✅ Начать День #{next_day}", callback_data: "start_day_#{next_day}_from_proposal" }]
-              ]
-            }.to_json
-          end
-          
-          send_message(text: message, reply_markup: markup)
-        else
-          # Программа завершена
-          send_program_completion_message
-        end
-      end
-      
       def send_program_completion_message
         message = "🏆 *Поздравляем! Вы завершили всю программу самопомощи!* 🏆\n\n" \
                   "Вы прошли 13-дневный путь развития и освоили множество полезных техник.\n\n" \
