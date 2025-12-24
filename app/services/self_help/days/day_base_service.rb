@@ -1,9 +1,10 @@
 # app/services/self_help/days/day_base_service.rb
+
 module SelfHelp
   module Days
     class DayBaseService
       include TelegramMarkupHelper
-      # Константы
+      
       DAY_NUMBER = nil # Должен быть переопределен в наследниках
       
       # Атрибуты
@@ -15,6 +16,8 @@ module SelfHelp
         @chat_id = chat_id
         @message_sender = Telegram::RobustMessageSender.new(bot_service, user, chat_id)
       end
+      
+      # ===== ПУБЛИЧНЫЕ МЕТОДЫ =====
       
       # Основной метод доставки контента дня
       def deliver_content
@@ -91,86 +94,8 @@ module SelfHelp
         propose_next_day
       end
       
-      protected
-
-      def send_exercise_completion_message
-        message = "🎉 *Упражнение дня #{self.class::DAY_NUMBER} завершено!* 🎉\n\n" \
-                  "Отличная работа! Вы освоили новую технику."
-        
-        send_message(text: message, parse_mode: 'Markdown')
-      end
-      
-      def send_completion_message
-        message = "🎉 *День #{self.class::DAY_NUMBER} завершен!* 🎉\n\n" \
-                  "Отличная работа! Вы сделали важный шаг в своем развитии."
-        
-        send_message(text: message, parse_mode: 'Markdown')
-      end
-      
-      def send_program_completion_message
-        message = "🏆 *Поздравляем! Вы завершили всю программу самопомощи!* 🏆\n\n" \
-                  "Вы прошли 13-дневный путь развития и освоили множество полезных техник.\n\n" \
-                  "Продолжайте практиковать полученные навыки!"
-        
-        send_message(
-          text: message,
-          parse_mode: 'Markdown',
-          reply_markup: TelegramMarkupHelper.final_program_completion_markup
-        )
-      end
-      
-      # Вспомогательные методы
-      def save_current_progress
-        # Сохраняем прогресс в сессию
-        @user.active_session&.update_progress(
-          day: self.class::DAY_NUMBER,
-          state: @user.self_help_state,
-          timestamp: Time.current
-        )
-      end
-      
-      def should_deliver_exercise_immediately?
-        false # По умолчанию не сразу
-      end
-      
-      def ask_for_input_again
-        send_message(text: "Пожалуйста, продолжите ввод...")
-      end
-      
-      def send_completion_message
-        message = "🎉 *День #{self.class::DAY_NUMBER} завершен!* 🎉\n\n" \
-                  "Отличная работа! Вы сделали важный шаг в своем развитии."
-        
-        send_message(text: message, parse_mode: 'Markdown')
-      end
-      
-      def propose_next_day
-        next_day = self.class::DAY_NUMBER + 1
-        
-        if next_day <= 28
-          @user.set_self_help_step("awaiting_day_#{next_day}_start")
-          
-          message = "Готовы начать День #{next_day}?"
-          markup = TelegramMarkupHelper.send("day_#{next_day}_start_proposal_markup")
-          
-          send_message(text: message, reply_markup: markup)
-        else
-          # Программа завершена
-          send_program_completion_message
-        end
-      end
-      
-      def send_program_completion_message
-        message = "🏆 *Поздравляем! Вы завершили всю программу самопомощи!* 🏆\n\n" \
-                  "Вы прошли 13-дневный путь развития и освоили множество полезных техник.\n\n" \
-                  "Продолжайте практиковать полученные навыки!"
-        
-        send_message(
-          text: message,
-          parse_mode: 'Markdown',
-          reply_markup: TelegramMarkupHelper.final_program_completion_markup
-        )
-      end
+      # ===== ОСНОВНЫЕ ПУБЛИЧНЫЕ ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ =====
+      # Эти методы должны быть ПУБЛИЧНЫМИ, чтобы их можно было вызывать из обработчиков
       
       def send_message(text:, reply_markup: nil, parse_mode: nil, save_progress: true)
         success = @message_sender.send_with_retry(
@@ -210,6 +135,99 @@ module SelfHelp
         Rails.logger.error "[#{self.class}] #{message} - User: #{@user.telegram_id}"
         Rails.logger.error error.message if error
       end
+      
+      # ===== ЗАЩИЩЕННЫЕ МЕТОДЫ (protected) =====
+      # Эти методы доступны только внутри класса и его наследников
+      
+      protected
+      
+      def send_exercise_completion_message
+        message = "🎉 *Упражнение дня #{self.class::DAY_NUMBER} завершено!* 🎉\n\n" \
+                  "Отличная работа! Вы освоили новую технику."
+        
+        send_message(text: message, parse_mode: 'Markdown')
+      end
+      
+      def send_completion_message
+        message = "🎉 *День #{self.class::DAY_NUMBER} завершен!* 🎉\n\n" \
+                  "Отличная работа! Вы сделали важный шаг в своем развитии."
+        
+        send_message(text: message, parse_mode: 'Markdown')
+      end
+      
+      def send_program_completion_message
+        message = "🏆 *Поздравляем! Вы завершили всю программу самопомощи!* 🏆\n\n" \
+                  "Вы прошли 13-дневный путь развития и освоили множество полезных техник.\n\n" \
+                  "Продолжайте практиковать полученные навыки!"
+        
+        send_message(
+          text: message,
+          parse_mode: 'Markdown',
+          reply_markup: TelegramMarkupHelper.final_program_completion_markup
+        )
+      end
+      
+      def save_current_progress
+        # Сохраняем прогресс в сессию
+        @user.active_session&.update_progress(
+          day: self.class::DAY_NUMBER,
+          state: @user.self_help_state,
+          timestamp: Time.current
+        )
+      end
+      
+      def should_deliver_exercise_immediately?
+        false # По умолчанию не сразу
+      end
+      
+      def ask_for_input_again
+        send_message(text: "Пожалуйста, продолжите ввод...")
+      end
+      
+      def propose_next_day
+        next_day = self.class::DAY_NUMBER + 1
+        
+        if next_day <= 28
+          @user.set_self_help_step("awaiting_day_#{next_day}_start")
+          
+          message = "Готовы начать День #{next_day}?"
+          
+          begin
+            # Пробуем получить разметку
+            markup_method = "day_#{next_day}_start_proposal_markup"
+            if TelegramMarkupHelper.respond_to?(markup_method)
+              markup = TelegramMarkupHelper.send(markup_method)
+            else
+              # Запасной вариант
+              markup = {
+                inline_keyboard: [
+                  [{ text: "✅ Начать День #{next_day}", callback_data: "start_day_#{next_day}_from_proposal" }]
+                ]
+              }.to_json
+            end
+          rescue => e
+            log_error("Failed to get markup for day #{next_day}", e)
+            markup = {
+              inline_keyboard: [
+                [{ text: "✅ Начать День #{next_day}", callback_data: "start_day_#{next_day}_from_proposal" }]
+              ]
+            }.to_json
+          end
+          
+          send_message(text: message, reply_markup: markup)
+        else
+          # Программа завершена
+          send_program_completion_message
+        end
+      end
+      
+      # ===== ПРИВАТНЫЕ МЕТОДЫ (private) =====
+      # Эти методы доступны только внутри самого класса
+      
+      private
+      
+      # Здесь могут быть приватные вспомогательные методы
+      # которые не должны быть доступны даже наследникам
     end
   end
 end

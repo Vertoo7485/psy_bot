@@ -108,6 +108,12 @@ module Telegram
         'view_activity_ideas' => 'PleasureActivitiesHandler',
         'pleasure_stats' => 'PleasureActivitiesHandler',
         'back_to_day_18_menu' => 'PleasureActivitiesHandler',
+        /^start_day_19/ => 'DayStartHandler',
+        'day_19_exercise_completed' => 'DayExerciseCompleteHandler',
+        /^day_19_/ => 'Day19Handler',
+        'view_meditation_tips' => 'MeditationTipsHandler',
+        'meditation_stats' => 'MeditationStatsHandler',
+        'back_to_day_19_menu' => 'MeditationMenuHandler',
      
         # Финальное завершение
         'complete_program_final' => 'ProgramCompleteHandler',

@@ -363,6 +363,9 @@ module SelfHelp
         # День 18 - ДОБАВЛЯЕМ ЭТУ СЕКЦИЮ
         when 'day_18_exercise_in_progress'
           handle_day_18_input(text, service)
+
+        when 'day_19_exercise_in_progress'
+          handle_day_19_input(text, service)
         
         # ИЗМЕНЕНИЕ 1: Добавляем обработку для дня 10
         when 'day_10_exercise_in_progress'
@@ -383,6 +386,37 @@ module SelfHelp
         end
       end
       
+
+      def handle_day_19_input(text, day_service)
+  log_info("Handling day 19 input: #{text}")
+  
+  # Проверяем на пустой ввод
+  if text.strip.empty?
+    log_warn("Empty input received for day 19")
+    @bot_service.send_message(
+      chat_id: @chat_id,
+      text: "Пожалуйста, напишите ваш ответ."
+    )
+    return true
+  end
+  
+  # Получаем текущий шаг
+  current_step = @user.get_self_help_data('day_19_current_step')
+  log_info("Day 19 current step: #{current_step}")
+  
+  # Обрабатываем в зависимости от шага
+  if current_step == 'waiting_feedback' && day_service.respond_to?(:handle_feedback_input)
+    day_service.handle_feedback_input(text)
+    return true
+  end
+  
+  log_warn("Unknown day 19 step for text input: #{current_step}")
+  false
+rescue => e
+  log_error("Failed to handle day 19 input", e)
+  false
+end
+
       # Новый метод для обработки ввода дня 18
       # app/services/self_help/facade/self_help_facade.rb
 

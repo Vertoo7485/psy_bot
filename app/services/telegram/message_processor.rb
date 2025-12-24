@@ -96,20 +96,21 @@ module Telegram
     
     # Обработка активных сессий
     def handle_active_sessions
-      # Проверяем дневник эмоций
-      if @user.current_diary_step.present?
-        handle_emotion_diary_input
-        return true
-      end
-      
-      # Проверяем программу самопомощи
-      if @user.self_help_state.present?
-        handle_self_help_input
-        return true
-      end
-      
-      false
-    end
+  # Проверяем дневник эмоций
+  if @user.current_diary_step.present?
+    handle_emotion_diary_input
+    return true
+  end
+  
+  # Проверяем программу самопомощи
+  if @user.self_help_state.present?
+    # Передаем состояние как параметр
+    handle_self_help_input(@user.self_help_state)
+    return true
+  end
+  
+  false
+end
     
     # Обработка ввода для дневника эмоций
     def handle_emotion_diary_input
@@ -119,10 +120,23 @@ module Telegram
     end
     
     # Обработка ввода для программы самопомощи
-    def handle_self_help_input
-      facade = SelfHelp::Facade::SelfHelpFacade.new(@bot, @user, @chat_id)
-      facade.handle_day_input(@text, @user.self_help_state)
-    end
+    def handle_self_help_input(state)
+  log_info("Handling self-help input for state: #{state}")
+  
+  if state&.start_with?('day_19')
+    # Создаем временный bot_service
+    bot_service = create_temp_bot_service(@bot)
+    
+    # Создаем и используем сервис дня 19 напрямую
+    service = SelfHelp::Days::Day19Service.new(bot_service, @user, @chat_id)
+    service.handle_text_input(@text)
+    return
+  end
+  
+  # Для остальных дней используем фасад
+  facade = SelfHelp::Facade::SelfHelpFacade.new(@bot, @user, @chat_id)
+  facade.handle_day_input(@text, state)
+end
     
     # Обработка контекстных сообщений
     def handle_context_message

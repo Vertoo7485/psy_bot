@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :reconnection_practices, dependent: :destroy
   has_many :compassion_letters, dependent: :destroy
   has_many :pleasure_activities, dependent: :destroy
+  has_many :meditation_sessions, dependent: :destroy
 
   # Атрибуты
   attribute :current_diary_step, :string, default: nil
@@ -35,6 +36,51 @@ class User < ApplicationRecord
       user.username = from_data[:username]
     end
   end
+
+  # app/models/user.rb
+def meditation_stats
+  begin
+    # Проверяем, есть ли связь с MeditationSession
+    if defined?(MeditationSession) && MeditationSession.column_names.include?('user_id')
+      sessions = meditation_sessions.completed
+      total = sessions.count
+      total_minutes = sessions.sum(:duration_minutes)
+      average_rating = sessions.average(:rating).to_f.round(1)
+    else
+      # Возвращаем дефолтные значения если таблицы нет
+      total = 0
+      total_minutes = 0
+      average_rating = 0
+    end
+    
+    {
+      total: total,
+      total_minutes: total_minutes,
+      average_rating: average_rating,
+      streak_days: 0 # временное значение
+    }
+  rescue => e
+    Rails.logger.error "Error calculating meditation stats: #{e.message}"
+    { total: 0, total_minutes: 0, average_rating: 0, streak_days: 0 }
+  end
+end
+
+def calculate_meditation_streak
+  return 0 if meditation_sessions.completed.empty?
+  
+  # Получаем даты всех завершенных медитаций
+  dates = meditation_sessions.completed.pluck(:completed_at).map(&:to_date).uniq.sort.reverse
+  
+  streak = 0
+  current_date = Date.current
+  
+  dates.each do |date|
+    break unless date == current_date - streak.days
+    streak += 1
+  end
+  
+  streak
+end
 
   def pleasure_stats
     total = pleasure_activities.count

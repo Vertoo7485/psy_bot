@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_23_083428) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_23_150601) do
   create_table "answer_options", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "text"
@@ -94,6 +94,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_23_083428) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_grounding_exercise_entries_on_user_id"
+  end
+
+  create_table "meditation_sessions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pleasure_activities", force: :cascade do |t|
