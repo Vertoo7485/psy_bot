@@ -114,6 +114,12 @@ module Telegram
         'view_meditation_tips' => 'MeditationTipsHandler',
         'meditation_stats' => 'MeditationStatsHandler',
         'back_to_day_19_menu' => 'MeditationMenuHandler',
+        /^start_day_20/ => 'DayStartHandler',
+        /^day_20_exercise_completed$/ => 'DayExerciseCompleteHandler',
+        /^day_20_/ => 'Day20Handler',
+        'view_fear_tips' => 'Day20Handler',
+        'view_fear_victories' => 'Day20Handler',
+        'back_to_day_20_menu' => 'Day20Handler',
      
         # Финальное завершение
         'complete_program_final' => 'ProgramCompleteHandler',

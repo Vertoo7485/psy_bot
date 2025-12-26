@@ -918,6 +918,16 @@ end
     }.to_json
   end
 
+  def self.day_20_start_proposal_markup
+  { 
+    inline_keyboard: [
+      [
+        { text: "🦸 Начать День 20", callback_data: 'start_day_20_from_proposal' }
+      ]
+    ] 
+  }.to_json
+end
+
   def handle_self_help_input(state)
       log_info("Handling self-help input for state: #{state}")
       

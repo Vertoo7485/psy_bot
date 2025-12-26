@@ -120,20 +120,52 @@ end
     end
     
     # Обработка ввода для программы самопомощи
-    def handle_self_help_input(state)
+   def handle_self_help_input(state)
   log_info("Handling self-help input for state: #{state}")
   
-  if state&.start_with?('day_19')
+  # Проверяем день 20
+  if state&.start_with?('day_20')
+    log_info("Day 20 input detected, state: #{state}")
+    
     # Создаем временный bot_service
     bot_service = create_temp_bot_service(@bot)
     
-    # Создаем и используем сервис дня 19 напрямую
-    service = SelfHelp::Days::Day19Service.new(bot_service, @user, @chat_id)
+    # Создаем сервис дня 20
+    service = SelfHelp::Days::Day20Service.new(bot_service, @user, @chat_id)
+    
+    # Обрабатываем текст
     service.handle_text_input(@text)
-    return
+    return true
   end
   
-  # Для остальных дней используем фасад
+  # Проверяем день 19 и его подсостояния
+  day19_current_step = @user.self_help_data&.dig('day_19_current_step')
+  
+  # Если состояние связано с днем 19 или есть текущий шаг дня 19
+  if state&.start_with?('day_19') || 
+     day19_current_step == 'waiting_feedback' ||
+     day19_current_step == 'feedback'
+    
+    log_info("Day 19 related input detected, state: #{state}, day19_current_step: #{day19_current_step}")
+    
+    # Создаем временный bot_service
+    bot_service = create_temp_bot_service(@bot)
+    
+    # Создаем сервис дня 19
+    service = SelfHelp::Days::Day19Service.new(bot_service, @user, @chat_id)
+    
+    # Обрабатываем текст
+    service.handle_text_input(@text)
+    return true
+  end
+  
+  # Для остальных дней используем фасад, но сначала проверяем @bot
+  if @bot.nil?
+    log_error("Bot is nil in handle_self_help_input")
+    send_message(text: "Произошла ошибка. Пожалуйста, попробуйте еще раз.")
+    return false
+  end
+  
   facade = SelfHelp::Facade::SelfHelpFacade.new(@bot, @user, @chat_id)
   facade.handle_day_input(@text, state)
 end
