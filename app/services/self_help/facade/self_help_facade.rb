@@ -23,7 +23,9 @@ module SelfHelp
         17 => Days::Day17Service,
         18 => Days::Day18Service,
         19 => Days::Day19Service,
-        20 => Days::Day20Service
+        20 => Days::Day20Service,
+        21 => Days::Day21Service,
+        22 => Days::Day22Service
       }.freeze
       
       # Максимальное количество дней в программе
@@ -307,86 +309,153 @@ module SelfHelp
       end
       
       # Обработка ввода для конкретного дня
-      def handle_day_specific_input(service, text, state)
-        log_info("Handling day specific input - State: #{state}, Text: #{text.truncate(50)}")
-        
-        case state
-        when 'day_3_waiting_for_gratitude'
-          service.handle_gratitude_input(text)
-        when 'day_7_waiting_for_reflection'
-          service.handle_reflection_input(text)
-        when 'day_9_waiting_for_thought'
-          service.handle_thought_input(text)
-        when 'day_9_waiting_for_probability'
-          service.handle_probability_input(text)
-        when 'day_9_waiting_for_facts_pro'
-          service.handle_facts_pro_input(text)
-        when 'day_9_waiting_for_facts_con'
-          service.handle_facts_con_input(text)
-        when 'day_9_waiting_for_reframe'
-          service.handle_reframe_input(text)
-        when 'day_11_exercise_in_progress'
-          service.handle_grounding_input(text)
-        when 'day_12_exercise_in_progress'
-          service.handle_self_compassion_input(text)
-        when 'day_13_exercise_in_progress'
-          service.handle_procrastination_input(text)
-        when 'day_14_exercise_in_progress'
-          if service.respond_to?(:handle_reflection_input)
-            service.handle_reflection_input(text)
-          else
-            log_error("Day 14 service doesn't have handle_reflection_input method")
-            false
-          end
-        when 'day_15_exercise_in_progress'
-          if service.respond_to?(:handle_kindness_input)
-            service.handle_kindness_input(text)
-          else
-            log_error("Day 15 service doesn't have handle_kindness_input method")
-            false
-          end
-        when 'day_16_exercise_in_progress'
-          if service.respond_to?(:handle_connection_input)
-            service.handle_connection_input(text)
-          else
-            log_error("Day 16 service doesn't have handle_connection_input method")
-            false
-          end
-        # День 17
-        when 'day_17_exercise_in_progress'
-          current_step = @user.get_self_help_data('day_17_current_step')
-          if service.respond_to?(:handle_compassion_input)
-            service.handle_compassion_input(text, current_step)
-          else
-            log_error("Day 17 service doesn't have handle_compassion_input method")
-            false
-          end
-        
-        # День 18 - ДОБАВЛЯЕМ ЭТУ СЕКЦИЮ
-        when 'day_18_exercise_in_progress'
-          handle_day_18_input(text, service)
+      # app/services/self_help/facade/self_help_facade.rb
 
-        when 'day_19_exercise_in_progress'
-          handle_day_19_input(text, service)
-        
-        # ИЗМЕНЕНИЕ 1: Добавляем обработку для дня 10
-        when 'day_10_exercise_in_progress'
-          handle_day_10_emotion_diary_input(text, service)
-        else
-          # Проверяем, не находится ли пользователь в процессе заполнения дневника для дня 10
-          if @user.get_self_help_data('is_filling_emotion_diary') == true
-            handle_day_10_emotion_diary_input(text, service)
-          else
-            # Проверяем, не день ли 18
-            if state&.start_with?('day_18_')
-              handle_day_18_input(text, service)
-            else
-              log_info("No handler for state: #{state}")
-              false
-            end
-          end
-        end
+def handle_day_specific_input(service, text, state)
+  log_info("Handling day specific input - State: #{state}, Text: #{text.truncate(50)}")
+  log_info("=== START handle_day_specific_input ===")
+  log_info("State: #{state}")
+  log_info("Text: #{text}")
+  log_info("Service class: #{service.class}")
+  log_info("Day 19 step: #{@user.get_self_help_data('day_19_current_step')}")
+  log_info("User self_help_state: #{@user.self_help_state}")
+  
+  # ВРЕМЕННЫЙ ФИКС: Если пользователь в дне 22, обрабатываем только день 22
+  if state == 'day_22_exercise_in_progress'
+    log_info("Processing day 22 input specifically")
+    if service.respond_to?(:handle_text_input)
+      return service.handle_text_input(text)
+    elsif service.respond_to?(:handle_smart_input)
+      return service.handle_smart_input(text)
+    else
+      log_error("Day 22 service doesn't have handle_text_input method")
+      return false
+    end
+  end
+  
+  # Основная логика обработки по состоянию
+  case state
+  when 'day_3_waiting_for_gratitude'
+    service.handle_gratitude_input(text)
+  when 'day_7_waiting_for_reflection'
+    service.handle_reflection_input(text)
+  when 'day_9_waiting_for_thought'
+    service.handle_thought_input(text)
+  when 'day_9_waiting_for_probability'
+    service.handle_probability_input(text)
+  when 'day_9_waiting_for_facts_pro'
+    service.handle_facts_pro_input(text)
+  when 'day_9_waiting_for_facts_con'
+    service.handle_facts_con_input(text)
+  when 'day_9_waiting_for_reframe'
+    service.handle_reframe_input(text)
+  when 'day_11_exercise_in_progress'
+    service.handle_grounding_input(text)
+  when 'day_12_exercise_in_progress'
+    service.handle_self_compassion_input(text)
+  when 'day_13_exercise_in_progress'
+    service.handle_procrastination_input(text)
+  when 'day_14_exercise_in_progress'
+    if service.respond_to?(:handle_reflection_input)
+      service.handle_reflection_input(text)
+    else
+      log_error("Day 14 service doesn't have handle_reflection_input method")
+      false
+    end
+  when 'day_15_exercise_in_progress'
+    if service.respond_to?(:handle_kindness_input)
+      service.handle_kindness_input(text)
+    else
+      log_error("Day 15 service doesn't have handle_kindness_input method")
+      false
+    end
+  when 'day_16_exercise_in_progress'
+    if service.respond_to?(:handle_connection_input)
+      service.handle_connection_input(text)
+    else
+      log_error("Day 16 service doesn't have handle_connection_input method")
+      false
+    end
+  when 'day_17_exercise_in_progress'
+    current_step = @user.get_self_help_data('day_17_current_step')
+    if service.respond_to?(:handle_compassion_input)
+      service.handle_compassion_input(text, current_step)
+    else
+      log_error("Day 17 service doesn't have handle_compassion_input method")
+      false
+    end
+  when 'day_18_exercise_in_progress'
+    handle_day_18_input(text, service)
+  when 'day_19_exercise_in_progress'
+    handle_day_19_input(text, service)
+  when 'day_20_exercise_in_progress'
+    if service.respond_to?(:handle_text_input)
+      service.handle_text_input(text)
+    elsif service.respond_to?(:handle_fear_input)
+      service.handle_fear_input(text)
+    else
+      log_error("Day 20 service doesn't have handle_text_input or handle_fear_input method")
+      false
+    end
+  when 'day_21_exercise_in_progress'
+    if service.respond_to?(:handle_reflection_input)
+      service.handle_reflection_input(text)
+    elsif service.respond_to?(:handle_text_input)
+      service.handle_text_input(text)
+    else
+      log_error("Day 21 service doesn't have handle_reflection_input or handle_text_input method")
+      false
+    end
+  when 'day_22_exercise_in_progress'
+  if service.respond_to?(:handle_text_input)
+    service.handle_text_input(text)
+  elsif service.respond_to?(:handle_smart_input)
+    service.handle_smart_input(text)
+  else
+    log_error("Day 22 service doesn't have handle_text_input method")
+    false
+  end
+  when 'day_10_exercise_in_progress'
+    handle_day_10_emotion_diary_input(text, service)
+  else
+    # Сначала проверяем, не в процессе ли пользователь какого-то дня
+    current_day_number = extract_day_number_from_state(state)
+    
+    if current_day_number
+      # Пользователь находится в процессе какого-то дня
+      # Нужно обработать именно этот день, а не проверять другие
+      log_warn("No specific handler for day #{current_day_number} state: #{state}")
+      
+      # Пробуем использовать общий обработчик, если есть
+      if service.respond_to?(:handle_text_input)
+        return service.handle_text_input(text)
+      else
+        log_error("Day #{current_day_number} service doesn't have handle_text_input method")
+        return false
       end
+    else
+      # Только если пользователь не в процессе какого-либо дня
+      # проверяем другие незавершенные задачи
+      
+      # Проверяем, находится ли пользователь в процессе заполнения дневника для дня 10
+      if @user.get_self_help_data('is_filling_emotion_diary') == true
+        handle_day_10_emotion_diary_input(text, service)
+      # Проверяем, не день ли 18 по префиксу состояния
+      elsif state&.start_with?('day_18_')
+        handle_day_18_input(text, service)
+      # ВАЖНО: НЕ проверяем день 19 здесь, если пользователь в другом дне!
+      # Только если нет активного состояния дня
+      elsif @user.self_help_state.nil? && @user.get_self_help_data('day_19_current_step') == 'waiting_feedback'
+        # Если нет активного дня, но день 19 ожидает фидбек
+        handle_day_19_input(text, service)
+      else
+        log_info("No handler for state: #{state}")
+        false
+      end
+    end
+  end
+  log_info("=== END handle_day_specific_input ===")
+end
       
 
       def handle_day_19_input(text, day_service)

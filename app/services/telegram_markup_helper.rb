@@ -928,6 +928,14 @@ end
   }.to_json
 end
 
+def day_22_start_proposal_markup
+  {
+    inline_keyboard: [
+      [{ text: "🎯 Начать День 22: SMART цели", callback_data: "start_day_22_from_proposal" }]
+    ]
+  }.to_json
+end
+
   def handle_self_help_input(state)
       log_info("Handling self-help input for state: #{state}")
       

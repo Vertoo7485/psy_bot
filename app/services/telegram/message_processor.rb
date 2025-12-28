@@ -19,21 +19,42 @@ module Telegram
       @message_data = message_data
       @chat_id = message_data[:chat][:id]
       @text = message_data[:text].to_s.strip
+      
+      # Создаем временный bot_service для совместимости
+      @bot_service = create_temp_bot_service(@bot)
     end
     
     def process
-      log_info("Processing message: #{@text.truncate(50)}")
+      log_info("Processing message: #{@text} - User: #{@user.telegram_id}, Chat: #{@chat_id}")
       
+      # Проверяем команды
       if command?
-        process_command
-      else
-        process_text_message
+        return process_command
       end
       
-      true
-    rescue => e
-      log_error("Error processing message", e)
-      send_error_message
+      # Получаем текущее состояние
+      state = @user.self_help_state
+      log_info("User state: #{state}")
+      
+      # Если есть активное состояние, обрабатываем его
+      if state.present?
+        # Проверяем дневник эмоций
+        if @user.current_diary_step.present?
+          return handle_emotion_diary_input
+        end
+        
+        # Проверяем программу самопомощи
+        if state.include?('day_')
+          return handle_self_help_input(state)
+        end
+      end
+      
+      # Если ничего не подошло
+      log_info("No handler found for message")
+      send_message(
+        text: "Не понял вашего сообщения. Используйте меню или команды."
+      )
+      
       false
     end
     
@@ -56,7 +77,6 @@ module Telegram
           )
         end
         
-        # Добавляем другие методы, если нужны
         def answer_callback_query(callback_query_id:, text: nil, show_alert: false)
           @bot.answer_callback_query(
             callback_query_id: callback_query_id,
@@ -64,8 +84,19 @@ module Telegram
             show_alert: show_alert
           )
         end
+        
+        def edit_message_text(chat_id:, message_id:, text:, reply_markup: nil, parse_mode: nil)
+          @bot.edit_message_text(
+            chat_id: chat_id,
+            message_id: message_id,
+            text: text,
+            reply_markup: reply_markup,
+            parse_mode: parse_mode
+          )
+        end
       end.new(bot)
     end
+    
     # Проверка, является ли сообщение командой
     def command?
       @text.start_with?('/')
@@ -96,79 +127,50 @@ module Telegram
     
     # Обработка активных сессий
     def handle_active_sessions
-  # Проверяем дневник эмоций
-  if @user.current_diary_step.present?
-    handle_emotion_diary_input
-    return true
-  end
-  
-  # Проверяем программу самопомощи
-  if @user.self_help_state.present?
-    # Передаем состояние как параметр
-    handle_self_help_input(@user.self_help_state)
-    return true
-  end
-  
-  false
-end
+      # Проверяем дневник эмоций
+      if @user.current_diary_step.present?
+        handle_emotion_diary_input
+        return true
+      end
+      
+      # Проверяем программу самопомощи
+      if @user.self_help_state.present?
+        # Передаем состояние как параметр
+        handle_self_help_input(@user.self_help_state)
+        return true
+      end
+      
+      false
+    end
     
     # Обработка ввода для дневника эмоций
     def handle_emotion_diary_input
-      # Создаем временный bot_service
-      temp_bot_service = create_temp_bot_service(@bot)
-      EmotionDiaryService.new(temp_bot_service, @user, @chat_id).handle_answer(@text)
+      EmotionDiaryService.new(@bot_service, @user, @chat_id).handle_answer(@text)
     end
     
     # Обработка ввода для программы самопомощи
-   def handle_self_help_input(state)
-  log_info("Handling self-help input for state: #{state}")
-  
-  # Проверяем день 20
-  if state&.start_with?('day_20')
-    log_info("Day 20 input detected, state: #{state}")
-    
-    # Создаем временный bot_service
-    bot_service = create_temp_bot_service(@bot)
-    
-    # Создаем сервис дня 20
-    service = SelfHelp::Days::Day20Service.new(bot_service, @user, @chat_id)
-    
-    # Обрабатываем текст
-    service.handle_text_input(@text)
-    return true
-  end
-  
-  # Проверяем день 19 и его подсостояния
-  day19_current_step = @user.self_help_data&.dig('day_19_current_step')
-  
-  # Если состояние связано с днем 19 или есть текущий шаг дня 19
-  if state&.start_with?('day_19') || 
-     day19_current_step == 'waiting_feedback' ||
-     day19_current_step == 'feedback'
-    
-    log_info("Day 19 related input detected, state: #{state}, day19_current_step: #{day19_current_step}")
-    
-    # Создаем временный bot_service
-    bot_service = create_temp_bot_service(@bot)
-    
-    # Создаем сервис дня 19
-    service = SelfHelp::Days::Day19Service.new(bot_service, @user, @chat_id)
-    
-    # Обрабатываем текст
-    service.handle_text_input(@text)
-    return true
-  end
-  
-  # Для остальных дней используем фасад, но сначала проверяем @bot
-  if @bot.nil?
-    log_error("Bot is nil in handle_self_help_input")
-    send_message(text: "Произошла ошибка. Пожалуйста, попробуйте еще раз.")
-    return false
-  end
-  
-  facade = SelfHelp::Facade::SelfHelpFacade.new(@bot, @user, @chat_id)
-  facade.handle_day_input(@text, state)
-end
+    def handle_self_help_input(state)
+      log_info("Handling self-help input for state: #{state}")
+      
+      # ВАЖНО: Убираем все специальные проверки для отдельных дней
+      # Все обрабатываем через фасад
+      
+      # Создаем фасад
+      facade = SelfHelp::Facade::SelfHelpFacade.new(@bot_service, @user, @chat_id)
+      
+      # Обрабатываем ввод через фасад
+      result = facade.handle_day_input(@text, state)
+      
+      # Если фасад не смог обработать, показываем сообщение
+      unless result
+        log_info("Facade couldn't handle input for state: #{state}")
+        send_message(
+          text: "Пожалуйста, используйте кнопки для навигации или завершите текущий шаг."
+        )
+      end
+      
+      result
+    end
     
     # Обработка контекстных сообщений
     def handle_context_message
