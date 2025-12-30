@@ -936,6 +936,14 @@ def day_22_start_proposal_markup
   }.to_json
 end
 
+def day_24_start_proposal_markup
+  {
+    inline_keyboard: [
+      [{ text: "✅ Начать День 24: Превентивные стратегии", callback_data: "start_day_24_from_proposal" }]
+    ]
+  }.to_json
+end
+
   def handle_self_help_input(state)
       log_info("Handling self-help input for state: #{state}")
       
