@@ -26,7 +26,8 @@ module SelfHelp
         20 => Days::Day20Service,
         21 => Days::Day21Service,
         22 => Days::Day22Service,
-        23 => Days::Day23Service
+        23 => Days::Day23Service,
+        24 => Days::Day24Service
       }.freeze
       
       # Максимальное количество дней в программе
