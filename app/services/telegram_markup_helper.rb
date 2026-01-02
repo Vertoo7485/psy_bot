@@ -966,6 +966,18 @@ def self.day_25_start_proposal_markup
   }.to_json
 end
 
+# Добавьте метод для предложения дня 26:
+def self.day_26_start_proposal_markup
+  { 
+    inline_keyboard: [
+      [
+        { text: "🔗 Начать День 26: Цепочка ценностей", 
+          callback_data: "start_day_26_from_proposal" }
+      ]
+    ] 
+  }.to_json
+end
+
   def handle_self_help_input(state)
       log_info("Handling self-help input for state: #{state}")
       

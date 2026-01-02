@@ -145,6 +145,9 @@ module Telegram
         /^start_day_25/ => 'DayStartHandler',
         'day_25_exercise_completed' => 'DayExerciseCompleteHandler',
         /^day_25_/ => 'Day25Handler',
+        /^start_day_26/ => 'DayStartHandler',
+        'day_26_exercise_completed' => 'DayExerciseCompleteHandler',
+        /^day_26_/ => 'Day26Handler',
      
         # Финальное завершение
         'complete_program_final' => 'ProgramCompleteHandler',

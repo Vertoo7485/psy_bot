@@ -28,7 +28,8 @@ module SelfHelp
         22 => Days::Day22Service,
         23 => Days::Day23Service,
         24 => Days::Day24Service,
-        25 => Days::Day25Service
+        25 => Days::Day25Service,
+        26 => Days::Day26Service
       }.freeze
       
       # Максимальное количество дней в программе
@@ -433,6 +434,14 @@ def handle_day_specific_input(service, text, state)
       log_error("Day 25 service doesn't have handle_text_input method")
       false
     end
+
+  when 'day_26_exercise_in_progress'
+  if service.respond_to?(:handle_text_input)
+    service.handle_text_input(text)
+  else
+    log_error("Day 26 service doesn't have handle_text_input method")
+    false
+  end
   
   when 'day_10_exercise_in_progress'
     handle_day_10_emotion_diary_input(text, service)
