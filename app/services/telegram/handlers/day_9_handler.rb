@@ -14,7 +14,7 @@ module Telegram
           handle_complete_day
         else
           log_error("Unknown day 9 callback: #{@callback_data}")
-          answer_callback_query("Неизвестная команда")
+          answer_callback_query( "Неизвестная команда")
         end
       end
       
@@ -26,7 +26,7 @@ module Telegram
         service = SelfHelp::Days::Day9Service.new(@bot_service, @user, @chat_id)
         service.deliver_exercise
         
-        answer_callback_query("Начинаем анализ мысли...")
+        answer_callback_query( "Начинаем анализ мысли...")
       end
       
       def handle_show_current
@@ -35,7 +35,7 @@ module Telegram
         service = SelfHelp::Days::Day9Service.new(@bot_service, @user, @chat_id)
         service.show_current_progress
         
-        answer_callback_query("Показываю текущий прогресс...")
+        answer_callback_query( "Показываю текущий прогресс...")
       end
       
       def handle_show_all
@@ -44,7 +44,7 @@ module Telegram
         service = SelfHelp::Days::Day9Service.new(@bot_service, @user, @chat_id)
         service.show_all_entries
         
-        answer_callback_query("Показываю все анализы...")
+        answer_callback_query( "Показываю все анализы...")
       end
       
       def handle_complete_day
@@ -53,7 +53,7 @@ module Telegram
         service = SelfHelp::Days::Day9Service.new(@bot_service, @user, @chat_id)
         service.complete_day
         
-        answer_callback_query("День 9 завершен!")
+        answer_callback_query( "День 9 завершен!")
       end
     end
   end

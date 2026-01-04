@@ -82,6 +82,26 @@ def calculate_meditation_streak
   streak
 end
 
+def in_self_help_program?
+  # Пользователь в программе если step не nil и не 'not_started'
+  self_help_program_step.present? && self_help_program_step != 'not_started'
+end
+
+def get_self_help_data(key)
+  self_help_program_data&.[](key)
+end
+
+def store_self_help_data(key, value)
+  current_data = self_help_program_data || {}
+  current_data[key] = value
+  update(self_help_program_data: current_data)
+end
+
+def self_help_state
+  # Для обратной совместимости
+  self_help_program_step
+end
+
   def pleasure_stats
     total = pleasure_activities.count
     completed = pleasure_activities.completed.count

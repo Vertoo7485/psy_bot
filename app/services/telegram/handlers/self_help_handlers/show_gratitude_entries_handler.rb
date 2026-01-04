@@ -12,7 +12,7 @@ module Telegram
           show_all_gratitude_entries
         end
         
-        answer_callback_query("Показываю записи благодарности...")
+        answer_callback_query( "Показываю записи благодарности...")
       end
       
       private

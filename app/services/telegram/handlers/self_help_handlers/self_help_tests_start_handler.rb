@@ -8,7 +8,7 @@ module Telegram
         facade = SelfHelp::Facade::SelfHelpFacade.new(@bot_service, @user, @chat_id)
         facade.start_tests_sequence
         
-        answer_callback_query("Начинаем тестирование")
+        answer_callback_query( "Начинаем тестирование")
       end
     end
   end

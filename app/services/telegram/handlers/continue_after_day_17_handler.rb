@@ -24,11 +24,11 @@ module Telegram
           reply_markup: TelegramMarkupHelper.continue_after_day_17_markup
         )
         
-        answer_callback_query("Выберите дальнейшее действие")
+        answer_callback_query( "Выберите дальнейшее действие")
         
       rescue => e
         log_error("Error continuing after day 17", e)
-        answer_callback_query("Ошибка при выборе действия")
+        answer_callback_query( "Ошибка при выборе действия")
       end
     end
   end

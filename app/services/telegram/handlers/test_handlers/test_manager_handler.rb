@@ -6,7 +6,7 @@ module Telegram
         log_info("Showing test categories")
         
         TestManager.new(@bot_service, @user, @chat_id).show_categories
-        answer_callback_query("Выберите тест")
+        answer_callback_query( "Выберите тест")
       end
     end
   end

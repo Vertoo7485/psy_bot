@@ -21,12 +21,12 @@ module Telegram
               text: "Произошла ошибка при обработке. Пожалуйста, попробуйте еще раз."
             )
             # Отвечаем Telegram об ошибке
-            answer_callback_query("❌ Ошибка обработки")
+            answer_callback_query( "❌ Ошибка обработки")
             return
           end
           
           # Успешное завершение
-          answer_callback_query("✅")
+          answer_callback_query( "✅")
         end
         
         # Метод для отправки сообщения

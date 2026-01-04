@@ -30,11 +30,11 @@ module Telegram
           reply_markup: TelegramMarkupHelper.day_17_full_menu_markup
         )
         
-        answer_callback_query("Меню дня 17")
+        answer_callback_query( "Меню дня 17")
         
       rescue => e
         log_error("Error showing day 17 menu", e)
-        answer_callback_query("Ошибка при показе меню")
+        answer_callback_query( "Ошибка при показе меню")
       end
     end
   end

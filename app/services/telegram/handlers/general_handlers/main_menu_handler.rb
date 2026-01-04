@@ -24,7 +24,7 @@ module Telegram
           reply_markup: TelegramMarkupHelper.main_menu_markup
         )
         
-        answer_callback_query("Возвращаемся в главное меню")
+        answer_callback_query( "Возвращаемся в главное меню")
       end
     end
   end

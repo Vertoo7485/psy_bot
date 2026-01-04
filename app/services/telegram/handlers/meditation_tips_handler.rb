@@ -11,11 +11,11 @@ module Telegram
         
         service.show_meditation_tips
         
-        answer_callback_query("Показываю советы...")
+        answer_callback_query( "Показываю советы...")
         
       rescue => e
         log_error("Error in MeditationTipsHandler", e)
-        answer_callback_query("Ошибка")
+        answer_callback_query( "Ошибка")
       end
     end
   end

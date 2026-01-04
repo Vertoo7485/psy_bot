@@ -11,11 +11,11 @@ module Telegram
         
         service.show_meditation_menu
         
-        answer_callback_query("Показываю меню...")
+        answer_callback_query( "Показываю меню...")
         
       rescue => e
         log_error("Error in MeditationMenuHandler", e)
-        answer_callback_query("Ошибка")
+        answer_callback_query( "Ошибка")
       end
     end
   end

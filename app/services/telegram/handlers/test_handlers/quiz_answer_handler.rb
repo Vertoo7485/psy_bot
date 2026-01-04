@@ -1,33 +1,44 @@
-# app/services/telegram/handlers/test_handlers/quiz_answer_handler.rb
-
 module Telegram
   module Handlers
-    class QuizAnswerHandler < BaseHandler
-      def process
-        unless has_matches? && matches.length >= 3
-          log_error("Invalid callback data format: #{@callback_data}")
-          answer_callback_query("Ошибка: неверный формат данных")
-          return
+    module TestHandlers
+      class QuizAnswerHandler < BaseHandler
+        def initialize(bot_service, user, chat_id, callback_query_data)
+          super(bot_service, user, chat_id, callback_query_data)
+          log_info("QuizAnswerHandler initialized", user_id: @user&.id, callback_data: @callback_data)
         end
-        
-        question_id = match_group(1).to_i
-        answer_option_id = match_group(2).to_i
-        test_result_id = match_group(3).to_i
-        
-        log_info("Processing answer", {
-          question_id: question_id, 
-          answer_option_id: answer_option_id, 
-          test_result_id: test_result_id
-        })
-        
-        # Обрабатываем ответ
-        runner = QuizRunner.new(@bot_service, @user, @chat_id)
-        success = runner.process_answer(question_id, answer_option_id, test_result_id)
-        
-        if success
+
+        def process
+          log_info("Processing quiz answer", callback_data: @callback_data)
+          
+          # Извлекаем ответ из callback_data
+          # Новый формат: answer_<question_id>_<option_id>_<test_result_id>
+          match = @callback_data.match(/^answer_(\d+)_(\d+)_(\d+)$/)
+          
+          unless match
+            log_error("Invalid answer format", callback_data: @callback_data)
+            send_message(text: "Ошибка: неверный формат ответа")
+            return
+          end
+          
+          question_id = match[1].to_i
+          option_id = match[2].to_i
+          test_result_id = match[3].to_i
+          
+          # Обрабатываем ответ через QuizRunner
+          quiz_runner = QuizRunner.new(@bot_service, @user, @chat_id)
+          quiz_runner.process_answer(question_id, option_id, test_result_id)
+          
           answer_callback_query("Ответ принят")
-        else
-          answer_callback_query("Ошибка при обработке ответа")
+        end
+
+        private
+
+        def log_info(message, data = {})
+          Rails.logger.info "[QuizAnswerHandler] #{message} - #{data}"
+        end
+
+        def log_error(message, data = {})
+          Rails.logger.error "[QuizAnswerHandler] #{message} - #{data}"
         end
       end
     end

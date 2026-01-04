@@ -24,7 +24,7 @@ module Telegram
         
           unless day_number
             log_error("Could not extract day number", callback_data: @callback_data)
-            answer_callback_query("Ошибка: не удалось определить день")
+            answer_callback_query( "Ошибка: не удалось определить день")
             return
           end
         
@@ -34,7 +34,7 @@ module Telegram
         
       rescue => e
         log_error("Error in DayExerciseCompleteHandler", e)
-        answer_callback_query("Ошибка при завершении упражнения")
+        answer_callback_query( "Ошибка при завершении упражнения")
       end
       
       private
@@ -45,9 +45,9 @@ module Telegram
         if @user.self_help_state == "day_14_exercise_in_progress"
           service = SelfHelp::Days::Day14Service.new(@bot_service, @user, @chat_id)
           service.complete_exercise
-          answer_callback_query("Рефлексия завершена!")
+          answer_callback_query( "Рефлексия завершена!")
         else
-          answer_callback_query("Сначала начните рефлексию")
+          answer_callback_query( "Сначала начните рефлексию")
         end
       end
       
@@ -60,14 +60,14 @@ module Telegram
           begin
             service = SelfHelp::Days::Day11Service.new(@bot_service, @user, @chat_id)
             service.complete_exercise
-            answer_callback_query("Упражнение заземления завершено!")
+            answer_callback_query( "Упражнение заземления завершено!")
           rescue => e
             log_error("Failed to complete grounding exercise", e)
             fallback_grounding_completion
           end
         else
           log_warn("User not in correct state for grounding exercise", state: @user.self_help_state)
-          answer_callback_query("Сначала начните упражнение заземления")
+          answer_callback_query( "Сначала начните упражнение заземления")
         end
       end
       
@@ -87,7 +87,7 @@ module Telegram
           )
         end
         
-        answer_callback_query("Упражнение завершено")
+        answer_callback_query( "Упражнение завершено")
       end
       
       # ИСПРАВЛЕНИЕ: Добавляем метод для self_compassion_exercise_completed
@@ -98,14 +98,14 @@ module Telegram
           begin
             service = SelfHelp::Days::Day12Service.new(@bot_service, @user, @chat_id)
             service.complete_exercise
-            answer_callback_query("Медитация на самосострадание завершена!")
+            answer_callback_query( "Медитация на самосострадание завершена!")
           rescue => e
             log_error("Failed to complete self-compassion exercise", e)
             fallback_self_compassion_completion
           end
         else
           log_warn("User not in correct state for self-compassion exercise", state: @user.self_help_state)
-          answer_callback_query("Сначала начните медитацию")
+          answer_callback_query( "Сначала начните медитацию")
         end
       end
       
@@ -117,14 +117,14 @@ module Telegram
           begin
             service = SelfHelp::Days::Day13Service.new(@bot_service, @user, @chat_id)
             service.complete_exercise
-            answer_callback_query("Работа с прокрастинацией завершена!")
+            answer_callback_query( "Работа с прокрастинацией завершена!")
           rescue => e
             log_error("Failed to complete procrastination exercise", e)
             fallback_procrastination_completion
           end
         else
           log_warn("User not in correct state for procrastination exercise", state: @user.self_help_state)
-          answer_callback_query("Сначала начните работу с прокрастинацией")
+          answer_callback_query( "Сначала начните работу с прокрастинацией")
         end
       end
       
@@ -136,14 +136,14 @@ module Telegram
           begin
             service = SelfHelp::Days::Day10Service.new(@bot_service, @user, @chat_id)
             service.complete_exercise
-            answer_callback_query("Упражнение дня 10 завершено!")
+            answer_callback_query( "Упражнение дня 10 завершено!")
           rescue => e
             log_error("Failed to complete day 10 exercise", e)
             fallback_day_10_completion
           end
         else
           log_warn("User not in correct state for day 10", state: @user.self_help_state)
-          answer_callback_query("Сначала начните упражнение дня 10")
+          answer_callback_query( "Сначала начните упражнение дня 10")
         end
       end
       
@@ -174,7 +174,7 @@ module Telegram
           # Вызываем complete_exercise для дня 8
           service.complete_exercise
           
-          answer_callback_query("Отлично! Продолжаем...")
+          answer_callback_query( "Отлично! Продолжаем...")
         rescue => e
           log_error("Failed to handle day 8 exercise", e)
           
@@ -189,7 +189,7 @@ module Telegram
             reply_markup: TelegramMarkupHelper.day_8_distraction_options_markup
           )
           
-          answer_callback_query("Упражнение завершено")
+          answer_callback_query( "Упражнение завершено")
         end
       end
       
@@ -213,7 +213,7 @@ module Telegram
             )
           end
           
-          answer_callback_query("Упражнение завершено!")
+          answer_callback_query( "Упражнение завершено!")
           
         rescue NameError
           # Если сервис не найден, используем fallback
@@ -225,7 +225,7 @@ module Telegram
             reply_markup: TelegramMarkupHelper.day_start_proposal_markup(day_number + 1)
           )
           
-          answer_callback_query("Упражнение завершено")
+          answer_callback_query( "Упражнение завершено")
         end
       end
       

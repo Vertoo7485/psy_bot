@@ -20,11 +20,11 @@ module Telegram
           service.show_pleasure_activities_menu
         end
         
-        answer_callback_query("Показываю...")
+        answer_callback_query( "Показываю...")
         
       rescue => e
         log_error("Error in PleasureActivitiesHandler", e)
-        answer_callback_query("Ошибка")
+        answer_callback_query( "Ошибка")
       end
     end
   end

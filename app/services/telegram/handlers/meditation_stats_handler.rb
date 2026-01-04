@@ -11,11 +11,11 @@ module Telegram
         
         service.show_meditation_stats
         
-        answer_callback_query("Показываю статистику...")
+        answer_callback_query( "Показываю статистику...")
         
       rescue => e
         log_error("Error in MeditationStatsHandler", e)
-        answer_callback_query("Ошибка")
+        answer_callback_query( "Ошибка")
       end
     end
   end

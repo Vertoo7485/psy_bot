@@ -12,7 +12,7 @@ module Telegram
           reply_markup: TelegramMarkupHelper.day_3_menu_markup
         )
         
-        answer_callback_query("Возвращаемся к меню дня 3...")
+        answer_callback_query( "Возвращаемся к меню дня 3...")
       end
     end
   end

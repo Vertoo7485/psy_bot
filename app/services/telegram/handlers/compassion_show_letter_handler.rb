@@ -26,11 +26,11 @@ module Telegram
           reply_markup: letter_actions_markup(letter.id)
         )
         
-        answer_callback_query("Показываю письмо")
+        answer_callback_query( "Показываю письмо")
         
       rescue => e
         log_error("Error showing compassion letter", e)
-        answer_callback_query("Ошибка при показе письма")
+        answer_callback_query( "Ошибка при показе письма")
       end
       
       private

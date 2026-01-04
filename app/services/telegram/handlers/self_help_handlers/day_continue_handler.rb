@@ -7,7 +7,7 @@ module Telegram
         
         unless day_number
           log_error("Could not extract day number", callback_data: @callback_data)
-          answer_callback_query("Ошибка: не удалось определить день")
+          answer_callback_query( "Ошибка: не удалось определить день")
           return
         end
         
@@ -16,7 +16,7 @@ module Telegram
         # Прямой вызов сервиса дня
         handle_day_continuation(day_number)
         
-        answer_callback_query("Продолжаем день #{day_number}...")
+        answer_callback_query( "Продолжаем день #{day_number}...")
       end
       
       private

@@ -14,7 +14,7 @@ module Telegram
           handle_exercise_completed
         else
           log_error("Unknown callback for day 8")
-          answer_callback_query("Неизвестная команда дня 8")
+          answer_callback_query( "Неизвестная команда дня 8")
         end
       end
       
@@ -35,10 +35,10 @@ module Telegram
             service.complete_exercise
           end
           
-          answer_callback_query("Отлично! Теперь выберите способ отвлечения...")
+          answer_callback_query( "Отлично! Теперь выберите способ отвлечения...")
         else
           log_warn("User not in correct state for stopped thought", state: @user.self_help_state)
-          answer_callback_query("Сначала начните упражнение дня 8")
+          answer_callback_query( "Сначала начните упражнение дня 8")
         end
       end
       
@@ -53,10 +53,10 @@ module Telegram
             service.handle_distraction_choice(distraction_type)
           end
           
-          answer_callback_query("Хороший выбор!")
+          answer_callback_query( "Хороший выбор!")
         else
           log_warn("User not in correct state for distraction", state: @user.self_help_state)
-          answer_callback_query("Сначала завершите упражнение остановки мыслей")
+          answer_callback_query( "Сначала завершите упражнение остановки мыслей")
         end
       end
       
@@ -71,7 +71,7 @@ module Telegram
           service.complete_exercise
         end
         
-        answer_callback_query("Упражнение завершено!")
+        answer_callback_query( "Упражнение завершено!")
       end
     end
   end

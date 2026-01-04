@@ -15,7 +15,7 @@ module Telegram
         # Начинаем новую запись
         service.start_new_entry
         
-        answer_callback_query("Начинаем новую запись...")
+        answer_callback_query( "Начинаем новую запись...")
       end
     end
   end

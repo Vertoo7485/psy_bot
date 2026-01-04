@@ -176,7 +176,11 @@ class LuscherTestService
   
   # Очистка незавершенных тестов
   def cleanup_incomplete_tests
-    TestResult.where(user: @user, test: @test, completed_at: nil).destroy_all
+    # Используем scope для оптимизации
+    TestResult.luscher_tests
+              .where(user: @user, completed_at: nil)
+              .delete_all  # Используем delete_all для быстрого удаления
+    
     log_info("Cleaned up incomplete Luscher tests")
   end
   
@@ -279,20 +283,24 @@ class LuscherTestService
     @test_result.completed_at.nil?
   end
   
-  # Добавление выбранного цвета
+  # Добавление выбранного цвета - ОПТИМИЗИРОВАННАЯ ВЕРСИЯ
   def add_color_choice(color_code)
-    choices = @test_result.luscher_choices_array
+    # Используем метод модели для добавления цвета
+    success = @test_result.add_luscher_color(color_code)
     
-    unless choices.include?(color_code)
-      choices << color_code
-      @test_result.update(luscher_choices: choices)
-      log_info("Added color choice: #{color_code}, choices: #{choices}")
+    if success
+      log_info("Added color choice: #{color_code}, choices: #{@test_result.luscher_choices_array}")
+    else
+      log_warn("Color already chosen or invalid: #{color_code}")
     end
+    
+    success
   end
   
-  # Проверка завершения теста
+  # Проверка завершения теста - ОПТИМИЗИРОВАННАЯ ВЕРСИЯ
   def test_completed?
-    @test_result.luscher_choices_array.length >= TOTAL_COLORS
+    # Используем метод модели
+    @test_result.luscher_completed?
   end
   
   # Завершение теста
@@ -347,9 +355,11 @@ class LuscherTestService
     COLOURS.reject { |color| chosen_colors.include?(color[:code]) }
   end
   
-  # Поиск последнего результата теста
+  #  Поиск последнего результата теста - ОПТИМИЗИРОВАННАЯ ВЕРСИЯ
   def find_latest_test_result
-    TestResult.where(user: @user, test: @test)
+    # Используем оптимизированный запрос с индексами
+    TestResult.includes(:test)
+              .where(user: @user, tests: { test_type: 'luscher' })
               .order(created_at: :desc)
               .first
   end

@@ -21,7 +21,7 @@ module Telegram
         # Обрабатываем разные состояния напрямую
         handle_state_resumption(current_state)
         
-        answer_callback_query("Продолжаем с того места, где остановились...")
+        answer_callback_query( "Продолжаем с того места, где остановились...")
         
       rescue => e
         log_error("Error resuming session", e)

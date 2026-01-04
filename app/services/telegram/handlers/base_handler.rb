@@ -1,18 +1,27 @@
-# app/services/telegram/handlers/base_handler.rb
-
 module Telegram
   module Handlers
     class BaseHandler
-      # Атрибуты
-      attr_reader :bot_service, :user, :chat_id, :callback_query_data
-      attr_accessor :matches
+      attr_reader :bot_service, :user, :chat_id, :callback_query_data, :callback_data, :callback_query_id
+      attr_accessor :matches  # ← ДОБАВЛЯЕМ сеттер для matches
       
       def initialize(bot_service, user, chat_id, callback_query_data = nil)
         @bot_service = bot_service
         @user = user
         @chat_id = chat_id
         @callback_query_data = callback_query_data
-        @callback_data = callback_query_data[:data] if callback_query_data
+        
+        if callback_query_data
+          @callback_data = callback_query_data[:data] || callback_query_data["data"]
+          
+          # Извлекаем ID разными способами
+          @callback_query_id = callback_query_data[:id] || 
+                              callback_query_data["id"] ||
+                              (callback_query_data[:callback_query] && callback_query_data[:callback_query][:id]) ||
+                              (callback_query_data["callback_query"] && callback_query_data["callback_query"]["id"])
+        end
+        
+        # Инициализируем matches если есть callback_data и паттерн
+        init_matches if @callback_data
       end
       
       # Основной метод обработки (должен быть переопределен в наследниках)
@@ -21,6 +30,45 @@ module Telegram
       end
       
       protected
+      
+      # Инициализация matches на основе CALLBACK_PATTERN
+      def init_matches
+        return unless @callback_data
+        
+        if self.class.const_defined?(:CALLBACK_PATTERN)
+          pattern = self.class::CALLBACK_PATTERN
+          @matches = @callback_data.match(pattern)
+        else
+          @matches = nil
+        end
+      end
+      
+      # Безопасная проверка наличия совпадений
+      def has_matches?
+        return false unless @callback_data
+        
+        if defined?(@matches)
+          !@matches.nil?
+        elsif self.class.const_defined?(:CALLBACK_PATTERN)
+          !@callback_data.match(self.class::CALLBACK_PATTERN).nil?
+        else
+          false
+        end
+      end
+      
+      # Безопасное получение группы совпадения
+      def match_group(index)
+        return nil unless has_matches?
+        
+        if defined?(@matches) && @matches
+          @matches[index]
+        elsif self.class.const_defined?(:CALLBACK_PATTERN)
+          match = @callback_data.match(self.class::CALLBACK_PATTERN)
+          match[index] if match
+        end
+      end
+      
+      # === УТИЛИТНЫЕ МЕТОДЫ ===
       
       # Отправка сообщения пользователю
       def send_message(text:, reply_markup: nil, parse_mode: nil, disable_notification: false)
@@ -38,15 +86,13 @@ module Telegram
       
       # Ответ на callback query
       def answer_callback_query(text = nil, show_alert: false)
-        return unless @callback_query_data && @callback_query_data["id"]
+        return unless @callback_query_id
         
         @bot_service.answer_callback_query(
-          callback_query_id: @callback_query_data["id"],
+          callback_query_id: @callback_query_id,
           text: text,
           show_alert: show_alert
         )
-      rescue Telegram::Bot::Error => e
-        log_error("Failed to answer callback query", e)
       end
       
       # Редактирование сообщения
@@ -81,39 +127,24 @@ module Telegram
         false
       end
       
-      # Проверка наличия совпадений из регулярного выражения
-      def has_matches?
-        !matches.nil?
+      # === ЛОГИРОВАНИЕ ===
+      
+      def log_info(message, data = {})
+        Rails.logger.info "[#{self.class.name}] #{message} - #{data}"
       end
       
-      # Получение группы совпадения
-      def match_group(index)
-        matches[index] if matches
+      def log_error(message, error = nil)
+        Rails.logger.error "[#{self.class.name}] #{message}"
+        if error
+          Rails.logger.error "Error: #{error.message}"
+          Rails.logger.error "Backtrace: #{error.backtrace.first(5).join(', ')}" if error.backtrace
+        end
       end
       
       # ====== ИСПРАВЛЕННЫЕ МЕТОДЫ ЛОГИРОВАНИЯ ======
-      
-      def log_info(message, context = {})
-        context_str = context.any? ? " #{context}" : ""
-        Rails.logger.info "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}#{context_str}"
-      end
-      
-      def log_error(message, error = nil, context = {})
-        context_str = context.any? ? " #{context}" : ""
-        Rails.logger.error "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}#{context_str}"
-        Rails.logger.error error.message if error
-        Rails.logger.error error.backtrace.join("\n") if error.respond_to?(:backtrace)
-      end
-      
-      def log_warn(message, context = {})
-        context_str = context.any? ? " #{context}" : ""
-        Rails.logger.warn "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}#{context_str}"
-      end
-      
-      def log_debug(message, context = {})
-        context_str = context.any? ? " #{context}" : ""
-        Rails.logger.debug "[#{self.class}] #{message} - User: #{@user.telegram_id}, Chat: #{@chat_id}#{context_str}"
-      end
     end
   end
 end
+      def log_warn(message, data = {})
+        Rails.logger.warn "[#{self.class.name}] #{message} - #{data}"
+      end

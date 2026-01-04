@@ -14,13 +14,13 @@ module Telegram
           
           # ВАЖНО: Отвечаем на callback_query, чтобы Telegram знал, что запрос обработан
           # и убрал "часики" с кнопки
-          answer_callback_query("✅")  # Это вызовет метод из BaseHandler
+          answer_callback_query( "✅")  # Это вызовет метод из BaseHandler
           
         rescue => e
           log_error("Error processing day 21 callback", e)
           
           # Даже при ошибке отвечаем Telegram
-          answer_callback_query("❌ Ошибка")
+          answer_callback_query( "❌ Ошибка")
           
           # Пересылаем ошибку выше
           raise

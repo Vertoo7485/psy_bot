@@ -13,10 +13,10 @@ module Telegram
         service = LuscherTestService.new(@bot_service, @user, @chat_id)
         
         if service.show_interpretation
-          answer_callback_query("Показываю интерпретацию...")
+          answer_callback_query( "Показываю интерпретацию...")
         else
           log_error("Failed to show Luscher interpretation")
-          answer_callback_query("Ошибка при получении интерпретации")
+          answer_callback_query( "Ошибка при получении интерпретации")
         end
       end
     end

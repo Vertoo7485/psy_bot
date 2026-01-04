@@ -1,0 +1,149 @@
+[dotenv] Set [36mTELEGRAM_BOT_TOKEN[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (103.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "answer_options" CASCADE[0m
+  [1m[35m (143.7ms)[0m  [1m[35mCREATE TABLE "answer_options" ("id" bigserial primary key, "question_id" integer NOT NULL, "text" character varying, "value" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (87.4ms)[0m  [1m[35mCREATE INDEX "index_answer_options_on_question_id" ON "answer_options" ("question_id")[0m
+  [1m[35m (11.7ms)[0m  [1m[35mDROP TABLE IF EXISTS "answers" CASCADE[0m
+  [1m[35m (95.6ms)[0m  [1m[35mCREATE TABLE "answers" ("id" bigserial primary key, "test_result_id" integer NOT NULL, "question_id" integer NOT NULL, "answer_option_id" integer NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (97.9ms)[0m  [1m[35mCREATE INDEX "index_answers_on_answer_option_id" ON "answers" ("answer_option_id")[0m
+  [1m[35m (87.3ms)[0m  [1m[35mCREATE INDEX "index_answers_on_question_id" ON "answers" ("question_id")[0m
+  [1m[35m (87.0ms)[0m  [1m[35mCREATE INDEX "index_answers_on_test_result_id" ON "answers" ("test_result_id")[0m
+  [1m[35m (23.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "anxious_thought_entries" CASCADE[0m
+  [1m[35m (116.9ms)[0m  [1m[35mCREATE TABLE "anxious_thought_entries" ("id" bigserial primary key, "user_id" integer NOT NULL, "entry_date" date, "thought" text, "probability" integer, "facts_pro" text, "facts_con" text, "reframe" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (64.8ms)[0m  [1m[35mCREATE INDEX "index_anxious_thought_entries_on_user_id_and_entry_date" ON "anxious_thought_entries" ("user_id", "entry_date")[0m
+  [1m[35m (76.4ms)[0m  [1m[35mCREATE INDEX "index_anxious_thought_entries_on_user_id" ON "anxious_thought_entries" ("user_id")[0m
+  [1m[35m (22.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "compassion_letters" CASCADE[0m
+  [1m[35m (136.0ms)[0m  [1m[35mCREATE TABLE "compassion_letters" ("id" bigserial primary key, "user_id" integer NOT NULL, "entry_date" date, "situation_text" text, "understanding_text" text, "kindness_text" text, "advice_text" text, "closure_text" text, "full_text" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (87.2ms)[0m  [1m[35mCREATE INDEX "index_compassion_letters_on_user_id" ON "compassion_letters" ("user_id")[0m
+  [1m[35m (11.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "emotion_diary_entries" CASCADE[0m
+  [1m[35m (151.0ms)[0m  [1m[35mCREATE TABLE "emotion_diary_entries" ("id" bigserial primary key, "user_id" integer NOT NULL, "date" date, "situation" text, "thoughts" text, "emotions" text, "behavior" text, "evidence_against" text, "new_thoughts" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (87.1ms)[0m  [1m[35mCREATE INDEX "index_emotion_diary_entries_on_user_id" ON "emotion_diary_entries" ("user_id")[0m
+  [1m[35m (21.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "gratitude_entries" CASCADE[0m
+  [1m[35m (129.6ms)[0m  [1m[35mCREATE TABLE "gratitude_entries" ("id" bigserial primary key, "user_id" integer NOT NULL, "entry_date" date, "entry_text" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (87.0ms)[0m  [1m[35mCREATE INDEX "index_gratitude_entries_on_user_id" ON "gratitude_entries" ("user_id")[0m
+  [1m[35m (301.8ms)[0m  [1m[35mDROP TABLE IF EXISTS "grounding_exercise_entries" CASCADE[0m
+  [1m[35m (234.9ms)[0m  [1m[35mCREATE TABLE "grounding_exercise_entries" ("id" bigserial primary key, "user_id" integer NOT NULL, "entry_date" date, "seen" text, "touched" text, "heard" text, "smelled" text, "tasted" text, "feelings" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (131.0ms)[0m  [1m[35mCREATE INDEX "index_grounding_exercise_entries_on_user_id" ON "grounding_exercise_entries" ("user_id")[0m
+  [1m[35m (10.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "meditation_sessions" CASCADE[0m
+  [1m[35m (97.1ms)[0m  [1m[35mCREATE TABLE "meditation_sessions" ("id" bigserial primary key, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (56.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "pleasure_activities" CASCADE[0m
+  [1m[35m (128.3ms)[0m  [1m[35mCREATE TABLE "pleasure_activities" ("id" bigserial primary key, "user_id" integer NOT NULL, "title" character varying, "description" text, "activity_type" character varying, "duration" integer, "completed" boolean, "completed_at" timestamp(6), "feelings_before" integer, "feelings_after" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (65.1ms)[0m  [1m[35mCREATE INDEX "index_pleasure_activities_on_user_id" ON "pleasure_activities" ("user_id")[0m
+  [1m[35m (22.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "procrastination_tasks" CASCADE[0m
+  [1m[35m (149.9ms)[0m  [1m[35mCREATE TABLE "procrastination_tasks" ("id" bigserial primary key, "user_id" integer NOT NULL, "entry_date" date, "task" text, "reason" text, "steps" text, "first_step" text, "completed" boolean, "feelings_after" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (75.6ms)[0m  [1m[35mCREATE INDEX "index_procrastination_tasks_on_user_id" ON "procrastination_tasks" ("user_id")[0m
+  [1m[35m (11.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "questions" CASCADE[0m
+  [1m[35m (140.2ms)[0m  [1m[35mCREATE TABLE "questions" ("id" bigserial primary key, "test_id" integer NOT NULL, "text" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "part" integer)[0m
+  [1m[35m (85.3ms)[0m  [1m[35mCREATE INDEX "index_questions_on_test_id" ON "questions" ("test_id")[0m
+  [1m[35m (11.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "reconnection_practices" CASCADE[0m
+  [1m[35m (161.8ms)[0m  [1m[35mCREATE TABLE "reconnection_practices" ("id" bigserial primary key, "user_id" integer NOT NULL, "entry_date" date, "reconnected_person" character varying, "communication_format" character varying, "conversation_start" text, "reflection_text" text, "integration_plan" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (87.1ms)[0m  [1m[35mCREATE INDEX "index_reconnection_practices_on_user_id" ON "reconnection_practices" ("user_id")[0m
+  [1m[35m (10.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "reflection_entries" CASCADE[0m
+  [1m[35m (161.9ms)[0m  [1m[35mCREATE TABLE "reflection_entries" ("id" bigserial primary key, "user_id" integer NOT NULL, "entry_date" date, "entry_text" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (78.7ms)[0m  [1m[35mCREATE INDEX "index_reflection_entries_on_user_id" ON "reflection_entries" ("user_id")[0m
+  [1m[35m (18.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "self_compassion_practices" CASCADE[0m
+  [1m[35m (132.2ms)[0m  [1m[35mCREATE TABLE "self_compassion_practices" ("id" bigserial primary key, "user_id" integer NOT NULL, "entry_date" date, "current_difficulty" text, "common_humanity" text, "kind_words" text, "physical_comfort" text, "mantra" text, "feelings_after" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (74.5ms)[0m  [1m[35mCREATE INDEX "index_self_compassion_practices_on_user_id" ON "self_compassion_practices" ("user_id")[0m
+  [1m[35m (11.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "settings" CASCADE[0m
+  [1m[35m (129.5ms)[0m  [1m[35mCREATE TABLE "settings" ("id" bigserial primary key, "key" character varying, "value" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (21.8ms)[0m  [1m[35mDROP TABLE IF EXISTS "test_results" CASCADE[0m
+  [1m[35m (129.1ms)[0m  [1m[35mCREATE TABLE "test_results" ("id" bigserial primary key, "user_id" integer NOT NULL, "test_id" integer NOT NULL, "score" integer, "completed_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "luscher_choices" text)[0m
+  [1m[35m (109.2ms)[0m  [1m[35mCREATE INDEX "index_test_results_on_test_id" ON "test_results" ("test_id")[0m
+  [1m[35m (73.9ms)[0m  [1m[35mCREATE INDEX "index_test_results_on_user_id" ON "test_results" ("user_id")[0m
+  [1m[35m (11.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "tests" CASCADE[0m
+  [1m[35m (272.4ms)[0m  [1m[35mCREATE TABLE "tests" ("id" bigserial primary key, "name" character varying, "description" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "test_type" integer)[0m
+  [1m[35m (61.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "user_sessions" CASCADE[0m
+  [1m[35m (162.1ms)[0m  [1m[35mCREATE TABLE "user_sessions" ("id" bigserial primary key, "user_id" integer NOT NULL, "last_activity_at" timestamp(6), "last_successful_step" character varying, "current_data" text, "session_type" character varying, "message_queue" text, "retry_count" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (64.8ms)[0m  [1m[35mCREATE INDEX "index_user_sessions_on_user_id" ON "user_sessions" ("user_id")[0m
+  [1m[35m (19.8ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (133.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "telegram_id" integer, "first_name" character varying, "last_name" character varying, "username" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "current_diary_step" character varying, "diary_data" json, "self_help_program_step" character varying, "self_help_program_data" json DEFAULT '{}' NOT NULL)[0m
+  [1m[35m (65.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_telegram_id" ON "users" ("telegram_id")[0m
+  [1m[35m (12.6ms)[0m  [1m[35mALTER TABLE "answer_options" ADD CONSTRAINT "fk_rails_4d660e1508"
+FOREIGN KEY ("question_id")
+  REFERENCES "questions" ("id")
+[0m
+  [1m[35m (9.1ms)[0m  [1m[35mALTER TABLE "answers" ADD CONSTRAINT "fk_rails_08b3e6cd40"
+FOREIGN KEY ("answer_option_id")
+  REFERENCES "answer_options" ("id")
+[0m
+  [1m[35m (18.8ms)[0m  [1m[35mALTER TABLE "answers" ADD CONSTRAINT "fk_rails_3d5ed4418f"
+FOREIGN KEY ("question_id")
+  REFERENCES "questions" ("id")
+[0m
+  [1m[35m (8.8ms)[0m  [1m[35mALTER TABLE "answers" ADD CONSTRAINT "fk_rails_81e5dda97e"
+FOREIGN KEY ("test_result_id")
+  REFERENCES "test_results" ("id")
+[0m
+  [1m[35m (20.2ms)[0m  [1m[35mALTER TABLE "anxious_thought_entries" ADD CONSTRAINT "fk_rails_617ed6a170"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (15.8ms)[0m  [1m[35mALTER TABLE "compassion_letters" ADD CONSTRAINT "fk_rails_dfacdbfa20"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (11.3ms)[0m  [1m[35mALTER TABLE "emotion_diary_entries" ADD CONSTRAINT "fk_rails_ed5b5dd53f"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (8.9ms)[0m  [1m[35mALTER TABLE "gratitude_entries" ADD CONSTRAINT "fk_rails_acbd2eb35e"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (16.6ms)[0m  [1m[35mALTER TABLE "grounding_exercise_entries" ADD CONSTRAINT "fk_rails_a3ed116e68"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (9.0ms)[0m  [1m[35mALTER TABLE "pleasure_activities" ADD CONSTRAINT "fk_rails_23d40322a1"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (9.1ms)[0m  [1m[35mALTER TABLE "procrastination_tasks" ADD CONSTRAINT "fk_rails_40efaca472"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (15.3ms)[0m  [1m[35mALTER TABLE "questions" ADD CONSTRAINT "fk_rails_cb4b358d50"
+FOREIGN KEY ("test_id")
+  REFERENCES "tests" ("id")
+[0m
+  [1m[35m (16.1ms)[0m  [1m[35mALTER TABLE "reconnection_practices" ADD CONSTRAINT "fk_rails_b2ba825bb9"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (8.8ms)[0m  [1m[35mALTER TABLE "reflection_entries" ADD CONSTRAINT "fk_rails_59f9749593"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (16.0ms)[0m  [1m[35mALTER TABLE "self_compassion_practices" ADD CONSTRAINT "fk_rails_70d429ded4"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (9.1ms)[0m  [1m[35mALTER TABLE "test_results" ADD CONSTRAINT "fk_rails_b56923d317"
+FOREIGN KEY ("test_id")
+  REFERENCES "tests" ("id")
+[0m
+  [1m[35m (9.5ms)[0m  [1m[35mALTER TABLE "test_results" ADD CONSTRAINT "fk_rails_592dda5024"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (12.5ms)[0m  [1m[35mALTER TABLE "user_sessions" ADD CONSTRAINT "fk_rails_9fa262d742"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (1.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (1.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+[dotenv] Set [36mTELEGRAM_BOT_TOKEN[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5618199981869994015)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT pg_advisory_unlock(5618199981869994015)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m

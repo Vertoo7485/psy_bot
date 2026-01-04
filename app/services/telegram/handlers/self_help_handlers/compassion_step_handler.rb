@@ -9,7 +9,7 @@ module Telegram
         
         if day_number != 17 && !@user.self_help_state&.include?('day_17')
           log_warn("User not in day 17 for compassion step", state: @user.self_help_state)
-          answer_callback_query("Сначала начните день 17")
+          answer_callback_query( "Сначала начните день 17")
           return
         end
         
@@ -20,11 +20,11 @@ module Telegram
         # Обрабатываем нажатие кнопки
         service.handle_compassion_button(@callback_data)
         
-        answer_callback_query("Продолжаем...")
+        answer_callback_query( "Продолжаем...")
         
       rescue => e
         log_error("Error processing compassion step", e)
-        answer_callback_query("Ошибка при обработке шага")
+        answer_callback_query( "Ошибка при обработке шага")
       end
     end
   end

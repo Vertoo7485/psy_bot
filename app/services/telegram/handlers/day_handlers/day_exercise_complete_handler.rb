@@ -6,7 +6,7 @@ module Telegram
         
         unless day_number
           log_error("Could not extract day number", callback_data: @callback_data)
-          answer_callback_query("Ошибка: не удалось определить день")
+          answer_callback_query( "Ошибка: не удалось определить день")
           return
         end
         
@@ -15,10 +15,10 @@ module Telegram
         facade = SelfHelp::Facade::SelfHelpFacade.new(@bot_service, @user, @chat_id)
         
         if facade.complete_day_exercise(day_number)
-          answer_callback_query("Упражнение завершено!")
+          answer_callback_query( "Упражнение завершено!")
         else
           log_error("Failed to complete exercise for day #{day_number}")
-          answer_callback_query("Ошибка при завершении упражнения")
+          answer_callback_query( "Ошибка при завершении упражнения")
         end
       end
       

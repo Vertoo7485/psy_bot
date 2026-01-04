@@ -11,7 +11,7 @@ module Telegram
         service = SelfHelp::Days::Day2Service.new(@bot_service, @user, @chat_id)
         service.deliver_exercise
         
-        answer_callback_query("Запускаю медитацию дня 2...")
+        answer_callback_query( "Запускаю медитацию дня 2...")
       end
     end
   end

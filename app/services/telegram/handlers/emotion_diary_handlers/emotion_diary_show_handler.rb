@@ -15,7 +15,7 @@ module Telegram
         # Показываем записи (например, последние 10)
         service.show_entries(10)
         
-        answer_callback_query("Показываю записи дневника...")
+        answer_callback_query( "Показываю записи дневника...")
       end
     end
   end

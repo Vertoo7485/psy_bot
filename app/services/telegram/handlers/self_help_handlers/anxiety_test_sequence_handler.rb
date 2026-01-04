@@ -26,10 +26,10 @@ module Telegram
         test_manager = TestManager.new(@bot_service, @user, @chat_id)
         
         if test_manager.prepare_test('anxiety', in_program_context: true)
-          answer_callback_query("Запускаю тест на тревожность...")
+          answer_callback_query( "Запускаю тест на тревожность...")
         else
           log_error("Failed to prepare anxiety test")
-          answer_callback_query("Ошибка при запуске теста")
+          answer_callback_query( "Ошибка при запуске теста")
         end
       end
       
@@ -61,7 +61,7 @@ module Telegram
           reply_markup: markup
         )
         
-        answer_callback_query("Показываю варианты...")
+        answer_callback_query( "Показываю варианты...")
       end
     end
   end

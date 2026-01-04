@@ -8,7 +8,7 @@ module Telegram
         facade = SelfHelp::Facade::SelfHelpFacade.new(@bot_service, @user, @chat_id)
         facade.start_program
         
-        answer_callback_query("Начинаем программу самопомощи")
+        answer_callback_query( "Начинаем программу самопомощи")
       end
     end
   end

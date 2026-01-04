@@ -11,7 +11,7 @@ module Telegram
           handle_program_restart
         else
           log_error("Unknown program completion callback", callback_data: @callback_data)
-          answer_callback_query("Неизвестная команда завершения программы")
+          answer_callback_query( "Неизвестная команда завершения программы")
         end
       end
       
@@ -42,7 +42,7 @@ module Telegram
           reply_markup: TelegramMarkupHelper.main_menu_markup
         )
         
-        answer_callback_query("Программа завершена!")
+        answer_callback_query( "Программа завершена!")
       end
       
       def handle_program_restart
@@ -63,7 +63,7 @@ module Telegram
         facade = SelfHelp::Facade::SelfHelpFacade.new(@bot_service, @user, @chat_id)
         facade.start_program
         
-        answer_callback_query("Начинаем программу заново!")
+        answer_callback_query( "Начинаем программу заново!")
       end
     end
   end

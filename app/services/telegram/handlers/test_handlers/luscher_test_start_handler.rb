@@ -13,10 +13,10 @@ module Telegram
         service = LuscherTestService.new(@bot_service, @user, @chat_id)
         
         if service.start_test
-          answer_callback_query("Запускаю тест Люшера...")
+          answer_callback_query( "Запускаю тест Люшера...")
         else
           log_error("Failed to start Luscher test")
-          answer_callback_query("Ошибка при запуске теста")
+          answer_callback_query( "Ошибка при запуске теста")
         end
       end
     end

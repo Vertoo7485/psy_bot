@@ -12,7 +12,7 @@ module Telegram
         # Пропускаем тест на тревожность и переходим к дню 1
         facade.skip_anxiety_test
         
-        answer_callback_query("Пропускаем тест на тревожность, переходим к программе...")
+        answer_callback_query( "Пропускаем тест на тревожность, переходим к программе...")
       end
     end
   end

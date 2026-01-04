@@ -12,7 +12,7 @@ module Telegram
         # Очищаем и перезапускаем программу
         facade.clear_and_restart
         
-        answer_callback_query("Начинаем заново")
+        answer_callback_query( "Начинаем заново")
       end
     end
   end

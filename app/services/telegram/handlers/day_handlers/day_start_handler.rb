@@ -16,7 +16,7 @@ module Telegram
           
           unless day_number
             log_error("Could not extract day number", callback_data: @callback_data)
-            answer_callback_query("Ошибка: не удалось определить день")
+            answer_callback_query( "Ошибка: не удалось определить день")
             return
           end
           
@@ -52,10 +52,10 @@ end
             day_service.deliver_exercise
           end
           
-          answer_callback_query("Начинаем упражнение заземления!")
+          answer_callback_query( "Начинаем упражнение заземления!")
         else
           log_warn("User cannot start grounding exercise", state: @user.self_help_state)
-          answer_callback_query("Сначала начните день 11")
+          answer_callback_query( "Сначала начните день 11")
         end
       end
       
@@ -75,10 +75,10 @@ end
             day_service.deliver_exercise
           end
           
-          answer_callback_query("Начинаем медитацию на самосострадание!")
+          answer_callback_query( "Начинаем медитацию на самосострадание!")
         else
           log_warn("User cannot start self-compassion exercise", state: @user.self_help_state)
-          answer_callback_query("Сначала начните день 12")
+          answer_callback_query( "Сначала начните день 12")
         end
       end
       
@@ -98,10 +98,10 @@ end
             day_service.deliver_exercise
           end
           
-          answer_callback_query("Начинаем работу с прокрастинацией!")
+          answer_callback_query( "Начинаем работу с прокрастинацией!")
         else
           log_warn("User cannot start procrastination exercise", state: @user.self_help_state)
-          answer_callback_query("Сначала начните день 13")
+          answer_callback_query( "Сначала начните день 13")
         end
       end
       
@@ -127,22 +127,22 @@ end
     service = day_service_for(day_number)
     if service
       service.resume_session
-      answer_callback_query("Продолжаем день #{day_number}!")
+      answer_callback_query( "Продолжаем день #{day_number}!")
     else
       log_error("Failed to create service for day #{day_number}")
-      answer_callback_query("Ошибка при продолжении дня")
+      answer_callback_query( "Ошибка при продолжении дня")
     end
   elsif facade.can_start_day?(day_number)
     # Новый день - можем начать
     if facade.deliver_day(day_number)
-      answer_callback_query("Начинаем День #{day_number}!")
+      answer_callback_query( "Начинаем День #{day_number}!")
     else
       log_error("Failed to deliver day #{day_number}")
-      answer_callback_query("Ошибка при запуске дня")
+      answer_callback_query( "Ошибка при запуске дня")
     end
   else
     log_warn("User cannot start day #{day_number}", state: @user.self_help_state)
-    answer_callback_query("Сначала завершите предыдущие этапы")
+    answer_callback_query( "Сначала завершите предыдущие этапы")
   end
 end
       
@@ -160,10 +160,10 @@ end
             day_service.deliver_exercise
           end
           
-          answer_callback_query("Начинаем упражнение!")
+          answer_callback_query( "Начинаем упражнение!")
         else
           log_warn("User cannot start exercise for day #{day_number}", state: @user.self_help_state)
-          answer_callback_query("Сначала начните день #{day_number}")
+          answer_callback_query( "Сначала начните день #{day_number}")
         end
       end
       

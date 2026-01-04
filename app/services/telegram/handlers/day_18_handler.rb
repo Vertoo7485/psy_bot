@@ -13,11 +13,11 @@ module Telegram
         # Обрабатываем кнопку
         service.handle_button(@callback_data)
         
-        answer_callback_query("Обрабатываю...")
+        answer_callback_query( "Обрабатываю...")
         
       rescue => e
         log_error("Error processing day 18 callback", e)
-        answer_callback_query("Ошибка при обработке")
+        answer_callback_query( "Ошибка при обработке")
       end
     end
   end

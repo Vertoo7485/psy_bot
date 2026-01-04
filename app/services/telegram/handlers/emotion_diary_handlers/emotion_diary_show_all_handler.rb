@@ -15,7 +15,7 @@ module Telegram
         # Показываем все записи
         service.show_entries(100) # или nil для всех
         
-        answer_callback_query("Показываю все записи дневника...")
+        answer_callback_query( "Показываю все записи дневника...")
       end
     end
   end

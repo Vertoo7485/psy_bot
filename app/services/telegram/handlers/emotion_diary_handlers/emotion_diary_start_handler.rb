@@ -12,7 +12,7 @@ module Telegram
         service = EmotionDiaryService.new(@bot_service, @user, @chat_id)
         service.start_diary_menu
         
-        answer_callback_query("Открываю дневник эмоций")
+        answer_callback_query( "Открываю дневник эмоций")
       end
     end
   end

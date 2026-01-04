@@ -7,7 +7,7 @@ module Telegram
         
         unless day_number
           log_error("Could not extract day number", callback_data: @callback_data)
-          answer_callback_query("Ошибка: не удалось определить день")
+          answer_callback_query( "Ошибка: не удалось определить день")
           return
         end
         
@@ -43,7 +43,7 @@ module Telegram
         service.deliver_exercise
         
         # Ответ на callback query
-        answer_callback_query("Начинаем практику благодарности...")
+        answer_callback_query( "Начинаем практику благодарности...")
       end
       
       def handle_other_day_gratitude(day_number)
@@ -54,7 +54,7 @@ module Telegram
           reply_markup: TelegramMarkupHelper.main_menu_markup
         )
         
-        answer_callback_query("Функция временно недоступна")
+        answer_callback_query( "Функция временно недоступна")
       end
     end
   end

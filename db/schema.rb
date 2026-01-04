@@ -10,14 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_23_150601) do
+ActiveRecord::Schema[7.1].define(version: 2026_01_04_131017) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "answer_options", force: :cascade do |t|
     t.integer "question_id", null: false
     t.string "text"
     t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["question_id"], name: "index_answer_options_on_question_id"
+    t.index ["question_id", "value"], name: "index_answer_options_on_question_id_and_value"
   end
 
   create_table "answers", force: :cascade do |t|
@@ -28,6 +31,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_23_150601) do
     t.datetime "updated_at", null: false
     t.index ["answer_option_id"], name: "index_answers_on_answer_option_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["test_result_id", "question_id"], name: "index_answers_on_test_result_id_and_question_id", unique: true
     t.index ["test_result_id"], name: "index_answers_on_test_result_id"
   end
 
@@ -189,8 +193,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_23_150601) do
     t.datetime "completed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "luscher_choices"
+    t.text "luscher_choices", default: [], comment: "Массив выбранных цветов для теста Люшера. Формат: [\"dark_blue\", \"red_yellow\", ...]", array: true
+    t.index ["completed_at"], name: "index_test_results_on_completed_at"
+    t.index ["created_at"], name: "index_test_results_on_created_at"
+    t.index ["luscher_choices"], name: "index_test_results_on_luscher_choices", using: :gin
+    t.index ["score"], name: "index_test_results_on_score", where: "(score IS NOT NULL)"
+    t.index ["test_id", "completed_at"], name: "index_test_results_on_luscher_test_null_completed", where: "((test_id = 10) AND (completed_at IS NULL))"
     t.index ["test_id"], name: "index_test_results_on_test_id"
+    t.index ["user_id", "completed_at"], name: "index_test_results_on_user_id_and_completed_at"
+    t.index ["user_id", "test_id", "completed_at"], name: "index_test_results_on_user_and_test_and_completed"
     t.index ["user_id"], name: "index_test_results_on_user_id"
   end
 
@@ -200,6 +211,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_23_150601) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "test_type"
+    t.integer "max_score"
   end
 
   create_table "user_sessions", force: :cascade do |t|
@@ -226,6 +238,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_23_150601) do
     t.json "diary_data"
     t.string "self_help_program_step"
     t.json "self_help_program_data", default: {}, null: false
+    t.index ["self_help_program_step"], name: "index_users_on_self_help_program_step"
     t.index ["telegram_id"], name: "index_users_on_telegram_id", unique: true
   end
 

@@ -44,11 +44,11 @@ module Telegram
             end
           end
           
-          answer_callback_query("Обрабатываю...")
+          answer_callback_query( "Обрабатываю...")
           
         rescue => e
           log_error("Error in Day19Handler", e)
-          answer_callback_query("Ошибка")
+          answer_callback_query( "Ошибка")
         end
       end
     end

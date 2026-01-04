@@ -7,7 +7,7 @@ module Telegram
         
         unless day_number
           log_error("Could not extract day number", callback_data: @callback_data)
-          answer_callback_query("Ошибка: не удалось определить день")
+          answer_callback_query( "Ошибка: не удалось определить день")
           return
         end
         
@@ -23,7 +23,7 @@ module Telegram
         
       rescue => e
         log_error("Error in DayCompleteHandler", e)
-        answer_callback_query("Ошибка при завершении дня")
+        answer_callback_query( "Ошибка при завершении дня")
       end
       
       private
@@ -44,7 +44,7 @@ module Telegram
             parse_mode: 'Markdown',
             reply_markup: TelegramMarkupHelper.day_3_menu_markup
           )
-          answer_callback_query("Сначала создайте запись")
+          answer_callback_query( "Сначала создайте запись")
           return
         end
         
@@ -54,7 +54,7 @@ module Telegram
           service = SelfHelp::Days::Day3Service.new(@bot_service, @user, @chat_id)
           service.complete_day
           
-          answer_callback_query("День 3 завершен!")
+          answer_callback_query( "День 3 завершен!")
         rescue => e
           log_error("Failed to complete day 3 with Day3Service", e)
           fallback_day_3_completion
@@ -84,7 +84,7 @@ module Telegram
           }.to_json
         )
         
-        answer_callback_query("День 3 завершен!")
+        answer_callback_query( "День 3 завершен!")
       end
       
       def handle_other_day_completion(day_number)
@@ -110,7 +110,7 @@ module Telegram
           )
         end
         
-        answer_callback_query("День #{day_number} завершен!")
+        answer_callback_query( "День #{day_number} завершен!")
       end
     end
   end

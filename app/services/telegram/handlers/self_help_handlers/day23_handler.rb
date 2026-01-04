@@ -19,11 +19,11 @@ module Telegram
             send_message(
               text: "Произошла ошибка при анализе дневника. Пожалуйста, попробуйте еще раз."
             )
-            answer_callback_query("❌ Ошибка")
+            answer_callback_query( "❌ Ошибка")
             return
           end
           
-          answer_callback_query("✅")
+          answer_callback_query( "✅")
         end
         
         private
