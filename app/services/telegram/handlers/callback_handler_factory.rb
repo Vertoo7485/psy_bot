@@ -42,6 +42,11 @@ module Telegram
         'no_anxiety_test_sequence' => 'NoAnxietyTestHandler',
         
         # Дни программы - запуск
+        'start_day_1_content' => 'SelfHelpHandlers::DayHandlers::Day1Handler',
+        'start_day_1_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day1Handler',
+        'continue_day_1_content' => 'SelfHelpHandlers::DayHandlers::Day1Handler',
+        'day_1_exercise_completed' => 'SelfHelpHandlers::DayHandlers::Day1Handler',
+        /^day_1_/ => 'SelfHelpHandlers::DayHandlers::Day1Handler', # Все остальные кнопки дня 1
         /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
         /^start_day_(\d+)_content$/ => 'DayStartHandler',
         /^start_day_(\d+)_exercise$/ => 'DayStartHandler',
@@ -205,9 +210,10 @@ module Telegram
           # Пробуем найти класс в разных namespace
           possible_paths = [
             "Telegram::Handlers::#{handler_name}",
+            "Telegram::Handlers::SelfHelpHandlers::DayHandlers::#{handler_name}",
+            "Telegram::Handlers::SelfHelpHandlers::#{handler_name}",
             "Telegram::Handlers::GeneralHandlers::#{handler_name}",
             "Telegram::Handlers::TestHandlers::#{handler_name}",
-            "Telegram::Handlers::SelfHelpHandlers::#{handler_name}",
             "Telegram::Handlers::EmotionDiaryHandlers::#{handler_name}"
           ]
           
@@ -221,13 +227,6 @@ module Telegram
           
           # Если не нашли, возвращаем UnknownHandler
           "Telegram::Handlers::UnknownHandler".constantize
-        rescue NameError => e
-          Rails.logger.error "[CallbackHandlerFactory] Error finding handler class #{handler_name}: #{e.message}"
-          # Если даже UnknownHandler не найден, создаем простой заглушечный класс
-          Class.new do
-            def initialize(*args); end
-            def process; end
-          end
         end
       end
     end

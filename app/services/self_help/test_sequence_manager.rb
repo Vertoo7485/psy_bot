@@ -90,7 +90,7 @@ module SelfHelp
     def start_test(test_type)
       log_info("Starting test: #{test_type}")
       
-      runner = QuizRunner.new(@bot_service, @user, @chat_id)
+      runner = QuizRunner.new(@bot_service, @user, @chat_id, in_program_context: true)
       runner.start_quiz(test_type)
       
       true

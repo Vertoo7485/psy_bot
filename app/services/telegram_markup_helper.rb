@@ -193,6 +193,91 @@ module TelegramMarkupHelper
       ]
     }.to_json
   end
+
+    # Новые методы для Дня 1 (переработанного)
+  def day_1_breathing_techniques_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🌊 Естественное дыхание", callback_data: 'day_1_breathing_0' },
+          { text: "🌀 4-7-8 дыхание", callback_data: 'day_1_breathing_1' }
+        ],
+        [
+          { text: "⬜ Квадратное дыхание", callback_data: 'day_1_breathing_2' },
+          { text: "🌬️ Диафрагмальное", callback_data: 'day_1_breathing_3' }
+        ],
+        [
+          { text: "❓ Помощь в выборе", callback_data: 'day_1_help_choose' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_1_practice_timer_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "⏱️ 5 минут", callback_data: 'day_1_timer_5' },
+          { text: "⏱️ 10 минут", callback_data: 'day_1_timer_10' }
+        ],
+        [
+          { text: "⏱️ 15 минут", callback_data: 'day_1_timer_15' },
+          { text: "⏰ Свой таймер", callback_data: 'day_1_timer_custom' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_1_practice_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "✅ Завершить практику", callback_data: 'day_1_practice_complete' }
+        ],
+        [
+          { text: "🔄 Начать заново", callback_data: 'day_1_practice_restart' },
+          { text: "❌ Прервать", callback_data: 'day_1_practice_cancel' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_1_challenges_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🌀 Ум блуждает", callback_data: 'day_1_challenge_0' },
+          { text: "😣 Не расслабляюсь", callback_data: 'day_1_challenge_1' }
+        ],
+        [
+          { text: "💭 Слишком мыслей", callback_data: 'day_1_challenge_2' },
+          { text: "⏰ Нет времени", callback_data: 'day_1_challenge_3' }
+        ],
+        [
+          { text: "✅ Никаких трудностей", callback_data: 'day_1_no_challenges' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_1_final_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🎯 Завершить День 1", callback_data: 'day_1_complete_exercise' },
+          { text: "🔄 Повторить практику", callback_data: 'day_1_restart_practice' }
+        ],
+        [
+          { text: "📝 Сделать заметку", callback_data: 'day_1_make_note' }
+        ]
+      ]
+    }.to_json
+  end
+
+  # Метод для предложения дня 1 (для единообразия)
+  def self.day_1_start_proposal_markup
+    { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 1", callback_data: 'start_day_1_from_proposal' }]] }.to_json
+  end
   
   # День 2
   def day_2_start_exercise_markup

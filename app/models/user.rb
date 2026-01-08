@@ -115,50 +115,67 @@ end
   
   # Получить рекомендации на основе истории
   def activity_recommendations
-  # Получаем все завершенные активности
-  completed_activities = pleasure_activities.completed
-  
-  if completed_activities.any?
-    # Получаем самые частые типы активностей
-    activity_types = completed_activities.pluck(:activity_type).compact
+    # Получаем все завершенные активности
+    completed_activities = pleasure_activities.completed
     
-    if activity_types.any?
-      most_common = activity_types.group_by(&:itself).transform_values(&:count).max_by(&:last)
+    if completed_activities.any?
+      # Получаем самые частые типы активностей
+      activity_types = completed_activities.pluck(:activity_type).compact
       
-      # Рекомендуем похожие активности
-      similar_activities = {
-        'reading' => ['art', 'learning', 'relaxation'],
-        'music' => ['art', 'relaxation', 'nature'],
-        'art' => ['music', 'reading', 'cooking'],
-        'sports' => ['nature', 'games', 'relaxation'],
-        'nature' => ['sports', 'relaxation', 'social'],
-        'cooking' => ['art', 'social', 'games'],
-        'games' => ['sports', 'social', 'learning'],
-        'learning' => ['reading', 'games', 'art'],
-        'social' => ['nature', 'games', 'cooking'],
-        'relaxation' => ['nature', 'music', 'reading']
-      }
-      
-      if most_common && similar_activities[most_common[0]]
-        return similar_activities[most_common[0]].first(3)
+      if activity_types.any?
+        most_common = activity_types.group_by(&:itself).transform_values(&:count).max_by(&:last)
+        
+        # Рекомендуем похожие активности
+        similar_activities = {
+          'reading' => ['art', 'learning', 'relaxation'],
+          'music' => ['art', 'relaxation', 'nature'],
+          'art' => ['music', 'reading', 'cooking'],
+          'sports' => ['nature', 'games', 'relaxation'],
+          'nature' => ['sports', 'relaxation', 'social'],
+          'cooking' => ['art', 'social', 'games'],
+          'games' => ['sports', 'social', 'learning'],
+          'learning' => ['reading', 'games', 'art'],
+          'social' => ['nature', 'games', 'cooking'],
+          'relaxation' => ['nature', 'music', 'reading']
+        }
+        
+        if most_common && similar_activities[most_common[0]]
+          return similar_activities[most_common[0]].first(3)
+        end
       end
     end
+    
+    # Дефолтные рекомендации
+    ['reading', 'nature', 'relaxation']
   end
-  
-  # Дефолтные рекомендации
-  ['reading', 'nature', 'relaxation']
-end
+
+def clear_day_data(day_number)
+    day_prefix = "day_#{day_number}_"
+    
+    # Находим все ключи, начинающиеся с префикса дня
+    day_keys = self_help_program_data.keys.select { |k| k.start_with?(day_prefix) }
+    
+    # Удаляем эти ключи
+    day_keys.each do |key|
+      self_help_program_data.delete(key)
+    end
+    
+    # Сохраняем изменения
+    save if day_keys.any?
+    
+    day_keys
+  end
 
   def reconnection_stats
-  {
-    total: reconnection_practices.count,
-    calls: reconnection_practices.by_format('звонок').count,
-    messages: reconnection_practices.by_format('сообщение').count,
-    letters: reconnection_practices.by_format('письмо').count,
-    this_month: reconnection_practices.this_month.count,
-    success_rate: calculate_success_rate
-  }
-end
+    {
+      total: reconnection_practices.count,
+      calls: reconnection_practices.by_format('звонок').count,
+      messages: reconnection_practices.by_format('сообщение').count,
+      letters: reconnection_practices.by_format('письмо').count,
+      this_month: reconnection_practices.this_month.count,
+      success_rate: calculate_success_rate
+    }
+  end
 
   # Методы для работы с дневником эмоций
   def start_diary_entry
@@ -270,10 +287,10 @@ end
   end
 
   def calculate_success_rate
-  total = reconnection_practices.count
-  return 0 if total.zero?
-  
-  successful = reconnection_practices.select { |p| p.success_score >= 2 }.count
-  (successful.to_f / total * 100).round
-end
+    total = reconnection_practices.count
+    return 0 if total.zero?
+    
+    successful = reconnection_practices.select { |p| p.success_score >= 2 }.count
+    (successful.to_f / total * 100).round
+  end
 end

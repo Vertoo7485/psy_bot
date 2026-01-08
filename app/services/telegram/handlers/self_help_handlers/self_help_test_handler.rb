@@ -11,7 +11,7 @@ module Telegram
           log_info("Processing self help test", callback_data: @callback_data)
           
           # Извлекаем тип теста из callback_data
-          match = @callback_data.match(/^self_help_(.+)_test$/)
+          match = @callback_data.match(/^self_help_start_(\w+)_test$/)
           
           unless match
             log_error("Could not extract test type", callback_data: @callback_data)
@@ -19,11 +19,11 @@ module Telegram
             return
           end
           
-          test_type = match[1]
+          test_type = match[1].to_sym  # :anxiety
           log_info("Extracted test type", test_type: test_type)
           
-          # Запускаем тест через QuizRunner
-          quiz_runner = QuizRunner.new(@bot_service, @user, @chat_id)
+          # Запускаем тест через QuizRunner с in_program_context: true
+          quiz_runner = QuizRunner.new(@bot_service, @user, @chat_id, in_program_context: true)
           quiz_runner.start_quiz(test_type)
           
           answer_callback_query("Запускаю тест...")
