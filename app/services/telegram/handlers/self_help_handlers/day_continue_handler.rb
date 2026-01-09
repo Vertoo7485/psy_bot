@@ -7,16 +7,16 @@ module Telegram
         
         unless day_number
           log_error("Could not extract day number", callback_data: @callback_data)
-          answer_callback_query( "Ошибка: не удалось определить день")
+          answer_callback_query("Ошибка: не удалось определить день")
           return
         end
         
         log_info("Continuing day #{day_number}")
         
-        # Прямой вызов сервиса дня
-        handle_day_continuation(day_number)
+        # Вместо прямой обработки здесь, делегируем соответствующим DayHandler'ам
+        delegate_to_day_handler(day_number)
         
-        answer_callback_query( "Продолжаем день #{day_number}...")
+        answer_callback_query("Продолжаем день #{day_number}...")
       end
       
       private
@@ -29,45 +29,47 @@ module Telegram
         match ? match[1].to_i : nil
       end
       
-      def handle_day_continuation(day_number)
+      def delegate_to_day_handler(day_number)
         case day_number
         when 1
-          handle_day_1_continuation
+          delegate_to_day1_handler
         when 2
-          handle_day_2_continuation
-        # ... добавьте обработку для других дней по мере необходимости
+          delegate_to_day2_handler
         else
           log_error("Day #{day_number} continuation not implemented")
           send_message(
-            text: "Продолжение дня #{day_number} еще не реализовано.",
+            text: "День #{day_number} будет доступен позже.",
             reply_markup: TelegramMarkupHelper.main_menu_markup
           )
         end
       end
       
-      def handle_day_1_continuation
-        begin
-          require Rails.root.join('app/services/self_help/days/day_1_service')
-          
-          service = SelfHelp::Days::Day1Service.new(@bot_service, @user, @chat_id)
-          service.deliver_exercise
-          
-          log_info("Successfully delivered day 1 exercise")
-        rescue => e
-          log_error("Failed to deliver day 1 exercise", e)
-          send_message(
-            text: "Ошибка при загрузке упражнения дня 1. Попробуйте позже.",
-            reply_markup: TelegramMarkupHelper.main_menu_markup
-          )
-        end
-      end
-      
-      def handle_day_2_continuation
-        # Аналогично для дня 2
-        send_message(
-          text: "День 2 будет доступен позже.",
-          reply_markup: TelegramMarkupHelper.main_menu_markup
+      def delegate_to_day1_handler
+        require Rails.root.join('app/services/telegram/handlers/self_help_handlers/day_handlers/day1_handler')
+        
+        handler = Telegram::Handlers::SelfHelpHandlers::DayHandlers::Day1Handler.new(
+          @bot,
+          @message,
+          @user,
+          @chat_id,
+          @callback_data,
+          @callback_query_id
         )
+        handler.process
+      end
+      
+      def delegate_to_day2_handler
+        require Rails.root.join('app/services/telegram/handlers/self_help_handlers/day_handlers/day2_handler')
+        
+        handler = Telegram::Handlers::SelfHelpHandlers::DayHandlers::Day2Handler.new(
+          @bot,
+          @message,
+          @user,
+          @chat_id,
+          @callback_data,
+          @callback_query_id
+        )
+        handler.process
       end
     end
   end

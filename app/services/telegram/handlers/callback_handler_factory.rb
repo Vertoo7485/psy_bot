@@ -48,9 +48,11 @@ module Telegram
         'continue_day_1_content' => 'SelfHelpHandlers::DayHandlers::Day1Handler',
         'day_1_exercise_completed' => 'SelfHelpHandlers::DayHandlers::Day1Handler',
         /^day_1_/ => 'SelfHelpHandlers::DayHandlers::Day1Handler', # Все остальные кнопки дня 1
+        'start_day_2_content' => 'SelfHelpHandlers::DayHandlers::Day2Handler',
+        'start_day_2_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day2Handler',
+        'continue_day_2_content' => 'SelfHelpHandlers::DayHandlers::Day2Handler',
+        /^day_2_/ => 'SelfHelpHandlers::DayHandlers::Day2Handler',
         /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
-        /^start_day_(\d+)_content$/ => 'DayStartHandler',
-        /^start_day_(\d+)_exercise$/ => 'DayStartHandler',
         'day_8_stopped_thought_first_try' => 'Day8Handler',
         /^day_8_distraction_(music|video|friend|exercise|book)$/ => 'Day8Handler',
         'day_8_exercise_completed' => 'Day8Handler',
@@ -67,7 +69,6 @@ module Telegram
         'procrastination_exercise_completed' => 'DayExerciseCompleteHandler',
         
         # Специфичные действия дней
-        'start_day_2_exercise_audio' => 'Day2ExerciseAudioHandler',
         /^day_(\d+)_enter_gratitude$/ => 'DayGratitudeHandler',
         'show_gratitude_entries' => 'ShowGratitudeEntriesHandler',
         'back_to_day_3_menu' => 'Day3MenuHandler',

@@ -8,7 +8,8 @@ module Telegram
       '/help' => :handle_help,
       '/tests' => :handle_tests,
       '/diary' => :handle_diary,
-      '/program' => :handle_program
+      '/program' => :handle_program,
+      '/progress' => :handle_progress
     }.freeze
     
     attr_reader :bot, :user, :message_data
@@ -68,12 +69,13 @@ module Telegram
         
         attr_reader :bot
         
-        def send_message(chat_id:, text:, reply_markup: nil, parse_mode: nil)
+        def send_message(chat_id:, text:, reply_markup: nil, parse_mode: nil, disable_notification: false)
           @bot.send_message(
             chat_id: chat_id,
             text: text,
             reply_markup: reply_markup,
-            parse_mode: parse_mode
+            parse_mode: parse_mode,
+            disable_notification: disable_notification
           )
         end
         
@@ -206,6 +208,25 @@ module Telegram
       facade = SelfHelp::Facade::SelfHelpFacade.new(@bot, @user, @chat_id)
       facade.start_program
     end
+
+    def handle_progress
+      log_info("Handling /progress command")
+      
+      # Используем уже созданный bot_service, а не создаем новый
+      handler = Telegram::Handlers::GeneralHandlers::ProgressHandler.new(
+        @bot_service,  # ← Используем существующий
+        @user, 
+        @chat_id, 
+        {}  
+      )
+      
+      handler.process
+    rescue => e
+      log_error("Failed to handle /progress", e)
+      send_message(
+        text: "Произошла ошибка при получении прогресса. Попробуйте позже."
+      )
+    end
     
     def handle_unknown_command
       send_message(
@@ -274,12 +295,13 @@ module Telegram
     end
     
     # Отправка сообщения через бота
-    def send_message(text:, reply_markup: nil, parse_mode: nil)
+    def send_message(text:, reply_markup: nil, parse_mode: nil, disable_notification: false)
       @bot.send_message(
         chat_id: @chat_id,
         text: text,
         reply_markup: reply_markup,
-        parse_mode: parse_mode
+        parse_mode: parse_mode,
+        disable_notification: disable_notification
       )
     rescue Telegram::Bot::Error => e
       log_error("Failed to send message", e)

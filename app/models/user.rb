@@ -254,7 +254,6 @@ class User < ApplicationRecord
 
   # Проверки для дней программы самопомощи
   def can_start_day?(day_number)
-    # Используем новую систему проверки вместо DayStateChecker
     can_start_day_program?(day_number)
   end
 
@@ -265,6 +264,34 @@ class User < ApplicationRecord
   def current_day_number
     match = self_help_state&.match(/day_(\d+)_/)
     match ? match[1].to_i : nil
+  end
+
+  def current_streak
+    return 0 if completed_days.empty?
+    
+    sorted_days = completed_days.sort
+    streak = 1
+    
+    (1...sorted_days.size).each do |i|
+      if sorted_days[i] == sorted_days[i-1] + 1
+        streak += 1
+      else
+        break
+      end
+    end
+    
+    streak
+  end
+
+  def formatted_progress
+    percentage = progress_percentage
+    completed = completed_days.size
+    
+    # Красивая прогресс-строка
+    filled = "🟩" * (completed % 10)  # показываем последние 10 дней
+    empty = "⬜" * (10 - (completed % 10))
+    
+    "#{filled}#{empty} #{completed}/28 (#{percentage}%)"
   end
 
   def complete_self_help_day(day_number)

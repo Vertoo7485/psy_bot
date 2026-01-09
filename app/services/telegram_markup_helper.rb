@@ -278,27 +278,7 @@ module TelegramMarkupHelper
   def self.day_1_start_proposal_markup
     { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 1", callback_data: 'start_day_1_from_proposal' }]] }.to_json
   end
-  
-  # День 2
-  def day_2_start_exercise_markup
-    {
-      inline_keyboard: [
-        [
-          { text: "#{EMOJI[:yoga]} Начать медитацию", callback_data: 'start_day_2_exercise_audio' }
-        ]
-      ]
-    }.to_json
-  end
-  
-  def day_2_exercise_completed_markup
-    {
-      inline_keyboard: [
-        [
-          { text: "#{EMOJI[:check]} Я завершил(а) упражнение", callback_data: 'day_2_exercise_completed' }
-        ]
-      ]
-    }.to_json
-  end
+
   
   # День 3
   def day_3_menu_markup

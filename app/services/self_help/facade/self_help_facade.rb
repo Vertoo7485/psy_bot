@@ -255,7 +255,7 @@ module SelfHelp
       def can_start_day?(day_number)
         return false unless valid_day_number?(day_number)
         
-        DayStateChecker.new(@user).can_start_day?(day_number)
+        @user.can_start_day?(day_number)
       end
       
       # Получение текущего номера дня
@@ -341,6 +341,14 @@ def handle_day_specific_input(service, text, state)
   
   # Основная логика обработки по состоянию
   case state
+    when 'day_2_exercise_in_progress'
+    # Day2Service ожидает заметку о практике
+    if service.respond_to?(:handle_text_input)
+      service.handle_text_input(text)
+    else
+      log_error("Day 2 service doesn't have handle_text_input method")
+      false
+    end
   when 'day_3_waiting_for_gratitude'
     service.handle_gratitude_input(text)
   when 'day_7_waiting_for_reflection'
