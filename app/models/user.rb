@@ -21,6 +21,9 @@ class User < ApplicationRecord
   attribute :current_diary_step, :string, default: nil
   attribute :diary_data, :json, default: {}
   attribute :self_help_program_step, :string, default: nil
+  attribute :current_day_started_at, :datetime, default: nil
+  attribute :last_day_completed_at, :datetime, default: nil
+  attribute :completed_days, :integer, array: true, default: []
 
   # Валидации
   validates :telegram_id, presence: true, uniqueness: true
@@ -37,70 +40,69 @@ class User < ApplicationRecord
     end
   end
 
-  # app/models/user.rb
-def meditation_stats
-  begin
-    # Проверяем, есть ли связь с MeditationSession
-    if defined?(MeditationSession) && MeditationSession.column_names.include?('user_id')
-      sessions = meditation_sessions.completed
-      total = sessions.count
-      total_minutes = sessions.sum(:duration_minutes)
-      average_rating = sessions.average(:rating).to_f.round(1)
-    else
-      # Возвращаем дефолтные значения если таблицы нет
-      total = 0
-      total_minutes = 0
-      average_rating = 0
+  def meditation_stats
+    begin
+      # Проверяем, есть ли связь с MeditationSession
+      if defined?(MeditationSession) && MeditationSession.column_names.include?('user_id')
+        sessions = meditation_sessions.completed
+        total = sessions.count
+        total_minutes = sessions.sum(:duration_minutes)
+        average_rating = sessions.average(:rating).to_f.round(1)
+      else
+        # Возвращаем дефолтные значения если таблицы нет
+        total = 0
+        total_minutes = 0
+        average_rating = 0
+      end
+      
+      {
+        total: total,
+        total_minutes: total_minutes,
+        average_rating: average_rating,
+        streak_days: 0 # временное значение
+      }
+    rescue => e
+      Rails.logger.error "Error calculating meditation stats: #{e.message}"
+      { total: 0, total_minutes: 0, average_rating: 0, streak_days: 0 }
+    end
+  end
+
+  def calculate_meditation_streak
+    return 0 if meditation_sessions.completed.empty?
+    
+    # Получаем даты всех завершенных медитаций
+    dates = meditation_sessions.completed.pluck(:completed_at).map(&:to_date).uniq.sort.reverse
+    
+    streak = 0
+    current_date = Date.current
+    
+    dates.each do |date|
+      break unless date == current_date - streak.days
+      streak += 1
     end
     
-    {
-      total: total,
-      total_minutes: total_minutes,
-      average_rating: average_rating,
-      streak_days: 0 # временное значение
-    }
-  rescue => e
-    Rails.logger.error "Error calculating meditation stats: #{e.message}"
-    { total: 0, total_minutes: 0, average_rating: 0, streak_days: 0 }
+    streak
   end
-end
 
-def calculate_meditation_streak
-  return 0 if meditation_sessions.completed.empty?
-  
-  # Получаем даты всех завершенных медитаций
-  dates = meditation_sessions.completed.pluck(:completed_at).map(&:to_date).uniq.sort.reverse
-  
-  streak = 0
-  current_date = Date.current
-  
-  dates.each do |date|
-    break unless date == current_date - streak.days
-    streak += 1
+  def in_self_help_program?
+    # Пользователь в программе если step не nil и не 'not_started'
+    self_help_program_step.present? && self_help_program_step != 'not_started'
   end
-  
-  streak
-end
 
-def in_self_help_program?
-  # Пользователь в программе если step не nil и не 'not_started'
-  self_help_program_step.present? && self_help_program_step != 'not_started'
-end
+  def get_self_help_data(key)
+    self_help_program_data&.[](key)
+  end
 
-def get_self_help_data(key)
-  self_help_program_data&.[](key)
-end
+  def store_self_help_data(key, value)
+    current_data = self_help_program_data || {}
+    current_data[key] = value
+    update(self_help_program_data: current_data)
+  end
 
-def store_self_help_data(key, value)
-  current_data = self_help_program_data || {}
-  current_data[key] = value
-  update(self_help_program_data: current_data)
-end
-
-def self_help_state
-  # Для обратной совместимости
-  self_help_program_step
-end
+  def self_help_state
+    # Для обратной совместимости
+    self_help_program_step
+  end
 
   def pleasure_stats
     total = pleasure_activities.count
@@ -149,7 +151,7 @@ end
     ['reading', 'nature', 'relaxation']
   end
 
-def clear_day_data(day_number)
+  def clear_day_data(day_number)
     day_prefix = "day_#{day_number}_"
     
     # Находим все ключи, начинающиеся с префикса дня
@@ -252,7 +254,8 @@ def clear_day_data(day_number)
 
   # Проверки для дней программы самопомощи
   def can_start_day?(day_number)
-    SelfHelp::DayStateChecker.new(self).can_start_day?(day_number)
+    # Используем новую систему проверки вместо DayStateChecker
+    can_start_day_program?(day_number)
   end
 
   def in_day_state?(day_number, state)
@@ -267,6 +270,112 @@ def clear_day_data(day_number)
   def complete_self_help_day(day_number)
     set_self_help_step("day_#{day_number}_completed")
     set_self_help_step("awaiting_day_#{day_number + 1}_start") if day_number < 13
+    complete_day_program(day_number)
+  end
+
+  # Проверяет, может ли пользователь начать день
+  def can_start_day_program?(day_number)
+    # День 1 всегда можно начать
+    return true if day_number == 1
+    
+    errors = []
+    
+    # 1. Предыдущий день должен быть завершен
+    unless completed_days.include?(day_number - 1)
+      errors << "Сначала завершите День #{day_number - 1}"
+    end
+    
+    # 2. Проверяем время с начала текущего дня (12 часов)
+    if current_day_started_at
+      time_passed = Time.current - current_day_started_at
+      if time_passed < 12.hours
+        hours_left = ((12.hours - time_passed) / 1.hour).ceil
+        errors << "С момента начала текущего дня прошло недостаточно времени. Подождите #{hours_left} часов."
+      end
+    end
+    
+    # 3. Нельзя повторно начинать уже завершенный день
+    if completed_days.include?(day_number)
+      errors << "День #{day_number} уже завершен. Переходите к следующему дню."
+    end
+    
+    errors.empty? ? true : errors
+  end
+
+  # Начать день в программе
+  def start_day_program(day_number)
+    # Очищаем старые данные дня
+    clear_day_data(day_number)
+    
+    # Устанавливаем время начала нового дня
+    self.current_day_started_at = Time.current
+    save
+  end
+
+  # Завершить день в программе
+  def complete_day_program(day_number)
+    self.completed_days ||= []
+    self.completed_days << day_number unless completed_days.include?(day_number)
+    self.last_day_completed_at = Time.current
+    # НЕ обнуляем current_day_started_at - нужно ждать 12 часов!
+    save
+  end
+
+  # Получить следующий доступный день
+  def next_available_day
+    # Ищем первый незавершенный день
+    (1..28).each do |day|
+      return day unless completed_days.include?(day)
+    end
+    1 # Все дни завершены, начинаем с первого
+  end
+
+  # Получить прогресс
+  def progress_percentage
+    return 0 if completed_days.empty?
+    (completed_days.size.to_f / 28 * 100).round(1)
+  end
+
+  # Форматированное время до следующего дня
+  def formatted_time_until_next_day
+    seconds = time_until_next_day
+    return "сейчас" if seconds <= 0
+    
+    hours = seconds / 3600
+    minutes = (seconds % 3600) / 60
+    
+    if hours > 0
+      "#{hours} ч #{minutes} мин"
+    else
+      "#{minutes} мин"
+    end
+  end
+
+  # Достаточно ли времени прошло с начала текущего дня?
+  def enough_time_passed?
+    return true unless current_day_started_at
+    
+    # 12 часов между днями
+    time_passed = Time.current - current_day_started_at
+    time_passed >= 12.hours
+  end
+
+  # Время до возможности начать следующий день (в секундах)
+  def time_until_next_day
+    return 0 unless current_day_started_at
+    
+    time_passed = Time.current - current_day_started_at
+    if time_passed < 12.hours
+      (12.hours - time_passed).ceil
+    else
+      0
+    end
+  end
+
+  # ПРОСТОЙ СПОСОБ ДЛЯ ТЕСТИРОВАНИЯ: сбросить ограничение времени
+  def reset_time_restriction!
+    update(current_day_started_at: nil)
+    true
   end
 
   def clear_self_help_program_data
@@ -278,6 +387,12 @@ def clear_day_data(day_number)
         store_self_help_data("day_#{day}_#{key}", nil)
       end
     end
+    
+    # Очищаем данные прогресса
+    self.completed_days = []
+    self.current_day_started_at = nil
+    self.last_day_completed_at = nil
+    save
   end
 
   private

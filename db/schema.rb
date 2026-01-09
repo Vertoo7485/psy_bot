@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_01_04_131017) do
+ActiveRecord::Schema[7.1].define(version: 2026_01_08_124346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -238,6 +238,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_04_131017) do
     t.json "diary_data"
     t.string "self_help_program_step"
     t.json "self_help_program_data", default: {}, null: false
+    t.datetime "current_day_started_at"
+    t.datetime "last_day_completed_at"
+    t.integer "completed_days", default: [], array: true
+    t.index ["completed_days"], name: "index_users_on_completed_days", using: :gin
     t.index ["self_help_program_step"], name: "index_users_on_self_help_program_step"
     t.index ["telegram_id"], name: "index_users_on_telegram_id", unique: true
   end

@@ -30,6 +30,7 @@ module Telegram
         'start_self_help_program' => 'SelfHelpProgramStartHandler',
         'start_self_help_program_tests' => 'SelfHelpTestsStartHandler',
         'restart_self_help_program' => 'RestartProgramHandler',
+        'progress' => 'GeneralHandlers::ProgressHandler',
         
         # Ответы да/нет
         'yes' => 'YesResponseHandler',

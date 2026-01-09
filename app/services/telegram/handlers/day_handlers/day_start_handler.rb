@@ -26,18 +26,53 @@ module Telegram
         unless day_number
           log_error("Could not extract day number", callback_data: @callback_data)
           answer_callback_query("Ошибка: не удалось определить день")
-          return
+          return # КРИТИЧЕСКИ ВАЖНО: return после ошибки
+        end
+        
+        # ПЕРВОЕ И ГЛАВНОЕ: проверка ограничений
+        can_start_result = @user.can_start_day?(day_number)
+        
+        unless can_start_result == true
+          # Не может начать - показываем причину и ПРЕРЫВАЕМ выполнение
+          error_message = can_start_result.is_a?(Array) ? can_start_result.join("\n") : can_start_result
+          log_warn("User cannot start day #{day_number}", reason: error_message)
+          answer_callback_query(error_message, show_alert: true)  # show_alert чтобы пользователь увидел
+          return # КРИТИЧЕСКИ ВАЖНО: return после ошибки
         end
         
         # Динамически проверяем, есть ли у этого дня свой хендлер
         if day_has_own_handler?(day_number)
           log_info("Day #{day_number} has its own handler, skipping", callback_data: @callback_data)
           answer_callback_query("День #{day_number} обрабатывается отдельным хендлером")
+          return # КРИТИЧЕСКИ ВАЖНО: return после перенаправления
+        end
+        
+        # ЕСЛИ ДОШЛИ СЮДА: пользователь может начать день
+        log_info("User can start day #{day_number}, proceeding with old logic")
+        
+        # НАЧИНАЕМ ДЕНЬ - только один раз в одном месте
+        start_day_safely(day_number)
+      end
+
+      def start_day_safely(day_number)
+        # Защита от двойного вызова start_day_program
+        unless @user.can_start_day?(day_number) == true
+          log_error("Day #{day_number} cannot be started - validation failed in start_day_safely")
+          answer_callback_query("Ошибка при запуске дня")
           return
         end
         
-        # Обрабатываем только простые дни через старую логику
-        handle_day_using_old_logic(day_number)
+        # Обновляем состояние пользователя
+        @user.start_day_program(day_number)
+        
+        # Проверяем, сохранился ли пользователь
+        if @user.save
+          log_info("Successfully started day #{day_number} for user")
+          handle_day_using_old_logic(day_number)
+        else
+          log_error("Failed to save user after starting day #{day_number}", errors: @user.errors.full_messages)
+          answer_callback_query("Ошибка при сохранении состояния")
+        end
       end
       
       # Динамически проверяем, существует ли хендлер для этого дня
