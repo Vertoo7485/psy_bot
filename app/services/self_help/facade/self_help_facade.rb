@@ -349,8 +349,15 @@ def handle_day_specific_input(service, text, state)
       log_error("Day 2 service doesn't have handle_text_input method")
       false
     end
-  when 'day_3_waiting_for_gratitude'
-    service.handle_gratitude_input(text)
+    when 'day_3_exercise_in_progress'
+    # Day3Service ожидает ввод благодарностей или заметок
+    if service.respond_to?(:handle_text_input)
+      service.handle_text_input(text)
+    else
+      log_error("Day 3 service doesn't have handle_text_input method")
+      false
+    end
+  
   when 'day_7_waiting_for_reflection'
     service.handle_reflection_input(text)
   when 'day_9_waiting_for_thought'

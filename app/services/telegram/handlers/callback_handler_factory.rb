@@ -52,6 +52,9 @@ module Telegram
         'start_day_2_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day2Handler',
         'continue_day_2_content' => 'SelfHelpHandlers::DayHandlers::Day2Handler',
         /^day_2_/ => 'SelfHelpHandlers::DayHandlers::Day2Handler',
+        'start_day_3_content' => 'SelfHelpHandlers::DayHandlers::Day3Handler',
+        'continue_day_3_content' => 'SelfHelpHandlers::DayHandlers::Day3Handler',
+        /^day_3_/ => 'SelfHelpHandlers::DayHandlers::Day3Handler',
         /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
         'day_8_stopped_thought_first_try' => 'Day8Handler',
         /^day_8_distraction_(music|video|friend|exercise|book)$/ => 'Day8Handler',
@@ -69,9 +72,6 @@ module Telegram
         'procrastination_exercise_completed' => 'DayExerciseCompleteHandler',
         
         # Специфичные действия дней
-        /^day_(\d+)_enter_gratitude$/ => 'DayGratitudeHandler',
-        'show_gratitude_entries' => 'ShowGratitudeEntriesHandler',
-        'back_to_day_3_menu' => 'Day3MenuHandler',
         'day_9_enter_thought' => 'Day9Handler',
         'day_9_show_current' => 'Day9Handler',
         'show_all_anxious_thoughts' => 'Day9Handler',
@@ -174,11 +174,16 @@ module Telegram
           handler_class_name = nil
           matches = nil
           
+          Rails.logger.info "[CallbackHandlerFactory] Looking for handler for: #{callback_data}"
+          
           # Ищем подходящий обработчик
-          HANDLERS_MAP.each do |pattern, handler_name|
+          HANDLERS_MAP.each_with_index do |(pattern, handler_name), index|
+            Rails.logger.info "[CallbackHandlerFactory] Checking pattern #{index}: #{pattern.inspect}"
+            
             if pattern.is_a?(String)
               if callback_data == pattern
                 handler_class_name = handler_name
+                Rails.logger.info "[CallbackHandlerFactory] Found string match: #{handler_name}"
                 break
               end
             elsif pattern.is_a?(Regexp)
@@ -186,6 +191,7 @@ module Telegram
               if match
                 handler_class_name = handler_name
                 matches = match
+                Rails.logger.info "[CallbackHandlerFactory] Found regex match: #{handler_name}"
                 break
               end
             end
@@ -196,6 +202,8 @@ module Telegram
             Rails.logger.warn "[CallbackHandlerFactory] No handler found for: #{callback_data}"
             handler_class_name = 'UnknownHandler'
           end
+          
+          Rails.logger.info "[CallbackHandlerFactory] Selected handler: #{handler_class_name}"
           
           # Получаем класс по имени
           handler_class = get_handler_class(handler_class_name)
