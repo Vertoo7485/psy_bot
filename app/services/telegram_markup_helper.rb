@@ -547,7 +547,7 @@ module TelegramMarkupHelper
   end
   
   # День 6
-  def day_6_exercise_completed_markup
+  def self.day_6_exercise_completed_markup
     {
       inline_keyboard: [
         [
@@ -555,6 +555,11 @@ module TelegramMarkupHelper
         ]
       ]
     }.to_json
+  end
+  
+  # Метод для предложения дня 6
+  def self.day_6_start_proposal_markup
+    { inline_keyboard: [[{ text: "😌 Начать День 6", callback_data: 'start_day_6_from_proposal' }]] }.to_json
   end
   
   # День 7
@@ -942,9 +947,29 @@ module TelegramMarkupHelper
     { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 6", callback_data: 'start_day_6_from_proposal' }]] }.to_json
   end
   
-  # День 7 предложение
+  def self.day_7_reflection_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "#{EMOJI[:back]} Отменить рефлексию", callback_data: 'back_to_main_menu' }
+        ]
+      ]
+    }.to_json
+  end
+  
+  def self.complete_program_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "#{EMOJI[:check]} Завершить неделю", callback_data: 'complete_day_7' }
+        ]
+      ]
+    }.to_json
+  end
+  
+  # Метод для предложения дня 7
   def self.day_7_start_proposal_markup
-    { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 7", callback_data: 'start_day_7_from_proposal' }]] }.to_json
+    { inline_keyboard: [[{ text: "📖 Начать День 7", callback_data: 'start_day_7_from_proposal' }]] }.to_json
   end
   
   # День 8 предложение
@@ -1177,14 +1202,14 @@ end
   end
 
   def self.day_20_start_proposal_markup
-  { 
-    inline_keyboard: [
-      [
-        { text: "🦸 Начать День 20", callback_data: 'start_day_20_from_proposal' }
-      ]
-    ] 
-  }.to_json
-end
+    { 
+      inline_keyboard: [
+        [
+          { text: "🦸 Начать День 20", callback_data: 'start_day_20_from_proposal' }
+        ]
+      ] 
+    }.to_json
+  end
 
 def day_22_start_proposal_markup
   {
@@ -1248,26 +1273,26 @@ def self.day_27_start_proposal_markup
 end
 
   def handle_self_help_input(state)
-      log_info("Handling self-help input for state: #{state}")
+    log_info("Handling self-help input for state: #{state}")
       
-      # Проверяем, не день ли 18
-      if state&.start_with?('day_18')
-        # Используем специальный обработчик для дня 18
-        handler = Telegram::Handlers::Day18TextHandler.new(@bot, @user, @chat_id, @text)
-        handler.process
-        return
-      end
-      
-      # Для остальных дней используем фасад
-      facade = SelfHelp::Facade::SelfHelpFacade.new(@bot, @user, @chat_id)
-      handled = facade.handle_day_input(@text, state)
-      
-      unless handled
-        send_message(
-          text: "Извините, я не понял ваш ответ. Пожалуйста, используйте кнопки меню.",
-          reply_markup: TelegramMarkupHelper.back_to_main_menu_markup
-        )
-      end
+    # Проверяем, не день ли 18
+    if state&.start_with?('day_18')
+      # Используем специальный обработчик для дня 18
+      handler = Telegram::Handlers::Day18TextHandler.new(@bot, @user, @chat_id, @text)
+      handler.process
+      return
     end
+      
+    # Для остальных дней используем фасад
+    facade = SelfHelp::Facade::SelfHelpFacade.new(@bot, @user, @chat_id)
+    handled = facade.handle_day_input(@text, state)
+      
+    unless handled
+      send_message(
+        text: "Извините, я не понял ваш ответ. Пожалуйста, используйте кнопки меню.",
+        reply_markup: TelegramMarkupHelper.back_to_main_menu_markup
+      )
+    end
+  end
 
 end

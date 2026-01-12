@@ -65,6 +65,14 @@ module Telegram
         'continue_day_5_content' => 'SelfHelpHandlers::DayHandlers::Day5Handler',
         'day_5_exercise_completed' => 'SelfHelpHandlers::DayHandlers::Day5Handler',
         /^day_5_/ => 'SelfHelpHandlers::DayHandlers::Day5Handler',
+        'start_day_6_content' => 'SelfHelpHandlers::DayHandlers::Day6Handler',
+        'start_day_6_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day6Handler',
+        'continue_day_6_content' => 'SelfHelpHandlers::DayHandlers::Day6Handler',
+        /^day_6_/ => 'SelfHelpHandlers::DayHandlers::Day6Handler',
+        'start_day_7_content' => 'SelfHelpHandlers::DayHandlers::Day7Handler',
+        'start_day_7_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day7Handler',
+        'continue_day_7_content' => 'SelfHelpHandlers::DayHandlers::Day7Handler',
+        /^day_7_/ => 'SelfHelpHandlers::DayHandlers::Day7Handler',
         /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
         'day_8_stopped_thought_first_try' => 'Day8Handler',
         /^day_8_distraction_(music|video|friend|exercise|book)$/ => 'Day8Handler',
@@ -174,7 +182,6 @@ module Telegram
         # Финальное завершение
         'complete_program_final' => 'ProgramCompleteHandler',
         'complete_day_10' => 'ProgramCompleteHandler',
-        'complete_day_7' => 'DayCompleteHandler'
       }.freeze
       
       class << self
