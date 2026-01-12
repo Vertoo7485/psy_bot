@@ -302,31 +302,54 @@ class User < ApplicationRecord
 
   # Проверяет, может ли пользователь начать день
   def can_start_day_program?(day_number)
+    Rails.logger.debug "[DEBUG] User##{id} can_start_day_program?(#{day_number}) called"
+    
     # День 1 всегда можно начать
-    return true if day_number == 1
+    if day_number == 1
+      Rails.logger.debug "[DEBUG] Day 1 always allowed"
+      return true
+    end
     
     errors = []
+    Rails.logger.debug "[DEBUG] Checking conditions for day #{day_number}"
+    Rails.logger.debug "[DEBUG] User state: completed_days=#{completed_days.inspect}, current_day_started_at=#{current_day_started_at}, last_day_completed_at=#{last_day_completed_at}"
     
     # 1. Предыдущий день должен быть завершен
     unless completed_days.include?(day_number - 1)
       errors << "Сначала завершите День #{day_number - 1}"
+      Rails.logger.debug "[DEBUG] Previous day #{day_number - 1} not completed"
     end
     
     # 2. Проверяем время с начала текущего дня (12 часов)
     if current_day_started_at
       time_passed = Time.current - current_day_started_at
+      Rails.logger.debug "[DEBUG] Time since current_day_started_at: #{time_passed} seconds (#{time_passed / 3600} hours)"
+      
       if time_passed < 12.hours
         hours_left = ((12.hours - time_passed) / 1.hour).ceil
-        errors << "С момента начала текущего дня прошло недостаточно времени. Подождите #{hours_left} часов."
+        error_msg = "С момента начала текущего дня прошло недостаточно времени. Подождите #{hours_left} часов."
+        errors << error_msg
+        Rails.logger.debug "[DEBUG] Time restriction: #{hours_left} hours left"
+      else
+        Rails.logger.debug "[DEBUG] Time restriction passed (>12 hours)"
       end
+    else
+      Rails.logger.debug "[DEBUG] No current_day_started_at set"
     end
     
     # 3. Нельзя повторно начинать уже завершенный день
     if completed_days.include?(day_number)
       errors << "День #{day_number} уже завершен. Переходите к следующему дню."
+      Rails.logger.debug "[DEBUG] Day #{day_number} already completed"
     end
     
-    errors.empty? ? true : errors
+    if errors.empty?
+      Rails.logger.debug "[DEBUG] All checks passed for day #{day_number}"
+      true
+    else
+      Rails.logger.debug "[DEBUG] Checks failed: #{errors.join(', ')}"
+      errors
+    end
   end
 
   # Начать день в программе

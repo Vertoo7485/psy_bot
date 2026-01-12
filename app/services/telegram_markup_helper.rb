@@ -299,16 +299,90 @@ module TelegramMarkupHelper
       ]
     }.to_json
   end
-  
-  def day_3_input_markup
+
+  def day_4_observation_techniques_markup
     {
       inline_keyboard: [
         [
-          { text: "#{EMOJI[:back]} Отменить ввод", callback_data: 'back_to_main_menu' }
+          { text: "🎨 Цветовые пятна", callback_data: 'day_4_technique_0' },
+          { text: "🌀 Контуры и формы", callback_data: 'day_4_technique_1' }
+        ],
+        [
+          { text: "🌳 Детали природы", callback_data: 'day_4_technique_2' },
+          { text: "🏛️ Архитектурные линии", callback_data: 'day_4_technique_3' }
+        ],
+        [
+          { text: "🔄 Взгляд ребенка", callback_data: 'day_4_technique_4' },
+          { text: "🖼️ Картина как медитация", callback_data: 'day_4_technique_5' }
+        ],
+        [
+          { text: "❓ Помощь в выборе", callback_data: 'day_4_help_choose' }
         ]
       ]
     }.to_json
   end
+
+  def day_4_observation_timer_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "⏱️ 3 минуты", callback_data: 'day_4_timer_3' },
+          { text: "⏱️ 5 минут", callback_data: 'day_4_timer_5' }
+        ],
+        [
+          { text: "⏱️ 7 минут", callback_data: 'day_4_timer_7' },
+          { text: "⏰ Свой таймер", callback_data: 'day_4_timer_custom' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_4_practice_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "✅ Завершить практику", callback_data: 'day_4_practice_complete' }
+        ],
+        [
+          { text: "🔄 Наблюдать другой объект", callback_data: 'day_4_practice_restart' },
+          { text: "❌ Прервать", callback_data: 'day_4_practice_cancel' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_4_challenges_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🌀 Глаза устают", callback_data: 'day_4_challenge_0' },
+          { text: "😣 Трудно концентрироваться", callback_data: 'day_4_challenge_1' }
+        ],
+        [
+          { text: "💭 Мысли мешают", callback_data: 'day_4_challenge_2' },
+          { text: "👁️ Не вижу ничего особенного", callback_data: 'day_4_challenge_3' }
+        ],
+        [
+          { text: "✅ Никаких трудностей", callback_data: 'day_4_no_challenges' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_4_final_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🎯 Завершить День 4", callback_data: 'day_4_complete_exercise' },
+          { text: "🔄 Повторить практику", callback_data: 'day_4_restart_practice' }
+        ],
+        [
+          { text: "📝 Сделать заметку", callback_data: 'day_4_make_note' }
+        ]
+      ]
+    }.to_json
+  end
+  
   
   # День 4
   def day_4_exercise_consent_markup
@@ -343,14 +417,133 @@ module TelegramMarkupHelper
     }.to_json
   end
   
-  def day_5_exercise_completed_markup
+  def day_5_activity_types_markup
     {
       inline_keyboard: [
         [
-          { text: "#{EMOJI[:check]} Я выполнил(а) упражнение", callback_data: 'day_5_exercise_completed' }
+          { text: "🚶 Прогулка", callback_data: 'day_5_activity_0' },
+          { text: "💃 Танцы", callback_data: 'day_5_activity_1' }
+        ],
+        [
+          { text: "🧘 Йога/растяжка", callback_data: 'day_5_activity_2' },
+          { text: "🏋️ Силовая", callback_data: 'day_5_activity_3' }
+        ],
+        [
+          { text: "🏃 Кардио", callback_data: 'day_5_activity_4' },
+          { text: "🤸 Функциональная", callback_data: 'day_5_activity_5' }
+        ],
+        [
+          { text: "❓ Помощь в выборе", callback_data: 'day_5_help_choose' }
         ]
       ]
     }.to_json
+  end
+
+  def day_5_duration_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "⏱️ 10 минут", callback_data: 'day_5_duration_10' },
+          { text: "⏱️ 20 минут", callback_data: 'day_5_duration_20' }
+        ],
+        [
+          { text: "⏱️ 30 минут", callback_data: 'day_5_duration_30' },
+          { text: "⏰ Свое время", callback_data: 'day_5_duration_custom' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_5_activity_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "✅ Завершить активность", callback_data: 'day_5_activity_complete' }
+        ],
+        [
+          { text: "🔄 Сменить активность", callback_data: 'day_5_activity_restart' },
+          { text: "❌ Прервать", callback_data: 'day_5_activity_cancel' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_5_mood_changes_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "😊 Значительно лучше", callback_data: 'day_5_mood_0' },
+          { text: "🙂 Немного лучше", callback_data: 'day_5_mood_1' }
+        ],
+        [
+          { text: "😐 Без изменений", callback_data: 'day_5_mood_2' },
+          { text: "😔 Хуже (усталость)", callback_data: 'day_5_mood_3' }
+        ],
+        [
+          { text: "📝 Описать подробнее", callback_data: 'day_5_mood_describe' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_5_final_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🎯 Завершить День 5", callback_data: 'day_5_complete_exercise' },
+          { text: "🔄 Добавить еще активность", callback_data: 'day_5_add_more_activity' }
+        ],
+        [
+          { text: "📝 Сделать заметку", callback_data: 'day_5_make_note' }
+        ]
+      ]
+    }.to_json
+  end
+  
+  def self.day_5_challenges_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🌀 Нет энергии или мотивации", callback_data: 'day_5_challenge_0' },
+          { text: "😣 Тело болит или дискомфортно", callback_data: 'day_5_challenge_1' }
+        ],
+        [
+          { text: "💭 Постоянно отвлекают мысли", callback_data: 'day_5_challenge_2' },
+          { text: "⏰ Нет времени или места", callback_data: 'day_5_challenge_3' }
+        ],
+        [
+          { text: "✅ Никаких трудностей", callback_data: 'day_5_no_challenges' }
+        ]
+      ]
+    }.to_json
+  end
+  
+  # Новый метод для вертикального форматирования
+  def self.day_5_challenges_vertical_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🌀 Нет энергии или мотивации", callback_data: 'day_5_challenge_0' }
+        ],
+        [
+          { text: "😣 Тело болит или дискомфортно", callback_data: 'day_5_challenge_1' }
+        ],
+        [
+          { text: "💭 Постоянно отвлекают мысли", callback_data: 'day_5_challenge_2' }
+        ],
+        [
+          { text: "⏰ Нет времени или места", callback_data: 'day_5_challenge_3' }
+        ],
+        [
+          { text: "✅ Никаких трудностей", callback_data: 'day_5_no_challenges' }
+        ]
+      ]
+    }.to_json
+  end
+
+  # Метод для предложения дня 5
+  def self.day_5_start_proposal_markup
+    { inline_keyboard: [[{ text: "🏃 Начать День 5", callback_data: 'start_day_5_from_proposal' }]] }.to_json
   end
   
   # День 6
