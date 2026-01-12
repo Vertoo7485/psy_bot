@@ -73,10 +73,11 @@ module Telegram
         'start_day_7_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day7Handler',
         'continue_day_7_content' => 'SelfHelpHandlers::DayHandlers::Day7Handler',
         /^day_7_/ => 'SelfHelpHandlers::DayHandlers::Day7Handler',
+        'start_day_8_content' => 'SelfHelpHandlers::DayHandlers::Day8Handler',
+        'start_day_8_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day8Handler',
+        'continue_day_8_content' => 'SelfHelpHandlers::DayHandlers::Day8Handler',
+        /^day_8_/ => 'SelfHelpHandlers::DayHandlers::Day8Handler',
         /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
-        'day_8_stopped_thought_first_try' => 'Day8Handler',
-        /^day_8_distraction_(music|video|friend|exercise|book)$/ => 'Day8Handler',
-        'day_8_exercise_completed' => 'Day8Handler',
         
         # Дни программы - продолжение/завершение
         /^continue_day_(\d+)_content$/ => 'DayContinueHandler',

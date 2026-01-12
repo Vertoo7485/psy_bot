@@ -584,53 +584,132 @@ module TelegramMarkupHelper
   end
   
   # День 8
+  def day_8_content_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🛑 Начать практику остановки мыслей", callback_data: 'start_day_8_content' }
+        ],
+        [
+          { text: "#{EMOJI[:back]} Вернуться в главное меню", callback_data: 'back_to_main_menu' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_8_stop_signals_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🗣️ Мысленная команда", callback_data: 'day_8_stop_signal_0' },
+          { text: "🛑 Визуальный образ", callback_data: 'day_8_stop_signal_1' }
+        ],
+        [
+          { text: "👏 Физический сигнал", callback_data: 'day_8_stop_signal_2' },
+          { text: "🔊 Звуковой сигнал", callback_data: 'day_8_stop_signal_3' }
+        ],
+        [
+          { text: "🌬️ Дыхательный стоп", callback_data: 'day_8_stop_signal_4' },
+          { text: "✋ Движение-стоп", callback_data: 'day_8_stop_signal_5' }
+        ],
+        [
+          { text: "❓ Помогите выбрать", callback_data: 'day_8_help_choose_signal' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_8_distraction_strategies_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🌬️ Дыхание 4-7-8", callback_data: 'day_8_distraction_0' },
+          { text: "👁️ Сенсорное сканирование", callback_data: 'day_8_distraction_1' }
+        ],
+        [
+          { text: "🏃 Физическая активность", callback_data: 'day_8_distraction_2' },
+          { text: "🔢 Счет или алфавит", callback_data: 'day_8_distraction_3' }
+        ],
+        [
+          { text: "🎨 Креативная задача", callback_data: 'day_8_distraction_4' },
+          { text: "🌳 Внешний фокус", callback_data: 'day_8_distraction_5' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_8_practice_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "✅ Завершить практику", callback_data: 'day_8_practice_complete' }
+        ],
+        [
+          { text: "🔄 Начать заново", callback_data: 'day_8_practice_restart' },
+          { text: "💭 Сменить мысль", callback_data: 'day_8_change_thought' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_8_challenges_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🌀 Мысль возвращается", callback_data: 'day_8_challenge_0' }
+        ],
+        [
+          { text: "😳 Чувствую себя глупо", callback_data: 'day_8_challenge_1' }
+        ],
+        [
+          { text: "🤔 Не могу выбрать мысль", callback_data: 'day_8_challenge_2' }
+        ],
+        [
+          { text: "🔄 Стоп-сигнал не работает", callback_data: 'day_8_challenge_3' }
+        ],
+        [
+          { text: "✅ Никаких трудностей", callback_data: 'day_8_no_challenges' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_8_final_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🎯 Завершить День 8", callback_data: 'day_8_complete_exercise' },
+          { text: "🔄 Повторить практику", callback_data: 'day_8_restart_practice' }
+        ]
+      ]
+    }.to_json
+  end
+
+  # И обновим старые методы для совместимости:
   def day_8_consent_markup
-    {
-      inline_keyboard: [
-        [
-          { text: "#{EMOJI[:check]} Да, готов(а)!", callback_data: 'start_day_8_exercise' },
-          { text: "#{EMOJI[:warning]} Нет, позже", callback_data: 'back_to_main_menu' }
-        ]
-      ]
-    }.to_json
+    # Перенаправляем на новый метод
+    day_8_content_markup
   end
-  
+
   def day_8_stopped_thought_first_try_markup
+    # Этот метод больше не используется в новом стиле
     {
       inline_keyboard: [
         [
-          { text: "#{EMOJI[:check]} Я попробовал(а) остановить мысль", callback_data: 'day_8_stopped_thought_first_try' }
+          { text: "⚠️ Используйте новую систему", callback_data: 'start_day_8_content' }
         ]
       ]
     }.to_json
   end
-  
+
   def day_8_distraction_options_markup
-    {
-      inline_keyboard: [
-        [
-          { text: "#{EMOJI[:music]} Музыка", callback_data: 'day_8_distraction_music' },
-          { text: "#{EMOJI[:video]} Видео", callback_data: 'day_8_distraction_video' }
-        ],
-        [
-          { text: "#{EMOJI[:friend]} Друг", callback_data: 'day_8_distraction_friend' },
-          { text: "#{EMOJI[:exercise]} Упражнения", callback_data: 'day_8_distraction_exercise' }
-        ],
-        [
-          { text: "#{EMOJI[:book]} Книга", callback_data: 'day_8_distraction_book' }
-        ]
-      ]
-    }.to_json
+    # Перенаправляем на новый метод
+    day_8_distraction_strategies_markup
   end
-  
+
   def day_8_exercise_completed_markup
-    {
-      inline_keyboard: [
-        [
-          { text: "#{EMOJI[:check]} Я выполнил(а) упражнение", callback_data: 'day_8_exercise_completed' }
-        ]
-      ]
-    }.to_json
+    # Перенаправляем на новый метод
+    day_8_final_completion_markup
   end
   
   # День 9
