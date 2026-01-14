@@ -77,6 +77,14 @@ module Telegram
         'start_day_8_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day8Handler',
         'continue_day_8_content' => 'SelfHelpHandlers::DayHandlers::Day8Handler',
         /^day_8_/ => 'SelfHelpHandlers::DayHandlers::Day8Handler',
+        'start_day_9_content' => 'SelfHelpHandlers::DayHandlers::Day9Handler',
+        'start_day_9_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day9Handler',
+        'continue_day_9_content' => 'SelfHelpHandlers::DayHandlers::Day9Handler',
+        'day_9_enter_thought' => 'SelfHelpHandlers::DayHandlers::Day9Handler',
+        'day_9_show_current' => 'SelfHelpHandlers::DayHandlers::Day9Handler',
+        'show_all_anxious_thoughts' => 'SelfHelpHandlers::DayHandlers::Day9Handler',
+        'complete_day_9' => 'SelfHelpHandlers::DayHandlers::Day9Handler',
+        /^day_9_/ => 'SelfHelpHandlers::DayHandlers::Day9Handler',
         /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
         
         # Дни программы - продолжение/завершение
@@ -91,10 +99,6 @@ module Telegram
         'procrastination_exercise_completed' => 'DayExerciseCompleteHandler',
         
         # Специфичные действия дней
-        'day_9_enter_thought' => 'Day9Handler',
-        'day_9_show_current' => 'Day9Handler',
-        'show_all_anxious_thoughts' => 'Day9Handler',
-        'complete_day_9' => 'Day9Handler',
         /^day_(\d+)_distraction_(music|video|friend|exercise|book)$/ => 'DayDistractionHandler',
         /^day_(\d+)_viewed_entries$/ => 'DayViewedEntriesHandler',
         /^view_self_compassion_practices$/ => 'DaySelfCompassionHandler',

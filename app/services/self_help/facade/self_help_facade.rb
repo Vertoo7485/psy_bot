@@ -360,16 +360,10 @@ def handle_day_specific_input(service, text, state)
   
   when 'day_7_waiting_for_reflection'
     service.handle_reflection_input(text)
-  when 'day_9_waiting_for_thought'
-    service.handle_thought_input(text)
-  when 'day_9_waiting_for_probability'
-    service.handle_probability_input(text)
-  when 'day_9_waiting_for_facts_pro'
-    service.handle_facts_pro_input(text)
-  when 'day_9_waiting_for_facts_con'
-    service.handle_facts_con_input(text)
-  when 'day_9_waiting_for_reframe'
-    service.handle_reframe_input(text)
+  when /^day_9_waiting_for_/
+    # Обработка ввода для дня 9
+    day_service = SelfHelp::Days::Day9Service.new(@bot, @user, @chat_id)
+    return day_service.handle_text_input(text)
   when 'day_11_exercise_in_progress'
     service.handle_grounding_input(text)
   when 'day_12_exercise_in_progress'

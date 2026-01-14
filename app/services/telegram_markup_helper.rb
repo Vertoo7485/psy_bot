@@ -713,20 +713,11 @@ module TelegramMarkupHelper
   end
   
   # День 9
-  def day_9_menu_markup
+    def day_9_content_markup
     {
       inline_keyboard: [
         [
-          { text: "#{EMOJI[:thought]} Ввести тревожную мысль", callback_data: 'day_9_enter_thought' }
-        ],
-        [
-          { text: "#{EMOJI[:info]} Посмотреть текущий прогресс", callback_data: 'day_9_show_current' }
-        ],
-        [
-          { text: "#{EMOJI[:calendar]} Все мои записи о мыслях", callback_data: 'show_all_anxious_thoughts' }
-        ],
-        [
-          { text: "#{EMOJI[:check]} Завершить День 9", callback_data: 'complete_day_9' }
+          { text: "🧠 Начать когнитивный анализ", callback_data: 'start_day_9_content' }
         ],
         [
           { text: "#{EMOJI[:back]} Вернуться в главное меню", callback_data: 'back_to_main_menu' }
@@ -734,7 +725,7 @@ module TelegramMarkupHelper
       ]
     }.to_json
   end
-  
+
   def day_9_input_markup
     {
       inline_keyboard: [
@@ -744,12 +735,120 @@ module TelegramMarkupHelper
       ]
     }.to_json
   end
-  
+
   def day_9_back_to_menu_markup
     {
       inline_keyboard: [
         [
           { text: "#{EMOJI[:check]} Завершить анализ", callback_data: 'complete_day_9' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_9_probability_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "1️⃣", callback_data: 'day_9_probability_1' },
+          { text: "2️⃣", callback_data: 'day_9_probability_2' },
+          { text: "3️⃣", callback_data: 'day_9_probability_3' },
+          { text: "4️⃣", callback_data: 'day_9_probability_4' },
+          { text: "5️⃣", callback_data: 'day_9_probability_5' }
+        ],
+        [
+          { text: "6️⃣", callback_data: 'day_9_probability_6' },
+          { text: "7️⃣", callback_data: 'day_9_probability_7' },
+          { text: "8️⃣", callback_data: 'day_9_probability_8' },
+          { text: "9️⃣", callback_data: 'day_9_probability_9' },
+          { text: "🔟", callback_data: 'day_9_probability_10' }
+        ],
+        [
+          { text: "❓ Помощь с оценкой", callback_data: 'day_9_help_probability' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_9_facts_pro_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "✅ Ввести факты «за»", callback_data: 'day_9_enter_facts_pro' }
+        ],
+        [
+          { text: "❓ Помощь с фактами", callback_data: 'day_9_help_facts' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_9_facts_con_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "❌ Ввести факты «против»", callback_data: 'day_9_enter_facts_con' }
+        ],
+        [
+          { text: "❓ Помощь с фактами", callback_data: 'day_9_help_facts' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_9_reframing_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "💡 Ввести рефрейминг", callback_data: 'day_9_enter_reframe' }
+        ],
+        [
+          { text: "❓ Помощь с рефреймингом", callback_data: 'day_9_help_reframe' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_9_cognitive_distortions_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🌀 Катастрофизация", callback_data: 'day_9_distortion_0' },
+          { text: "⚫️⚪️ Чёрно-белое", callback_data: 'day_9_distortion_1' }
+        ],
+        [
+          { text: "⬇️ Обесценивание", callback_data: 'day_9_distortion_2' },
+          { text: "🔮 Чтение мыслей", callback_data: 'day_9_distortion_3' }
+        ],
+        [
+          { text: "♾️ Сверхобобщение", callback_data: 'day_9_distortion_4' },
+          { text: "🎯 Персонализация", callback_data: 'day_9_distortion_5' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_9_continue_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🔄 Продолжить анализ", callback_data: 'continue_day_9_content' },
+          { text: "📊 Показать прогресс", callback_data: 'day_9_show_current' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_9_final_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🎯 Завершить День 9", callback_data: 'day_9_complete_exercise' },
+          { text: "🔄 Новый анализ", callback_data: 'day_9_restart_analysis' }
+        ],
+        [
+          { text: "📚 Все мои анализы", callback_data: 'show_all_anxious_thoughts' },
+          { text: "📊 Текущий прогресс", callback_data: 'day_9_show_current' }
         ]
       ]
     }.to_json
