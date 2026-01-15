@@ -855,11 +855,11 @@ module TelegramMarkupHelper
   end
   
   # День 10
-  def day_10_start_exercise_markup
+  def day_10_content_markup
     {
       inline_keyboard: [
         [
-          { text: "#{EMOJI[:diary]} Начать заполнение Дневника эмоций", callback_data: 'start_day_10_exercise' }
+          { text: "🎭 Начать развитие эмоционального интеллекта", callback_data: 'start_day_10_content' }
         ],
         [
           { text: "#{EMOJI[:back]} Вернуться в главное меню", callback_data: 'back_to_main_menu' }
@@ -867,17 +867,70 @@ module TelegramMarkupHelper
       ]
     }.to_json
   end
-  
-  def day_10_exercise_completed_markup
+
+  def day_10_core_emotions_markup
     {
       inline_keyboard: [
         [
-          { text: "#{EMOJI[:check]} Я завершил(а) Дневник эмоций", callback_data: 'day_10_exercise_completed' }
+          { text: "😊 Радость", callback_data: 'day_10_emotion_0' },
+          { text: "😔 Грусть", callback_data: 'day_10_emotion_1' }
+        ],
+        [
+          { text: "😠 Гнев", callback_data: 'day_10_emotion_2' },
+          { text: "😨 Тревога/Страх", callback_data: 'day_10_emotion_3' }
+        ],
+        [
+          { text: "😳 Стыд", callback_data: 'day_10_emotion_4' },
+          { text: "😞 Вина", callback_data: 'day_10_emotion_5' }
         ]
       ]
     }.to_json
   end
-  
+
+  def day_10_diary_start_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "📔 Начать заполнение дневника", callback_data: 'day_10_start_diary' }
+        ],
+        [
+          { text: "❓ Помощь с выбором ситуации", callback_data: 'day_10_help_choose_situation' },
+          { text: "📚 Посмотреть мои записи", callback_data: 'day_10_show_entries' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_10_final_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🎯 Завершить День 10", callback_data: 'day_10_complete_exercise' },
+          { text: "🔄 Новый дневник", callback_data: 'day_10_restart_diary' }
+        ],
+        [
+          { text: "📚 Все мои записи", callback_data: 'day_10_view_all_entries' },
+          { text: "📊 Текущий прогресс", callback_data: 'day_10_show_entries' }
+        ]
+      ]
+    }.to_json
+  end
+
+  # Обновляем старые методы для совместимости
+  def day_10_start_exercise_markup
+    day_10_content_markup
+  end
+
+  def day_10_exercise_completed_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "✅ Завершить дневник и продолжить", callback_data: 'day_10_diary_completed' }
+        ]
+      ]
+    }.to_json
+  end
+
   def day_10_view_entries_markup
     {
       inline_keyboard: [
@@ -1162,7 +1215,7 @@ module TelegramMarkupHelper
   
   # День 10 предложение
   def self.day_10_start_proposal_markup
-    { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 10", callback_data: 'start_day_10_from_proposal' }]] }.to_json
+    { inline_keyboard: [[{ text: "🎭 Начать День 10", callback_data: 'start_day_10_from_proposal' }]] }.to_json
   end
   
   # День 11 предложение

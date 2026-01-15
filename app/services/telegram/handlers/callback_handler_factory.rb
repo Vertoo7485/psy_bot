@@ -85,6 +85,12 @@ module Telegram
         'show_all_anxious_thoughts' => 'SelfHelpHandlers::DayHandlers::Day9Handler',
         'complete_day_9' => 'SelfHelpHandlers::DayHandlers::Day9Handler',
         /^day_9_/ => 'SelfHelpHandlers::DayHandlers::Day9Handler',
+        'start_day_10_content' => 'SelfHelpHandlers::DayHandlers::Day10Handler',
+        'start_day_10_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day10Handler',
+        'continue_day_10_content' => 'SelfHelpHandlers::DayHandlers::Day10Handler',
+        'day_10_exercise_completed' => 'SelfHelpHandlers::DayHandlers::Day10Handler',
+        'day_10_viewed_entries' => 'SelfHelpHandlers::DayHandlers::Day10Handler',
+        /^day_10_/ => 'SelfHelpHandlers::DayHandlers::Day10Handler',
         /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
         
         # Дни программы - продолжение/завершение
@@ -186,7 +192,6 @@ module Telegram
         /^day_28_select_achievement_(\d+)$/ => 'Day28Handler',
         # Финальное завершение
         'complete_program_final' => 'ProgramCompleteHandler',
-        'complete_day_10' => 'ProgramCompleteHandler',
       }.freeze
       
       class << self

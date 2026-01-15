@@ -196,19 +196,24 @@ class EmotionDiaryService
   
   # Обработка контекста завершения
   def handle_completion_context
+    # Проверяем контекст через данные пользователя
+    diary_context = @user.get_self_help_data('emotion_diary_context')
+    
     # Если пользователь в программе самопомощи (День 10)
-    # Используем self_help_program_step вместо get_self_help_step
-    if @user.self_help_program_step == 'day_10_exercise_in_progress'
+    if diary_context == 'day_10'
+      # Очищаем контекст
+      @user.store_self_help_data('emotion_diary_context', nil)
+      
       # Возвращаемся в контекст программы
       send_message(
-        text: "✅ Дневник эмоций заполнен и сохранен!\n\nВернемся к программе самопомощи...",
+        text: "✅ Дневник эмоций заполнен и сохранен!\n\nВозвращаемся к программе самопомощи...",
         reply_markup: TelegramMarkupHelper.day_10_exercise_completed_markup
       )
     else
       # Обычное поведение
       send_message(
         text: "✅ Дневник заполнен и сохранен!\n\nЧто хотите сделать дальше?",
-        reply_markup: TelegramMarkupHelper.main_menu_markup
+        reply_markup: emotion_diary_menu_markup
       )
     end
   end
