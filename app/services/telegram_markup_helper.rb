@@ -1101,9 +1101,6 @@ def day_12_challenges_markup
       ],
       [
         { text: "🌀 Мысли возвращаются к проблеме", callback_data: 'day_12_challenge_3' }
-      ],
-      [
-        { text: "✅ Никаких трудностей", callback_data: 'day_12_no_challenges' }
       ]
     ]
   }.to_json

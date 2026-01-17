@@ -702,16 +702,6 @@ end
         }
       end
       
-      def day_12_challenges_markup
-        {
-          inline_keyboard: COMPASSION_CHALLENGES.each_with_index.map do |challenge, index|
-            [{ text: "#{challenge[:emoji]} #{challenge[:challenge]}", callback_data: "day_12_challenge_#{index}" }]
-          end + [
-            [{ text: "✅ Никаких трудностей", callback_data: 'day_12_no_challenges' }]
-          ]
-        }
-      end
-      
       def day_12_final_completion_markup
         TelegramMarkupHelper.day_12_menu_markup
       end

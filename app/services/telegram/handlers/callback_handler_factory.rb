@@ -101,6 +101,11 @@ module Telegram
         'start_day_12_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day12Handler',
         'continue_day_12_content' => 'SelfHelpHandlers::DayHandlers::Day12Handler',
         /^day_12_/ => 'SelfHelpHandlers::DayHandlers::Day12Handler',
+        'start_day_13_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day13Handler',
+        'start_procrastination_exercise' => 'SelfHelpHandlers::DayHandlers::Day13Handler',
+        'continue_day_13_content' => 'SelfHelpHandlers::DayHandlers::Day13Handler',
+        'procrastination_exercise_completed' => 'SelfHelpHandlers::DayHandlers::Day13Handler',
+        /^day_13_/ => 'SelfHelpHandlers::DayHandlers::Day13Handler',
         /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
         
         # Дни программы - продолжение/завершение
@@ -109,15 +114,13 @@ module Telegram
         /^day_(\d+)_exercise_completed$/ => 'DayExerciseCompleteHandler',
         'start_self_compassion_exercise' => 'DayStartHandler',
         'self_compassion_exercise_completed' => 'DayExerciseCompleteHandler',
-        'start_procrastination_exercise' => 'DayStartHandler',
-        'procrastination_exercise_completed' => 'DayExerciseCompleteHandler',
         
         # Специфичные действия дней
         /^day_(\d+)_distraction_(music|video|friend|exercise|book)$/ => 'DayDistractionHandler',
         /^day_(\d+)_viewed_entries$/ => 'DayViewedEntriesHandler',
         'view_self_compassion_practices' => 'SelfHelpHandlers::DayHandlers::Day12Handler',
-        /^view_my_procrastination_tasks$/ => 'DayProcrastinationHandler',
-        'mark_task_completed' => 'MarkTaskCompletedHandler',
+        /^view_my_procrastination_tasks$/ => 'SelfHelpHandlers::DayHandlers::Day13Handler',
+        'mark_task_completed' => 'SelfHelpHandlers::DayHandlers::Day13Handler',
         'procrastination_first_step_done' => 'ProcrastinationFirstStepHandler',
         'start_day_14_exercise' => 'DayStartHandler',
         'reflection_exercise_completed' => 'DayExerciseCompleteHandler',
