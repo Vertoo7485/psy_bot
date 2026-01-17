@@ -368,8 +368,10 @@ def handle_day_specific_input(service, text, state)
     # Обработка ввода для дня 10 (дневник эмоций)
     day_service = SelfHelp::Days::Day10Service.new(@bot, @user, @chat_id)
     return day_service.handle_text_input(text)
-  when 'day_11_exercise_in_progress'
-    service.handle_grounding_input(text)
+  when /^day_11_waiting_for_(seen|touched|heard|smelled|tasted)/
+          # Обработка ввода для дня 11 (шаги заземления)
+          day_service = SelfHelp::Days::Day11Service.new(@bot, @user, @chat_id)
+          return day_service.handle_text_input(text)
   when 'day_12_exercise_in_progress'
     service.handle_self_compassion_input(text)
   when 'day_13_exercise_in_progress'

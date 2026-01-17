@@ -945,21 +945,91 @@ module TelegramMarkupHelper
   end
   
   # День 11
-  def day_11_start_exercise_markup
+  def day_11_content_markup
     {
       inline_keyboard: [
         [
-          { text: "#{EMOJI[:grounding]} Начать упражнение 'Заземление 5-4-3-2-1'", callback_data: 'start_grounding_exercise' }
+          { text: "🌍 Начать технику заземления", callback_data: 'start_day_11_content' }
+        ],
+        [
+          { text: "#{EMOJI[:back]} Вернуться в главное меню", callback_data: 'back_to_main_menu' }
         ]
       ]
     }.to_json
   end
-  
+
+  def day_11_grounding_start_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🚀 Начать практику 5-4-3-2-1", callback_data: 'day_11_start_grounding' }
+        ],
+        [
+          { text: "💡 Советы для эффективности", callback_data: 'day_11_help_tips' },
+          { text: "🚨 Экстренный режим", callback_data: 'day_11_emergency_mode' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_11_input_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "⏭️ Пропустить шаг", callback_data: 'day_11_skip_step' },
+          { text: "🔄 Начать заново", callback_data: 'day_11_restart_grounding' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_11_challenges_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🔍 Не могу найти предметы", callback_data: 'day_11_challenge_0' }
+        ],
+        [
+          { text: "💭 Мысли отвлекают", callback_data: 'day_11_challenge_1' }
+        ],
+        [
+          { text: "😳 Чувствую себя глупо", callback_data: 'day_11_challenge_2' }
+        ],
+        [
+          { text: "⏳ Не чувствую эффекта", callback_data: 'day_11_challenge_3' }
+        ],
+        [
+          { text: "✅ Никаких трудностей", callback_data: 'day_11_no_challenges' }
+        ]
+      ]
+    }.to_json
+  end
+
+  def day_11_final_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🎯 Завершить День 11", callback_data: 'day_11_complete_exercise' },
+          { text: "🔄 Новая практика", callback_data: 'day_11_restart_grounding' }
+        ],
+        [
+          { text: "📚 Мои практики", callback_data: 'day_11_show_entries' },
+          { text: "💡 Советы", callback_data: 'day_11_help_tips' }
+        ]
+      ]
+    }.to_json
+  end
+
+  # Обновляем старые методы для совместимости
+  def day_11_start_exercise_markup
+    day_11_content_markup
+  end
+
   def grounding_exercise_completed_markup
     {
       inline_keyboard: [
         [
-          { text: "#{EMOJI[:check]} Я завершил(а) упражнение", callback_data: 'grounding_exercise_completed' }
+          { text: "✅ Завершить практику", callback_data: 'day_11_complete_grounding' }
         ]
       ]
     }.to_json
@@ -1002,6 +1072,57 @@ module TelegramMarkupHelper
     }.to_json
   end
   
+  def day_12_content_markup
+  day_12_start_exercise_markup
+end
+
+def day_12_input_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "⏭️ Пропустить шаг", callback_data: 'day_12_skip_step' },
+        { text: "🔄 Начать заново", callback_data: 'day_12_restart_compassion' }
+      ]
+    ]
+  }.to_json
+end
+
+def day_12_challenges_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "💬 Не могу найти добрые слова", callback_data: 'day_12_challenge_0' }
+      ],
+      [
+        { text: "🎭 Чувствую фальшь", callback_data: 'day_12_challenge_1' }
+      ],
+      [
+        { text: "😔 Не верю, что заслуживаю", callback_data: 'day_12_challenge_2' }
+      ],
+      [
+        { text: "🌀 Мысли возвращаются к проблеме", callback_data: 'day_12_challenge_3' }
+      ],
+      [
+        { text: "✅ Никаких трудностей", callback_data: 'day_12_no_challenges' }
+      ]
+    ]
+  }.to_json
+end
+
+def day_12_final_completion_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "🎯 Завершить День 12", callback_data: 'day_12_complete_exercise' },
+        { text: "💝 Новая практика", callback_data: 'day_12_start_compassion' }
+      ],
+      [
+        { text: "📚 Мои практики", callback_data: 'view_self_compassion_practices' },
+        { text: "🏠 Главное меню", callback_data: 'back_to_main_menu' }
+      ]
+    ]
+  }.to_json
+end
   # День 13
   def day_13_start_exercise_markup
     {
@@ -1220,7 +1341,7 @@ module TelegramMarkupHelper
   
   # День 11 предложение
   def self.day_11_start_proposal_markup
-    { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 11", callback_data: 'start_day_11_from_proposal' }]] }.to_json
+    { inline_keyboard: [[{ text: "🌍 Начать День 11", callback_data: 'start_day_11_from_proposal' }]] }.to_json
   end
   
   # День 12 предложение
