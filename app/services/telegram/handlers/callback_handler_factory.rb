@@ -106,6 +106,12 @@ module Telegram
         'continue_day_13_content' => 'SelfHelpHandlers::DayHandlers::Day13Handler',
         'procrastination_exercise_completed' => 'SelfHelpHandlers::DayHandlers::Day13Handler',
         /^day_13_/ => 'SelfHelpHandlers::DayHandlers::Day13Handler',
+        'start_day_14_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day14Handler',
+        'start_two_weeks_reflection' => 'SelfHelpHandlers::DayHandlers::Day14Handler',
+        'continue_day_14_content' => 'SelfHelpHandlers::DayHandlers::Day14Handler',
+        'reflection_exercise_completed' => 'SelfHelpHandlers::DayHandlers::Day14Handler',
+        'start_day_14_content' => 'SelfHelpHandlers::DayHandlers::Day14Handler',
+        /^day_14_/ => 'SelfHelpHandlers::DayHandlers::Day14Handler',
         /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
         
         # Дни программы - продолжение/завершение
@@ -122,9 +128,6 @@ module Telegram
         /^view_my_procrastination_tasks$/ => 'SelfHelpHandlers::DayHandlers::Day13Handler',
         'mark_task_completed' => 'SelfHelpHandlers::DayHandlers::Day13Handler',
         'procrastination_first_step_done' => 'ProcrastinationFirstStepHandler',
-        'start_day_14_exercise' => 'DayStartHandler',
-        'reflection_exercise_completed' => 'DayExerciseCompleteHandler',
-        /^start_day_14_/ => 'DayStartHandler',
         /^start_day_15_/ => 'DayStartHandler',
         /^day_15_exercise_completed$/ => 'DayExerciseCompleteHandler',
         /^start_day_16_/ => 'DayStartHandler',

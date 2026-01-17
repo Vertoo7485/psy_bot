@@ -1133,26 +1133,24 @@ end
 
       # День 14
     def day_14_start_exercise_markup
-      {
-        inline_keyboard: [
-          [
-            { text: "#{EMOJI[:reflection]} Начать рефлексию", 
-              callback_data: 'start_day_14_exercise' }
-          ]
-        ]
-      }.to_json
-    end
+  {
+    inline_keyboard: [
+      [
+        { text: "📖 Начать рефлексию 2 недель", callback_data: 'start_two_weeks_reflection' }
+      ]
+    ]
+  }.to_json
+end
 
-    def reflection_exercise_completed_markup
-      {
-        inline_keyboard: [
-          [
-            { text: "#{EMOJI[:check]} Завершить рефлексию", 
-              callback_data: 'reflection_exercise_completed' }
-          ]
-        ]
-      }.to_json
-    end
+def reflection_exercise_completed_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "✅ Завершить рефлексию", callback_data: 'reflection_exercise_completed' }
+      ]
+    ]
+  }.to_json
+end
 
     # Метод для предложения дня 14
     def self.day_14_start_proposal_markup
