@@ -1165,6 +1165,22 @@ def day_15_start_exercise_markup
   }.to_json
 end
 
+def day_15_completion_menu_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "🤝 Новая практика", callback_data: 'day_15_start_new_practice' },
+        { text: "🎯 Завершить День 15", callback_data: 'day_15_complete_exercise' }
+      ]
+    ]
+  }.to_json
+end
+
+# Обновляем старый метод для совместимости
+def day_15_final_completion_markup
+  day_15_completion_menu_markup
+end
+
     # Метод для предложения дня 14
     def self.day_14_start_proposal_markup
       { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 14", callback_data: 'start_day_14_from_proposal' }]] }.to_json
@@ -1367,7 +1383,7 @@ end
   end
 
 def self.day_16_start_proposal_markup
-  day_start_proposal_markup(16)
+  { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 16", callback_data: 'start_day_16_from_proposal' }]] }.to_json
 end
 
 def day_16_start_exercise_markup
@@ -1385,6 +1401,19 @@ def day_16_exercise_completed_markup
     inline_keyboard: [
       [
         { text: "#{EMOJI[:check]} Завершить упражнение", callback_data: 'day_16_exercise_completed' }
+      ]
+    ]
+  }.to_json
+end
+
+def day_16_content_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "🤝 Начать практику восстановления связей", callback_data: 'start_day_16_content' }
+      ],
+      [
+        { text: "#{EMOJI[:back]} Вернуться в главное меню", callback_data: 'back_to_main_menu' }
       ]
     ]
   }.to_json
@@ -1460,34 +1489,17 @@ def day_17_exercise_completed_markup
   }.to_json
 end
 
-def day_17_menu_markup
+def day_17_simple_menu_markup
   {
     inline_keyboard: [
       [
-        { text: "📚 Мои письма самосострадания", callback_data: 'view_compassion_letters' }
+        { text: "📚 Мои письма", callback_data: 'view_compassion_letters' }
       ],
       [
-        { text: "✍️ Написать новое письмо", callback_data: 'start_day_17_exercise' }
-      ],
-      [
-        { text: "➡️ Продолжить программу", callback_data: 'continue_after_day_17' }
+        { text: "✍️ Новое письмо", callback_data: 'start_day_17_exercise' }
       ],
       [
         { text: "#{EMOJI[:back]} Главное меню", callback_data: 'back_to_main_menu' }
-      ]
-    ]
-  }.to_json
-end
-
-# Добавьте разметку для продолжения после дня 17
-def continue_after_day_17_markup
-  {
-    inline_keyboard: [
-      [
-        { text: "✅ Начать День 18", callback_data: 'start_day_18_from_proposal' }
-      ],
-      [
-        { text: "📚 Вернуться к письмам", callback_data: 'back_to_day_17_menu' }
       ]
     ]
   }.to_json
@@ -1496,27 +1508,6 @@ end
 # Метод для предложения дня 17
 def self.day_17_start_proposal_markup
   { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 17", callback_data: 'start_day_17_from_proposal' }]] }.to_json
-end
-
-def day_17_full_menu_markup
-  {
-    inline_keyboard: [
-      [
-        { text: "#{EMOJI[:book]} Все письма", callback_data: 'view_compassion_letters' },
-        { text: "#{EMOJI[:calendar]} По дате", callback_data: 'compassion_by_date' }
-      ],
-      [
-        { text: "#{EMOJI[:star]} Лучшие письма", callback_data: 'compassion_best' },
-        { text: "#{EMOJI[:check]} Новое письмо", callback_data: 'start_day_17_exercise' }
-      ],
-      [
-        { text: "#{EMOJI[:check]} Следующий день (18)", callback_data: 'start_day_18_from_proposal' }
-      ],
-      [
-        { text: "#{EMOJI[:back]} Главное меню", callback_data: 'back_to_main_menu' }
-      ]
-    ]
-  }.to_json
 end
 
 # День 18

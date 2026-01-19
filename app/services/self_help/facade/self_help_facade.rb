@@ -232,25 +232,6 @@ module SelfHelp
         start_program
       end
       
-      # Завершение программы
-      def complete_program
-        @user.clear_self_help_program_data
-        @user.active_session&.destroy
-        
-        message = <<~MARKDOWN
-          🎊 *Программа самопомощи завершена!* 🎊
-
-          Вы прошли 13-дневный путь развития. Все инструменты остаются в вашем распоряжении!
-        MARKDOWN
-        
-        @bot_service.send_message(
-          chat_id: @chat_id,
-          text: message,
-          parse_mode: 'Markdown',
-          reply_markup: TelegramMarkupHelper.main_menu_markup
-        )
-      end
-      
       # Проверка, может ли пользователь начать день
       def can_start_day?(day_number)
         return false unless valid_day_number?(day_number)
@@ -390,19 +371,19 @@ def handle_day_specific_input(service, text, state)
       log_error("Day 15 service doesn't have handle_kindness_input method")
       false
     end
-  when 'day_16_exercise_in_progress'
-    if service.respond_to?(:handle_connection_input)
-      service.handle_connection_input(text)
+    when 'day_16_exercise_in_progress'
+    if service.respond_to?(:handle_text_input)
+      service.handle_text_input(text)
     else
-      log_error("Day 16 service doesn't have handle_connection_input method")
+      log_error("Day 16 service doesn't have handle_text_input method")
       false
     end
   when 'day_17_exercise_in_progress'
-    current_step = @user.get_self_help_data('day_17_current_step')
-    if service.respond_to?(:handle_compassion_input)
-      service.handle_compassion_input(text, current_step)
+    # Обработка ввода для дня 17
+    if service.respond_to?(:handle_text_input)
+      service.handle_text_input(text)
     else
-      log_error("Day 17 service doesn't have handle_compassion_input method")
+      log_error("Day 17 service doesn't have handle_text_input method")
       false
     end
   when 'day_18_exercise_in_progress'
