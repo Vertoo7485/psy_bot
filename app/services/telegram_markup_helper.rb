@@ -1152,6 +1152,19 @@ def reflection_exercise_completed_markup
   }.to_json
 end
 
+def day_15_start_exercise_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "🤝 Начать практику доброты", callback_data: 'start_day_15_content' }
+      ],
+      [
+        { text: "#{EMOJI[:back]} Вернуться в главное меню", callback_data: 'back_to_main_menu' }
+      ]
+    ]
+  }.to_json
+end
+
     # Метод для предложения дня 14
     def self.day_14_start_proposal_markup
       { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 14", callback_data: 'start_day_14_from_proposal' }]] }.to_json
