@@ -4,9 +4,18 @@ class PleasureActivity < ApplicationRecord
   belongs_to :user
   
   validates :title, presence: true
-  validates :feelings_before, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5, allow_nil: true }
-  validates :feelings_after, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5, allow_nil: true }
-  validates :duration_minutes, numericality: { only_integer: true, greater_than: 0, allow_nil: true }
+  validates :feelings_before, numericality: { 
+    only_integer: true, 
+    greater_than_or_equal_to: 1, 
+    less_than_or_equal_to: 5, 
+    allow_nil: true 
+  }
+  validates :feelings_after, numericality: { 
+    only_integer: true, 
+    greater_than_or_equal_to: 1, 
+    less_than_or_equal_to: 5, 
+    allow_nil: true 
+  }
   
   # Типы активностей для классификации
   ACTIVITY_TYPES = {

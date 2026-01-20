@@ -1512,7 +1512,7 @@ end
 
 # День 18
   def self.day_18_start_proposal_markup
-    { inline_keyboard: [[{ text: "#{EMOJI[:check]} Начать День 18", callback_data: 'start_day_18_from_proposal' }]] }.to_json
+    { inline_keyboard: [[{ text: "🌈 Начать День 18", callback_data: 'start_day_18_from_proposal' }]] }.to_json
   end
   
   def day_18_start_exercise_markup
@@ -1535,22 +1535,27 @@ end
     }.to_json
   end
   
-  def day_18_menu_markup
-    {
-      inline_keyboard: [
-        [
-          { text: "#{EMOJI[:book]} Мои активности", callback_data: 'view_pleasure_activities' },
-          { text: "#{EMOJI[:lightbulb]} Идеи", callback_data: 'view_activity_ideas' }
-        ],
-        [
-          { text: "#{EMOJI[:plus]} Новая активность", callback_data: 'start_day_18_exercise' }
-        ],
-        [
-          { text: "#{EMOJI[:back]} Главное меню", callback_data: 'back_to_main_menu' }
-        ]
+  def day_18_simple_menu_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "📚 Мои активности", callback_data: 'view_pleasure_activities' }
+      ],
+      [
+        { text: "➕ Новая активность", callback_data: 'start_day_18_exercise' }
+      ],
+      [
+        { text: "🏠 Главное меню", callback_data: 'back_to_main_menu' },
+        { text: "➡️ Следующий день", callback_data: 'start_day_19_from_proposal' }
       ]
-    }.to_json
-  end
+    ]
+  }.to_json
+end
+
+# Обновляем старый метод для совместимости
+def day_18_menu_markup
+  day_18_simple_menu_markup
+end
 
   def self.day_20_start_proposal_markup
     { 
