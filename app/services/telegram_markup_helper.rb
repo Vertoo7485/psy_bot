@@ -1535,6 +1535,10 @@ end
     }.to_json
   end
   
+  def self.day_19_start_proposal_markup
+    { inline_keyboard: [[{ text: "🧘‍♀️ Начать День 19", callback_data: 'start_day_19_from_proposal' }]] }.to_json
+  end
+
   def day_18_simple_menu_markup
   {
     inline_keyboard: [
@@ -1555,6 +1559,19 @@ end
 # Обновляем старый метод для совместимости
 def day_18_menu_markup
   day_18_simple_menu_markup
+end
+
+def day_20_content_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "🦸 Начать работу со страхами", callback_data: 'start_day_20_content' }
+      ],
+      [
+        { text: "#{EMOJI[:back]} Вернуться в главное меню", callback_data: 'back_to_main_menu' }
+      ]
+    ]
+  }.to_json
 end
 
   def self.day_20_start_proposal_markup

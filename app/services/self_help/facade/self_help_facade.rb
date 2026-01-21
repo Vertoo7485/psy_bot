@@ -397,7 +397,11 @@ def handle_day_specific_input(service, text, state)
       false
     end
   when 'day_19_exercise_in_progress'
-    handle_day_19_input(text, service)
+  if service.respond_to?(:handle_text_input)
+    service.handle_text_input(text)
+  else
+    false
+  end
   when 'day_20_exercise_in_progress'
     if service.respond_to?(:handle_text_input)
       service.handle_text_input(text)
