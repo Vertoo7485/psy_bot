@@ -185,6 +185,13 @@ module Telegram
         'retry_day_22_exercise' => 'SelfHelpHandlers::DayHandlers::Day22Handler',
         'day_22_exercise_completed' => 'SelfHelpHandlers::DayHandlers::Day22Handler',
         /^day_22_/ => 'SelfHelpHandlers::DayHandlers::Day22Handler',
+        'start_day_23_from_proposal' => 'SelfHelpHandlers::DayHandlers::Day23Handler',
+        'start_day_23_content' => 'SelfHelpHandlers::DayHandlers::Day23Handler',
+        'start_day_23_exercise' => 'SelfHelpHandlers::DayHandlers::Day23Handler',
+        'continue_day_23_content' => 'SelfHelpHandlers::DayHandlers::Day23Handler',
+        'retry_day_23_exercise' => 'SelfHelpHandlers::DayHandlers::Day23Handler',
+        'day_23_exercise_completed' => 'SelfHelpHandlers::DayHandlers::Day23Handler',
+        /^day_23_/ => 'SelfHelpHandlers::DayHandlers::Day23Handler',
         /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
         
         # Дни программы - продолжение/завершение
@@ -208,9 +215,6 @@ module Telegram
         'back_to_day_16_menu' => 'MainMenuHandler',
         /^start_day_17_/ => 'DayStartHandler',
         /^day_17_exercise_completed$/ => 'DayExerciseCompleteHandler',
-        /^start_day_23/ => 'DayStartHandler',
-        'day_23_exercise_completed' => 'DayExerciseCompleteHandler',
-        /^day_23_/ => 'Day23Handler',
         /^start_day_24/ => 'DayStartHandler',
         'day_24_exercise_completed' => 'DayExerciseCompleteHandler',
         /^day_24_/ => 'Day24Handler',

@@ -1592,6 +1592,32 @@ def day_22_start_proposal_markup
   }.to_json
 end
 
+def self.day_23_start_proposal_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "📊 Начать День 23", callback_data: "start_day_23_from_proposal" },
+          { text: "⏰ Позже", callback_data: "back_to_main_menu" }
+        ]
+      ]
+    }.to_json
+  end
+  
+  def self.day_23_completion_markup
+    {
+      inline_keyboard: [
+        [
+          { text: "🎯 Следующий день", callback_data: "start_day_24_from_proposal" },
+          { text: "📊 Мой прогресс", callback_data: "progress" }
+        ],
+        [
+          { text: "📝 В дневник", callback_data: "start_emotion_diary" },
+          { text: "🏠 В меню", callback_data: "back_to_main_menu" }
+        ]
+      ]
+    }.to_json
+  end
+
 def day_24_start_proposal_markup
   {
     inline_keyboard: [
