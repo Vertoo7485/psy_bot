@@ -1618,24 +1618,16 @@ def self.day_23_start_proposal_markup
     }.to_json
   end
 
-def day_24_start_proposal_markup
-  {
-    inline_keyboard: [
-      [{ text: "✅ Начать День 24: Превентивные стратегии", callback_data: "start_day_24_from_proposal" }]
-    ]
-  }.to_json
-end
-
-def self.day_24_start_proposal_markup
-  { 
-    inline_keyboard: [
-      [
-        { text: "🛡️ Начать День 24: Предвосхищение", 
-          callback_data: "start_day_24_from_proposal" }
-      ]
-    ] 
-  }.to_json
-end
+  def self.day_24_start_proposal_markup
+    { 
+      inline_keyboard: [
+        [
+          { text: "🛡️ Начать День 24: Предвосхищение", 
+            callback_data: "start_day_24_from_proposal" }
+        ]
+      ] 
+    }.to_json
+  end
 
 def self.day_25_start_proposal_markup
   { 
@@ -1647,6 +1639,18 @@ def self.day_25_start_proposal_markup
     ] 
   }.to_json
 end
+
+def self.day_25_start_proposal_markup
+    { 
+      inline_keyboard: [
+        [
+          { text: "🌌 Начать День 25: Вид сверху", 
+            callback_data: "start_day_25_from_proposal" }
+        ]
+      ] 
+    }.to_json
+  end
+
 
 # Добавьте метод для предложения дня 26:
 def self.day_26_start_proposal_markup
