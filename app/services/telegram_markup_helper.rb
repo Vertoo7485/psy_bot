@@ -1675,6 +1675,20 @@ def self.day_27_start_proposal_markup
   }.to_json
 end
 
+# Метод для предложения дня 27 (для единообразия)
+def day_27_content_markup
+  {
+    inline_keyboard: [
+      [
+        { text: "🧠 Начать нейрохакинг", callback_data: 'start_day_27_content' }
+      ],
+      [
+        { text: "#{EMOJI[:back]} Вернуться в главное меню", callback_data: 'back_to_main_menu' }
+      ]
+    ]
+  }.to_json
+end
+
   def handle_self_help_input(state)
     log_info("Handling self-help input for state: #{state}")
       

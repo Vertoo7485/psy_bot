@@ -184,85 +184,85 @@ module SelfHelp
       
       # Обработка ввода пользователя
       def handle_text_input(input_text)
-        current_step = get_day_data('current_step')
-        
-        log_info("Day #{DAY_NUMBER}: Handling text input for step: #{current_step}, text: #{input_text.truncate(50)}")
-        
-        case current_step
-        when 'intro'
-          handle_intro_input(input_text)
-        when 'celebration'
-          handle_celebration_input(input_text)
-        when 'review_achievements'
-          handle_achievements_input(input_text)
-        when 'skills_integration'
-          handle_skills_input(input_text)
-        when 'personal_support_plan'
-          handle_support_plan_input(input_text)
-        when 'future_horizons'
-          handle_future_input(input_text)
-        when 'final_message'
-          handle_letter_input(input_text)
-        else
-          log_warn("Unknown step for text input: #{current_step}")
-          send_message(text: "Пожалуйста, следуйте инструкциям на экране.")
-          false
+          current_step = get_day_data('current_step')
+          
+          log_info("Day #{DAY_NUMBER}: Handling text input for step: #{current_step}, text: #{input_text.truncate(50)}")
+          
+          case current_step
+          when 'intro'
+            handle_intro_input(input_text)
+          when 'celebration'
+            handle_celebration_input(input_text)
+          when 'review_achievements'
+            handle_achievements_input(input_text)
+          when 'skills_integration'
+            handle_skills_input(input_text)
+          when 'personal_support_plan'
+            handle_support_plan_input(input_text)
+          when 'future_horizons'
+            handle_future_input(input_text)
+          when 'final_message'
+            handle_letter_input(input_text)
+          else
+            log_warn("Unknown step for text input: #{current_step}")
+            send_message(text: "Пожалуйста, следуйте инструкциям на экране.")
+            false
+          end
         end
-      end
+        
+        # Обработка кнопок
+        def handle_button(callback_data)
+    log_info("Day #{DAY_NUMBER}: Handling button: #{callback_data}")
+    
+    case callback_data
+    when 'start_day_28_exercise'
+      deliver_exercise
       
-      # Обработка кнопок
-      def handle_button(callback_data)
-  log_info("Day #{DAY_NUMBER}: Handling button: #{callback_data}")
-  
-  case callback_data
-  when 'start_day_28_exercise'
-    deliver_exercise
-    
-  when 'day_28_show_statistics'
-    show_program_statistics
-    
-  when 'day_28_view_achievements'
-    show_achievements_overview
-    
-  when /^day_28_select_achievement_(.+)_(\d+)$/
-    category = $1
-    index = $2.to_i
-    handle_achievement_selection(category, index)
-    
-  when 'day_28_finish_achievements'
-    finish_achievements_selection
-    
-  when /^day_28_select_future_(.+)$/
-    module_key = $1
-    handle_future_module_selection(module_key)
-    
-  when 'day_28_finish_future'
-    finish_future_selection
-    
-  when 'day_28_complete_exercise'
-    complete_final_day
-    
-  when 'day_28_view_certificate'
-    show_completion_certificate
-    
-  when 'day_28_restart_program'
-    restart_program
-    
-  when 'day_28_continue_other_modules'
-    show_other_modules
-    
-  # Новые кнопки
-  when 'day_28_skip_achievements'
-    handle_skip_achievements
-    
-  when 'day_28_back_to_achievements'
-    start_final_step('review_achievements')
-    
-  else
-    log_warn("Unknown button callback: #{callback_data}")
-    send_message(text: "Неизвестная команда. Используйте кнопки на экране.")
+    when 'day_28_show_statistics'
+      show_program_statistics
+      
+    when 'day_28_view_achievements'
+      show_achievements_overview
+      
+    when /^day_28_select_achievement_(.+)_(\d+)$/
+      category = $1
+      index = $2.to_i
+      handle_achievement_selection(category, index)
+      
+    when 'day_28_finish_achievements'
+      finish_achievements_selection
+      
+    when /^day_28_select_future_(.+)$/
+      module_key = $1
+      handle_future_module_selection(module_key)
+      
+    when 'day_28_finish_future'
+      finish_future_selection
+      
+    when 'day_28_complete_exercise'
+      complete_final_day
+      
+    when 'day_28_view_certificate'
+      show_completion_certificate
+      
+    when 'day_28_restart_program'
+      restart_program
+      
+    when 'day_28_continue_other_modules'
+      show_other_modules
+      
+    # Новые кнопки
+    when 'day_28_skip_achievements'
+      handle_skip_achievements
+      
+    when 'day_28_back_to_achievements'
+      start_final_step('review_achievements')
+      
+    else
+      log_warn("Unknown button callback: #{callback_data}")
+      send_message(text: "Неизвестная команда. Используйте кнопки на экране.")
+    end
   end
-end
 
 def handle_skip_achievements
   # Устанавливаем пустой массив достижений
