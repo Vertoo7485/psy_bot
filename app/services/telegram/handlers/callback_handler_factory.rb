@@ -209,6 +209,13 @@ module Telegram
         /^day_27_exercise_completed$/ => 'SelfHelpHandlers::DayHandlers::Day27Handler',
         /^day_27_complete_exercise$/ => 'SelfHelpHandlers::DayHandlers::Day27Handler',
         /^day_27_/ => 'SelfHelpHandlers::DayHandlers::Day27Handler',
+        /^start_day_28_from_proposal$/ => 'SelfHelpHandlers::DayHandlers::Day28Handler',
+        /^start_day_28_content$/ => 'SelfHelpHandlers::DayHandlers::Day28Handler',
+        /^continue_day_28_content$/ => 'SelfHelpHandlers::DayHandlers::Day28Handler',
+        /^day_28_exercise_completed$/ => 'SelfHelpHandlers::DayHandlers::Day28Handler',
+        /^day_28_complete_exercise$/ => 'SelfHelpHandlers::DayHandlers::Day28Handler',
+        /^day_28_/ => 'SelfHelpHandlers::DayHandlers::Day28Handler',
+        /^day_28_select_achievement_([a-z_]+)_(\d+)$/ => 'SelfHelpHandlers::DayHandlers::Day28Handler',
         /^start_day_(\d+)_from_proposal$/ => 'DayStartHandler',
         
         # Дни программы - продолжение/завершение
@@ -233,11 +240,6 @@ module Telegram
         /^start_day_17_/ => 'DayStartHandler',
         /^day_17_exercise_completed$/ => 'DayExerciseCompleteHandler',
         /^start_day_28/ => 'DayStartHandler',
-        'day_28_exercise_completed' => 'DayExerciseCompleteHandler',
-        /^day_28_/ => 'Day28Handler',
-        /^day_28_select_achievement_(\d+)$/ => 'Day28Handler',
-        # Финальное завершение
-        'complete_program_final' => 'ProgramCompleteHandler',
       }.freeze
       
       class << self

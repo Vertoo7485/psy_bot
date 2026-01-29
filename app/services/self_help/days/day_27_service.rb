@@ -576,68 +576,67 @@ module SelfHelp
       end
       
       def propose_next_day_with_restriction
-        next_day = 28
-        
-        # Проверяем, можно ли начать следующий день
-        can_start_result = @user.can_start_day?(next_day)
-        
-        if can_start_result == true
-          message = <<~MARKDOWN
-            🎯 **Следующий шаг: День #{next_day}**
-            
-            ✅ *Доступен сейчас!*
-            
-            **Что вас ждет:**
-            • 🎭 Завершение 4-недельной программы
-            • 🧩 Итоговая интеграция всех техник
-            • 📊 Создание личного плана поддержания результатов
-            • 🌟 Церемония завершения с научной рефлексией
-            
-            Вы можете начать следующий день прямо сейчас.
-          MARKDOWN
-          
-          button_text = "🎭 Начать День #{next_day}"
-          callback_data = "start_day_#{next_day}_from_proposal"
-        else
-          error_message = can_start_result.is_a?(Array) ? can_start_result.join("\n") : can_start_result
-          
-          message = <<~MARKDOWN
-            🎯 **Следующий шаг: День #{next_day}**
-            
-            ⏱️ *Ограничение:* #{error_message}
-            
-            **Пока ждете, можете:**
-            • 🧠 Практиковать ваш алгоритм радости для маленьких достижений
-            • 🎭 Использовать техники смакования в повседневности
-            • ⚖️ Поэкспериментировать с дофаминовыми паузами
-            • 📊 Посмотреть статистику программы (/progress)
-            
-            *Следующий день будет автоматически доступен, когда пройдет достаточно времени.*
-          MARKDOWN
-          
-          # Если день недоступен, НЕ отправляем активную кнопку
-          button_text = "⏱️ Проверить доступность Дня #{next_day}"
-          callback_data = "start_day_#{next_day}_from_proposal"  # Оставляем ту же, но Day28Handler проверит
-        end
-        
-        # Отправляем сообщение
-        send_message(text: message, parse_mode: 'Markdown')
-        
-        # Отправляем кнопку ВСЕГДА, но Day28Handler проверит доступность
-        send_message(
-          text: "Нажмите кнопку:",
-          reply_markup: {
-            inline_keyboard: [
-              [
-                { 
-                  text: button_text, 
-                  callback_data: callback_data
-                }
-              ]
-            ]
+  next_day = 28
+  
+  # Проверяем, можно ли начать следующий день
+  can_start_result = @user.can_start_day?(next_day)
+  
+  if can_start_result == true
+    message = <<~MARKDOWN
+      🎯 **Следующий шаг: День #{next_day}**
+      
+      ✅ *Доступен сейчас!*
+      
+      **Что вас ждет:**
+      • 🧬 Финальная научная рефлексия всей 28-дневной программы
+      • 📊 Анализ вашего нейропластического эксперимента
+      • 🎯 Создание персональной системы поддержки на научной основе
+      • 📜 Получение научного сертификата завершения
+      
+      **Это финальный день программы** — время подвести итоги и получить заслуженное признание!
+      
+      Вы можете начать финальный день прямо сейчас.
+    MARKDOWN
+    
+    button_text = "🧬 Начать финальный день"
+    callback_data = "start_day_#{next_day}_from_proposal"
+  else
+    error_message = can_start_result.is_a?(Array) ? can_start_result.join("\n") : can_start_result
+    
+    message = <<~MARKDOWN
+      🎯 **Следующий шаг: День #{next_day} (Финальный день)**
+      
+      ⏱️ *Ограничение:* #{error_message}
+      
+      **Пока ждете, можете:**
+      • 🧠 Практиковать техники нейрохакинга радости
+      • 📊 Проанализировать ваш прогресс за 27 дней
+      • 🎭 Создать ритуалы празднования маленьких побед
+      • 🔬 Подготовиться к научной рефлексии финального дня
+      
+      *Финальный день программы будет автоматически доступен, когда пройдет достаточно времени.*
+    MARKDOWN
+    
+    button_text = "⏱️ Проверить доступность финального дня"
+    callback_data = "start_day_#{next_day}_from_proposal"
+  end
+  
+  send_message(text: message, parse_mode: 'Markdown')
+  
+  send_message(
+    text: "Нажмите кнопку:",
+    reply_markup: {
+      inline_keyboard: [
+        [
+          { 
+            text: button_text, 
+            callback_data: callback_data
           }
-        )
-      end
+        ]
+      ]
+    }.to_json
+  )
+end
       
       # ===== ОБРАБОТКА КНОПОК =====
       
