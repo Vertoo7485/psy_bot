@@ -650,42 +650,6 @@ module SelfHelp
         complete_exercise
       end
 
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_#{DAY_NUMBER}_intro"
-          # Если пользователь только начал день, показываем упражнение
-          deliver_exercise
-        when "day_#{DAY_NUMBER}_exercise_in_progress"
-          # Восстанавливаем с текущего шага
-          current_step = get_day_data('current_step')
-          if current_step.present?
-            handle_resume_from_step(current_step)
-          else
-            # Если шаг не сохранен, начинаем упражнение
-            deliver_exercise
-          end
-        when "day_#{DAY_NUMBER}_waiting_for_thought"
-          # Если пользователь ожидает ввода мысли
-          show_thought_selection_guidance
-        when "day_#{DAY_NUMBER}_practice_completed"
-          # Если практика завершена, но рефлексия еще нет
-          show_post_practice_reflection
-        when "day_#{DAY_NUMBER}_reflection_done"
-          # Если рефлексия сделана, предлагаем завершить день
-          send_message(
-            text: "🌟 Вы завершили практику остановки мыслей!\n\nХотите завершить День 8?",
-            reply_markup: day_8_final_completion_markup
-          )
-        else
-          # Если состояние не определено или не соответствует дню 8
-          log_warn("Unknown or invalid state for resume: #{current_state}")
-          # Показываем введение и предлагаем начать
-          show_intro_without_state
-        end
-      end
-
       def handle_resume_from_step(step)
         case step
         when 'intro'

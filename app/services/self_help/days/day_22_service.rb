@@ -958,51 +958,6 @@ module SelfHelp
         false
       end
       
-      # ===== ВОССТАНОВЛЕНИЕ СЕССИИ =====
-      
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_#{DAY_NUMBER}_intro"
-          deliver_exercise
-          
-        when "day_#{DAY_NUMBER}_exercise_in_progress"
-          current_step = get_day_data('current_step')
-          if current_step.present?
-            handle_resume_from_step(current_step)
-          else
-            deliver_exercise
-          end
-          
-        when /^day_#{DAY_NUMBER}_waiting_for_/
-          current_step = get_day_data('current_smart_step')
-          if current_step.present?
-            start_smart_step(current_step)
-          else
-            deliver_exercise
-          end
-          
-        when "day_#{DAY_NUMBER}_goal_completed"
-          goals = get_day_data('smart_goals') || []
-          if goals.any?
-            goal_number = goals.size
-            send_message(
-              text: "Вы создали #{goal_number} цель(ей). Хотите создать еще или завершить упражнение?",
-              reply_markup: day_22_goal_completion_markup(goal_number)
-            )
-          else
-            deliver_exercise
-          end
-          
-        when "day_#{DAY_NUMBER}_completed"
-          show_smart_completion
-          
-        else
-          log_warn("Unknown or invalid state for resume: #{current_state}")
-          deliver_intro
-        end
-      end
       
       def handle_resume_from_step(step)
         case step

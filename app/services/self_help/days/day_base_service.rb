@@ -15,58 +15,82 @@ module SelfHelp
         @user = user
         @chat_id = chat_id
         @message_sender = Telegram::RobustMessageSender.new(bot_service, user, chat_id)
+        @access_control = AccessControlService.new(user)
       end
       
       # ===== ПУБЛИЧНЫЕ МЕТОДЫ =====
       
       # Основной метод доставки контента дня
       def deliver_content
+        # Проверяем доступ перед началом дня
+        check_access!
+        
         save_current_progress
         deliver_intro
         
         # Если нужно сразу перейти к упражнению
         deliver_exercise if should_deliver_exercise_immediately?
+        
+      rescue AccessControlService::AccessDeniedError,
+             AccessControlService::TrialExpiredError,
+             AccessControlService::SubscriptionExpiredError,
+             AccessControlService::NotPremiumError => e
+        
+        handle_access_error(e)
+        false
       end
       
       # Метод для продолжения дня (после интро)
       def continue_content
+        check_access!
         save_current_progress
         deliver_exercise
+        
+      rescue AccessControlService::AccessDeniedError,
+             AccessControlService::TrialExpiredError,
+             AccessControlService::SubscriptionExpiredError,
+             AccessControlService::NotPremiumError => e
+        
+        handle_access_error(e)
+        false
       end
       
       # Метод для завершения упражнения дня
       def handle_exercise_completion
+        check_access!
         save_current_progress
         complete_exercise
         
         # Предлагаем следующий день
         propose_next_day
+        
+      rescue AccessControlService::AccessDeniedError,
+             AccessControlService::TrialExpiredError,
+             AccessControlService::SubscriptionExpiredError,
+             AccessControlService::NotPremiumError => e
+        
+        handle_access_error(e)
+        false
       end
       
       # Метод для завершения дня полностью
       def complete_day
+        check_access!
         save_current_progress
         @user.complete_self_help_day(self.class::DAY_NUMBER)
         
         send_completion_message
         propose_next_day
+        
+      rescue AccessControlService::AccessDeniedError,
+             AccessControlService::TrialExpiredError,
+             AccessControlService::SubscriptionExpiredError,
+             AccessControlService::NotPremiumError => e
+        
+        handle_access_error(e)
+        false
       end
       
-      # Метод для восстановления сессии
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_#{self.class::DAY_NUMBER}_intro"
-          deliver_intro
-        when "day_#{self.class::DAY_NUMBER}_exercise_in_progress"
-          deliver_exercise
-        when "day_#{self.class::DAY_NUMBER}_waiting_for_input"
-          ask_for_input_again
-        else
-          deliver_content
-        end
-      end
       
       # Абстрактные методы (должны быть реализованы в наследниках)
       def deliver_intro
@@ -140,7 +164,113 @@ module SelfHelp
       # Эти методы доступны только внутри класса и его наследников
       
       protected
+
+      def check_access!
+        @access_control.check_self_help_access!
+      end
       
+      def handle_access_error(error)
+        log_error("Access denied for user #{@user.id}: #{error.class}")
+        
+        case error
+        when AccessControlService::NotPremiumError
+          send_not_premium_message(error.message)
+        when AccessControlService::TrialExpiredError
+          send_trial_expired_message(error.message)
+        when AccessControlService::SubscriptionExpiredError
+          send_subscription_expired_message(error.message)
+        when AccessControlService::AccessDeniedError
+          send_access_denied_message(error.message)
+        else
+          send_generic_access_error(error.message)
+        end
+      end
+
+      def send_not_premium_message(message)
+  text = "🔒 *Доступ к программе самопомощи*\n\n" \
+         "#{message}\n\n" \
+         "Ваш текущий уровень доступа: *#{@user.access_info}*\n\n" \
+         "Для получения премиум доступа:\n" \
+         "1. Обратитесь к администратору @your_admin_username\n" \
+         "2. Укажите ваш Telegram (@#{@user.username || 'username'})\n" \
+         "3. После оплаты вы получите доступ на 30 дней\n\n" \
+         "Пробный период: 3 дня бесплатно для новых пользователей."
+  
+  send_access_message(text)
+end
+
+# Сообщение об истёкшем trial
+def send_trial_expired_message(message)
+  text = "⏰ *Пробный период завершен*\n\n" \
+         "#{message}\n\n" \
+         "Вы успешно опробовали программу самопомощи!\n\n" \
+         "Чтобы продолжить, приобретите подписку:\n" \
+         "1. Обратитесь к администратору @your_admin_username\n" \
+         "2. Укажите ваш Telegram (@#{@user.username || 'username'})\n" \
+         "3. После оплаты получите доступ на 30 дней\n\n" \
+         "💰 Стоимость: XXX руб. / 30 дней"
+  
+  send_access_message(text)
+end
+
+# Сообщение об истёкшей подписке
+def send_subscription_expired_message(message)
+  text = "📅 *Подписка истекла*\n\n" \
+         "#{message}\n\n" \
+         "Спасибо, что были с нами!\n\n" \
+         "Для продления подписки:\n" \
+         "1. Обратитесь к администратору @your_admin_username\n" \
+         "2. Укажите ваш Telegram (@#{@user.username || 'username'})\n" \
+         "3. После оплаты доступ будет продлён\n\n" \
+         "Ваш прогресс сохранён и будет доступен после активации."
+  
+  send_access_message(text)
+end
+
+# Общее сообщение об ошибке доступа
+def send_access_denied_message(message)
+  text = "❌ *Доступ ограничен*\n\n" \
+         "#{message}\n\n" \
+         "Обратитесь к администратору @your_admin_username для помощи."
+  
+  send_access_message(text)
+end
+
+# Общее сообщение об ошибке
+def send_generic_access_error(message)
+  text = "⚠️ *Ошибка доступа*\n\n" \
+         "#{message}\n\n" \
+         "Обратитесь к администратору @your_admin_username."
+  
+  send_access_message(text)
+end
+
+# Отправка сообщения с кнопками
+def send_access_message(text)
+  markup = {
+    inline_keyboard: [
+      [
+        { text: "📋 Тесты", callback_data: 'show_test_categories' },
+        { text: "📔 Дневник", callback_data: 'start_emotion_diary' }
+      ],
+      [
+        { text: "ℹ️ О программе", callback_data: 'self_help_info' },
+        { text: "👑 Админ", callback_data: 'contact_admin' }
+      ],
+      [
+        { text: "🏠 Главное меню", callback_data: 'back_to_main_menu' }
+      ]
+    ]
+  }.to_json
+  
+  send_message(
+    text: text,
+    parse_mode: 'Markdown',
+    reply_markup: markup,
+    save_progress: false
+  )
+end
+
       def send_exercise_completion_message
         message = "🎉 *Упражнение дня #{self.class::DAY_NUMBER} завершено!* 🎉\n\n" \
                   "Отличная работа! Вы освоили новую технику."

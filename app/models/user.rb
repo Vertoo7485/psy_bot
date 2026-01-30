@@ -1,5 +1,11 @@
 # app/models/user.rb
+
+require_dependency 'user_access'
+
 class User < ApplicationRecord
+
+  include UserAccess
+  
   # Ассоциации
   has_many :test_results, dependent: :destroy
   has_many :tests, through: :test_results
@@ -27,9 +33,237 @@ class User < ApplicationRecord
 
   # Валидации
   validates :telegram_id, presence: true, uniqueness: true
+  validates :access_level, inclusion: { in: ACCESS_LEVELS.values }
 
   # Scopes
   scope :with_telegram_id, ->(telegram_id) { where(telegram_id: telegram_id) }
+
+  # Scopes для удобства работы с уровнями доступа
+  scope :free_users, -> { where(access_level: 'free') }
+  scope :premium_users, -> { where(access_level: 'premium') }
+  scope :admin_users, -> { where(access_level: 'admin') }
+  scope :active_users, -> { where(is_active: true) }
+  scope :inactive_users, -> { where(is_active: false) }
+  scope :with_active_subscription, -> { 
+    premium_users
+      .active_users
+      .where('subscription_ends_at > ?', Time.current) 
+  }
+  scope :with_active_trial, -> {
+    where('trial_ends_at > ?', Time.current)
+    .where(access_level: 'premium')
+  }
+  scope :with_expired_subscription, -> {
+    premium_users
+      .active_users
+      .where('subscription_ends_at <= ?', Time.current)
+      .where('subscription_ends_at IS NOT NULL')
+  }
+  scope :with_expired_trial, -> {
+    where('trial_ends_at <= ?', Time.current)
+    .where(access_level: 'premium')
+    .where('trial_ends_at IS NOT NULL')
+  }
+  
+  # Callback: при создании пользователя устанавливаем trial на 3 дня
+  after_create :set_initial_trial, if: :new_user_requires_trial?
+  
+  # Callback: проверяем доступ при обновлении подписки
+  before_save :check_subscription_status
+  
+  # === МЕТОДЫ ДЛЯ УРОВНЕЙ ДОСТУПА ===
+  
+  # Проверка уровня доступа
+  def free?
+    access_level == 'free'
+  end
+  
+  def premium?
+    access_level == 'premium'
+  end
+  
+  def admin?
+    access_level == 'admin'
+  end
+  
+  # Проверка активности доступа
+  def trial_active?
+    return false unless premium?
+    trial_ends_at.present? && trial_ends_at > Time.current
+  end
+  
+  def subscription_active?
+    return false unless premium?
+    subscription_ends_at.present? && subscription_ends_at > Time.current
+  end
+  
+  def has_active_premium?
+    premium? && is_active && (trial_active? || subscription_active?)
+  end
+  
+  def can_access_self_help_program?
+    # Админы всегда имеют доступ
+    return true if admin?
+    
+    # Проверяем активный премиум доступ
+    has_active_premium?
+  end
+  
+  # === РАБОТА С ВРЕМЕНЕМ ===
+  
+  def days_until_trial_ends
+    return 0 unless trial_ends_at && trial_ends_at > Time.current
+    (trial_ends_at.to_date - Date.current).to_i
+  end
+  
+  def days_until_subscription_ends
+    return 0 unless subscription_ends_at && subscription_ends_at > Time.current
+    (subscription_ends_at.to_date - Date.current).to_i
+  end
+  
+  def trial_ended?
+    trial_ends_at.present? && trial_ends_at <= Time.current
+  end
+  
+  def subscription_ended?
+    subscription_ends_at.present? && subscription_ends_at <= Time.current
+  end
+  
+  # === АКТИВАЦИЯ/ДЕАКТИВАЦИЯ ===
+  
+  # Активация premium доступа
+  def activate_premium!(days: SUBSCRIPTION_DAYS)
+    update!(
+      access_level: 'premium',
+      subscription_ends_at: Time.current + days.days,
+      premium_activated_at: Time.current,
+      is_active: true,
+      trial_ends_at: nil # Сбрасываем trial если был
+    )
+    
+    Rails.logger.info "User #{id} activated premium for #{days} days"
+    true
+  end
+  
+  # Активация trial периода
+  def activate_trial!(days: TRIAL_DAYS)
+    update!(
+      access_level: 'premium',
+      trial_ends_at: Time.current + days.days,
+      is_active: true,
+      subscription_ends_at: nil, # Не устанавливаем подписку для trial
+      premium_activated_at: nil
+    )
+    
+    Rails.logger.info "User #{id} activated trial for #{days} days"
+    true
+  end
+  
+  # Деактивация premium доступа
+  def deactivate_premium!
+    update!(
+      access_level: 'free',
+      subscription_ends_at: nil,
+      trial_ends_at: nil,
+      is_active: false
+    )
+    
+    Rails.logger.info "User #{id} deactivated premium access"
+    true
+  end
+  
+  # Продление подписки
+  def extend_subscription!(days: SUBSCRIPTION_DAYS)
+    new_ends_at = if subscription_ends_at && subscription_ends_at > Time.current
+      # Если подписка еще активна, продлеваем от текущей даты окончания
+      subscription_ends_at + days.days
+    else
+      # Иначе начинаем с текущего момента
+      Time.current + days.days
+    end
+    
+    update!(
+      subscription_ends_at: new_ends_at,
+      is_active: true
+    )
+    
+    Rails.logger.info "User #{id} subscription extended for #{days} days, now ends at #{new_ends_at}"
+    true
+  end
+  
+  # Деактивация (без смены уровня)
+  def deactivate!
+    update!(is_active: false)
+    Rails.logger.info "User #{id} deactivated"
+  end
+  
+  # Активация (без смены уровня)
+  def activate!
+    update!(is_active: true)
+    Rails.logger.info "User #{id} activated"
+  end
+  
+  # === ИНФОРМАЦИЯ О ДОСТУПЕ ===
+  
+  def access_info
+    if admin?
+      ACCESS_MESSAGES[:admin]
+    elsif free?
+      ACCESS_MESSAGES[:free]
+    elsif premium?
+      info = ACCESS_MESSAGES[:premium]
+      
+      if trial_active?
+        info += " (Trial, осталось #{days_until_trial_ends} дн.)"
+      elsif subscription_active?
+        info += " (Подписка, осталось #{days_until_subscription_ends} дн.)"
+      elsif trial_ended?
+        info += " (Trial истёк)"
+      elsif subscription_ended?
+        info += " (Подписка истекла)"
+      else
+        info += " (Неактивен)"
+      end
+      
+      info += is_active ? " ✅" : " ❌"
+      info
+    end
+  end
+  
+  def subscription_info
+    return "Бесплатный доступ" if free?
+    
+    info = ""
+    if trial_active?
+      info += "🎁 Пробный период: #{days_until_trial_ends} дн. осталось"
+    elsif subscription_active?
+      info += "⭐️ Премиум подписка: #{days_until_subscription_ends} дн. осталось"
+    elsif trial_ended?
+      info += "⏰ Пробный период закончился"
+    elsif subscription_ended?
+      info += "📅 Подписка закончилась"
+    end
+    
+    if subscription_ends_at
+      info += "\nДействует до: #{subscription_ends_at.strftime('%d.%m.%Y')}"
+    end
+    
+    info
+  end
+  
+  # === МЕТОДЫ ДЛЯ АДМИНА ===
+  
+  # Назначить администратором
+  def make_admin!
+    update!(access_level: 'admin')
+    Rails.logger.info "User #{id} promoted to admin"
+  end
+  
+  # Сделать обычным пользователем
+  def make_regular!
+    update!(access_level: 'free')
+    Rails.logger.info "User #{id} demoted to regular user"
+  end
 
   # Методы для работы с Telegram
   def self.find_or_create_from_telegram_message(from_data)
@@ -446,6 +680,42 @@ class User < ApplicationRecord
   end
 
   private
+
+  def set_initial_trial
+    activate_trial!(days: TRIAL_DAYS)
+    
+    Rails.logger.info "Set #{TRIAL_DAYS}-day trial for new user #{id}"
+    
+    # Здесь можно добавить отправку приветственного сообщения
+    # с информацией о trial
+  end
+  
+  # Проверка, нужен ли trial новому пользователю
+  def new_user_requires_trial?
+    # Даём trial всем новым пользователям, кроме админов
+    # (админа мы назначим отдельно через rake задачу)
+    true
+  end
+  
+  # Проверка статуса подписки при сохранении
+  def check_subscription_status
+    # Если подписка истекла и пользователь еще premium,
+    # автоматически переводим на free
+    if premium? && subscription_ends_at && subscription_ends_at <= Time.current
+      self.access_level = 'free'
+      self.is_active = false
+      Rails.logger.info "Auto-downgraded user #{id} from premium to free (subscription expired)"
+    end
+    
+    # Если trial истек и нет активной подписки,
+    # автоматически переводим на free
+    if premium? && trial_ends_at && trial_ends_at <= Time.current && 
+       (!subscription_ends_at || subscription_ends_at <= Time.current)
+      self.access_level = 'free'
+      self.is_active = false
+      Rails.logger.info "Auto-downgraded user #{id} from premium to free (trial expired)"
+    end
+  end
 
   def self_help_program_data
     super || {}

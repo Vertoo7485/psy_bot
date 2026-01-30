@@ -1,4 +1,6 @@
 # app/services/telegram/message_processor.rb
+require Rails.root.join('app/services/telegram/admin_service')
+
 module Telegram
   class MessageProcessor
     # Константы
@@ -9,7 +11,9 @@ module Telegram
       '/tests' => :handle_tests,
       '/diary' => :handle_diary,
       '/program' => :handle_program,
-      '/progress' => :handle_progress
+      '/progress' => :handle_progress,
+      '/admin' => :handle_admin,          # ← ДОБАВЛЯЕМ
+      '/access' => :handle_access
     }.freeze
     
     attr_reader :bot, :user, :message_data
@@ -116,6 +120,136 @@ module Telegram
       end
     end
     
+    def handle_admin
+  log_info("Processing /admin command")
+  
+  # Проверяем, является ли пользователь админом
+  unless @user.admin?
+    send_message("❌ У вас нет прав администратора.")
+    return
+  end
+  
+  # Используем AdminService для обработки команды
+  # Передаем @bot и @message_data (хэш), а не объект Message
+  admin_service = Telegram::AdminService.new(@bot, @message_data, @user)
+  admin_service.process
+  
+rescue => e
+  log_error("Error in admin command", e)
+  send_message("❌ Ошибка при обработке команды администратора: #{e.message}")
+end
+    
+    def handle_access
+      log_info("Processing /access command")
+      
+      access_text = "🔐 *Информация о вашем доступе*\n\n"
+      access_text += "#{@user.access_info}\n\n"
+      
+      if @user.admin?
+        access_text += "👑 Вы администратор системы\n"
+        access_text += "Используйте `/admin help` для управления пользователями\n"
+        
+      elsif @user.premium?
+        if @user.trial_active?
+          days_left = @user.days_until_trial_ends
+          access_text += "🎁 *Пробный период активен*\n"
+          access_text += "Осталось дней: #{days_left}\n"
+          access_text += "Завершается: #{@user.trial_ends_at.strftime('%d.%m.%Y')}\n\n"
+          
+          if days_left <= 1
+            access_text += "⚠️ Пробный период заканчивается скоро!\n"
+            access_text += "Для продолжения программы самопомощи обратитесь к администратору после истечения trial.\n"
+          end
+          
+        elsif @user.subscription_active?
+          days_left = @user.days_until_subscription_ends
+          access_text += "⭐️ *Премиум подписка активна*\n"
+          access_text += "Осталось дней: #{days_left}\n"
+          access_text += "Завершается: #{@user.subscription_ends_at.strftime('%d.%m.%Y')}\n\n"
+          
+          if days_left <= 3
+            access_text += "⚠️ Подписка заканчивается скоро!\n"
+            access_text += "Для продления обратитесь к администратору.\n"
+          end
+          
+        else
+          access_text += "❌ Премиум доступ не активен\n"
+          access_text += "Обратитесь к администратору для активации.\n"
+        end
+        
+        access_text += "\n✅ Вам доступна вся программа самопомощи (28 дней)"
+        
+      else
+        access_text += "🆓 *Бесплатный доступ*\n\n"
+        access_text += "Вам доступны:\n"
+        access_text += "• 📋 Все психологические тесты\n"
+        access_text += "• 📔 Дневник эмоций\n\n"
+        access_text += "Для доступа к программе самопомощи (28 дней) необходим премиум доступ.\n"
+        access_text += "Новые пользователи получают 3 дня пробного периода автоматически.\n"
+      end
+      
+      # Кнопки действий
+      markup = if @user.admin?
+        {
+          inline_keyboard: [
+            [{ text: "👑 Админ-панель", callback_data: "admin:help" }],
+            [{ text: "📊 Статистика", callback_data: "admin:stats" }],
+            [{ text: "🏠 Главное меню", callback_data: "back_to_main_menu" }]
+          ]
+        }
+      elsif @user.can_access_self_help_program?
+        {
+          inline_keyboard: [
+            [{ text: "⭐️ Начать программу", callback_data: "start_self_help_program" }],
+            [{ text: "📋 Тесты", callback_data: "show_test_categories" }],
+            [{ text: "🏠 Главное меню", callback_data: "back_to_main_menu" }]
+          ]
+        }
+      else
+        {
+          inline_keyboard: [
+            [{ text: "📋 Тесты", callback_data: "show_test_categories" }],
+            [{ text: "📔 Дневник", callback_data: "start_emotion_diary" }],
+            [{ text: "🏠 Главное меню", callback_data: "back_to_main_menu" }]
+          ]
+        }
+      end.to_json
+      
+      send_message(text: access_text, parse_mode: 'Markdown', reply_markup: markup)
+    end
+    
+    def show_admin_help
+  help_text = "👑 *Админ-панель*\n\n" \
+              "Используйте команды:\n" \
+              "`/admin help` - эта справка\n" \
+              "`/admin users` - список пользователей\n" \
+              "`/admin user @username` - информация о пользователе\n" \
+              "`/admin activate @username` - активировать премиум\n" \
+              "`/admin deactivate @username` - деактивировать\n" \
+              "`/admin trial @username` - установить trial\n" \
+              "`/admin stats` - статистика\n" \
+              "`/admin search имя` - поиск\n\n" \
+              "Или используйте кнопки ниже:"
+  
+  markup = {
+    inline_keyboard: [
+      [
+        { text: "👥 Пользователи", callback_data: "admin:users" },
+        { text: "📊 Статистика", callback_data: "admin:stats" }
+      ],
+      [
+        { text: "🔍 Поиск", callback_data: "admin:search" },
+        { text: "🆘 Справка", callback_data: "admin:help" }
+      ],
+      [
+        { text: "🏠 Главное меню", callback_data: "back_to_main_menu" }
+      ]
+    ]
+  }.to_json
+  
+  send_message(text: help_text, parse_mode: 'Markdown', reply_markup: markup)
+end
+
     # Обработка текстовых сообщений
     def process_text_message
       # Проверяем активные сессии пользователя
@@ -237,19 +371,28 @@ module Telegram
     # Вспомогательные методы
     
     def send_welcome_message
-      message = <<~MARKDOWN
-        👋 *Добро пожаловать!*
-
-        Я — бот для психологической поддержки и самопомощи.
-
-        Я помогу вам:
-        • Пройти психологические тесты
-        • Вести дневник эмоций
-        • Пройти программу самопомощи
-        • Освоить техники управления эмоциями
-
-        Используйте команду /menu для навигации.
-      MARKDOWN
+      # Определяем сообщение в зависимости от доступа
+      if @user.can_access_self_help_program?
+        message = "🌟 *Добро пожаловать!*\n\n" \
+                  "Рады видеть вас снова! У вас есть доступ ко всем функциям:\n" \
+                  "⭐️ Программа самопомощи (28 дней)\n" \
+                  "📋 Все тесты\n" \
+                  "📔 Дневник эмоций\n\n" \
+                  "Ваш статус: #{@user.access_info}"
+      elsif @user.free?
+        message = "🌟 *Добро пожаловать в психологический бот!*\n\n" \
+                  "Я помогу вам:\n" \
+                  "• 📋 Пройти психологические тесты\n" \
+                  "• 📔 Вести дневник эмоций\n" \
+                  "• ⭐️ Пройти программу самопомощи (28 дней)\n\n" \
+                  "Новые пользователи получают *3 дня бесплатного доступа* к программе!\n\n" \
+                  "Ваш текущий статус: #{@user.access_info}"
+      else
+        message = "🌟 *Добро пожаловать!*\n\n" \
+                  "Я — бот для психологической поддержки и самопомощи.\n\n" \
+                  "Используйте команду /menu для навигации.\n" \
+                  "Используйте /access для информации о вашем доступе."
+      end
       
       send_message(text: message, parse_mode: 'Markdown')
     end

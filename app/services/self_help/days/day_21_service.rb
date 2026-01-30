@@ -714,36 +714,6 @@ end
         false
       end
       
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_#{DAY_NUMBER}_intro"
-          deliver_intro
-          
-        when "day_#{DAY_NUMBER}_exercise_in_progress"
-          progress = get_reflection_progress
-          if progress[:current_category_index] > 0
-            # Продолжаем с текущей категории
-            show_next_reflection_category
-          else
-            # Начинаем сначала
-            deliver_exercise
-          end
-          
-        when /^day_#{DAY_NUMBER}_waiting_reflection_/
-          # Восстанавливаем текущую категорию
-          progress = get_reflection_progress
-          show_next_reflection_category
-          
-        when "day_#{DAY_NUMBER}_completed"
-          show_three_weeks_menu
-          
-        else
-          deliver_intro
-        end
-      end
-      
       private
       
       # ===== ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ =====

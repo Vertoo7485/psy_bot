@@ -453,30 +453,6 @@ module SelfHelp
         )
       end
       
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_#{DAY_NUMBER}_intro"
-          # Если пользователь только начал день, показываем упражнение
-          deliver_exercise
-        when "day_#{DAY_NUMBER}_exercise_in_progress"
-          # Восстанавливаем с текущего шага
-          current_step = get_day_data('current_step')
-          if current_step.present?
-            handle_resume_from_step(current_step)
-          else
-            # Если шаг не сохранен, начинаем упражнение
-            deliver_exercise
-          end
-        else
-          # Если состояние не определено или не соответствует дню 5
-          log_warn("Unknown or invalid state for resume: #{current_state}")
-          # Показываем введение и предлагаем начать
-          show_intro_without_state
-        end
-      end
-      
       # ===== ОБРАБОТКА КНОПОК =====
       
       def handle_button(callback_data)

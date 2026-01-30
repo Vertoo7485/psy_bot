@@ -803,24 +803,7 @@ end
         handle_text_input(text)
       end
       
-      # ===== ВОССТАНОВЛЕНИЕ СЕССИИ =====
-      
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_#{DAY_NUMBER}_intro"
-          deliver_intro
-        when "day_#{DAY_NUMBER}_exercise_in_progress"
-          current_step = get_day_data('current_step')
-          handle_resume_from_step(current_step)
-        when "day_#{DAY_NUMBER}_completed"
-          show_fear_overcoming_menu
-        else
-          show_intro_without_state
-        end
-      end
-      
+  
       def handle_resume_from_step(step)
         case step
         when 'intro'

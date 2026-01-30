@@ -712,56 +712,6 @@ module SelfHelp
         handle_text_input(text)
       end
       
-      # ===== ВОССТАНОВЛЕНИЕ СЕССИИ =====
-      
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_#{DAY_NUMBER}_intro"
-          deliver_exercise
-          
-        when "day_#{DAY_NUMBER}_exercise_in_progress"
-          current_step = get_day_data('current_step')
-          if current_step.present?
-            handle_resume_from_step(current_step)
-          else
-            deliver_exercise
-          end
-          
-        when "day_#{DAY_NUMBER}_waiting_for_thought"
-          send_message(
-            text: "💭 Напишите тревожную мысль для анализа:",
-            reply_markup: day_9_input_markup
-          )
-          
-        when "day_#{DAY_NUMBER}_waiting_for_facts_pro"
-          send_message(
-            text: "✅ Напишите факты, которые ПОДДЕРЖИВАЮТ вашу мысль:",
-            reply_markup: day_9_input_markup
-          )
-          
-        when "day_#{DAY_NUMBER}_waiting_for_facts_con"
-          send_message(
-            text: "❌ Напишите факты, которые ОПРОВЕРГАЮТ вашу мысль:",
-            reply_markup: day_9_input_markup
-          )
-          
-        when "day_#{DAY_NUMBER}_waiting_for_reframe"
-          send_message(
-            text: "💡 Напишите рефрейминг — более реалистичную формулировку:",
-            reply_markup: day_9_input_markup
-          )
-          
-        when "day_#{DAY_NUMBER}_analysis_completed"
-          show_completion_message
-          
-        else
-          log_warn("Unknown or invalid state for resume: #{current_state}")
-          show_intro_without_state
-        end
-      end
-      
       def handle_resume_from_step(step)
         case step
         when 'intro'

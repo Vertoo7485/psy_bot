@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_01_20_172446) do
+ActiveRecord::Schema[7.1].define(version: 2026_01_29_131008) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -249,9 +249,18 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_20_172446) do
     t.datetime "current_day_started_at"
     t.datetime "last_day_completed_at"
     t.integer "completed_days", default: [], array: true
+    t.string "access_level", default: "free", null: false
+    t.datetime "subscription_ends_at"
+    t.datetime "trial_ends_at"
+    t.boolean "is_active", default: true, null: false
+    t.datetime "premium_activated_at"
+    t.index ["access_level"], name: "index_users_on_access_level"
     t.index ["completed_days"], name: "index_users_on_completed_days", using: :gin
+    t.index ["is_active"], name: "index_users_on_is_active"
     t.index ["self_help_program_step"], name: "index_users_on_self_help_program_step"
+    t.index ["subscription_ends_at"], name: "index_users_on_subscription_ends_at"
     t.index ["telegram_id"], name: "index_users_on_telegram_id", unique: true
+    t.index ["trial_ends_at"], name: "index_users_on_trial_ends_at"
   end
 
   add_foreign_key "answer_options", "questions"

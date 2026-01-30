@@ -764,41 +764,6 @@ end
         handle_text_input(text)
       end
       
-      # ===== ВОССТАНОВЛЕНИЕ СЕССИИ =====
-      
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_#{DAY_NUMBER}_intro"
-          deliver_intro
-        when "day_#{DAY_NUMBER}_exercise_in_progress"
-          current_step = get_day_data('current_step')
-          if current_step.present?
-            handle_resume_from_step(current_step)
-          else
-            deliver_exercise
-          end
-        when "day_#{DAY_NUMBER}_planning_activity"
-          start_activity_planning
-        when "day_#{DAY_NUMBER}_planning_time"
-          send_message(text: "⏰ Напишите, когда планируете заняться активностью:")
-        when "day_#{DAY_NUMBER}_activity_planned"
-          show_activity_summary
-        when "day_#{DAY_NUMBER}_activity_summary_shown"
-          show_activity_reflection
-        when "day_#{DAY_NUMBER}_waiting_completion"
-          send_message(
-            text: "✅ План сохранен. Когда завершите, нажмите:",
-            reply_markup: activity_completed_markup
-          )
-        when "day_#{DAY_NUMBER}_completed"
-          show_simple_menu
-        else
-          show_intro_without_state
-        end
-      end
-      
       def handle_resume_from_step(step)
         case step
         when 'intro'

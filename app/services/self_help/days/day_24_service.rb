@@ -407,34 +407,6 @@ end
         true
       end
       
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_#{DAY_NUMBER}_intro"
-          deliver_intro
-          
-        when "day_#{DAY_NUMBER}_exercise_in_progress"
-          current_step = get_day_data('current_step')
-          if current_step.present?
-            handle_resume_from_step(current_step)
-          else
-            deliver_exercise
-          end
-          
-        when /^day_#{DAY_NUMBER}_waiting_for_/
-          current_step = get_day_data('current_step')
-          start_exercise_step(current_step) if current_step
-          
-        when "day_#{DAY_NUMBER}_completed"
-          show_day_completion
-          
-        else
-          log_warn("Unknown state for resume: #{current_state}")
-          deliver_intro
-        end
-      end
-      
       # ===== ОБРАБОТКА КНОПОК =====
       
       def handle_button(callback_data)

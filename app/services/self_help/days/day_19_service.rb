@@ -587,44 +587,6 @@ end
         end
       end
       
-      # ===== ВОССТАНОВЛЕНИЕ СЕССИИ =====
-      
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_#{DAY_NUMBER}_intro"
-          deliver_intro
-        when "day_#{DAY_NUMBER}_exercise_in_progress"
-          current_step = get_day_data('current_step')
-          handle_resume_from_step(current_step)
-        when "day_#{DAY_NUMBER}_completed"
-          show_meditation_menu
-        else
-          show_intro_without_state
-        end
-      end
-      
-      def handle_resume_from_step(step)
-        case step
-        when 'intro'
-          deliver_intro
-        when 'exercise_started', 'preparation'
-          start_meditation_preparation
-        when /^step_(\d+)$/
-          step_number = $1.to_i
-          continue_meditation_step(step_number)
-        when 'meditation_completed'
-          complete_meditation_session
-        when 'rating'
-          ask_for_meditation_rating
-        when 'feedback', 'waiting_feedback'
-          send_message(text: "💭 Напишите ваши впечатления от медитации:")
-        else
-          deliver_exercise
-        end
-      end
-      
       def show_intro_without_state
         send_message(
           text: "🧘‍♀️ *День 19: Ваша первая медитация* 🧘‍♀️\n\nДавайте начнем!",

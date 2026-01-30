@@ -1939,47 +1939,6 @@ end
   end
 end
       
-      # ===== ВОССТАНОВЛЕНИЕ СЕССИИ =====
-      
-      def resume_session
-  current_state = @user.self_help_state
-  
-  case current_state
-  when "day_#{DAY_NUMBER}_intro"
-    deliver_exercise
-    
-  when "day_#{DAY_NUMBER}_exercise_in_progress"
-    current_step = get_day_data('current_step')
-    if current_step.present?
-      handle_resume_from_step(current_step)
-    else
-      deliver_exercise
-    end
-    
-  when /^day_#{DAY_NUMBER}_waiting_for_/
-    current_step = get_day_data('current_analysis_step')
-    if current_step.present?
-      start_analysis_step(current_step)
-    else
-      deliver_exercise
-    end
-    
-  when "day_#{DAY_NUMBER}_analysis_completed"
-    analysis_data = get_day_data('final_analysis')
-    if analysis_data.present?
-      show_analysis_completion(analysis_data)
-    else
-      deliver_exercise
-    end
-    
-  when "day_#{DAY_NUMBER}_completed"
-    show_day_completion  # Изменяем здесь тоже
-    
-  else
-    log_warn("Unknown or invalid state for resume: #{current_state}")
-    deliver_intro
-  end
-end
       
       def handle_resume_from_step(step)
         case step

@@ -317,20 +317,6 @@ module SelfHelp
         propose_next_day_with_restriction
       end
       
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_3_intro"
-          deliver_intro
-        when "day_3_exercise_in_progress"
-          current_step = get_day_data('current_step')
-          handle_resume_from_step(current_step || 'exercise')
-        else
-          super
-        end
-      end
-      
       # ===== ОБРАБОТКА КНОПОК =====
       
       def handle_button(callback_data)

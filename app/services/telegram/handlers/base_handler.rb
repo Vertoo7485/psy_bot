@@ -33,40 +33,58 @@ module Telegram
       
       # Инициализация matches на основе CALLBACK_PATTERN
       def init_matches
-        return unless @callback_data
-        
-        if self.class.const_defined?(:CALLBACK_PATTERN)
-          pattern = self.class::CALLBACK_PATTERN
-          @matches = @callback_data.match(pattern)
-        else
-          @matches = nil
-        end
-      end
+  return unless @callback_data
+  
+  # Используем класс текущего объекта (наследника)
+  actual_class = self.class
+  if actual_class.const_defined?(:CALLBACK_PATTERN, false)  # false = не искать в предках
+    pattern = actual_class::CALLBACK_PATTERN
+    @matches = @callback_data.match(pattern)
+    Rails.logger.debug "[#{self.class.name}] Pattern found: #{pattern}, matches: #{@matches&.captures&.inspect}"
+  else
+    Rails.logger.debug "[#{self.class.name}] No CALLBACK_PATTERN defined"
+    @matches = nil
+  end
+end
       
       # Безопасная проверка наличия совпадений
       def has_matches?
-        return false unless @callback_data
-        
-        if defined?(@matches)
-          !@matches.nil?
-        elsif self.class.const_defined?(:CALLBACK_PATTERN)
-          !@callback_data.match(self.class::CALLBACK_PATTERN).nil?
-        else
-          false
-        end
-      end
+  return false unless @callback_data
+  
+  if defined?(@matches) && @matches
+    true
+  else
+    # Проверяем в классе наследника
+    actual_class = self.class
+    if actual_class.const_defined?(:CALLBACK_PATTERN, false)
+      pattern = actual_class::CALLBACK_PATTERN
+      match = @callback_data.match(pattern)
+      !match.nil?
+    else
+      false
+    end
+  end
+end
       
       # Безопасное получение группы совпадения
       def match_group(index)
-        return nil unless has_matches?
-        
-        if defined?(@matches) && @matches
-          @matches[index]
-        elsif self.class.const_defined?(:CALLBACK_PATTERN)
-          match = @callback_data.match(self.class::CALLBACK_PATTERN)
-          match[index] if match
-        end
-      end
+  return nil unless @callback_data
+  
+  # Сначала проверяем @matches
+  if defined?(@matches) && @matches
+    return @matches[index]
+  end
+  
+  # Если @matches нет, пробуем найти match
+  actual_class = self.class
+  if actual_class.const_defined?(:CALLBACK_PATTERN, false)
+    pattern = actual_class::CALLBACK_PATTERN
+    match = @callback_data.match(pattern)
+    return match[index] if match
+  end
+  
+  nil
+end
       
       # === УТИЛИТНЫЕ МЕТОДЫ ===
       

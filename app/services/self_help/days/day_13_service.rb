@@ -571,53 +571,6 @@ module SelfHelp
         handle_text_input(text)
       end
       
-      # ===== ВОССТАНОВЛЕНИЕ СЕССИИ =====
-      
-      def resume_session
-        current_state = @user.self_help_state
-        
-        case current_state
-        when "day_#{DAY_NUMBER}_intro"
-          deliver_exercise
-          
-        when "day_#{DAY_NUMBER}_exercise_in_progress"
-          current_step = get_day_data('current_step')
-          if current_step.present?
-            handle_resume_from_step(current_step)
-          else
-            deliver_exercise
-          end
-          
-        when /^day_#{DAY_NUMBER}_waiting_for_/
-          current_step = get_day_data('current_procrastination_step')
-          if current_step.present?
-            start_procrastination_step(current_step)
-          else
-            deliver_exercise
-          end
-          
-        when "day_#{DAY_NUMBER}_timer_running"
-          # Таймер запущен - предлагаем завершить
-          send_message(
-            text: "⏱️ Таймер на #{FIRST_STEP_DURATION_MINUTES} минут запущен.\n\nНажмите кнопку, когда закончите:",
-            reply_markup: day_13_timer_completion_markup
-          )
-          
-        when "day_#{DAY_NUMBER}_procrastination_completed"
-          show_procrastination_completion
-          
-        when "day_#{DAY_NUMBER}_reflection_done"
-          send_message(
-            text: "🎯 Метод преодоления прокрастинации освоен!\n\nХотите завершить День 13?",
-            reply_markup: day_13_final_completion_markup
-          )
-          
-        else
-          log_warn("Unknown or invalid state for resume: #{current_state}")
-          show_intro_without_state
-        end
-      end
-      
       def handle_resume_from_step(step)
         case step
         when 'intro'

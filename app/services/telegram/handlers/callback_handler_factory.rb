@@ -4,6 +4,8 @@ module Telegram
     class CallbackHandlerFactory
       # Карта сопоставления callback_data с обработчиками
       HANDLERS_MAP = {
+
+        /^admin:/ => 'AdminCallbackHandler',
         # Главное меню и общие действия
         'back_to_main_menu' => 'MainMenuHandler',
         'resume_session' => 'ResumeSessionHandler',
@@ -252,7 +254,7 @@ module Telegram
           
           # Ищем подходящий обработчик
           HANDLERS_MAP.each_with_index do |(pattern, handler_name), index|
-            Rails.logger.info "[CallbackHandlerFactory] Checking pattern #{index}: #{pattern.inspect}"
+            Rails.logger.debug "[CallbackHandlerFactory] Checking pattern #{index}: #{pattern.inspect}"
             
             if pattern.is_a?(String)
               if callback_data == pattern
@@ -291,27 +293,31 @@ module Telegram
         private
         
         def get_handler_class(handler_name)
-          # Пробуем найти класс в разных namespace
-          possible_paths = [
-            "Telegram::Handlers::#{handler_name}",
-            "Telegram::Handlers::SelfHelpHandlers::DayHandlers::#{handler_name}",
-            "Telegram::Handlers::SelfHelpHandlers::#{handler_name}",
-            "Telegram::Handlers::GeneralHandlers::#{handler_name}",
-            "Telegram::Handlers::TestHandlers::#{handler_name}",
-            "Telegram::Handlers::EmotionDiaryHandlers::#{handler_name}"
-          ]
-          
-          possible_paths.each do |class_path|
-            begin
-              return class_path.constantize
-            rescue NameError
-              next
-            end
-          end
-          
-          # Если не нашли, возвращаем UnknownHandler
-          "Telegram::Handlers::UnknownHandler".constantize
-        end
+  # Пробуем найти класс в разных namespace
+  possible_paths = [
+    "Telegram::Handlers::#{handler_name}",
+    "Telegram::Handlers::SelfHelpHandlers::DayHandlers::#{handler_name}",
+    "Telegram::Handlers::SelfHelpHandlers::#{handler_name}",
+    "Telegram::Handlers::GeneralHandlers::#{handler_name}",
+    "Telegram::Handlers::TestHandlers::#{handler_name}",
+    "Telegram::Handlers::EmotionDiaryHandlers::#{handler_name}",
+    "Telegram::#{handler_name}",  # ← ЭТО УЖЕ ЕСТЬ
+  ]
+  
+  possible_paths.each do |class_path|
+    begin
+      Rails.logger.debug "[CallbackHandlerFactory] Trying class path: #{class_path}"
+      return class_path.constantize
+    rescue NameError => e
+      Rails.logger.debug "[CallbackHandlerFactory] Failed to load #{class_path}: #{e.message}"
+      next
+    end
+  end
+  
+  # Если не нашли, возвращаем UnknownHandler
+  Rails.logger.warn "[CallbackHandlerFactory] Using UnknownHandler for #{handler_name}"
+  "Telegram::Handlers::UnknownHandler".constantize
+end
       end
     end
   end
