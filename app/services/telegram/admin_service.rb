@@ -111,42 +111,44 @@ module Telegram
     end
     
     def show_user_info
-      identifier = @args[1]
-      
-      unless identifier
-        send_message("❌ Укажите username, ID или имя: `/admin user @username`")
-        return
-      end
-      
-      user = find_user(identifier)
-      
-      unless user
-        send_message("❌ Пользователь не найден.")
-        return
-      end
-      
-      text = AccessControlService.format_user_info(user, detailed: true)
-      
-      # Кнопки для быстрых действий
-      markup = {
-        inline_keyboard: [
-          [
-            { text: "✅ Активировать 30д", callback_data: "admin:activate:#{user.id}:30" },
-            { text: "⏰ Trial 3д", callback_data: "admin:trial:#{user.id}:3" }
-          ],
-          [
-            { text: "❌ Деактивировать", callback_data: "admin:deactivate:#{user.id}" },
-            { text: "📅 Продлить 30д", callback_data: "admin:extend:#{user.id}:30" }
-          ],
-          [
-            { text: "📊 Статистика", callback_data: "admin:stats" },
-            { text: "🔍 Поиск", callback_data: "admin:search" }
-          ]
-        ]
-      }.to_json
-      
-      send_message(text, parse_mode: 'Markdown', reply_markup: markup)
-    end
+  identifier = @args[1]
+  
+  unless identifier
+    send_message("❌ Укажите username, ID или имя: `/admin user @username`")
+    return
+  end
+  
+  user = find_user(identifier)
+  
+  unless user
+    send_message("❌ Пользователь не найден.")
+    return
+  end
+  
+  # ИСПРАВЛЕНИЕ: format_user_info возвращает строку, не hash
+  text = AccessControlService.format_user_info(user, detailed: true)
+  
+  # Кнопки для быстрых действий
+  markup = {
+    inline_keyboard: [
+      [
+        { text: "✅ Активировать 30д", callback_data: "admin:activate:#{user.id}:30" },
+        { text: "⏰ Trial 3д", callback_data: "admin:trial:#{user.id}:3" }
+      ],
+      [
+        { text: "❌ Деактивировать", callback_data: "admin:deactivate:#{user.id}" },
+        { text: "📅 Продлить 30д", callback_data: "admin:extend:#{user.id}:30" }
+      ],
+      [
+        { text: "📊 Статистика", callback_data: "admin:stats" },
+        { text: "🔍 Поиск", callback_data: "admin:search" }
+      ]
+    ]
+  }.to_json
+  
+  # Временное исправление: убрать parse_mode пока не исправим Markdown
+  send_message(text, parse_mode: nil, reply_markup: markup)
+end
     
     def activate_user
       identifier = @args[1]
@@ -433,13 +435,13 @@ module Telegram
       end
     end
     
-    def send_message(text, parse_mode: nil, reply_markup: nil)
-      @bot.send_message(
-        chat_id: @chat_id,
-        text: text,
-        parse_mode: parse_mode,
-        reply_markup: reply_markup
-      )
-    end
+    def send_message(text, reply_markup: nil, parse_mode: nil)  # ← измените на nil
+  @bot.send_message(
+    chat_id: @chat_id,
+    text: text,
+    reply_markup: reply_markup,
+    parse_mode: parse_mode  # Будет nil
+  )
+end
   end
 end
