@@ -4,6 +4,7 @@ module TelegramMarkupHelper
   
   # Основные константы для эмодзи
   EMOJI = {
+    home: '🏠',
     tests: '📋',
     diary: '📔',
     self_help: '⭐️',

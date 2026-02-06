@@ -89,7 +89,12 @@ end
       # === УТИЛИТНЫЕ МЕТОДЫ ===
       
       # Отправка сообщения пользователю
-      def send_message(text:, reply_markup: nil, parse_mode: nil, disable_notification: false)
+            def send_message(text:, reply_markup: nil, parse_mode: nil, disable_notification: false)
+        # ЛОГИРОВАНИЕ ОТПРАВКИ
+        log_msg = "[#{Time.now}] 📤 SENDING: text='#{text[0..50]}...' | reply_markup=#{reply_markup ? 'YES' : 'NO'}"
+        File.write('/home/deploy/bot_requests.log', log_msg + "\n", mode: 'a')
+        puts log_msg
+        
         @bot_service.send_message(
           chat_id: @chat_id,
           text: text,
@@ -97,9 +102,6 @@ end
           parse_mode: parse_mode,
           disable_notification: disable_notification
         )
-      rescue Telegram::Bot::Error => e
-        log_error("Failed to send message", e)
-        false
       end
       
       # Ответ на callback query

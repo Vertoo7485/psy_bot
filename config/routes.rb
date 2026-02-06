@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   post '/telegram_webhooks/message', to: 'telegram_webhooks#message'
-  #post '/telegram_webhooks/callback_query', to: 'telegram_webhooks#callback_query'
+  post '/telegram_webhooks/callback_query', to: 'telegram_webhooks#callback_query'
 end

@@ -8145,3 +8145,1008 @@ I, [2026-02-05T20:22:12.840267 #19145]  INFO -- : [35cefb08-0528-458a-8603-52cb6
 E, [2026-02-05T20:22:12.840742 #19145] ERROR -- : [35cefb08-0528-458a-8603-52cb6d92a2d7]   
 [35cefb08-0528-458a-8603-52cb6d92a2d7] ActionController::RoutingError (No route matches [GET] "/wordpress"):
 [35cefb08-0528-458a-8603-52cb6d92a2d7]   
+=== puma startup: 2026-02-06 08:41:28 +0300 ===
+[26698] * Starting control server on unix:///tmp/puma-status-1770356487748-26698
+[26698] - Worker 0 (PID: 26719) booted in 0.0s, phase: 0
+[26698] - Worker 1 (PID: 26721) booted in 0.0s, phase: 0
+I, [2026-02-06T08:41:35.246889 #26721]  INFO -- : [5e91e317-3b94-4509-b027-4b1f13332101] Started POST "/telegram_webhooks/message" for 89.104.65.152 at 2026-02-06 08:41:35 +0300
+I, [2026-02-06T08:41:35.249479 #26721]  INFO -- : [5e91e317-3b94-4509-b027-4b1f13332101] Processing by TelegramWebhooksController#message as */*
+I, [2026-02-06T08:41:35.249544 #26721]  INFO -- : [5e91e317-3b94-4509-b027-4b1f13332101]   Parameters: {"message"=>{"from"=>{"id"=>617053577}, "chat"=>{"id"=>617053577}, "text"=>"/start"}, "telegram_webhook"=>{"message"=>{"from"=>{"id"=>617053577}, "chat"=>{"id"=>617053577}, "text"=>"/start"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 08:41:35 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T08:41:35.328823 #26721]  INFO -- : [5e91e317-3b94-4509-b027-4b1f13332101] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T08:41:35.693411 #26721]  INFO -- : [5e91e317-3b94-4509-b027-4b1f13332101] Completed 200 OK in 444ms (Views: 0.3ms | ActiveRecord: 8.7ms | Allocations: 37419)
+I, [2026-02-06T08:42:21.243540 #26721]  INFO -- : [cafeb4d4-ee57-4a47-904e-58231ae4c929] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:42:21 +0300
+I, [2026-02-06T08:42:21.244328 #26721]  INFO -- : [cafeb4d4-ee57-4a47-904e-58231ae4c929] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:42:21.244417 #26721]  INFO -- : [cafeb4d4-ee57-4a47-904e-58231ae4c929]   Parameters: {"update_id"=>165325735, "message"=>{"message_id"=>19689, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356541, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325735, "message"=>{"message_id"=>19689, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356541, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 08:42:21 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T08:42:21.247069 #26721]  INFO -- : [cafeb4d4-ee57-4a47-904e-58231ae4c929] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T08:42:21.706492 #26721]  INFO -- : [cafeb4d4-ee57-4a47-904e-58231ae4c929] Completed 200 OK in 462ms (Views: 0.1ms | ActiveRecord: 0.7ms | Allocations: 6814)
+I, [2026-02-06T08:42:24.664153 #26721]  INFO -- : [546d9519-f084-4bb2-9b2f-4ab1f09f8d6c] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:42:24 +0300
+I, [2026-02-06T08:42:24.665123 #26721]  INFO -- : [546d9519-f084-4bb2-9b2f-4ab1f09f8d6c] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:42:24.665285 #26721]  INFO -- : [546d9519-f084-4bb2-9b2f-4ab1f09f8d6c]   Parameters: {"update_id"=>165325736, "callback_query"=>{"id"=>"2650224937266524631", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19691, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356541, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}, "telegram_webhook"=>{"update_id"=>165325736, "callback_query"=>{"id"=>"2650224937266524631", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19691, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356541, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T08:42:24.666279 #26721]  INFO -- : [546d9519-f084-4bb2-9b2f-4ab1f09f8d6c] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 281)
+I, [2026-02-06T08:42:41.955716 #26719]  INFO -- : [70406c1e-be22-402e-b0fc-28d0fb3eaeae] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:42:41 +0300
+I, [2026-02-06T08:42:41.958508 #26719]  INFO -- : [70406c1e-be22-402e-b0fc-28d0fb3eaeae] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:42:41.958655 #26719]  INFO -- : [70406c1e-be22-402e-b0fc-28d0fb3eaeae]   Parameters: {"update_id"=>165325737, "callback_query"=>{"id"=>"2650224935431075599", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19691, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356541, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325737, "callback_query"=>{"id"=>"2650224935431075599", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19691, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356541, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T08:42:41.973249 #26719]  INFO -- : [70406c1e-be22-402e-b0fc-28d0fb3eaeae] Completed 200 OK in 14ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 9771)
+I, [2026-02-06T08:42:59.478946 #26721]  INFO -- : [36ec770d-3713-4f1a-8f85-e5e270840249] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:42:59 +0300
+I, [2026-02-06T08:42:59.479804 #26721]  INFO -- : [36ec770d-3713-4f1a-8f85-e5e270840249] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:42:59.479908 #26721]  INFO -- : [36ec770d-3713-4f1a-8f85-e5e270840249]   Parameters: {"update_id"=>165325738, "callback_query"=>{"id"=>"2650224935558987277", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19691, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356541, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}, "telegram_webhook"=>{"update_id"=>165325738, "callback_query"=>{"id"=>"2650224935558987277", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19691, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356541, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T08:42:59.480622 #26721]  INFO -- : [36ec770d-3713-4f1a-8f85-e5e270840249] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T08:43:02.026819 #26721]  INFO -- : [2e45869f-0385-4207-a551-ac3cf50c44be] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:43:02 +0300
+I, [2026-02-06T08:43:02.027726 #26721]  INFO -- : [2e45869f-0385-4207-a551-ac3cf50c44be] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:43:02.027867 #26721]  INFO -- : [2e45869f-0385-4207-a551-ac3cf50c44be]   Parameters: {"update_id"=>165325739, "message"=>{"message_id"=>19692, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356581, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325739, "message"=>{"message_id"=>19692, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356581, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 08:43:02 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T08:43:02.030499 #26721]  INFO -- : [2e45869f-0385-4207-a551-ac3cf50c44be] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T08:43:02.433435 #26721]  INFO -- : [2e45869f-0385-4207-a551-ac3cf50c44be] Completed 200 OK in 405ms (Views: 0.1ms | ActiveRecord: 0.4ms | Allocations: 6808)
+I, [2026-02-06T08:43:07.593357 #26719]  INFO -- : [b889fdf8-3fbe-48e4-80ea-f4a17d2d442c] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:43:07 +0300
+I, [2026-02-06T08:43:07.594167 #26719]  INFO -- : [b889fdf8-3fbe-48e4-80ea-f4a17d2d442c] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:43:07.594257 #26719]  INFO -- : [b889fdf8-3fbe-48e4-80ea-f4a17d2d442c]   Parameters: {"update_id"=>165325740, "message"=>{"message_id"=>19695, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356587, "text"=>"/help", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325740, "message"=>{"message_id"=>19695, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356587, "text"=>"/help", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 08:43:07 +0300] 👤 User: 617053577 | Команда: /help
+[BOT] 📱 Received: /help from 617053577
+[BOT] 💬 Processing: '/help' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T08:43:07.662204 #26719]  INFO -- : [b889fdf8-3fbe-48e4-80ea-f4a17d2d442c] [MessageProcessor] Processing message: /help - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T08:43:07.932246 #26719]  INFO -- : [b889fdf8-3fbe-48e4-80ea-f4a17d2d442c] Completed 200 OK in 338ms (Views: 0.2ms | ActiveRecord: 8.2ms | Allocations: 22441)
+[26698] === puma shutdown: 2026-02-06 08:45:36 +0300 ===
+[26698] - Goodbye!
+[26698] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 08:45:37 +0300 ===
+[27018] * Starting control server on unix:///tmp/puma-status-1770356736821-27018
+[27018] - Worker 0 (PID: 27038) booted in 0.0s, phase: 0
+[27018] - Worker 1 (PID: 27040) booted in 0.01s, phase: 0
+I, [2026-02-06T08:45:57.770279 #27038]  INFO -- : [f929e052-89b5-425d-9532-bf2bc6110a1e] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:45:57 +0300
+I, [2026-02-06T08:45:57.774083 #27038]  INFO -- : [f929e052-89b5-425d-9532-bf2bc6110a1e] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:45:57.774267 #27038]  INFO -- : [f929e052-89b5-425d-9532-bf2bc6110a1e]   Parameters: {"update_id"=>165325741, "callback_query"=>{"id"=>"2650224937360083050", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19694, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356582, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}, "telegram_webhook"=>{"update_id"=>165325741, "callback_query"=>{"id"=>"2650224937360083050", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19694, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356582, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T08:45:57.795218 #27038]  INFO -- : [f929e052-89b5-425d-9532-bf2bc6110a1e] Completed 200 OK in 21ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 9771)
+I, [2026-02-06T08:46:29.590843 #27038]  INFO -- : [38188a4f-b013-4e93-9794-2c253c407876] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:46:29 +0300
+I, [2026-02-06T08:46:29.591885 #27038]  INFO -- : [38188a4f-b013-4e93-9794-2c253c407876] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:46:29.592006 #27038]  INFO -- : [38188a4f-b013-4e93-9794-2c253c407876]   Parameters: {"update_id"=>165325742, "callback_query"=>{"id"=>"2650224937288636667", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19694, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356582, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325742, "callback_query"=>{"id"=>"2650224937288636667", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19694, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356582, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T08:46:29.592949 #27038]  INFO -- : [38188a4f-b013-4e93-9794-2c253c407876] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+[27018] === puma shutdown: 2026-02-06 08:47:51 +0300 ===
+[27018] - Goodbye!
+[27018] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 08:47:52 +0300 ===
+[27134] * Starting control server on unix:///tmp/puma-status-1770356872248-27134
+[27134] - Worker 0 (PID: 27155) booted in 0.0s, phase: 0
+[27134] - Worker 1 (PID: 27156) booted in 0.0s, phase: 0
+I, [2026-02-06T08:48:09.708949 #27156]  INFO -- : [89c619b9-fdd5-4468-b856-1d9895ccf7da] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:48:09 +0300
+I, [2026-02-06T08:48:09.711899 #27156]  INFO -- : [89c619b9-fdd5-4468-b856-1d9895ccf7da] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:48:09.712028 #27156]  INFO -- : [89c619b9-fdd5-4468-b856-1d9895ccf7da]   Parameters: {"update_id"=>165325743, "callback_query"=>{"id"=>"2650224934423010036", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19694, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356582, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325743, "callback_query"=>{"id"=>"2650224934423010036", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19694, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356582, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T08:48:09.726428 #27156]  INFO -- : [89c619b9-fdd5-4468-b856-1d9895ccf7da] Completed 200 OK in 14ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 9771)
+I, [2026-02-06T08:48:27.025785 #27156]  INFO -- : [882ccc61-9fce-46e2-abfb-ce7f1162b4da] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 08:48:27 +0300
+I, [2026-02-06T08:48:27.026709 #27156]  INFO -- : [882ccc61-9fce-46e2-abfb-ce7f1162b4da] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T08:48:27.026782 #27156]  INFO -- : [882ccc61-9fce-46e2-abfb-ce7f1162b4da]   Parameters: {"callback_query"=>{"id"=>"test123", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1}, "data"=>"test_button"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"test123", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1}, "data"=>"test_button"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 08:48:27 +0300] 🔘 CALLBACK User: 617053577 | Data: test_button
+[BOT] 🔘 Callback: test_button
+I, [2026-02-06T08:48:27.027782 #27156]  INFO -- : [882ccc61-9fce-46e2-abfb-ce7f1162b4da] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 246)
+I, [2026-02-06T08:48:37.769952 #27155]  INFO -- : [f6f64f7b-7412-4462-910d-4b9747573983] Started GET "/wordpress/wp-admin/setup-config.php" for 172.68.10.200 at 2026-02-06 08:48:37 +0300
+E, [2026-02-06T08:48:37.771086 #27155] ERROR -- : [f6f64f7b-7412-4462-910d-4b9747573983]   
+[f6f64f7b-7412-4462-910d-4b9747573983] ActionController::RoutingError (No route matches [GET] "/wordpress/wp-admin/setup-config.php"):
+[f6f64f7b-7412-4462-910d-4b9747573983]   
+I, [2026-02-06T08:48:52.308279 #27156]  INFO -- : [5dc05e79-d034-43d6-8cd4-a34134b55d51] Started GET "/wp-admin/setup-config.php" for 172.68.10.201 at 2026-02-06 08:48:52 +0300
+E, [2026-02-06T08:48:52.309095 #27156] ERROR -- : [5dc05e79-d034-43d6-8cd4-a34134b55d51]   
+[5dc05e79-d034-43d6-8cd4-a34134b55d51] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[5dc05e79-d034-43d6-8cd4-a34134b55d51]   
+I, [2026-02-06T08:49:16.825369 #27155]  INFO -- : [2451d5f8-2756-4803-83af-66cf3fc1fe2a] Started GET "/wordpress/wp-admin/setup-config.php" for 172.71.184.52 at 2026-02-06 08:49:16 +0300
+E, [2026-02-06T08:49:16.825825 #27155] ERROR -- : [2451d5f8-2756-4803-83af-66cf3fc1fe2a]   
+[2451d5f8-2756-4803-83af-66cf3fc1fe2a] ActionController::RoutingError (No route matches [GET] "/wordpress/wp-admin/setup-config.php"):
+[2451d5f8-2756-4803-83af-66cf3fc1fe2a]   
+I, [2026-02-06T08:49:18.115045 #27156]  INFO -- : [2d08a004-2e50-450c-ab75-4a439f99999a] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:49:18 +0300
+I, [2026-02-06T08:49:18.115801 #27156]  INFO -- : [2d08a004-2e50-450c-ab75-4a439f99999a] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:49:18.115889 #27156]  INFO -- : [2d08a004-2e50-450c-ab75-4a439f99999a]   Parameters: {"update_id"=>165325744, "message"=>{"message_id"=>19697, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356957, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325744, "message"=>{"message_id"=>19697, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356957, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 08:49:18 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T08:49:18.200646 #27156]  INFO -- : [2d08a004-2e50-450c-ab75-4a439f99999a] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T08:49:18.584984 #27156]  INFO -- : [2d08a004-2e50-450c-ab75-4a439f99999a] Completed 200 OK in 469ms (Views: 0.1ms | ActiveRecord: 11.3ms | Allocations: 27882)
+I, [2026-02-06T08:49:20.108005 #27155]  INFO -- : [05223337-8a4a-4850-bb5a-fb56829d1206] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:49:20 +0300
+I, [2026-02-06T08:49:20.110183 #27155]  INFO -- : [05223337-8a4a-4850-bb5a-fb56829d1206] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:49:20.110312 #27155]  INFO -- : [05223337-8a4a-4850-bb5a-fb56829d1206]   Parameters: {"update_id"=>165325745, "callback_query"=>{"id"=>"2650224933919256892", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19699, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356958, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325745, "callback_query"=>{"id"=>"2650224933919256892", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19699, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770356958, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T08:49:20.123348 #27155]  INFO -- : [05223337-8a4a-4850-bb5a-fb56829d1206] Completed 200 OK in 13ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 9759)
+I, [2026-02-06T08:49:31.324122 #27156]  INFO -- : [2c7e092b-fd4c-4e26-92c9-33e71b59ce97] Started GET "/wp-admin/setup-config.php" for 172.68.10.201 at 2026-02-06 08:49:31 +0300
+E, [2026-02-06T08:49:31.324517 #27156] ERROR -- : [2c7e092b-fd4c-4e26-92c9-33e71b59ce97]   
+[2c7e092b-fd4c-4e26-92c9-33e71b59ce97] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[2c7e092b-fd4c-4e26-92c9-33e71b59ce97]   
+[27134] === puma shutdown: 2026-02-06 08:52:17 +0300 ===
+[27134] - Goodbye!
+[27134] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 08:54:45 +0300 ===
+[27580] * Starting control server on unix:///tmp/puma-status-1770357284521-27580
+[27580] - Worker 0 (PID: 27600) booted in 0.0s, phase: 0
+[27580] - Worker 1 (PID: 27602) booted in 0.0s, phase: 0
+I, [2026-02-06T08:54:47.329410 #27600]  INFO -- : [992e1b1d-221d-4a84-ba8d-01dde4dda4d6] Started POST "/telegram_webhooks/message" for 89.104.65.152 at 2026-02-06 08:54:47 +0300
+I, [2026-02-06T08:54:47.332096 #27600]  INFO -- : [992e1b1d-221d-4a84-ba8d-01dde4dda4d6] Processing by TelegramWebhooksController#message as */*
+I, [2026-02-06T08:54:47.332156 #27600]  INFO -- : [992e1b1d-221d-4a84-ba8d-01dde4dda4d6]   Parameters: {"message"=>{"from"=>{"id"=>617053577}, "chat"=>{"id"=>617053577}, "text"=>"/start"}, "telegram_webhook"=>{"message"=>{"from"=>{"id"=>617053577}, "chat"=>{"id"=>617053577}, "text"=>"/start"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 08:54:47 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T08:54:47.408296 #27600]  INFO -- : [992e1b1d-221d-4a84-ba8d-01dde4dda4d6] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T08:54:47.905233 #27600]  INFO -- : [992e1b1d-221d-4a84-ba8d-01dde4dda4d6] Completed 200 OK in 573ms (Views: 0.3ms | ActiveRecord: 7.4ms | Allocations: 37391)
+I, [2026-02-06T08:55:34.236100 #27602]  INFO -- : [dcda2756-30a9-490a-b8b3-9f87a3002055] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:55:34 +0300
+I, [2026-02-06T08:55:34.239657 #27602]  INFO -- : [dcda2756-30a9-490a-b8b3-9f87a3002055] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:55:34.239802 #27602]  INFO -- : [dcda2756-30a9-490a-b8b3-9f87a3002055]   Parameters: {"update_id"=>165325747, "callback_query"=>{"id"=>"2650224935569142012", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19702, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357287, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325747, "callback_query"=>{"id"=>"2650224935569142012", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19702, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357287, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T08:55:34.255123 #27602]  INFO -- : [dcda2756-30a9-490a-b8b3-9f87a3002055] Completed 200 OK in 15ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 9771)
+I, [2026-02-06T08:55:56.479870 #27602]  INFO -- : [1da5a422-bb85-4867-9738-6de227c366da] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 08:55:56 +0300
+I, [2026-02-06T08:55:56.480791 #27602]  INFO -- : [1da5a422-bb85-4867-9738-6de227c366da] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T08:55:56.480871 #27602]  INFO -- : [1da5a422-bb85-4867-9738-6de227c366da]   Parameters: {"callback_query"=>{"id"=>"test_callback_123", "from"=>{"id"=>617053577, "first_name"=>"Test"}, "message"=>{"message_id"=>123}, "data"=>"test_buttons"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"test_callback_123", "from"=>{"id"=>617053577, "first_name"=>"Test"}, "message"=>{"message_id"=>123}, "data"=>"test_buttons"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 08:55:56 +0300] 🔘 CALLBACK User: 617053577 | Data: test_buttons
+[BOT] 🔘 Callback: test_buttons
+I, [2026-02-06T08:55:56.481809 #27602]  INFO -- : [1da5a422-bb85-4867-9738-6de227c366da] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 246)
+I, [2026-02-06T08:56:06.238910 #27602]  INFO -- : [4a68c710-f87f-4b21-a847-01ca2e3fba4f] Started POST "/" for 176.65.139.30 at 2026-02-06 08:56:06 +0300
+E, [2026-02-06T08:56:06.239613 #27602] ERROR -- : [4a68c710-f87f-4b21-a847-01ca2e3fba4f]   
+[4a68c710-f87f-4b21-a847-01ca2e3fba4f] ActionController::RoutingError (No route matches [POST] "/"):
+[4a68c710-f87f-4b21-a847-01ca2e3fba4f]   
+I, [2026-02-06T08:56:29.767509 #27600]  INFO -- : [c6521b75-bc4a-4bed-8b32-bf3f815646f9] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:56:29 +0300
+I, [2026-02-06T08:56:29.768280 #27600]  INFO -- : [c6521b75-bc4a-4bed-8b32-bf3f815646f9] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:56:29.768383 #27600]  INFO -- : [c6521b75-bc4a-4bed-8b32-bf3f815646f9]   Parameters: {"update_id"=>165325746, "message"=>{"message_id"=>19700, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357158, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325746, "message"=>{"message_id"=>19700, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357158, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 08:56:29 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T08:56:29.770269 #27600]  INFO -- : [c6521b75-bc4a-4bed-8b32-bf3f815646f9] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T08:56:30.106451 #27600]  INFO -- : [c6521b75-bc4a-4bed-8b32-bf3f815646f9] Completed 200 OK in 338ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 6813)
+I, [2026-02-06T08:57:39.266832 #27600]  INFO -- : [7db85866-c82b-4f39-808e-bb36190dfa92] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 08:57:39 +0300
+I, [2026-02-06T08:57:39.267566 #27600]  INFO -- : [7db85866-c82b-4f39-808e-bb36190dfa92] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T08:57:39.267639 #27600]  INFO -- : [7db85866-c82b-4f39-808e-bb36190dfa92]   Parameters: {"callback_query"=>{"id"=>"manual_test", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1}, "data"=>"manual_test_button"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"manual_test", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1}, "data"=>"manual_test_button"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 08:57:39 +0300] 🔘 CALLBACK User: 617053577 | Data: manual_test_button
+[BOT] 🔘 Callback: manual_test_button
+I, [2026-02-06T08:57:39.268304 #27600]  INFO -- : [7db85866-c82b-4f39-808e-bb36190dfa92] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 236)
+I, [2026-02-06T08:57:56.107655 #27600]  INFO -- : [93718c3a-031f-4548-9c43-c1e0bfb8d6e3] Started GET "/telegram_webhooks/message" for 223.233.68.65 at 2026-02-06 08:57:56 +0300
+E, [2026-02-06T08:57:56.108954 #27600] ERROR -- : [93718c3a-031f-4548-9c43-c1e0bfb8d6e3]   
+[93718c3a-031f-4548-9c43-c1e0bfb8d6e3] ActionController::RoutingError (No route matches [GET] "/telegram_webhooks/message"):
+[93718c3a-031f-4548-9c43-c1e0bfb8d6e3]   
+I, [2026-02-06T08:59:16.461207 #27602]  INFO -- : [76a25104-25f2-4bf2-ad98-08c5e447ca83] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:59:16 +0300
+I, [2026-02-06T08:59:16.461961 #27602]  INFO -- : [76a25104-25f2-4bf2-ad98-08c5e447ca83] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:59:16.462045 #27602]  INFO -- : [76a25104-25f2-4bf2-ad98-08c5e447ca83]   Parameters: {"update_id"=>165325748, "message"=>{"message_id"=>19705, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357556, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325748, "message"=>{"message_id"=>19705, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357556, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 08:59:16 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T08:59:16.535715 #27602]  INFO -- : [76a25104-25f2-4bf2-ad98-08c5e447ca83] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T08:59:16.903208 #27602]  INFO -- : [76a25104-25f2-4bf2-ad98-08c5e447ca83] Completed 200 OK in 441ms (Views: 0.1ms | ActiveRecord: 7.9ms | Allocations: 27880)
+I, [2026-02-06T08:59:25.942885 #27600]  INFO -- : [6b9021d4-da79-4f48-aac3-abd2e0c5c0a2] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 08:59:25 +0300
+I, [2026-02-06T08:59:25.943988 #27600]  INFO -- : [6b9021d4-da79-4f48-aac3-abd2e0c5c0a2] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T08:59:25.944173 #27600]  INFO -- : [6b9021d4-da79-4f48-aac3-abd2e0c5c0a2]   Parameters: {"update_id"=>165325749, "callback_query"=>{"id"=>"2650224934833573159", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19707, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357556, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325749, "callback_query"=>{"id"=>"2650224934833573159", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19707, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357556, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T08:59:25.945031 #27600]  INFO -- : [6b9021d4-da79-4f48-aac3-abd2e0c5c0a2] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 281)
+I, [2026-02-06T09:01:51.310556 #27602]  INFO -- : [79237ef8-b179-451b-968d-cd2b6a14c680] Started POST "/" for 176.65.139.30 at 2026-02-06 09:01:51 +0300
+E, [2026-02-06T09:01:51.311213 #27602] ERROR -- : [79237ef8-b179-451b-968d-cd2b6a14c680]   
+[79237ef8-b179-451b-968d-cd2b6a14c680] ActionController::RoutingError (No route matches [POST] "/"):
+[79237ef8-b179-451b-968d-cd2b6a14c680]   
+I, [2026-02-06T09:02:28.030728 #27600]  INFO -- : [730c5299-157c-46fb-aeec-afdaf48fcb84] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:02:28 +0300
+I, [2026-02-06T09:02:28.031663 #27600]  INFO -- : [730c5299-157c-46fb-aeec-afdaf48fcb84] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:02:28.031746 #27600]  INFO -- : [730c5299-157c-46fb-aeec-afdaf48fcb84]   Parameters: {"update_id"=>165325750, "message"=>{"message_id"=>19708, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357747, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325750, "message"=>{"message_id"=>19708, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357747, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:02:28 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:02:28.077258 #27600]  INFO -- : [730c5299-157c-46fb-aeec-afdaf48fcb84] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:02:28.348387 #27600]  INFO -- : [730c5299-157c-46fb-aeec-afdaf48fcb84] Completed 200 OK in 317ms (Views: 0.1ms | ActiveRecord: 4.0ms | Allocations: 5299)
+I, [2026-02-06T09:04:07.320721 #27602]  INFO -- : [d52e8881-13b3-46ab-85d1-45bc74397d80] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:04:07 +0300
+I, [2026-02-06T09:04:07.321480 #27602]  INFO -- : [d52e8881-13b3-46ab-85d1-45bc74397d80] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:04:07.321566 #27602]  INFO -- : [d52e8881-13b3-46ab-85d1-45bc74397d80]   Parameters: {"update_id"=>165325751, "message"=>{"message_id"=>19710, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357847, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325751, "message"=>{"message_id"=>19710, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357847, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:04:07 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:04:07.323806 #27602]  INFO -- : [d52e8881-13b3-46ab-85d1-45bc74397d80] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:04:07.696279 #27602]  INFO -- : [d52e8881-13b3-46ab-85d1-45bc74397d80] Completed 200 OK in 375ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 6811)
+I, [2026-02-06T09:04:10.096970 #27602]  INFO -- : [bf64aa36-af62-48a7-aabd-f667cf846b83] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:04:10 +0300
+I, [2026-02-06T09:04:10.097923 #27602]  INFO -- : [bf64aa36-af62-48a7-aabd-f667cf846b83] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:04:10.098071 #27602]  INFO -- : [bf64aa36-af62-48a7-aabd-f667cf846b83]   Parameters: {"update_id"=>165325752, "callback_query"=>{"id"=>"2650224935722979253", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19712, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357847, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325752, "callback_query"=>{"id"=>"2650224935722979253", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19712, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770357847, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T09:04:10.098872 #27602]  INFO -- : [bf64aa36-af62-48a7-aabd-f667cf846b83] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:05:17.641806 #27600]  INFO -- : [64a2bb1e-825e-4a78-955e-4cd77cc4eda7] Started GET "/js/twint_ch.js" for 84.254.106.197 at 2026-02-06 09:05:17 +0300
+E, [2026-02-06T09:05:17.642271 #27600] ERROR -- : [64a2bb1e-825e-4a78-955e-4cd77cc4eda7]   
+[64a2bb1e-825e-4a78-955e-4cd77cc4eda7] ActionController::RoutingError (No route matches [GET] "/js/twint_ch.js"):
+[64a2bb1e-825e-4a78-955e-4cd77cc4eda7]   
+I, [2026-02-06T09:05:17.700876 #27600]  INFO -- : [633101bc-5235-493a-9caf-fe7ad5af5703] Started GET "/js/lkk_ch.js" for 84.254.106.197 at 2026-02-06 09:05:17 +0300
+E, [2026-02-06T09:05:17.701282 #27600] ERROR -- : [633101bc-5235-493a-9caf-fe7ad5af5703]   
+[633101bc-5235-493a-9caf-fe7ad5af5703] ActionController::RoutingError (No route matches [GET] "/js/lkk_ch.js"):
+[633101bc-5235-493a-9caf-fe7ad5af5703]   
+I, [2026-02-06T09:05:17.774436 #27602]  INFO -- : [a4a7e24f-1508-4ed9-bc10-c9dd4c4ba6c7] Started GET "/css/support_parent.css" for 84.254.106.197 at 2026-02-06 09:05:17 +0300
+E, [2026-02-06T09:05:17.774811 #27602] ERROR -- : [a4a7e24f-1508-4ed9-bc10-c9dd4c4ba6c7]   
+[a4a7e24f-1508-4ed9-bc10-c9dd4c4ba6c7] ActionController::RoutingError (No route matches [GET] "/css/support_parent.css"):
+[a4a7e24f-1508-4ed9-bc10-c9dd4c4ba6c7]   
+I, [2026-02-06T09:05:36.595008 #27602]  INFO -- : [c08ad06c-47db-42f9-9f4d-2e0ef5d5f5fd] Started POST "/telegram_webhooks/message" for 89.104.65.152 at 2026-02-06 09:05:36 +0300
+I, [2026-02-06T09:05:36.595719 #27602]  INFO -- : [c08ad06c-47db-42f9-9f4d-2e0ef5d5f5fd] Processing by TelegramWebhooksController#message as */*
+I, [2026-02-06T09:05:36.595783 #27602]  INFO -- : [c08ad06c-47db-42f9-9f4d-2e0ef5d5f5fd]   Parameters: {"message"=>{"from"=>{"id"=>617053577}, "chat"=>{"id"=>617053577}, "text"=>"/start"}, "telegram_webhook"=>{"message"=>{"from"=>{"id"=>617053577}, "chat"=>{"id"=>617053577}, "text"=>"/start"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:05:36 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:05:36.598040 #27602]  INFO -- : [c08ad06c-47db-42f9-9f4d-2e0ef5d5f5fd] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:05:36.991076 #27602]  INFO -- : [c08ad06c-47db-42f9-9f4d-2e0ef5d5f5fd] Completed 200 OK in 395ms (Views: 0.1ms | ActiveRecord: 0.4ms | Allocations: 6809)
+I, [2026-02-06T09:07:23.212471 #27600]  INFO -- : [78e40e8a-8046-4b00-a95f-fd4450d90fa8] Started GET "/telegram_webhooks/message" for 223.233.68.65 at 2026-02-06 09:07:23 +0300
+E, [2026-02-06T09:07:23.213041 #27600] ERROR -- : [78e40e8a-8046-4b00-a95f-fd4450d90fa8]   
+[78e40e8a-8046-4b00-a95f-fd4450d90fa8] ActionController::RoutingError (No route matches [GET] "/telegram_webhooks/message"):
+[78e40e8a-8046-4b00-a95f-fd4450d90fa8]   
+I, [2026-02-06T09:07:32.045806 #27600]  INFO -- : [76c8c7c5-9deb-4ce4-9a02-a2239c7f2887] Started GET "/wp-admin/setup-config.php" for 172.71.184.53 at 2026-02-06 09:07:32 +0300
+E, [2026-02-06T09:07:32.046229 #27600] ERROR -- : [76c8c7c5-9deb-4ce4-9a02-a2239c7f2887]   
+[76c8c7c5-9deb-4ce4-9a02-a2239c7f2887] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[76c8c7c5-9deb-4ce4-9a02-a2239c7f2887]   
+I, [2026-02-06T09:07:44.598790 #27600]  INFO -- : [850f0d4e-40c4-4e56-ab99-fe3c81a32da1] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:07:44 +0300
+I, [2026-02-06T09:07:44.599543 #27600]  INFO -- : [850f0d4e-40c4-4e56-ab99-fe3c81a32da1] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:07:44.599664 #27600]  INFO -- : [850f0d4e-40c4-4e56-ab99-fe3c81a32da1]   Parameters: {"update_id"=>165325753, "message"=>{"message_id"=>19715, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358064, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325753, "message"=>{"message_id"=>19715, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358064, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:07:44 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:07:44.601715 #27600]  INFO -- : [850f0d4e-40c4-4e56-ab99-fe3c81a32da1] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:07:44.911048 #27600]  INFO -- : [850f0d4e-40c4-4e56-ab99-fe3c81a32da1] Completed 200 OK in 311ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 1787)
+I, [2026-02-06T09:07:54.290169 #27602]  INFO -- : [317eb93e-40e3-4609-89d5-4d254491166f] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:07:54 +0300
+I, [2026-02-06T09:07:54.291152 #27602]  INFO -- : [317eb93e-40e3-4609-89d5-4d254491166f] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:07:54.291277 #27602]  INFO -- : [317eb93e-40e3-4609-89d5-4d254491166f]   Parameters: {"update_id"=>165325754, "message"=>{"message_id"=>19717, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358074, "text"=>"/help", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325754, "message"=>{"message_id"=>19717, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358074, "text"=>"/help", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:07:54 +0300] 👤 User: 617053577 | Команда: /help
+[BOT] 📱 Received: /help from 617053577
+[BOT] 💬 Processing: '/help' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:07:54.323873 #27602]  INFO -- : [317eb93e-40e3-4609-89d5-4d254491166f] [MessageProcessor] Processing message: /help - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:07:54.637799 #27602]  INFO -- : [317eb93e-40e3-4609-89d5-4d254491166f] Completed 200 OK in 346ms (Views: 1.8ms | ActiveRecord: 0.4ms | Allocations: 2567)
+I, [2026-02-06T09:08:01.091881 #27600]  INFO -- : [0ce35324-7a1d-49fc-ba7f-316c78c944a9] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:08:01 +0300
+I, [2026-02-06T09:08:01.092970 #27600]  INFO -- : [0ce35324-7a1d-49fc-ba7f-316c78c944a9] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:08:01.093085 #27600]  INFO -- : [0ce35324-7a1d-49fc-ba7f-316c78c944a9]   Parameters: {"update_id"=>165325755, "callback_query"=>{"id"=>"2650224936914562837", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19716, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358064, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325755, "callback_query"=>{"id"=>"2650224936914562837", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19716, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358064, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T09:08:01.120390 #27600]  INFO -- : [0ce35324-7a1d-49fc-ba7f-316c78c944a9] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 278)
+I, [2026-02-06T09:08:13.951009 #27602]  INFO -- : [a8d0fea3-7487-49c5-88fd-0b8ed4917953] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:08:13 +0300
+I, [2026-02-06T09:08:13.951904 #27602]  INFO -- : [a8d0fea3-7487-49c5-88fd-0b8ed4917953] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:08:13.951983 #27602]  INFO -- : [a8d0fea3-7487-49c5-88fd-0b8ed4917953]   Parameters: {"update_id"=>165325756, "message"=>{"message_id"=>19719, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358093, "text"=>"/tests", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325756, "message"=>{"message_id"=>19719, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358093, "text"=>"/tests", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:08:13 +0300] 👤 User: 617053577 | Команда: /tests
+[BOT] 📱 Received: /tests from 617053577
+[BOT] 💬 Processing: '/tests' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:08:13.953859 #27602]  INFO -- : [a8d0fea3-7487-49c5-88fd-0b8ed4917953] [MessageProcessor] Processing message: /tests - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+I, [2026-02-06T09:08:13.954248 #27602]  INFO -- : [a8d0fea3-7487-49c5-88fd-0b8ed4917953] [TestManager] Showing test categories - User: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:08:14.233968 #27602]  INFO -- : [a8d0fea3-7487-49c5-88fd-0b8ed4917953] Completed 200 OK in 282ms (Views: 0.1ms | ActiveRecord: 0.6ms | Allocations: 2594)
+I, [2026-02-06T09:08:57.103304 #27602]  INFO -- : [be236de6-3565-414f-891a-54d67e015b11] Started GET "/wordpress/wp-admin/setup-config.php" for 172.71.184.53 at 2026-02-06 09:08:57 +0300
+E, [2026-02-06T09:08:57.103745 #27602] ERROR -- : [be236de6-3565-414f-891a-54d67e015b11]   
+[be236de6-3565-414f-891a-54d67e015b11] ActionController::RoutingError (No route matches [GET] "/wordpress/wp-admin/setup-config.php"):
+[be236de6-3565-414f-891a-54d67e015b11]   
+I, [2026-02-06T09:09:06.819793 #27600]  INFO -- : [f12915b7-40dc-46eb-bacd-33b6fb093c2f] Started GET "/wp-admin/setup-config.php" for 172.70.242.46 at 2026-02-06 09:09:06 +0300
+E, [2026-02-06T09:09:06.820306 #27600] ERROR -- : [f12915b7-40dc-46eb-bacd-33b6fb093c2f]   
+[f12915b7-40dc-46eb-bacd-33b6fb093c2f] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[f12915b7-40dc-46eb-bacd-33b6fb093c2f]   
+I, [2026-02-06T09:09:34.904417 #27602]  INFO -- : [cc089dc3-86f1-4add-afe3-05e49235e52b] Started GET "/wordpress/wp-admin/setup-config.php" for 172.68.10.201 at 2026-02-06 09:09:34 +0300
+E, [2026-02-06T09:09:34.904860 #27602] ERROR -- : [cc089dc3-86f1-4add-afe3-05e49235e52b]   
+[cc089dc3-86f1-4add-afe3-05e49235e52b] ActionController::RoutingError (No route matches [GET] "/wordpress/wp-admin/setup-config.php"):
+[cc089dc3-86f1-4add-afe3-05e49235e52b]   
+I, [2026-02-06T09:09:57.258765 #27602]  INFO -- : [9b01a9e3-4122-43a0-978f-3023de328fac] Started POST "/telegram_webhooks/message" for 89.104.65.152 at 2026-02-06 09:09:57 +0300
+I, [2026-02-06T09:09:57.259522 #27602]  INFO -- : [9b01a9e3-4122-43a0-978f-3023de328fac] Processing by TelegramWebhooksController#message as */*
+I, [2026-02-06T09:09:57.259591 #27602]  INFO -- : [9b01a9e3-4122-43a0-978f-3023de328fac]   Parameters: {"message"=>{"from"=>{"id"=>617053577}, "chat"=>{"id"=>617053577}, "text"=>"/menu"}, "telegram_webhook"=>{"message"=>{"from"=>{"id"=>617053577}, "chat"=>{"id"=>617053577}, "text"=>"/menu"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:09:57 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:09:57.261459 #27602]  INFO -- : [9b01a9e3-4122-43a0-978f-3023de328fac] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:09:57.526620 #27602]  INFO -- : [9b01a9e3-4122-43a0-978f-3023de328fac] Completed 200 OK in 267ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 1797)
+I, [2026-02-06T09:10:26.717788 #27602]  INFO -- : [72a0dcd2-c0c2-458e-98b9-0e576cacfffa] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:10:26 +0300
+I, [2026-02-06T09:10:26.719801 #27602]  INFO -- : [72a0dcd2-c0c2-458e-98b9-0e576cacfffa] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:10:26.719894 #27602]  INFO -- : [72a0dcd2-c0c2-458e-98b9-0e576cacfffa]   Parameters: {"update_id"=>165325757, "message"=>{"message_id"=>19722, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358226, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325757, "message"=>{"message_id"=>19722, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358226, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:10:26 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:10:26.721583 #27602]  INFO -- : [72a0dcd2-c0c2-458e-98b9-0e576cacfffa] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:10:26.985439 #27602]  INFO -- : [72a0dcd2-c0c2-458e-98b9-0e576cacfffa] Completed 200 OK in 265ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 1787)
+[27580] === puma shutdown: 2026-02-06 09:11:04 +0300 ===
+[27580] - Goodbye!
+[27580] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 09:11:06 +0300 ===
+[28982] * Starting control server on unix:///tmp/puma-status-1770358265340-28982
+[28982] - Worker 0 (PID: 29004) booted in 0.0s, phase: 0
+[28982] - Worker 1 (PID: 29006) booted in 0.0s, phase: 0
+I, [2026-02-06T09:11:31.928158 #29004]  INFO -- : [4cb2d0df-7fad-431f-bf70-271965b2a8cf] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:11:31 +0300
+I, [2026-02-06T09:11:31.931059 #29004]  INFO -- : [4cb2d0df-7fad-431f-bf70-271965b2a8cf] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:11:31.931167 #29004]  INFO -- : [4cb2d0df-7fad-431f-bf70-271965b2a8cf]   Parameters: {"update_id"=>165325758, "message"=>{"message_id"=>19724, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358291, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325758, "message"=>{"message_id"=>19724, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358291, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:11:31 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:11:32.013536 #29004]  INFO -- : [4cb2d0df-7fad-431f-bf70-271965b2a8cf] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:11:32.263513 #29004]  INFO -- : [4cb2d0df-7fad-431f-bf70-271965b2a8cf] Completed 200 OK in 332ms (Views: 0.2ms | ActiveRecord: 8.3ms | Allocations: 32374)
+I, [2026-02-06T09:11:46.067796 #29004]  INFO -- : [b5e319af-4503-401d-a667-0bf92fbeae76] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:11:46 +0300
+I, [2026-02-06T09:11:46.068663 #29004]  INFO -- : [b5e319af-4503-401d-a667-0bf92fbeae76] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:11:46.068834 #29004]  INFO -- : [b5e319af-4503-401d-a667-0bf92fbeae76]   Parameters: {"update_id"=>165325759, "message"=>{"message_id"=>19726, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358306, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325759, "message"=>{"message_id"=>19726, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358306, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:11:46 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:11:46.071129 #29004]  INFO -- : [b5e319af-4503-401d-a667-0bf92fbeae76] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:11:46.467050 #29004]  INFO -- : [b5e319af-4503-401d-a667-0bf92fbeae76] Completed 200 OK in 398ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 1797)
+I, [2026-02-06T09:12:52.782934 #29006]  INFO -- : [0ef19fce-9c83-4e12-a050-446d7017ce51] Started POST "/telegram_webhooks/message" for 89.104.65.152 at 2026-02-06 09:12:52 +0300
+I, [2026-02-06T09:12:52.786703 #29006]  INFO -- : [0ef19fce-9c83-4e12-a050-446d7017ce51] Processing by TelegramWebhooksController#message as */*
+I, [2026-02-06T09:12:52.786794 #29006]  INFO -- : [0ef19fce-9c83-4e12-a050-446d7017ce51]   Parameters: {"message"=>{"from"=>{"id"=>617053577}, "chat"=>{"id"=>617053577}, "text"=>"/menu"}, "telegram_webhook"=>{"message"=>{"from"=>{"id"=>617053577}, "chat"=>{"id"=>617053577}, "text"=>"/menu"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:12:52 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:12:52.890148 #29006]  INFO -- : [0ef19fce-9c83-4e12-a050-446d7017ce51] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:12:53.214402 #29006]  INFO -- : [0ef19fce-9c83-4e12-a050-446d7017ce51] Completed 200 OK in 427ms (Views: 0.3ms | ActiveRecord: 9.6ms | Allocations: 32354)
+I, [2026-02-06T09:14:46.293380 #29006]  INFO -- : [394fc3ef-8afa-4a9a-85bc-4214b84a3400] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 09:14:46 +0300
+I, [2026-02-06T09:14:46.294165 #29006]  INFO -- : [394fc3ef-8afa-4a9a-85bc-4214b84a3400] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T09:14:46.294229 #29006]  INFO -- : [394fc3ef-8afa-4a9a-85bc-4214b84a3400]   Parameters: {"callback_query"=>{"id"=>"test_callback_123", "from"=>{"id"=>617053577, "first_name"=>"Test"}, "message"=>{"message_id"=>123, "chat"=>{"id"=>617053577}}, "data"=>"show_test_categories"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"test_callback_123", "from"=>{"id"=>617053577, "first_name"=>"Test"}, "message"=>{"message_id"=>123, "chat"=>{"id"=>617053577}}, "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:14:46 +0300] 🔘 CALLBACK User: 617053577 | Data: show_test_categories
+[BOT] 🔘 Callback: show_test_categories
+I, [2026-02-06T09:14:46.295042 #29006]  INFO -- : [394fc3ef-8afa-4a9a-85bc-4214b84a3400] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 238)
+[28982] === puma shutdown: 2026-02-06 09:15:23 +0300 ===
+[28982] - Goodbye!
+[28982] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 09:15:25 +0300 ===
+[29198] * Starting control server on unix:///tmp/puma-status-1770358524513-29198
+[29198] - Worker 0 (PID: 29220) booted in 0.0s, phase: 0
+[29198] - Worker 1 (PID: 29223) booted in 0.01s, phase: 0
+I, [2026-02-06T09:15:35.299353 #29223]  INFO -- : [8cbd1c84-6b2f-45a0-b0fb-734428bd3014] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:15:35 +0300
+I, [2026-02-06T09:15:35.302166 #29223]  INFO -- : [8cbd1c84-6b2f-45a0-b0fb-734428bd3014] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:15:35.302264 #29223]  INFO -- : [8cbd1c84-6b2f-45a0-b0fb-734428bd3014]   Parameters: {"update_id"=>165325760, "message"=>{"message_id"=>19729, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358535, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325760, "message"=>{"message_id"=>19729, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358535, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:15:35 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:15:35.380967 #29223]  INFO -- : [8cbd1c84-6b2f-45a0-b0fb-734428bd3014] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:15:35.949042 #29223]  INFO -- : [8cbd1c84-6b2f-45a0-b0fb-734428bd3014] Completed 200 OK in 647ms (Views: 0.4ms | ActiveRecord: 7.6ms | Allocations: 37409)
+I, [2026-02-06T09:15:37.703588 #29223]  INFO -- : [7d724475-7009-47fc-ab74-2b7344af14cc] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:15:37 +0300
+I, [2026-02-06T09:15:37.704369 #29223]  INFO -- : [7d724475-7009-47fc-ab74-2b7344af14cc] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:15:37.704478 #29223]  INFO -- : [7d724475-7009-47fc-ab74-2b7344af14cc]   Parameters: {"update_id"=>165325761, "callback_query"=>{"id"=>"2650224935518270845", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19731, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358535, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325761, "callback_query"=>{"id"=>"2650224935518270845", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19731, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358535, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T09:15:37.705275 #29223]  INFO -- : [7d724475-7009-47fc-ab74-2b7344af14cc] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 283)
+I, [2026-02-06T09:15:55.369114 #29220]  INFO -- : [c370de78-98b8-493b-b0aa-74aa8ce8ad60] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:15:55 +0300
+I, [2026-02-06T09:15:55.372819 #29220]  INFO -- : [c370de78-98b8-493b-b0aa-74aa8ce8ad60] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:15:55.373001 #29220]  INFO -- : [c370de78-98b8-493b-b0aa-74aa8ce8ad60]   Parameters: {"update_id"=>165325762, "callback_query"=>{"id"=>"2650224934292052358", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19731, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358535, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325762, "callback_query"=>{"id"=>"2650224934292052358", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19731, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770358535, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T09:15:55.393447 #29220]  INFO -- : [c370de78-98b8-493b-b0aa-74aa8ce8ad60] Completed 200 OK in 20ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 9771)
+I, [2026-02-06T09:18:12.579321 #29223]  INFO -- : [6a79547f-cea4-4f2c-8006-1c7665ed07ac] Started GET "/telegram_webhooks/message" for 223.233.68.65 at 2026-02-06 09:18:12 +0300
+E, [2026-02-06T09:18:12.580408 #29223] ERROR -- : [6a79547f-cea4-4f2c-8006-1c7665ed07ac]   
+[6a79547f-cea4-4f2c-8006-1c7665ed07ac] ActionController::RoutingError (No route matches [GET] "/telegram_webhooks/message"):
+[6a79547f-cea4-4f2c-8006-1c7665ed07ac]   
+[29223] Unsupported HTTP method used: PROPFIND
+[29198] === puma shutdown: 2026-02-06 09:27:36 +0300 ===
+[29198] - Goodbye!
+[29198] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 09:28:34 +0300 ===
+[29936] * Starting control server on unix:///tmp/puma-status-1770359314161-29936
+[29936] - Worker 1 (PID: 29975) booted in 0.0s, phase: 0
+[29936] - Worker 0 (PID: 29973) booted in 0.0s, phase: 0
+I, [2026-02-06T09:29:11.125886 #29975]  INFO -- : [6ccb68fb-1bef-40fa-8c1a-b41406f389f8] Started GET "/+CSCOL+/Java.jar" for 104.248.193.21 at 2026-02-06 09:29:11 +0300
+E, [2026-02-06T09:29:11.127489 #29975] ERROR -- : [6ccb68fb-1bef-40fa-8c1a-b41406f389f8]   
+[6ccb68fb-1bef-40fa-8c1a-b41406f389f8] ActionController::RoutingError (No route matches [GET] "/+CSCOL+/Java.jar"):
+[6ccb68fb-1bef-40fa-8c1a-b41406f389f8]   
+I, [2026-02-06T09:29:11.624707 #29975]  INFO -- : [d2d43036-0986-4526-9f5a-15ce906e46b7] Started GET "/+CSCOE+/logon_forms.js" for 104.248.193.21 at 2026-02-06 09:29:11 +0300
+E, [2026-02-06T09:29:11.625285 #29975] ERROR -- : [d2d43036-0986-4526-9f5a-15ce906e46b7]   
+[d2d43036-0986-4526-9f5a-15ce906e46b7] ActionController::RoutingError (No route matches [GET] "/+CSCOE+/logon_forms.js"):
+[d2d43036-0986-4526-9f5a-15ce906e46b7]   
+I, [2026-02-06T09:29:12.196193 #29975]  INFO -- : [dee2b313-271c-40e3-bfa6-67b92be2d192] Started GET "/+CSCOL+/a1.jar" for 104.248.193.21 at 2026-02-06 09:29:12 +0300
+E, [2026-02-06T09:29:12.196737 #29975] ERROR -- : [dee2b313-271c-40e3-bfa6-67b92be2d192]   
+[dee2b313-271c-40e3-bfa6-67b92be2d192] ActionController::RoutingError (No route matches [GET] "/+CSCOL+/a1.jar"):
+[dee2b313-271c-40e3-bfa6-67b92be2d192]   
+I, [2026-02-06T09:29:12.870913 #29975]  INFO -- : [622f8a23-432f-4f11-9dbd-912936e92752] Started GET "/+CSCOE+/transfer.js" for 104.248.193.21 at 2026-02-06 09:29:12 +0300
+E, [2026-02-06T09:29:12.871292 #29975] ERROR -- : [622f8a23-432f-4f11-9dbd-912936e92752]   
+[622f8a23-432f-4f11-9dbd-912936e92752] ActionController::RoutingError (No route matches [GET] "/+CSCOE+/transfer.js"):
+[622f8a23-432f-4f11-9dbd-912936e92752]   
+I, [2026-02-06T09:29:39.953655 #29975]  INFO -- : [46891955-24ab-4586-8120-d0d605ce1cbb] Started GET "/wp-admin/setup-config.php" for 104.23.221.137 at 2026-02-06 09:29:39 +0300
+E, [2026-02-06T09:29:39.954018 #29975] ERROR -- : [46891955-24ab-4586-8120-d0d605ce1cbb]   
+[46891955-24ab-4586-8120-d0d605ce1cbb] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[46891955-24ab-4586-8120-d0d605ce1cbb]   
+I, [2026-02-06T09:29:49.133507 #29973]  INFO -- : [68c0f9f0-9a4c-41b0-882b-e537a5ecab9f] Started GET "/wp-admin/setup-config.php" for 104.23.221.137 at 2026-02-06 09:29:49 +0300
+E, [2026-02-06T09:29:49.135000 #29973] ERROR -- : [68c0f9f0-9a4c-41b0-882b-e537a5ecab9f]   
+[68c0f9f0-9a4c-41b0-882b-e537a5ecab9f] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[68c0f9f0-9a4c-41b0-882b-e537a5ecab9f]   
+[29936] === puma shutdown: 2026-02-06 09:30:14 +0300 ===
+[29936] - Goodbye!
+[29936] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 09:30:15 +0300 ===
+[30123] * Starting control server on unix:///tmp/puma-status-1770359415095-30123
+[30123] - Worker 0 (PID: 30143) booted in 0.0s, phase: 0
+[30123] - Worker 1 (PID: 30145) booted in 0.01s, phase: 0
+I, [2026-02-06T09:30:31.057412 #30143]  INFO -- : [f33f4f53-31e5-49a7-91b4-7bc0bc64217c] Started GET "/wordpress/wp-admin/setup-config.php" for 104.23.221.137 at 2026-02-06 09:30:31 +0300
+E, [2026-02-06T09:30:31.058797 #30143] ERROR -- : [f33f4f53-31e5-49a7-91b4-7bc0bc64217c]   
+[f33f4f53-31e5-49a7-91b4-7bc0bc64217c] ActionController::RoutingError (No route matches [GET] "/wordpress/wp-admin/setup-config.php"):
+[f33f4f53-31e5-49a7-91b4-7bc0bc64217c]   
+I, [2026-02-06T09:30:42.232431 #30143]  INFO -- : [76484bc5-8747-4532-876a-f096a25d2fa5] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 09:30:42 +0300
+I, [2026-02-06T09:30:42.234653 #30143]  INFO -- : [76484bc5-8747-4532-876a-f096a25d2fa5] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T09:30:42.234735 #30143]  INFO -- : [76484bc5-8747-4532-876a-f096a25d2fa5]   Parameters: {"callback_query"=>{"id"=>"test_123_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"show_test_categories"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"test_123_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:30:42 +0300] 🔘 CALLBACK User: 617053577 | Data: show_test_categories | ID: test_123_$(date +%s)
+[BOT] 🤖 Bot service initialized
+[BOT] 🤖 Bot service initialized for callback
+[BOT] 🔥 Callback processing error: missing keyword: :callback_query_id
+I, [2026-02-06T09:30:42.249581 #30143]  INFO -- : [76484bc5-8747-4532-876a-f096a25d2fa5] Completed 500 Internal Server Error in 15ms (ActiveRecord: 0.0ms | Allocations: 9915)
+E, [2026-02-06T09:30:42.250125 #30143] ERROR -- : [76484bc5-8747-4532-876a-f096a25d2fa5]   
+[76484bc5-8747-4532-876a-f096a25d2fa5] ArgumentError (missing keyword: :callback_query_id):
+[76484bc5-8747-4532-876a-f096a25d2fa5]   
+[76484bc5-8747-4532-876a-f096a25d2fa5] app/services/telegram/telegram_bot_service.rb:102:in `answer_callback_query'
+[76484bc5-8747-4532-876a-f096a25d2fa5] app/controllers/telegram_webhooks_controller.rb:47:in `rescue in callback_query'
+[76484bc5-8747-4532-876a-f096a25d2fa5] app/controllers/telegram_webhooks_controller.rb:36:in `callback_query'
+[30123] === puma shutdown: 2026-02-06 09:31:52 +0300 ===
+[30123] - Goodbye!
+[30123] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 09:31:53 +0300 ===
+[30230] * Starting control server on unix:///tmp/puma-status-1770359513337-30230
+[30230] - Worker 0 (PID: 30250) booted in 0.0s, phase: 0
+[30230] - Worker 1 (PID: 30252) booted in 0.0s, phase: 0
+I, [2026-02-06T09:32:21.607496 #30250]  INFO -- : [c0eb1216-69a8-47db-84aa-f9d059defe1d] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 09:32:21 +0300
+I, [2026-02-06T09:32:21.610225 #30250]  INFO -- : [c0eb1216-69a8-47db-84aa-f9d059defe1d] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T09:32:21.610295 #30250]  INFO -- : [c0eb1216-69a8-47db-84aa-f9d059defe1d]   Parameters: {"callback_query"=>{"id"=>"test_123", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1}, "data"=>"show_test_categories"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"test_123", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1}, "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:32:21 +0300] 🔘 CALLBACK User: 617053577 | Data: show_test_categories | ID: test_123
+[BOT] 1. Инициализация бот сервиса...
+[BOT] 🤖 Bot service initialized
+[BOT] 2. Бот сервис инициализирован
+[BOT] 3. Бот сервис доступен
+[BOT] 4. Отвечаем на callback: test_123
+[BOT] 🔥 Callback processing error: missing keyword: :callback_query_id
+[BOT] 🔥 Backtrace: /home/deploy/psy_bot/app/services/telegram/telegram_bot_service.rb:102:in `answer_callback_query' | /home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:40:in `callback_query' | /home/deploy/psy_bot/vendor/bundle/ruby/3.2.0/gems/actionpack-7.1.5.2/lib/action_controller/metal/basic_implicit_render.rb:6:in `send_action' | /home/deploy/psy_bot/vendor/bundle/ruby/3.2.0/gems/actionpack-7.1.5.2/lib/abstract_controller/base.rb:224:in `process_action' | /home/deploy/psy_bot/vendor/bundle/ruby/3.2.0/gems/actionpack-7.1.5.2/lib/action_controller/metal/rendering.rb:165:in `process_action'
+[BOT] 🔥 Не удалось ответить на callback: missing keyword: :callback_query_id
+I, [2026-02-06T09:32:21.627149 #30250]  INFO -- : [c0eb1216-69a8-47db-84aa-f9d059defe1d] Completed 500 Internal Server Error in 17ms (Views: 0.4ms | ActiveRecord: 0.0ms | Allocations: 10199)
+I, [2026-02-06T09:32:23.683891 #30250]  INFO -- : [97a42936-5202-4396-9fd1-887ca35f02cc] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 09:32:23 +0300
+I, [2026-02-06T09:32:23.684681 #30250]  INFO -- : [97a42936-5202-4396-9fd1-887ca35f02cc] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T09:32:23.684750 #30250]  INFO -- : [97a42936-5202-4396-9fd1-887ca35f02cc]   Parameters: {"callback_query"=>{"id"=>"debug_test_$(date +%s)", "from"=>{"id"=>617053577, "first_name"=>"Test"}, "message"=>{"message_id"=>123, "chat"=>{"id"=>617053577}}, "data"=>"help"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"debug_test_$(date +%s)", "from"=>{"id"=>617053577, "first_name"=>"Test"}, "message"=>{"message_id"=>123, "chat"=>{"id"=>617053577}}, "data"=>"help"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:32:23 +0300] 🔘 CALLBACK User: 617053577 | Data: help | ID: debug_test_$(date +%s)
+[BOT] 1. Инициализация бот сервиса...
+[BOT] 🤖 Bot service initialized
+[BOT] 2. Бот сервис инициализирован
+[BOT] 3. Бот сервис доступен
+[BOT] 4. Отвечаем на callback: debug_test_$(date +%s)
+[BOT] 🔥 Callback processing error: missing keyword: :callback_query_id
+[BOT] 🔥 Backtrace: /home/deploy/psy_bot/app/services/telegram/telegram_bot_service.rb:102:in `answer_callback_query' | /home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:40:in `callback_query' | /home/deploy/psy_bot/vendor/bundle/ruby/3.2.0/gems/actionpack-7.1.5.2/lib/action_controller/metal/basic_implicit_render.rb:6:in `send_action' | /home/deploy/psy_bot/vendor/bundle/ruby/3.2.0/gems/actionpack-7.1.5.2/lib/abstract_controller/base.rb:224:in `process_action' | /home/deploy/psy_bot/vendor/bundle/ruby/3.2.0/gems/actionpack-7.1.5.2/lib/action_controller/metal/rendering.rb:165:in `process_action'
+[BOT] 🔥 Не удалось ответить на callback: missing keyword: :callback_query_id
+I, [2026-02-06T09:32:23.686034 #30250]  INFO -- : [97a42936-5202-4396-9fd1-887ca35f02cc] Completed 500 Internal Server Error in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 653)
+I, [2026-02-06T09:32:31.108672 #30250]  INFO -- : [9ce059e7-2c36-463b-900d-85be797b4f23] Started POST "/" for 176.65.139.30 at 2026-02-06 09:32:31 +0300
+E, [2026-02-06T09:32:31.109385 #30250] ERROR -- : [9ce059e7-2c36-463b-900d-85be797b4f23]   
+[9ce059e7-2c36-463b-900d-85be797b4f23] ActionController::RoutingError (No route matches [POST] "/"):
+[9ce059e7-2c36-463b-900d-85be797b4f23]   
+[30230] === puma shutdown: 2026-02-06 09:33:47 +0300 ===
+[30230] - Goodbye!
+[30230] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 09:33:48 +0300 ===
+[30609] * Starting control server on unix:///tmp/puma-status-1770359628055-30609
+[30609] - Worker 1 (PID: 30632) booted in 0.0s, phase: 0
+[30609] - Worker 0 (PID: 30630) booted in 0.0s, phase: 0
+I, [2026-02-06T09:34:10.194178 #30632]  INFO -- : [ecd968ec-5e08-445f-ade6-962c6ac66bb3] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 09:34:10 +0300
+I, [2026-02-06T09:34:10.196863 #30632]  INFO -- : [ecd968ec-5e08-445f-ade6-962c6ac66bb3] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T09:34:10.196940 #30632]  INFO -- : [ecd968ec-5e08-445f-ade6-962c6ac66bb3]   Parameters: {"callback_query"=>{"id"=>"test_fixed_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"show_test_categories"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"test_fixed_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:34:10 +0300] 🔘 CALLBACK User: 617053577 | Data: show_test_categories | ID: test_fixed_$(date +%s)
+[BOT] 1. Инициализация бот сервиса...
+[BOT] 🤖 Bot service initialized
+[BOT] 2. Бот сервис инициализирован
+[BOT] 3. Бот сервис доступен
+[BOT] 4. Отвечаем на callback: test_fixed_$(date +%s)
+W, [2026-02-06T09:34:10.488374 #30632]  WARN -- : [ecd968ec-5e08-445f-ade6-962c6ac66bb3] [TelegramBotService] Retry 1/3 after 1s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+W, [2026-02-06T09:34:11.545172 #30632]  WARN -- : [ecd968ec-5e08-445f-ade6-962c6ac66bb3] [TelegramBotService] Retry 2/3 after 2s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+E, [2026-02-06T09:34:13.599209 #30632] ERROR -- : [ecd968ec-5e08-445f-ade6-962c6ac66bb3] [TelegramBotService] Telegram API Error answering callback query for test_fixed_$(date +%s): Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+[BOT] 5. Ответ отправлен
+[BOT] 6. Обрабатываем данные: show_test_categories
+[BOT] 🔧 Processing callback data: show_test_categories for user 617053577
+[BOT] 7. Данные обработаны
+I, [2026-02-06T09:34:13.683082 #30632]  INFO -- : [ecd968ec-5e08-445f-ade6-962c6ac66bb3] Completed 200 OK in 3486ms (Views: 0.6ms | ActiveRecord: 0.0ms | Allocations: 13454)
+I, [2026-02-06T09:35:01.781147 #30632]  INFO -- : [cbb83902-dbc8-4b11-8619-64e8aee64d84] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:35:01 +0300
+I, [2026-02-06T09:35:01.782208 #30632]  INFO -- : [cbb83902-dbc8-4b11-8619-64e8aee64d84] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:35:01.782360 #30632]  INFO -- : [cbb83902-dbc8-4b11-8619-64e8aee64d84]   Parameters: {"update_id"=>165325763, "message"=>{"message_id"=>19733, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359701, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325763, "message"=>{"message_id"=>19733, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359701, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:35:01 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:35:01.860992 #30632]  INFO -- : [cbb83902-dbc8-4b11-8619-64e8aee64d84] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:35:02.262597 #30632]  INFO -- : [cbb83902-dbc8-4b11-8619-64e8aee64d84] Completed 200 OK in 480ms (Views: 0.3ms | ActiveRecord: 9.6ms | Allocations: 27253)
+I, [2026-02-06T09:35:05.333815 #30632]  INFO -- : [45e52083-c10a-42ac-ab5b-f4d943521885] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:35:05 +0300
+I, [2026-02-06T09:35:05.334636 #30632]  INFO -- : [45e52083-c10a-42ac-ab5b-f4d943521885] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:35:05.334758 #30632]  INFO -- : [45e52083-c10a-42ac-ab5b-f4d943521885]   Parameters: {"update_id"=>165325764, "callback_query"=>{"id"=>"2650224936034955262", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19735, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359702, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325764, "callback_query"=>{"id"=>"2650224936034955262", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19735, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359702, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T09:35:05.335676 #30632]  INFO -- : [45e52083-c10a-42ac-ab5b-f4d943521885] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 281)
+I, [2026-02-06T09:35:19.344832 #30632]  INFO -- : [a19a5f28-5f6d-499a-964c-73084f406b4c] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:35:19 +0300
+I, [2026-02-06T09:35:19.345490 #30632]  INFO -- : [a19a5f28-5f6d-499a-964c-73084f406b4c] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:35:19.345571 #30632]  INFO -- : [a19a5f28-5f6d-499a-964c-73084f406b4c]   Parameters: {"update_id"=>165325765, "message"=>{"message_id"=>19736, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359719, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325765, "message"=>{"message_id"=>19736, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359719, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:35:19 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:35:19.347351 #30632]  INFO -- : [a19a5f28-5f6d-499a-964c-73084f406b4c] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:35:19.667540 #30632]  INFO -- : [a19a5f28-5f6d-499a-964c-73084f406b4c] Completed 200 OK in 322ms (Views: 0.2ms | ActiveRecord: 0.3ms | Allocations: 1788)
+I, [2026-02-06T09:35:21.986527 #30630]  INFO -- : [10a57f16-6a13-4e4e-9e32-ba96f1de0366] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:35:21 +0300
+I, [2026-02-06T09:35:21.990266 #30630]  INFO -- : [10a57f16-6a13-4e4e-9e32-ba96f1de0366] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:35:21.990394 #30630]  INFO -- : [10a57f16-6a13-4e4e-9e32-ba96f1de0366]   Parameters: {"update_id"=>165325766, "callback_query"=>{"id"=>"2650224936354031854", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19737, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359719, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325766, "callback_query"=>{"id"=>"2650224936354031854", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19737, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359719, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T09:35:22.006506 #30630]  INFO -- : [10a57f16-6a13-4e4e-9e32-ba96f1de0366] Completed 200 OK in 16ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 9771)
+I, [2026-02-06T09:35:25.784872 #30630]  INFO -- : [f7f94003-f731-4682-afd6-84dc771fcc1c] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:35:25 +0300
+I, [2026-02-06T09:35:25.785655 #30630]  INFO -- : [f7f94003-f731-4682-afd6-84dc771fcc1c] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:35:25.785753 #30630]  INFO -- : [f7f94003-f731-4682-afd6-84dc771fcc1c]   Parameters: {"update_id"=>165325767, "callback_query"=>{"id"=>"2650224933875051320", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19737, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359719, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}, "telegram_webhook"=>{"update_id"=>165325767, "callback_query"=>{"id"=>"2650224933875051320", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19737, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359719, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T09:35:25.786591 #30630]  INFO -- : [f7f94003-f731-4682-afd6-84dc771fcc1c] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:35:27.905414 #30630]  INFO -- : [6f391098-7d8c-438d-ad54-d01c33ca8ab1] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:35:27 +0300
+I, [2026-02-06T09:35:27.906289 #30630]  INFO -- : [6f391098-7d8c-438d-ad54-d01c33ca8ab1] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:35:27.906452 #30630]  INFO -- : [6f391098-7d8c-438d-ad54-d01c33ca8ab1]   Parameters: {"update_id"=>165325768, "callback_query"=>{"id"=>"2650224933594962312", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19737, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359719, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_self_help_program"}, "telegram_webhook"=>{"update_id"=>165325768, "callback_query"=>{"id"=>"2650224933594962312", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19737, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359719, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_self_help_program"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T09:35:27.907263 #30630]  INFO -- : [6f391098-7d8c-438d-ad54-d01c33ca8ab1] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:35:28.904150 #30630]  INFO -- : [194fb34e-463e-4431-899e-17a3f6358148] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:35:28 +0300
+I, [2026-02-06T09:35:28.905156 #30630]  INFO -- : [194fb34e-463e-4431-899e-17a3f6358148] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:35:28.905318 #30630]  INFO -- : [194fb34e-463e-4431-899e-17a3f6358148]   Parameters: {"update_id"=>165325769, "callback_query"=>{"id"=>"2650224936806395993", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19737, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359719, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}, "telegram_webhook"=>{"update_id"=>165325769, "callback_query"=>{"id"=>"2650224936806395993", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19737, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770359719, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:6:in `message'
+I, [2026-02-06T09:35:28.906473 #30630]  INFO -- : [194fb34e-463e-4431-899e-17a3f6358148] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+[30609] === puma shutdown: 2026-02-06 09:41:03 +0300 ===
+[30609] - Goodbye!
+[30609] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 09:41:05 +0300 ===
+[31118] * Starting control server on unix:///tmp/puma-status-1770360064571-31118
+[31118] - Worker 0 (PID: 31138) booted in 0.01s, phase: 0
+[31118] - Worker 1 (PID: 31140) booted in 0.01s, phase: 0
+[31118] === puma shutdown: 2026-02-06 09:41:50 +0300 ===
+[31118] - Goodbye!
+[31118] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 09:41:52 +0300 ===
+[31174] * Starting control server on unix:///tmp/puma-status-1770360111412-31174
+[31174] - Worker 0 (PID: 31195) booted in 0.0s, phase: 0
+[31174] - Worker 1 (PID: 31197) booted in 0.0s, phase: 0
+I, [2026-02-06T09:42:11.324518 #31197]  INFO -- : [c472a0b5-db8c-4fa7-b698-d10fd02ae20a] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:42:11 +0300
+I, [2026-02-06T09:42:11.327144 #31197]  INFO -- : [c472a0b5-db8c-4fa7-b698-d10fd02ae20a] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:42:11.327247 #31197]  INFO -- : [c472a0b5-db8c-4fa7-b698-d10fd02ae20a]   Parameters: {"update_id"=>165325770, "message"=>{"message_id"=>19738, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360131, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325770, "message"=>{"message_id"=>19738, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360131, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:42:11 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:42:11.412173 #31197]  INFO -- : [c472a0b5-db8c-4fa7-b698-d10fd02ae20a] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:42:11.800960 #31197]  INFO -- : [c472a0b5-db8c-4fa7-b698-d10fd02ae20a] Completed 200 OK in 474ms (Views: 0.4ms | ActiveRecord: 7.8ms | Allocations: 36245)
+I, [2026-02-06T09:42:13.808881 #31197]  INFO -- : [4e8a24d3-18c1-4908-9d84-b9c3505fd85b] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:42:13 +0300
+I, [2026-02-06T09:42:13.809665 #31197]  INFO -- : [4e8a24d3-18c1-4908-9d84-b9c3505fd85b] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:42:13.809780 #31197]  INFO -- : [4e8a24d3-18c1-4908-9d84-b9c3505fd85b]   Parameters: {"update_id"=>165325771, "callback_query"=>{"id"=>"2650224937011250098", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19740, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360131, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325771, "callback_query"=>{"id"=>"2650224937011250098", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19740, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360131, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:42:13.810662 #31197]  INFO -- : [4e8a24d3-18c1-4908-9d84-b9c3505fd85b] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 283)
+I, [2026-02-06T09:42:18.370384 #31195]  INFO -- : [df79bd28-2d16-4d4a-81bc-4387a79ec335] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:42:18 +0300
+I, [2026-02-06T09:42:18.373259 #31195]  INFO -- : [df79bd28-2d16-4d4a-81bc-4387a79ec335] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:42:18.373383 #31195]  INFO -- : [df79bd28-2d16-4d4a-81bc-4387a79ec335]   Parameters: {"update_id"=>165325772, "callback_query"=>{"id"=>"2650224935319951872", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19740, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360131, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}, "telegram_webhook"=>{"update_id"=>165325772, "callback_query"=>{"id"=>"2650224935319951872", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19740, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360131, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:42:18.387967 #31195]  INFO -- : [df79bd28-2d16-4d4a-81bc-4387a79ec335] Completed 200 OK in 14ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 9772)
+I, [2026-02-06T09:42:19.548514 #31195]  INFO -- : [e514ea0d-9bfd-4cf1-90b7-d8d9d1d11034] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:42:19 +0300
+I, [2026-02-06T09:42:19.549359 #31195]  INFO -- : [e514ea0d-9bfd-4cf1-90b7-d8d9d1d11034] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:42:19.549511 #31195]  INFO -- : [e514ea0d-9bfd-4cf1-90b7-d8d9d1d11034]   Parameters: {"update_id"=>165325773, "callback_query"=>{"id"=>"2650224933741224902", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19740, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360131, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_self_help_program"}, "telegram_webhook"=>{"update_id"=>165325773, "callback_query"=>{"id"=>"2650224933741224902", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19740, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360131, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_self_help_program"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:42:19.550205 #31195]  INFO -- : [e514ea0d-9bfd-4cf1-90b7-d8d9d1d11034] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:42:20.596235 #31195]  INFO -- : [03f134c1-11d3-400d-8000-17c65b345bc4] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:42:20 +0300
+I, [2026-02-06T09:42:20.596970 #31195]  INFO -- : [03f134c1-11d3-400d-8000-17c65b345bc4] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:42:20.597069 #31195]  INFO -- : [03f134c1-11d3-400d-8000-17c65b345bc4]   Parameters: {"update_id"=>165325774, "callback_query"=>{"id"=>"2650224935615872802", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19740, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360131, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}, "telegram_webhook"=>{"update_id"=>165325774, "callback_query"=>{"id"=>"2650224935615872802", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19740, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360131, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:42:20.597924 #31195]  INFO -- : [03f134c1-11d3-400d-8000-17c65b345bc4] Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:42:24.607501 #31195]  INFO -- : [6ada7a05-ac7b-49f6-89fa-9285341e7c19] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:42:24 +0300
+I, [2026-02-06T09:42:24.608254 #31195]  INFO -- : [6ada7a05-ac7b-49f6-89fa-9285341e7c19] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:42:24.608335 #31195]  INFO -- : [6ada7a05-ac7b-49f6-89fa-9285341e7c19]   Parameters: {"update_id"=>165325775, "message"=>{"message_id"=>19741, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360144, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325775, "message"=>{"message_id"=>19741, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360144, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:42:24 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:42:24.685900 #31195]  INFO -- : [6ada7a05-ac7b-49f6-89fa-9285341e7c19] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:42:25.009220 #31195]  INFO -- : [6ada7a05-ac7b-49f6-89fa-9285341e7c19] Completed 200 OK in 401ms (Views: 0.1ms | ActiveRecord: 11.0ms | Allocations: 21702)
+I, [2026-02-06T09:42:26.254557 #31195]  INFO -- : [9c6f2ee7-0b83-43b7-8ee4-054b7544f6a6] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:42:26 +0300
+I, [2026-02-06T09:42:26.255592 #31195]  INFO -- : [9c6f2ee7-0b83-43b7-8ee4-054b7544f6a6] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:42:26.255800 #31195]  INFO -- : [9c6f2ee7-0b83-43b7-8ee4-054b7544f6a6]   Parameters: {"update_id"=>165325776, "callback_query"=>{"id"=>"2650224937316359607", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19742, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360144, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325776, "callback_query"=>{"id"=>"2650224937316359607", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19742, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360144, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:42:26.256698 #31195]  INFO -- : [9c6f2ee7-0b83-43b7-8ee4-054b7544f6a6] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 276)
+I, [2026-02-06T09:42:27.653442 #31195]  INFO -- : [a4261619-d865-4dea-b5c0-617f79e22b5c] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:42:27 +0300
+I, [2026-02-06T09:42:27.654205 #31195]  INFO -- : [a4261619-d865-4dea-b5c0-617f79e22b5c] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:42:27.654311 #31195]  INFO -- : [a4261619-d865-4dea-b5c0-617f79e22b5c]   Parameters: {"update_id"=>165325777, "callback_query"=>{"id"=>"2650224935533745741", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19742, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360144, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}, "telegram_webhook"=>{"update_id"=>165325777, "callback_query"=>{"id"=>"2650224935533745741", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19742, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360144, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:42:27.654987 #31195]  INFO -- : [a4261619-d865-4dea-b5c0-617f79e22b5c] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:42:28.247700 #31197]  INFO -- : [22781fde-93ee-48cb-beb4-fd72627c39ef] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:42:28 +0300
+I, [2026-02-06T09:42:28.248608 #31197]  INFO -- : [22781fde-93ee-48cb-beb4-fd72627c39ef] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:42:28.248780 #31197]  INFO -- : [22781fde-93ee-48cb-beb4-fd72627c39ef]   Parameters: {"update_id"=>165325778, "callback_query"=>{"id"=>"2650224933274322188", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19742, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360144, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_self_help_program"}, "telegram_webhook"=>{"update_id"=>165325778, "callback_query"=>{"id"=>"2650224933274322188", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19742, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360144, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_self_help_program"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:42:28.249773 #31197]  INFO -- : [22781fde-93ee-48cb-beb4-fd72627c39ef] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:42:28.652943 #31197]  INFO -- : [752442bd-832b-48b4-8f74-316189389b44] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:42:28 +0300
+I, [2026-02-06T09:42:28.653826 #31197]  INFO -- : [752442bd-832b-48b4-8f74-316189389b44] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:42:28.653948 #31197]  INFO -- : [752442bd-832b-48b4-8f74-316189389b44]   Parameters: {"update_id"=>165325779, "callback_query"=>{"id"=>"2650224936708481862", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19742, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360144, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}, "telegram_webhook"=>{"update_id"=>165325779, "callback_query"=>{"id"=>"2650224936708481862", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19742, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360144, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:42:28.654890 #31197]  INFO -- : [752442bd-832b-48b4-8f74-316189389b44] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:42:39.255451 #31195]  INFO -- : [43892a57-fd60-4f46-b4a2-6fa37931670b] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 09:42:39 +0300
+I, [2026-02-06T09:42:39.256232 #31195]  INFO -- : [43892a57-fd60-4f46-b4a2-6fa37931670b] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T09:42:39.256286 #31195]  INFO -- : [43892a57-fd60-4f46-b4a2-6fa37931670b]   Parameters: {"callback_query"=>{"id"=>"test_menu_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"show_test_categories"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"test_menu_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:42:39 +0300] 🔘 CALLBACK User: 617053577 | Data: show_test_categories | ID: test_menu_$(date +%s)
+[BOT] 1. Инициализация бот сервиса...
+[BOT] 🤖 Bot service initialized
+[BOT] 2. Бот сервис инициализирован
+[BOT] 3. Бот сервис доступен
+[BOT] 4. Отвечаем на callback: test_menu_$(date +%s)
+W, [2026-02-06T09:42:39.515116 #31195]  WARN -- : [43892a57-fd60-4f46-b4a2-6fa37931670b] [TelegramBotService] Retry 1/3 after 1s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+W, [2026-02-06T09:42:40.649852 #31195]  WARN -- : [43892a57-fd60-4f46-b4a2-6fa37931670b] [TelegramBotService] Retry 2/3 after 2s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+E, [2026-02-06T09:42:42.707757 #31195] ERROR -- : [43892a57-fd60-4f46-b4a2-6fa37931670b] [TelegramBotService] Telegram API Error answering callback query for test_menu_$(date +%s): Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+[BOT] 5. Ответ отправлен
+[BOT] 6. Обрабатываем данные: show_test_categories
+[BOT] 🔧 Processing callback data: show_test_categories for user 617053577
+[BOT] 🔥 Callback processing error: undefined method `tests_menu_markup' for TelegramMarkupHelper:Module
+[BOT] 🔥 Backtrace: /home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:142:in `process_callback_data' | /home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:48:in `callback_query' | /home/deploy/psy_bot/vendor/bundle/ruby/3.2.0/gems/actionpack-7.1.5.2/lib/action_controller/metal/basic_implicit_render.rb:6:in `send_action' | /home/deploy/psy_bot/vendor/bundle/ruby/3.2.0/gems/actionpack-7.1.5.2/lib/abstract_controller/base.rb:224:in `process_action' | /home/deploy/psy_bot/vendor/bundle/ruby/3.2.0/gems/actionpack-7.1.5.2/lib/action_controller/metal/rendering.rb:165:in `process_action'
+W, [2026-02-06T09:42:42.769141 #31195]  WARN -- : [43892a57-fd60-4f46-b4a2-6fa37931670b] [TelegramBotService] Retry 1/3 after 1s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+W, [2026-02-06T09:42:43.829999 #31195]  WARN -- : [43892a57-fd60-4f46-b4a2-6fa37931670b] [TelegramBotService] Retry 2/3 after 2s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+E, [2026-02-06T09:42:46.016741 #31195] ERROR -- : [43892a57-fd60-4f46-b4a2-6fa37931670b] [TelegramBotService] Telegram API Error answering callback query for test_menu_$(date +%s): Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+I, [2026-02-06T09:42:46.017462 #31195]  INFO -- : [43892a57-fd60-4f46-b4a2-6fa37931670b] Completed 500 Internal Server Error in 6761ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 4420)
+I, [2026-02-06T09:42:46.081246 #31197]  INFO -- : [890ae427-d54b-4a0e-ad9b-d075684128de] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 09:42:46 +0300
+I, [2026-02-06T09:42:46.081971 #31197]  INFO -- : [890ae427-d54b-4a0e-ad9b-d075684128de] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T09:42:46.082018 #31197]  INFO -- : [890ae427-d54b-4a0e-ad9b-d075684128de]   Parameters: {"callback_query"=>{"id"=>"test_back_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"back_to_main_menu"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"test_back_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"back_to_main_menu"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:42:46 +0300] 🔘 CALLBACK User: 617053577 | Data: back_to_main_menu | ID: test_back_$(date +%s)
+[BOT] 1. Инициализация бот сервиса...
+[BOT] 🤖 Bot service initialized
+[BOT] 2. Бот сервис инициализирован
+[BOT] 3. Бот сервис доступен
+[BOT] 4. Отвечаем на callback: test_back_$(date +%s)
+W, [2026-02-06T09:42:46.322571 #31197]  WARN -- : [890ae427-d54b-4a0e-ad9b-d075684128de] [TelegramBotService] Retry 1/3 after 1s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+W, [2026-02-06T09:42:47.447199 #31197]  WARN -- : [890ae427-d54b-4a0e-ad9b-d075684128de] [TelegramBotService] Retry 2/3 after 2s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+E, [2026-02-06T09:42:49.516793 #31197] ERROR -- : [890ae427-d54b-4a0e-ad9b-d075684128de] [TelegramBotService] Telegram API Error answering callback query for test_back_$(date +%s): Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+[BOT] 5. Ответ отправлен
+[BOT] 6. Обрабатываем данные: back_to_main_menu
+[BOT] 🔧 Processing callback data: back_to_main_menu for user 617053577
+W, [2026-02-06T09:42:49.564090 #31197]  WARN -- : [890ae427-d54b-4a0e-ad9b-d075684128de] [TelegramBotService] Retry 1/3 after 1s: Bad Request: Bad Request: object expected as reply markup
+W, [2026-02-06T09:42:50.614429 #31197]  WARN -- : [890ae427-d54b-4a0e-ad9b-d075684128de] [TelegramBotService] Retry 2/3 after 2s: Bad Request: Bad Request: object expected as reply markup
+E, [2026-02-06T09:42:52.661233 #31197] ERROR -- : [890ae427-d54b-4a0e-ad9b-d075684128de] [TelegramBotService] Telegram API Error sending message for 617053577: Bad Request: Bad Request: object expected as reply markup
+[BOT] 7. Данные обработаны
+I, [2026-02-06T09:42:52.661805 #31197]  INFO -- : [890ae427-d54b-4a0e-ad9b-d075684128de] Completed 200 OK in 6580ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 6069)
+[31174] === puma shutdown: 2026-02-06 09:45:32 +0300 ===
+[31174] - Goodbye!
+[31174] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 09:45:34 +0300 ===
+[31400] * Starting control server on unix:///tmp/puma-status-1770360333239-31400
+[31400] - Worker 0 (PID: 31421) booted in 0.0s, phase: 0
+[31400] - Worker 1 (PID: 31423) booted in 0.0s, phase: 0
+I, [2026-02-06T09:46:33.187159 #31421]  INFO -- : [3ddf588d-e008-4d35-9228-2744805b7b8f] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 09:46:33 +0300
+I, [2026-02-06T09:46:33.189825 #31421]  INFO -- : [3ddf588d-e008-4d35-9228-2744805b7b8f] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T09:46:33.189917 #31421]  INFO -- : [3ddf588d-e008-4d35-9228-2744805b7b8f]   Parameters: {"callback_query"=>{"id"=>"test_categories_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"show_test_categories"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"test_categories_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:46:33 +0300] 🔘 CALLBACK User: 617053577 | Data: show_test_categories | ID: test_categories_$(date +%s)
+[BOT] 1. Инициализация бот сервиса...
+[BOT] 🤖 Bot service initialized
+[BOT] 2. Бот сервис инициализирован
+[BOT] 3. Бот сервис доступен
+[BOT] 4. Отвечаем на callback: test_categories_$(date +%s)
+W, [2026-02-06T09:46:33.513128 #31421]  WARN -- : [3ddf588d-e008-4d35-9228-2744805b7b8f] [TelegramBotService] Retry 1/3 after 1s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+W, [2026-02-06T09:46:34.585520 #31421]  WARN -- : [3ddf588d-e008-4d35-9228-2744805b7b8f] [TelegramBotService] Retry 2/3 after 2s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+E, [2026-02-06T09:46:36.640872 #31421] ERROR -- : [3ddf588d-e008-4d35-9228-2744805b7b8f] [TelegramBotService] Telegram API Error answering callback query for test_categories_$(date +%s): Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+[BOT] 5. Ответ отправлен
+[BOT] 6. Обрабатываем данные: show_test_categories
+[BOT] 🔧 Processing callback data: show_test_categories for user 617053577
+W, [2026-02-06T09:46:36.689597 #31421]  WARN -- : [3ddf588d-e008-4d35-9228-2744805b7b8f] [TelegramBotService] Retry 1/3 after 1s: Bad Request: Bad Request: object expected as reply markup
+W, [2026-02-06T09:46:37.740728 #31421]  WARN -- : [3ddf588d-e008-4d35-9228-2744805b7b8f] [TelegramBotService] Retry 2/3 after 2s: Bad Request: Bad Request: object expected as reply markup
+E, [2026-02-06T09:46:39.794156 #31421] ERROR -- : [3ddf588d-e008-4d35-9228-2744805b7b8f] [TelegramBotService] Telegram API Error sending message for 617053577: Bad Request: Bad Request: object expected as reply markup
+[BOT] 7. Данные обработаны
+I, [2026-02-06T09:46:39.795231 #31421]  INFO -- : [3ddf588d-e008-4d35-9228-2744805b7b8f] Completed 200 OK in 6605ms (Views: 0.5ms | ActiveRecord: 0.0ms | Allocations: 17082)
+I, [2026-02-06T09:46:39.855008 #31423]  INFO -- : [f7a359e1-f79b-4d95-833e-d429ea6aef32] Started POST "/telegram_webhooks/callback_query" for 89.104.65.152 at 2026-02-06 09:46:39 +0300
+I, [2026-02-06T09:46:39.858866 #31423]  INFO -- : [f7a359e1-f79b-4d95-833e-d429ea6aef32] Processing by TelegramWebhooksController#callback_query as */*
+I, [2026-02-06T09:46:39.858994 #31423]  INFO -- : [f7a359e1-f79b-4d95-833e-d429ea6aef32]   Parameters: {"callback_query"=>{"id"=>"test_anxiety_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"prepare_anxiety_test"}, "telegram_webhook"=>{"callback_query"=>{"id"=>"test_anxiety_$(date +%s)", "from"=>{"id"=>617053577}, "message"=>{"message_id"=>1, "chat"=>{"id"=>617053577}}, "data"=>"prepare_anxiety_test"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:46:39 +0300] 🔘 CALLBACK User: 617053577 | Data: prepare_anxiety_test | ID: test_anxiety_$(date +%s)
+[BOT] 1. Инициализация бот сервиса...
+[BOT] 🤖 Bot service initialized
+[BOT] 2. Бот сервис инициализирован
+[BOT] 3. Бот сервис доступен
+[BOT] 4. Отвечаем на callback: test_anxiety_$(date +%s)
+W, [2026-02-06T09:46:40.129023 #31423]  WARN -- : [f7a359e1-f79b-4d95-833e-d429ea6aef32] [TelegramBotService] Retry 1/3 after 1s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+I, [2026-02-06T09:46:40.554125 #31421]  INFO -- : [06d0c20e-b15b-4597-a932-1ae0ff3abb6e] Started GET "/wordpress/wp-admin/setup-config.php" for 104.23.223.27 at 2026-02-06 09:46:40 +0300
+E, [2026-02-06T09:46:40.555042 #31421] ERROR -- : [06d0c20e-b15b-4597-a932-1ae0ff3abb6e]   
+[06d0c20e-b15b-4597-a932-1ae0ff3abb6e] ActionController::RoutingError (No route matches [GET] "/wordpress/wp-admin/setup-config.php"):
+[06d0c20e-b15b-4597-a932-1ae0ff3abb6e]   
+W, [2026-02-06T09:46:41.192489 #31423]  WARN -- : [f7a359e1-f79b-4d95-833e-d429ea6aef32] [TelegramBotService] Retry 2/3 after 2s: Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+E, [2026-02-06T09:46:43.257291 #31423] ERROR -- : [f7a359e1-f79b-4d95-833e-d429ea6aef32] [TelegramBotService] Telegram API Error answering callback query for test_anxiety_$(date +%s): Bad Request: Bad Request: query is too old and response timeout expired or query ID is invalid
+[BOT] 5. Ответ отправлен
+[BOT] 6. Обрабатываем данные: prepare_anxiety_test
+[BOT] 🔧 Processing callback data: prepare_anxiety_test for user 617053577
+[BOT] 7. Данные обработаны
+I, [2026-02-06T09:46:43.354824 #31423]  INFO -- : [f7a359e1-f79b-4d95-833e-d429ea6aef32] Completed 200 OK in 3496ms (Views: 0.5ms | ActiveRecord: 0.0ms | Allocations: 13396)
+I, [2026-02-06T09:46:55.300139 #31423]  INFO -- : [1df1c47d-17c5-4891-825f-ae8fb007d4dc] Started GET "/wp-admin/setup-config.php" for 162.158.95.236 at 2026-02-06 09:46:55 +0300
+E, [2026-02-06T09:46:55.300874 #31423] ERROR -- : [1df1c47d-17c5-4891-825f-ae8fb007d4dc]   
+[1df1c47d-17c5-4891-825f-ae8fb007d4dc] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[1df1c47d-17c5-4891-825f-ae8fb007d4dc]   
+I, [2026-02-06T09:47:08.212282 #31421]  INFO -- : [36b67fd3-c4bc-40b2-a8bb-c58cd41c0df4] Started POST "/" for 62.234.46.149 at 2026-02-06 09:47:08 +0300
+E, [2026-02-06T09:47:08.212654 #31421] ERROR -- : [36b67fd3-c4bc-40b2-a8bb-c58cd41c0df4]   
+[36b67fd3-c4bc-40b2-a8bb-c58cd41c0df4] ActionController::RoutingError (No route matches [POST] "/"):
+[36b67fd3-c4bc-40b2-a8bb-c58cd41c0df4]   
+I, [2026-02-06T09:47:08.484718 #31423]  INFO -- : [0442ffcf-8ac6-4819-90c8-c77a693fff54] Started POST "/index.php" for 62.234.46.149 at 2026-02-06 09:47:08 +0300
+E, [2026-02-06T09:47:08.485189 #31423] ERROR -- : [0442ffcf-8ac6-4819-90c8-c77a693fff54]   
+[0442ffcf-8ac6-4819-90c8-c77a693fff54] ActionController::RoutingError (No route matches [POST] "/index.php"):
+[0442ffcf-8ac6-4819-90c8-c77a693fff54]   
+I, [2026-02-06T09:47:08.757450 #31421]  INFO -- : [37f98feb-30fa-414d-9b4c-684530af3107] Started POST "/admin" for 62.234.46.149 at 2026-02-06 09:47:08 +0300
+E, [2026-02-06T09:47:08.757888 #31421] ERROR -- : [37f98feb-30fa-414d-9b4c-684530af3107]   
+[37f98feb-30fa-414d-9b4c-684530af3107] ActionController::RoutingError (No route matches [POST] "/admin"):
+[37f98feb-30fa-414d-9b4c-684530af3107]   
+I, [2026-02-06T09:47:09.019829 #31421]  INFO -- : [aa4709a2-cefd-4c9a-b65f-8624cb43f4f7] Started POST "/api" for 62.234.46.149 at 2026-02-06 09:47:09 +0300
+E, [2026-02-06T09:47:09.020289 #31421] ERROR -- : [aa4709a2-cefd-4c9a-b65f-8624cb43f4f7]   
+[aa4709a2-cefd-4c9a-b65f-8624cb43f4f7] ActionController::RoutingError (No route matches [POST] "/api"):
+[aa4709a2-cefd-4c9a-b65f-8624cb43f4f7]   
+I, [2026-02-06T09:47:41.914383 #31421]  INFO -- : [c360e070-86c9-4958-b2a1-75a13b4cf6e9] Started GET "/wordpress/wp-admin/setup-config.php" for 104.23.223.26 at 2026-02-06 09:47:41 +0300
+E, [2026-02-06T09:47:41.914937 #31421] ERROR -- : [c360e070-86c9-4958-b2a1-75a13b4cf6e9]   
+[c360e070-86c9-4958-b2a1-75a13b4cf6e9] ActionController::RoutingError (No route matches [GET] "/wordpress/wp-admin/setup-config.php"):
+[c360e070-86c9-4958-b2a1-75a13b4cf6e9]   
+I, [2026-02-06T09:48:13.634328 #31421]  INFO -- : [400281f7-7a33-4318-a361-0efe00361032] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:48:13 +0300
+I, [2026-02-06T09:48:13.635382 #31421]  INFO -- : [400281f7-7a33-4318-a361-0efe00361032] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:48:13.635526 #31421]  INFO -- : [400281f7-7a33-4318-a361-0efe00361032]   Parameters: {"update_id"=>165325780, "message"=>{"message_id"=>19744, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360493, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325780, "message"=>{"message_id"=>19744, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360493, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:48:13 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:48:13.712946 #31421]  INFO -- : [400281f7-7a33-4318-a361-0efe00361032] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:48:14.106933 #31421]  INFO -- : [400281f7-7a33-4318-a361-0efe00361032] Completed 200 OK in 471ms (Views: 0.1ms | ActiveRecord: 11.4ms | Allocations: 26106)
+I, [2026-02-06T09:48:15.443431 #31421]  INFO -- : [bd6f857f-db04-4eba-96a9-a625e729a616] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:48:15 +0300
+I, [2026-02-06T09:48:15.444421 #31421]  INFO -- : [bd6f857f-db04-4eba-96a9-a625e729a616] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:48:15.444570 #31421]  INFO -- : [bd6f857f-db04-4eba-96a9-a625e729a616]   Parameters: {"update_id"=>165325781, "callback_query"=>{"id"=>"2650224933420115695", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19746, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360494, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325781, "callback_query"=>{"id"=>"2650224933420115695", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19746, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360494, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:48:15.445390 #31421]  INFO -- : [bd6f857f-db04-4eba-96a9-a625e729a616] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 281)
+I, [2026-02-06T09:48:21.855837 #31421]  INFO -- : [21000e17-a03d-440a-b871-21aff65d6b9e] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:48:21 +0300
+I, [2026-02-06T09:48:21.856705 #31421]  INFO -- : [21000e17-a03d-440a-b871-21aff65d6b9e] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:48:21.856823 #31421]  INFO -- : [21000e17-a03d-440a-b871-21aff65d6b9e]   Parameters: {"update_id"=>165325782, "callback_query"=>{"id"=>"2650224933351478333", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19746, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360494, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}, "telegram_webhook"=>{"update_id"=>165325782, "callback_query"=>{"id"=>"2650224933351478333", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19746, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360494, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:48:21.857531 #31421]  INFO -- : [21000e17-a03d-440a-b871-21aff65d6b9e] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:48:23.125579 #31421]  INFO -- : [44ea4be0-c41c-4ece-9dd0-32fd08e6e031] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:48:23 +0300
+I, [2026-02-06T09:48:23.126320 #31421]  INFO -- : [44ea4be0-c41c-4ece-9dd0-32fd08e6e031] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:48:23.126427 #31421]  INFO -- : [44ea4be0-c41c-4ece-9dd0-32fd08e6e031]   Parameters: {"update_id"=>165325783, "callback_query"=>{"id"=>"2650224937250201107", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19746, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360494, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_self_help_program"}, "telegram_webhook"=>{"update_id"=>165325783, "callback_query"=>{"id"=>"2650224937250201107", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19746, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360494, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_self_help_program"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:48:23.127025 #31421]  INFO -- : [44ea4be0-c41c-4ece-9dd0-32fd08e6e031] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:48:24.019288 #31421]  INFO -- : [03b0b7f8-e1b0-4742-9365-b0dba950251a] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:48:24 +0300
+I, [2026-02-06T09:48:24.020412 #31421]  INFO -- : [03b0b7f8-e1b0-4742-9365-b0dba950251a] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:48:24.020663 #31421]  INFO -- : [03b0b7f8-e1b0-4742-9365-b0dba950251a]   Parameters: {"update_id"=>165325784, "callback_query"=>{"id"=>"2650224934900454136", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19746, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360494, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}, "telegram_webhook"=>{"update_id"=>165325784, "callback_query"=>{"id"=>"2650224934900454136", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19746, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360494, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:48:24.021451 #31421]  INFO -- : [03b0b7f8-e1b0-4742-9365-b0dba950251a] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:48:31.700684 #31421]  INFO -- : [3a84cfcd-e627-43eb-9969-748695ad1848] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:48:31 +0300
+I, [2026-02-06T09:48:31.701379 #31421]  INFO -- : [3a84cfcd-e627-43eb-9969-748695ad1848] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:48:31.701463 #31421]  INFO -- : [3a84cfcd-e627-43eb-9969-748695ad1848]   Parameters: {"update_id"=>165325785, "message"=>{"message_id"=>19747, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360511, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325785, "message"=>{"message_id"=>19747, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360511, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:48:31 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:48:31.703204 #31421]  INFO -- : [3a84cfcd-e627-43eb-9969-748695ad1848] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:48:32.130176 #31421]  INFO -- : [3a84cfcd-e627-43eb-9969-748695ad1848] Completed 200 OK in 429ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 1789)
+I, [2026-02-06T09:48:33.587847 #31421]  INFO -- : [f5d79c2a-d450-453d-99d6-595178432838] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:48:33 +0300
+I, [2026-02-06T09:48:33.588710 #31421]  INFO -- : [f5d79c2a-d450-453d-99d6-595178432838] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:48:33.588806 #31421]  INFO -- : [f5d79c2a-d450-453d-99d6-595178432838]   Parameters: {"update_id"=>165325786, "callback_query"=>{"id"=>"2650224934387990511", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19748, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360512, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325786, "callback_query"=>{"id"=>"2650224934387990511", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19748, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360512, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:48:33.589520 #31421]  INFO -- : [f5d79c2a-d450-453d-99d6-595178432838] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:48:34.358388 #31423]  INFO -- : [3b75b9ac-1792-4d65-aa9f-0957907a84a3] Started GET "/wp-admin/setup-config.php" for 172.69.50.175 at 2026-02-06 09:48:34 +0300
+E, [2026-02-06T09:48:34.358900 #31423] ERROR -- : [3b75b9ac-1792-4d65-aa9f-0957907a84a3]   
+[3b75b9ac-1792-4d65-aa9f-0957907a84a3] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[3b75b9ac-1792-4d65-aa9f-0957907a84a3]   
+I, [2026-02-06T09:48:35.375047 #31423]  INFO -- : [adc36b51-364c-4184-b887-a9f21db4dda9] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:48:35 +0300
+I, [2026-02-06T09:48:35.375986 #31423]  INFO -- : [adc36b51-364c-4184-b887-a9f21db4dda9] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:48:35.376131 #31423]  INFO -- : [adc36b51-364c-4184-b887-a9f21db4dda9]   Parameters: {"update_id"=>165325787, "callback_query"=>{"id"=>"2650224936623941655", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19748, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360512, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}, "telegram_webhook"=>{"update_id"=>165325787, "callback_query"=>{"id"=>"2650224936623941655", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19748, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360512, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:48:35.376882 #31423]  INFO -- : [adc36b51-364c-4184-b887-a9f21db4dda9] Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 298)
+I, [2026-02-06T09:48:36.376897 #31421]  INFO -- : [27d20eae-66e5-4552-bc79-5773e282f652] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:48:36 +0300
+I, [2026-02-06T09:48:36.377565 #31421]  INFO -- : [27d20eae-66e5-4552-bc79-5773e282f652] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:48:36.377671 #31421]  INFO -- : [27d20eae-66e5-4552-bc79-5773e282f652]   Parameters: {"update_id"=>165325788, "callback_query"=>{"id"=>"2650224937216301075", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19748, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360512, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_self_help_program"}, "telegram_webhook"=>{"update_id"=>165325788, "callback_query"=>{"id"=>"2650224937216301075", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19748, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360512, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_self_help_program"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:48:36.378194 #31421]  INFO -- : [27d20eae-66e5-4552-bc79-5773e282f652] Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+I, [2026-02-06T09:48:36.732342 #31421]  INFO -- : [a39fee53-a76a-4295-a1fa-2ed4a7f3e090] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:48:36 +0300
+I, [2026-02-06T09:48:36.733120 #31421]  INFO -- : [a39fee53-a76a-4295-a1fa-2ed4a7f3e090] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:48:36.733285 #31421]  INFO -- : [a39fee53-a76a-4295-a1fa-2ed4a7f3e090]   Parameters: {"update_id"=>165325789, "callback_query"=>{"id"=>"2650224933641522637", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19748, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360512, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}, "telegram_webhook"=>{"update_id"=>165325789, "callback_query"=>{"id"=>"2650224933641522637", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19748, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770360512, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"help"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:48:36.733844 #31421]  INFO -- : [a39fee53-a76a-4295-a1fa-2ed4a7f3e090] Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 274)
+[31400] === puma shutdown: 2026-02-06 09:56:28 +0300 ===
+[31400] - Goodbye!
+[31400] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 09:56:29 +0300 ===
+[31962] * Starting control server on unix:///tmp/puma-status-1770360988807-31962
+[31962] - Worker 0 (PID: 31983) booted in 0.0s, phase: 0
+[31962] - Worker 1 (PID: 31985) booted in 0.0s, phase: 0
+I, [2026-02-06T09:57:37.254877 #31985]  INFO -- : [8aaa0707-2d89-46a5-ab5b-48704d74266e] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:57:37 +0300
+I, [2026-02-06T09:57:37.257877 #31985]  INFO -- : [8aaa0707-2d89-46a5-ab5b-48704d74266e] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:57:37.257998 #31985]  INFO -- : [8aaa0707-2d89-46a5-ab5b-48704d74266e]   Parameters: {"update_id"=>165325790, "message"=>{"message_id"=>19749, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361057, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325790, "message"=>{"message_id"=>19749, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361057, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:57:37 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:57:37.341259 #31985]  INFO -- : [8aaa0707-2d89-46a5-ab5b-48704d74266e] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:57:37.665609 #31985]  INFO -- : [8aaa0707-2d89-46a5-ab5b-48704d74266e] Completed 200 OK in 407ms (Views: 0.3ms | ActiveRecord: 9.4ms | Allocations: 31211)
+I, [2026-02-06T09:57:39.203231 #31983]  INFO -- : [8b1f266e-fa7b-4cab-b94c-0515b74f811b] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:57:39 +0300
+I, [2026-02-06T09:57:39.205956 #31983]  INFO -- : [8b1f266e-fa7b-4cab-b94c-0515b74f811b] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:57:39.206075 #31983]  INFO -- : [8b1f266e-fa7b-4cab-b94c-0515b74f811b]   Parameters: {"update_id"=>165325791, "callback_query"=>{"id"=>"2650224933985008411", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19750, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361057, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325791, "callback_query"=>{"id"=>"2650224933985008411", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19750, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361057, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[BOT] 🔥 ERROR: undefined method `[]' for nil:NilClass
+/home/deploy/psy_bot/app/controllers/telegram_webhooks_controller.rb:9:in `message'
+I, [2026-02-06T09:57:39.220402 #31983]  INFO -- : [8b1f266e-fa7b-4cab-b94c-0515b74f811b] Completed 200 OK in 14ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 9772)
+[31962] === puma shutdown: 2026-02-06 09:58:40 +0300 ===
+[31962] - Goodbye!
+[31962] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 09:58:41 +0300 ===
+[32213] * Starting control server on unix:///tmp/puma-status-1770361121221-32213
+[32213] - Worker 0 (PID: 32234) booted in 0.0s, phase: 0
+[32213] - Worker 1 (PID: 32236) booted in 0.0s, phase: 0
+I, [2026-02-06T09:59:36.610928 #32236]  INFO -- : [93aeb7e4-3f67-49a0-9641-29615c61a291] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:59:36 +0300
+I, [2026-02-06T09:59:36.614758 #32236]  INFO -- : [93aeb7e4-3f67-49a0-9641-29615c61a291] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:59:36.614912 #32236]  INFO -- : [93aeb7e4-3f67-49a0-9641-29615c61a291]   Parameters: {"update_id"=>165325792, "message"=>{"message_id"=>19751, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361176, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325792, "message"=>{"message_id"=>19751, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361176, "text"=>"/menu", "entities"=>[{"offset"=>0, "length"=>5, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:59:36 +0300] 👤 User: 617053577 | Команда: /menu
+[BOT] 📱 Received: /menu from 617053577
+[BOT] 💬 Processing: '/menu' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T09:59:36.705928 #32236]  INFO -- : [93aeb7e4-3f67-49a0-9641-29615c61a291] [MessageProcessor] Processing message: /menu - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T09:59:37.076743 #32236]  INFO -- : [93aeb7e4-3f67-49a0-9641-29615c61a291] Completed 200 OK in 462ms (Views: 0.4ms | ActiveRecord: 8.3ms | Allocations: 31222)
+I, [2026-02-06T09:59:38.606235 #32236]  INFO -- : [ca79bd59-80b7-4ca1-8b7a-a7e814dba14a] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:59:38 +0300
+I, [2026-02-06T09:59:38.607067 #32236]  INFO -- : [ca79bd59-80b7-4ca1-8b7a-a7e814dba14a] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:59:38.607174 #32236]  INFO -- : [ca79bd59-80b7-4ca1-8b7a-a7e814dba14a]   Parameters: {"update_id"=>165325793, "callback_query"=>{"id"=>"2650224935172642215", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19752, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361177, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325793, "callback_query"=>{"id"=>"2650224935172642215", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19752, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361177, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:59:38 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935172642215
+I, [2026-02-06T09:59:38.860722 #32236]  INFO -- : [ca79bd59-80b7-4ca1-8b7a-a7e814dba14a] [CallbackQueryProcessor] Processing callback: show_test_categories - User: 617053577, Chat: 617053577
+I, [2026-02-06T09:59:38.861403 #32236]  INFO -- : [ca79bd59-80b7-4ca1-8b7a-a7e814dba14a] [CallbackHandlerFactory] Looking for handler for: show_test_categories
+I, [2026-02-06T09:59:38.861488 #32236]  INFO -- : [ca79bd59-80b7-4ca1-8b7a-a7e814dba14a] [CallbackHandlerFactory] Found string match: TestManagerHandler
+I, [2026-02-06T09:59:38.861511 #32236]  INFO -- : [ca79bd59-80b7-4ca1-8b7a-a7e814dba14a] [CallbackHandlerFactory] Selected handler: TestManagerHandler
+I, [2026-02-06T09:59:38.861597 #32236]  INFO -- : [ca79bd59-80b7-4ca1-8b7a-a7e814dba14a] [Telegram::Handlers::TestManagerHandler] Showing test categories - {}
+I, [2026-02-06T09:59:38.861904 #32236]  INFO -- : [ca79bd59-80b7-4ca1-8b7a-a7e814dba14a] [TestManager] Showing test categories - User: 617053577
+[BOT] ✅ Callback processed
+I, [2026-02-06T09:59:38.999519 #32236]  INFO -- : [ca79bd59-80b7-4ca1-8b7a-a7e814dba14a] Completed 200 OK in 392ms (Views: 0.2ms | ActiveRecord: 0.8ms | Allocations: 4642)
+I, [2026-02-06T09:59:40.906895 #32236]  INFO -- : [997b6254-b677-4699-a33e-f0f960f39ba5] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:59:40 +0300
+I, [2026-02-06T09:59:40.907817 #32236]  INFO -- : [997b6254-b677-4699-a33e-f0f960f39ba5] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:59:40.907967 #32236]  INFO -- : [997b6254-b677-4699-a33e-f0f960f39ba5]   Parameters: {"update_id"=>165325794, "callback_query"=>{"id"=>"2650224934805164523", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19753, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361178, "text"=>"📋 Выберите тест, который вы хотите пройти:", "entities"=>[{"offset"=>3, "length"=>40, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"prepare_anxiety_test"}, "telegram_webhook"=>{"update_id"=>165325794, "callback_query"=>{"id"=>"2650224934805164523", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19753, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361178, "text"=>"📋 Выберите тест, который вы хотите пройти:", "entities"=>[{"offset"=>3, "length"=>40, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"prepare_anxiety_test"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:59:40 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934805164523
+I, [2026-02-06T09:59:41.253630 #32236]  INFO -- : [997b6254-b677-4699-a33e-f0f960f39ba5] [CallbackQueryProcessor] Processing callback: prepare_anxiety_test - User: 617053577, Chat: 617053577
+I, [2026-02-06T09:59:41.253735 #32236]  INFO -- : [997b6254-b677-4699-a33e-f0f960f39ba5] [CallbackHandlerFactory] Looking for handler for: prepare_anxiety_test
+I, [2026-02-06T09:59:41.253808 #32236]  INFO -- : [997b6254-b677-4699-a33e-f0f960f39ba5] [CallbackHandlerFactory] Found regex match: TestPreparationHandler
+I, [2026-02-06T09:59:41.253830 #32236]  INFO -- : [997b6254-b677-4699-a33e-f0f960f39ba5] [CallbackHandlerFactory] Selected handler: TestPreparationHandler
+I, [2026-02-06T09:59:41.253967 #32236]  INFO -- : [997b6254-b677-4699-a33e-f0f960f39ba5] [TestPreparationHandler] Preparing test - User: 617053577, Chat: 617053577
+I, [2026-02-06T09:59:41.253999 #32236]  INFO -- : [997b6254-b677-4699-a33e-f0f960f39ba5] [TestPreparationHandler] Preparing test: anxiety - User: 617053577, Chat: 617053577
+[BOT] ✅ Callback processed
+I, [2026-02-06T09:59:41.563999 #32236]  INFO -- : [997b6254-b677-4699-a33e-f0f960f39ba5] Completed 200 OK in 656ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 3216)
+I, [2026-02-06T09:59:43.775566 #32236]  INFO -- : [ebd4fe9b-57fc-4df4-8602-188264773139] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 09:59:43 +0300
+I, [2026-02-06T09:59:43.776508 #32236]  INFO -- : [ebd4fe9b-57fc-4df4-8602-188264773139] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T09:59:43.776740 #32236]  INFO -- : [ebd4fe9b-57fc-4df4-8602-188264773139]   Parameters: {"update_id"=>165325795, "callback_query"=>{"id"=>"2650224935897853416", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19754, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361181, "text"=>"Тест Тревожности\n\nТест Тревожности поможет вам оценить уровень тревожности. Ответьте на вопросы, чтобы получить результат.\n\nПримерное время прохождения: 5-10 минут.", "entities"=>[{"offset"=>0, "length"=>16, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_anxiety_test"}, "telegram_webhook"=>{"update_id"=>165325795, "callback_query"=>{"id"=>"2650224935897853416", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19754, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770361181, "text"=>"Тест Тревожности\n\nТест Тревожности поможет вам оценить уровень тревожности. Ответьте на вопросы, чтобы получить результат.\n\nПримерное время прохождения: 5-10 минут.", "entities"=>[{"offset"=>0, "length"=>16, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_anxiety_test"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 09:59:43 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935897853416
+I, [2026-02-06T09:59:44.038485 #32236]  INFO -- : [ebd4fe9b-57fc-4df4-8602-188264773139] [CallbackQueryProcessor] Processing callback: start_anxiety_test - User: 617053577, Chat: 617053577
+I, [2026-02-06T09:59:44.038537 #32236]  INFO -- : [ebd4fe9b-57fc-4df4-8602-188264773139] [CallbackHandlerFactory] Looking for handler for: start_anxiety_test
+I, [2026-02-06T09:59:44.038621 #32236]  INFO -- : [ebd4fe9b-57fc-4df4-8602-188264773139] [CallbackHandlerFactory] Found regex match: TestStartHandler
+I, [2026-02-06T09:59:44.038654 #32236]  INFO -- : [ebd4fe9b-57fc-4df4-8602-188264773139] [CallbackHandlerFactory] Selected handler: TestStartHandler
+I, [2026-02-06T09:59:44.038891 #32236]  INFO -- : [ebd4fe9b-57fc-4df4-8602-188264773139] [TestStartHandler] Starting test from tests list - {:test_type=>"anxiety", :user_id=>3, :self_help_state=>"taking_depression_test", :telegram_id=>617053577}
+I, [2026-02-06T09:59:44.045807 #32236]  INFO -- : [ebd4fe9b-57fc-4df4-8602-188264773139] [QuizRunner] QuizRunner initialized - User: 3, {:user_id=>3, :telegram_id=>617053577, :in_program_context=>false, :self_help_state=>"taking_depression_test", :current_test_type=>nil}
+E, [2026-02-06T09:59:44.048689 #32236] ERROR -- : [ebd4fe9b-57fc-4df4-8602-188264773139] [QuizRunner] Test not found: anxiety - User: 3
+[BOT] ✅ Callback processed
+I, [2026-02-06T09:59:44.224682 #32236]  INFO -- : [ebd4fe9b-57fc-4df4-8602-188264773139] Completed 200 OK in 448ms (Views: 0.2ms | ActiveRecord: 5.0ms | Allocations: 5038)
