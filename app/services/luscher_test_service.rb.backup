@@ -68,7 +68,7 @@ class LuscherTestService
     @bot_service = bot_service
     @user = user
     @chat_id = chat_id
-    @test = Test.find_by_type_name('luscher')
+    @test = Test.luscher_test
   end
   
   # Начать тест
@@ -399,10 +399,10 @@ class LuscherTestService
     <<~MARKDOWN
       ✨ **Ваши результаты 8-ми цветового теста Люшера** ✨
 
-      *#{first_color[:name]}*
+      *Первый выбранный цвет: #{first_color[:name]}*
       #{first_color[:first_interpretation]}
 
-      *#{last_color[:name]}*
+      *Последний выбранный цвет: #{last_color[:name]}*
       #{last_color[:last_interpretation]}
 
       ---

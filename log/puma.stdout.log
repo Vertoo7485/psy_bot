@@ -26995,3 +26995,921 @@ I, [2026-02-06T17:07:13.206629 #53997]  INFO -- : [1becc635-974a-4bb7-ba1d-6e252
 I, [2026-02-06T17:07:13.362277 #53997]  INFO -- : [1becc635-974a-4bb7-ba1d-6e2527d6224d] [Telegram::Handlers::TestManagerHandler] TestManagerHandler: Completed successfully - {}
 [BOT] ✅ Callback processed
 I, [2026-02-06T17:07:13.362687 #53997]  INFO -- : [1becc635-974a-4bb7-ba1d-6e2527d6224d] Completed 200 OK in 414ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 3296)
+[54000] Unsupported HTTP method used: PROPFIND
+I, [2026-02-06T17:20:57.178346 #53997]  INFO -- : [f9e90469-7c8a-4535-aca4-5f3d213634b4] Started GET "/wordpress/wp-admin/setup-config.php" for 104.23.221.137 at 2026-02-06 17:20:57 +0300
+E, [2026-02-06T17:20:57.178851 #53997] ERROR -- : [f9e90469-7c8a-4535-aca4-5f3d213634b4]   
+[f9e90469-7c8a-4535-aca4-5f3d213634b4] ActionController::RoutingError (No route matches [GET] "/wordpress/wp-admin/setup-config.php"):
+[f9e90469-7c8a-4535-aca4-5f3d213634b4]   
+I, [2026-02-06T17:22:43.126106 #53997]  INFO -- : [097312fa-2d1c-4da1-a34f-373f077a6ec3] Started GET "/wordpress/wp-admin/setup-config.php" for 104.23.221.137 at 2026-02-06 17:22:43 +0300
+E, [2026-02-06T17:22:43.126501 #53997] ERROR -- : [097312fa-2d1c-4da1-a34f-373f077a6ec3]   
+[097312fa-2d1c-4da1-a34f-373f077a6ec3] ActionController::RoutingError (No route matches [GET] "/wordpress/wp-admin/setup-config.php"):
+[097312fa-2d1c-4da1-a34f-373f077a6ec3]   
+I, [2026-02-06T17:23:07.690751 #53997]  INFO -- : [9ca3bee1-ea7e-4f08-a236-09d9429541c1] Started GET "/wp-admin/setup-config.php" for 104.23.223.27 at 2026-02-06 17:23:07 +0300
+E, [2026-02-06T17:23:07.691185 #53997] ERROR -- : [9ca3bee1-ea7e-4f08-a236-09d9429541c1]   
+[9ca3bee1-ea7e-4f08-a236-09d9429541c1] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[9ca3bee1-ea7e-4f08-a236-09d9429541c1]   
+I, [2026-02-06T17:24:19.120892 #54000]  INFO -- : [88190b4b-ee4a-43be-a0f8-2dd1298caa55] Started GET "/wp-admin/setup-config.php" for 104.23.221.137 at 2026-02-06 17:24:19 +0300
+E, [2026-02-06T17:24:19.121325 #54000] ERROR -- : [88190b4b-ee4a-43be-a0f8-2dd1298caa55]   
+[88190b4b-ee4a-43be-a0f8-2dd1298caa55] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[88190b4b-ee4a-43be-a0f8-2dd1298caa55]   
+I, [2026-02-06T17:27:48.023005 #53997]  INFO -- : [c25223d1-f35d-4955-8e08-776eca75b1fd] Started GET "/.env" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.023557 #53997] ERROR -- : [c25223d1-f35d-4955-8e08-776eca75b1fd]   
+[c25223d1-f35d-4955-8e08-776eca75b1fd] ActionController::RoutingError (No route matches [GET] "/.env"):
+[c25223d1-f35d-4955-8e08-776eca75b1fd]   
+I, [2026-02-06T17:27:48.073682 #53997]  INFO -- : [bfe99a06-59b2-4bf7-9fed-41d8c7d29ffb] Started GET "/.env.bak" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.074167 #53997] ERROR -- : [bfe99a06-59b2-4bf7-9fed-41d8c7d29ffb]   
+[bfe99a06-59b2-4bf7-9fed-41d8c7d29ffb] ActionController::RoutingError (No route matches [GET] "/.env.bak"):
+[bfe99a06-59b2-4bf7-9fed-41d8c7d29ffb]   
+I, [2026-02-06T17:27:48.124608 #54000]  INFO -- : [5d985933-58cd-4fbf-a106-ae0f038eb376] Started GET "/.env.save" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.124975 #54000] ERROR -- : [5d985933-58cd-4fbf-a106-ae0f038eb376]   
+[5d985933-58cd-4fbf-a106-ae0f038eb376] ActionController::RoutingError (No route matches [GET] "/.env.save"):
+[5d985933-58cd-4fbf-a106-ae0f038eb376]   
+I, [2026-02-06T17:27:48.174330 #53997]  INFO -- : [8d9dd4e8-159d-4b33-8729-176c237013cc] Started GET "/.env.backup" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.174682 #53997] ERROR -- : [8d9dd4e8-159d-4b33-8729-176c237013cc]   
+[8d9dd4e8-159d-4b33-8729-176c237013cc] ActionController::RoutingError (No route matches [GET] "/.env.backup"):
+[8d9dd4e8-159d-4b33-8729-176c237013cc]   
+I, [2026-02-06T17:27:48.224816 #54000]  INFO -- : [452a35bd-5e0a-49cc-ae70-10507507be76] Started GET "/backend/.env" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.225226 #54000] ERROR -- : [452a35bd-5e0a-49cc-ae70-10507507be76]   
+[452a35bd-5e0a-49cc-ae70-10507507be76] ActionController::RoutingError (No route matches [GET] "/backend/.env"):
+[452a35bd-5e0a-49cc-ae70-10507507be76]   
+I, [2026-02-06T17:27:48.274801 #53997]  INFO -- : [a7f1fe67-2116-479b-9408-20f0d6895613] Started GET "/admin/.env" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.275198 #53997] ERROR -- : [a7f1fe67-2116-479b-9408-20f0d6895613]   
+[a7f1fe67-2116-479b-9408-20f0d6895613] ActionController::RoutingError (No route matches [GET] "/admin/.env"):
+[a7f1fe67-2116-479b-9408-20f0d6895613]   
+I, [2026-02-06T17:27:48.324639 #53997]  INFO -- : [aeaecb6c-352a-4b3f-a36a-c9c82df5dc52] Started GET "/.git/config" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.325042 #53997] ERROR -- : [aeaecb6c-352a-4b3f-a36a-c9c82df5dc52]   
+[aeaecb6c-352a-4b3f-a36a-c9c82df5dc52] ActionController::RoutingError (No route matches [GET] "/.git/config"):
+[aeaecb6c-352a-4b3f-a36a-c9c82df5dc52]   
+I, [2026-02-06T17:27:48.375022 #53997]  INFO -- : [0bd954c0-c5f1-4d9a-8557-26d0212243c5] Started GET "/wp-config.php" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.375447 #53997] ERROR -- : [0bd954c0-c5f1-4d9a-8557-26d0212243c5]   
+[0bd954c0-c5f1-4d9a-8557-26d0212243c5] ActionController::RoutingError (No route matches [GET] "/wp-config.php"):
+[0bd954c0-c5f1-4d9a-8557-26d0212243c5]   
+I, [2026-02-06T17:27:48.425121 #53997]  INFO -- : [b117c56a-ba22-4c5f-b315-b33394e37040] Started GET "/wp-config.php.old" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.425511 #53997] ERROR -- : [b117c56a-ba22-4c5f-b315-b33394e37040]   
+[b117c56a-ba22-4c5f-b315-b33394e37040] ActionController::RoutingError (No route matches [GET] "/wp-config.php.old"):
+[b117c56a-ba22-4c5f-b315-b33394e37040]   
+I, [2026-02-06T17:27:48.474881 #53997]  INFO -- : [e8f4a865-2ca7-4928-8b4e-493bd9f932e1] Started GET "/wp-config.php.bak" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.475300 #53997] ERROR -- : [e8f4a865-2ca7-4928-8b4e-493bd9f932e1]   
+[e8f4a865-2ca7-4928-8b4e-493bd9f932e1] ActionController::RoutingError (No route matches [GET] "/wp-config.php.bak"):
+[e8f4a865-2ca7-4928-8b4e-493bd9f932e1]   
+I, [2026-02-06T17:27:48.524773 #53997]  INFO -- : [545347ac-66ff-4a5f-9662-f7e14c106fab] Started GET "/wp-config.php.save" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.525180 #53997] ERROR -- : [545347ac-66ff-4a5f-9662-f7e14c106fab]   
+[545347ac-66ff-4a5f-9662-f7e14c106fab] ActionController::RoutingError (No route matches [GET] "/wp-config.php.save"):
+[545347ac-66ff-4a5f-9662-f7e14c106fab]   
+I, [2026-02-06T17:27:48.576377 #53997]  INFO -- : [42399b5e-35b2-4a74-a5c8-06e4cbcded5e] Started GET "/wp-config.php~" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.576770 #53997] ERROR -- : [42399b5e-35b2-4a74-a5c8-06e4cbcded5e]   
+[42399b5e-35b2-4a74-a5c8-06e4cbcded5e] ActionController::RoutingError (No route matches [GET] "/wp-config.php~"):
+[42399b5e-35b2-4a74-a5c8-06e4cbcded5e]   
+I, [2026-02-06T17:27:48.626505 #53997]  INFO -- : [798cf78a-95db-4918-9881-35cf5bf99aab] Started GET "/wp-config.bak" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.626972 #53997] ERROR -- : [798cf78a-95db-4918-9881-35cf5bf99aab]   
+[798cf78a-95db-4918-9881-35cf5bf99aab] ActionController::RoutingError (No route matches [GET] "/wp-config.bak"):
+[798cf78a-95db-4918-9881-35cf5bf99aab]   
+I, [2026-02-06T17:27:48.676723 #53997]  INFO -- : [d96b18c8-07cf-44f0-88f7-34b78537ca55] Started GET "/config.php" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.677109 #53997] ERROR -- : [d96b18c8-07cf-44f0-88f7-34b78537ca55]   
+[d96b18c8-07cf-44f0-88f7-34b78537ca55] ActionController::RoutingError (No route matches [GET] "/config.php"):
+[d96b18c8-07cf-44f0-88f7-34b78537ca55]   
+I, [2026-02-06T17:27:48.726660 #53997]  INFO -- : [314bfbc1-9bba-4371-b307-72b3253ccecb] Started GET "/config.php.bak" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.727292 #53997] ERROR -- : [314bfbc1-9bba-4371-b307-72b3253ccecb]   
+[314bfbc1-9bba-4371-b307-72b3253ccecb] ActionController::RoutingError (No route matches [GET] "/config.php.bak"):
+[314bfbc1-9bba-4371-b307-72b3253ccecb]   
+I, [2026-02-06T17:27:48.777506 #53997]  INFO -- : [15cf99ed-6a51-4c45-ba96-3666fab2daac] Started GET "/config.php.old" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.778039 #53997] ERROR -- : [15cf99ed-6a51-4c45-ba96-3666fab2daac]   
+[15cf99ed-6a51-4c45-ba96-3666fab2daac] ActionController::RoutingError (No route matches [GET] "/config.php.old"):
+[15cf99ed-6a51-4c45-ba96-3666fab2daac]   
+I, [2026-02-06T17:27:48.828022 #53997]  INFO -- : [df8411fd-33e6-4353-93b9-db42d795f849] Started GET "/configuration.php" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.828536 #53997] ERROR -- : [df8411fd-33e6-4353-93b9-db42d795f849]   
+[df8411fd-33e6-4353-93b9-db42d795f849] ActionController::RoutingError (No route matches [GET] "/configuration.php"):
+[df8411fd-33e6-4353-93b9-db42d795f849]   
+I, [2026-02-06T17:27:48.878351 #53997]  INFO -- : [6424d254-8e79-4277-8743-12271c365180] Started GET "/configuration.php.bak" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.878886 #53997] ERROR -- : [6424d254-8e79-4277-8743-12271c365180]   
+[6424d254-8e79-4277-8743-12271c365180] ActionController::RoutingError (No route matches [GET] "/configuration.php.bak"):
+[6424d254-8e79-4277-8743-12271c365180]   
+I, [2026-02-06T17:27:48.928537 #53997]  INFO -- : [b4b20c6a-00ee-4527-aa20-e0d3a5a9d2a4] Started GET "/includes/config.php" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.930352 #53997] ERROR -- : [b4b20c6a-00ee-4527-aa20-e0d3a5a9d2a4]   
+[b4b20c6a-00ee-4527-aa20-e0d3a5a9d2a4] ActionController::RoutingError (No route matches [GET] "/includes/config.php"):
+[b4b20c6a-00ee-4527-aa20-e0d3a5a9d2a4]   
+I, [2026-02-06T17:27:48.979642 #53997]  INFO -- : [d564d395-f5f0-4fdc-baf8-ea7fb0898464] Started GET "/inc/config.php" for 195.178.110.132 at 2026-02-06 17:27:48 +0300
+E, [2026-02-06T17:27:48.980022 #53997] ERROR -- : [d564d395-f5f0-4fdc-baf8-ea7fb0898464]   
+[d564d395-f5f0-4fdc-baf8-ea7fb0898464] ActionController::RoutingError (No route matches [GET] "/inc/config.php"):
+[d564d395-f5f0-4fdc-baf8-ea7fb0898464]   
+I, [2026-02-06T17:27:49.029141 #53997]  INFO -- : [9182dd08-0a7a-4588-91f2-e6ef0bc0256d] Started GET "/lib/config.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.029459 #53997] ERROR -- : [9182dd08-0a7a-4588-91f2-e6ef0bc0256d]   
+[9182dd08-0a7a-4588-91f2-e6ef0bc0256d] ActionController::RoutingError (No route matches [GET] "/lib/config.php"):
+[9182dd08-0a7a-4588-91f2-e6ef0bc0256d]   
+I, [2026-02-06T17:27:49.078934 #53997]  INFO -- : [22fd4f4b-644c-494c-aa2a-38f06d1f7f47] Started GET "/settings.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.079316 #53997] ERROR -- : [22fd4f4b-644c-494c-aa2a-38f06d1f7f47]   
+[22fd4f4b-644c-494c-aa2a-38f06d1f7f47] ActionController::RoutingError (No route matches [GET] "/settings.php"):
+[22fd4f4b-644c-494c-aa2a-38f06d1f7f47]   
+I, [2026-02-06T17:27:49.129219 #53997]  INFO -- : [4d0fe103-b623-4b6d-a2c6-b399759bd8f4] Started GET "/db.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.129769 #53997] ERROR -- : [4d0fe103-b623-4b6d-a2c6-b399759bd8f4]   
+[4d0fe103-b623-4b6d-a2c6-b399759bd8f4] ActionController::RoutingError (No route matches [GET] "/db.php"):
+[4d0fe103-b623-4b6d-a2c6-b399759bd8f4]   
+I, [2026-02-06T17:27:49.179336 #53997]  INFO -- : [dfea8b23-4194-458b-9205-0cd959f5aaa8] Started GET "/database.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.179851 #53997] ERROR -- : [dfea8b23-4194-458b-9205-0cd959f5aaa8]   
+[dfea8b23-4194-458b-9205-0cd959f5aaa8] ActionController::RoutingError (No route matches [GET] "/database.php"):
+[dfea8b23-4194-458b-9205-0cd959f5aaa8]   
+I, [2026-02-06T17:27:49.229180 #53997]  INFO -- : [59c497f5-3d4d-4f0f-9495-37afec49eabf] Started GET "/connect.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.229525 #53997] ERROR -- : [59c497f5-3d4d-4f0f-9495-37afec49eabf]   
+[59c497f5-3d4d-4f0f-9495-37afec49eabf] ActionController::RoutingError (No route matches [GET] "/connect.php"):
+[59c497f5-3d4d-4f0f-9495-37afec49eabf]   
+I, [2026-02-06T17:27:49.278639 #53997]  INFO -- : [3e7c6b06-6e3d-4698-b4bc-c64ba6662045] Started GET "/connection.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.279011 #53997] ERROR -- : [3e7c6b06-6e3d-4698-b4bc-c64ba6662045]   
+[3e7c6b06-6e3d-4698-b4bc-c64ba6662045] ActionController::RoutingError (No route matches [GET] "/connection.php"):
+[3e7c6b06-6e3d-4698-b4bc-c64ba6662045]   
+I, [2026-02-06T17:27:49.328675 #53997]  INFO -- : [c5550b1a-9c58-4c4a-8c3e-54624cd978fe] Started GET "/credentials.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.329058 #53997] ERROR -- : [c5550b1a-9c58-4c4a-8c3e-54624cd978fe]   
+[c5550b1a-9c58-4c4a-8c3e-54624cd978fe] ActionController::RoutingError (No route matches [GET] "/credentials.php"):
+[c5550b1a-9c58-4c4a-8c3e-54624cd978fe]   
+I, [2026-02-06T17:27:49.380655 #53997]  INFO -- : [64f49177-3c0e-4ff4-adf4-871d1ae6d20f] Started GET "/api_config.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.381052 #53997] ERROR -- : [64f49177-3c0e-4ff4-adf4-871d1ae6d20f]   
+[64f49177-3c0e-4ff4-adf4-871d1ae6d20f] ActionController::RoutingError (No route matches [GET] "/api_config.php"):
+[64f49177-3c0e-4ff4-adf4-871d1ae6d20f]   
+I, [2026-02-06T17:27:49.430510 #53997]  INFO -- : [adcf19fb-c91b-4a0b-a9e1-3fcb382e12f0] Started GET "/config/database.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.430842 #53997] ERROR -- : [adcf19fb-c91b-4a0b-a9e1-3fcb382e12f0]   
+[adcf19fb-c91b-4a0b-a9e1-3fcb382e12f0] ActionController::RoutingError (No route matches [GET] "/config/database.php"):
+[adcf19fb-c91b-4a0b-a9e1-3fcb382e12f0]   
+I, [2026-02-06T17:27:49.480318 #53997]  INFO -- : [3e1344a7-b40d-41df-91fb-7585015c4155] Started GET "/application/config/database.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.480756 #53997] ERROR -- : [3e1344a7-b40d-41df-91fb-7585015c4155]   
+[3e1344a7-b40d-41df-91fb-7585015c4155] ActionController::RoutingError (No route matches [GET] "/application/config/database.php"):
+[3e1344a7-b40d-41df-91fb-7585015c4155]   
+I, [2026-02-06T17:27:49.530463 #53997]  INFO -- : [a18b0a00-95e2-40f4-8366-5c80213d6ded] Started GET "/application/config/config.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.530831 #53997] ERROR -- : [a18b0a00-95e2-40f4-8366-5c80213d6ded]   
+[a18b0a00-95e2-40f4-8366-5c80213d6ded] ActionController::RoutingError (No route matches [GET] "/application/config/config.php"):
+[a18b0a00-95e2-40f4-8366-5c80213d6ded]   
+I, [2026-02-06T17:27:49.581500 #53997]  INFO -- : [9e19e365-9285-4211-b067-a77f2809e9bb] Started GET "/app/config/database.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.581913 #53997] ERROR -- : [9e19e365-9285-4211-b067-a77f2809e9bb]   
+[9e19e365-9285-4211-b067-a77f2809e9bb] ActionController::RoutingError (No route matches [GET] "/app/config/database.php"):
+[9e19e365-9285-4211-b067-a77f2809e9bb]   
+I, [2026-02-06T17:27:49.631253 #53997]  INFO -- : [6c240b6a-63e5-468c-b578-4d924adf733d] Started GET "/app/config/config.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.631606 #53997] ERROR -- : [6c240b6a-63e5-468c-b578-4d924adf733d]   
+[6c240b6a-63e5-468c-b578-4d924adf733d] ActionController::RoutingError (No route matches [GET] "/app/config/config.php"):
+[6c240b6a-63e5-468c-b578-4d924adf733d]   
+I, [2026-02-06T17:27:49.681247 #53997]  INFO -- : [ffd75871-ab81-426a-b033-edafa7a19c27] Started GET "/config.inc.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.681757 #53997] ERROR -- : [ffd75871-ab81-426a-b033-edafa7a19c27]   
+[ffd75871-ab81-426a-b033-edafa7a19c27] ActionController::RoutingError (No route matches [GET] "/config.inc.php"):
+[ffd75871-ab81-426a-b033-edafa7a19c27]   
+I, [2026-02-06T17:27:49.731980 #53997]  INFO -- : [9c151500-904b-4712-91e0-b377271c5f84] Started GET "/phpmyadmin/config.inc.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.732634 #53997] ERROR -- : [9c151500-904b-4712-91e0-b377271c5f84]   
+[9c151500-904b-4712-91e0-b377271c5f84] ActionController::RoutingError (No route matches [GET] "/phpmyadmin/config.inc.php"):
+[9c151500-904b-4712-91e0-b377271c5f84]   
+I, [2026-02-06T17:27:49.782703 #53997]  INFO -- : [edc87e6a-c919-42f5-a841-ee702ac69128] Started GET "/admin/config.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.784647 #53997] ERROR -- : [edc87e6a-c919-42f5-a841-ee702ac69128]   
+[edc87e6a-c919-42f5-a841-ee702ac69128] ActionController::RoutingError (No route matches [GET] "/admin/config.php"):
+[edc87e6a-c919-42f5-a841-ee702ac69128]   
+I, [2026-02-06T17:27:49.834392 #53997]  INFO -- : [43a8d82c-015b-44cb-aa11-ad738e6bddba] Started GET "/backend/config.php" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.834917 #53997] ERROR -- : [43a8d82c-015b-44cb-aa11-ad738e6bddba]   
+[43a8d82c-015b-44cb-aa11-ad738e6bddba] ActionController::RoutingError (No route matches [GET] "/backend/config.php"):
+[43a8d82c-015b-44cb-aa11-ad738e6bddba]   
+I, [2026-02-06T17:27:49.886542 #53997]  INFO -- : [8d76981e-dcf9-4789-9d28-b20b7a28133a] Started GET "/config.js" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.886893 #53997] ERROR -- : [8d76981e-dcf9-4789-9d28-b20b7a28133a]   
+[8d76981e-dcf9-4789-9d28-b20b7a28133a] ActionController::RoutingError (No route matches [GET] "/config.js"):
+[8d76981e-dcf9-4789-9d28-b20b7a28133a]   
+I, [2026-02-06T17:27:49.936577 #53997]  INFO -- : [c3b5b5e8-4dcb-4c1c-8d7f-31a64a3d61c1] Started GET "/aws-config.js" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.937042 #53997] ERROR -- : [c3b5b5e8-4dcb-4c1c-8d7f-31a64a3d61c1]   
+[c3b5b5e8-4dcb-4c1c-8d7f-31a64a3d61c1] ActionController::RoutingError (No route matches [GET] "/aws-config.js"):
+[c3b5b5e8-4dcb-4c1c-8d7f-31a64a3d61c1]   
+I, [2026-02-06T17:27:49.986812 #53997]  INFO -- : [efdd0629-9227-4e8f-bb15-ea3021d73df2] Started GET "/aws.config.js" for 195.178.110.132 at 2026-02-06 17:27:49 +0300
+E, [2026-02-06T17:27:49.987303 #53997] ERROR -- : [efdd0629-9227-4e8f-bb15-ea3021d73df2]   
+[efdd0629-9227-4e8f-bb15-ea3021d73df2] ActionController::RoutingError (No route matches [GET] "/aws.config.js"):
+[efdd0629-9227-4e8f-bb15-ea3021d73df2]   
+I, [2026-02-06T17:40:19.437665 #53997]  INFO -- : [eb3b680f-0a90-439d-a640-2396dcecfcae] Started GET "/wp-admin/setup-config.php" for 162.158.182.22 at 2026-02-06 17:40:19 +0300
+E, [2026-02-06T17:40:19.438143 #53997] ERROR -- : [eb3b680f-0a90-439d-a640-2396dcecfcae]   
+[eb3b680f-0a90-439d-a640-2396dcecfcae] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[eb3b680f-0a90-439d-a640-2396dcecfcae]   
+I, [2026-02-06T17:40:50.274291 #54000]  INFO -- : [d48d0a40-c1b8-44bc-a200-a33955482149] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:40:50 +0300
+I, [2026-02-06T17:40:50.275079 #54000]  INFO -- : [d48d0a40-c1b8-44bc-a200-a33955482149] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:40:50.275193 #54000]  INFO -- : [d48d0a40-c1b8-44bc-a200-a33955482149]   Parameters: {"update_id"=>165325961, "message"=>{"message_id"=>19941, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388850, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325961, "message"=>{"message_id"=>19941, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388850, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:40:50 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T17:40:50.333298 #54000]  INFO -- : [d48d0a40-c1b8-44bc-a200-a33955482149] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T17:40:50.673209 #54000]  INFO -- : [d48d0a40-c1b8-44bc-a200-a33955482149] Completed 200 OK in 398ms (Views: 0.1ms | ActiveRecord: 3.9ms | Allocations: 11074)
+I, [2026-02-06T17:40:52.223572 #54000]  INFO -- : [0324d2e2-19db-4e5a-9fcc-e32c0fe3beaa] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:40:52 +0300
+I, [2026-02-06T17:40:52.224393 #54000]  INFO -- : [0324d2e2-19db-4e5a-9fcc-e32c0fe3beaa] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:40:52.224485 #54000]  INFO -- : [0324d2e2-19db-4e5a-9fcc-e32c0fe3beaa]   Parameters: {"update_id"=>165325962, "callback_query"=>{"id"=>"2650224936285889127", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19943, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388850, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325962, "callback_query"=>{"id"=>"2650224936285889127", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19943, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388850, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:40:52 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224936285889127
+I, [2026-02-06T17:40:52.492443 #54000]  INFO -- : [0324d2e2-19db-4e5a-9fcc-e32c0fe3beaa] [CallbackQueryProcessor] Processing callback: show_test_categories - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:40:52.492513 #54000]  INFO -- : [0324d2e2-19db-4e5a-9fcc-e32c0fe3beaa] [CallbackHandlerFactory] Looking for handler for: show_test_categories
+I, [2026-02-06T17:40:52.492570 #54000]  INFO -- : [0324d2e2-19db-4e5a-9fcc-e32c0fe3beaa] [CallbackHandlerFactory] Found string match: TestManagerHandler
+I, [2026-02-06T17:40:52.492592 #54000]  INFO -- : [0324d2e2-19db-4e5a-9fcc-e32c0fe3beaa] [CallbackHandlerFactory] Selected handler: TestManagerHandler
+I, [2026-02-06T17:40:52.492643 #54000]  INFO -- : [0324d2e2-19db-4e5a-9fcc-e32c0fe3beaa] [Telegram::Handlers::TestManagerHandler] TestManagerHandler: Processing show_test_categories - {}
+[2026-02-06 17:40:52 +0300] 📤 SENDING: text='📋 *Список тестов:*
+
+Выберите тест для прохождения:...' | reply_markup=YES
+I, [2026-02-06T17:40:52.646763 #54000]  INFO -- : [0324d2e2-19db-4e5a-9fcc-e32c0fe3beaa] [Telegram::Handlers::TestManagerHandler] TestManagerHandler: Completed successfully - {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:40:52.647238 #54000]  INFO -- : [0324d2e2-19db-4e5a-9fcc-e32c0fe3beaa] Completed 200 OK in 423ms (Views: 0.1ms | ActiveRecord: 0.4ms | Allocations: 3297)
+I, [2026-02-06T17:40:53.753295 #53997]  INFO -- : [90073f45-3b61-4569-82d6-f3191f62530f] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:40:53 +0300
+I, [2026-02-06T17:40:53.754213 #53997]  INFO -- : [90073f45-3b61-4569-82d6-f3191f62530f] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:40:53.754386 #53997]  INFO -- : [90073f45-3b61-4569-82d6-f3191f62530f]   Parameters: {"update_id"=>165325963, "callback_query"=>{"id"=>"2650224937013917133", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19944, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388852, "text"=>"📋 Список тестов:\n\nВыберите тест для прохождения:", "entities"=>[{"offset"=>3, "length"=>14, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"prepare_luscher_test"}, "telegram_webhook"=>{"update_id"=>165325963, "callback_query"=>{"id"=>"2650224937013917133", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19944, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388852, "text"=>"📋 Список тестов:\n\nВыберите тест для прохождения:", "entities"=>[{"offset"=>3, "length"=>14, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"prepare_luscher_test"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:40:53 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224937013917133
+I, [2026-02-06T17:40:54.138848 #53997]  INFO -- : [90073f45-3b61-4569-82d6-f3191f62530f] [CallbackQueryProcessor] Processing callback: prepare_luscher_test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:40:54.138912 #53997]  INFO -- : [90073f45-3b61-4569-82d6-f3191f62530f] [CallbackHandlerFactory] Looking for handler for: prepare_luscher_test
+I, [2026-02-06T17:40:54.138961 #53997]  INFO -- : [90073f45-3b61-4569-82d6-f3191f62530f] [CallbackHandlerFactory] Found regex match: TestPreparationHandler
+I, [2026-02-06T17:40:54.138978 #53997]  INFO -- : [90073f45-3b61-4569-82d6-f3191f62530f] [CallbackHandlerFactory] Selected handler: TestPreparationHandler
+I, [2026-02-06T17:40:54.139088 #53997]  INFO -- : [90073f45-3b61-4569-82d6-f3191f62530f] [TestPreparationHandler] Preparing test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:40:54.139117 #53997]  INFO -- : [90073f45-3b61-4569-82d6-f3191f62530f] [TestPreparationHandler] Preparing test: luscher - User: 617053577, Chat: 617053577
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:40:54.388763 #53997]  INFO -- : [90073f45-3b61-4569-82d6-f3191f62530f] Completed 200 OK in 634ms (Views: 0.1ms | ActiveRecord: 3.9ms | Allocations: 6982)
+I, [2026-02-06T17:40:55.195942 #53997]  INFO -- : [a0e104aa-4af2-4321-b2a4-5a7a443a2a55] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:40:55 +0300
+I, [2026-02-06T17:40:55.196901 #53997]  INFO -- : [a0e104aa-4af2-4321-b2a4-5a7a443a2a55] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:40:55.197108 #53997]  INFO -- : [a0e104aa-4af2-4321-b2a4-5a7a443a2a55]   Parameters: {"update_id"=>165325964, "callback_query"=>{"id"=>"2650224934970044325", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19945, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388854, "text"=>"8-ми цветовой тест Люшера\n\n8-ми цветовой тест Люшера поможет вам оценить ваше психоэмоциональное состояние. Тест состоит из выбора цветов в порядке предпочтения.\n\nПримерное время прохождения: 3-5 минут.", "entities"=>[{"offset"=>0, "length"=>25, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_luscher_test"}, "telegram_webhook"=>{"update_id"=>165325964, "callback_query"=>{"id"=>"2650224934970044325", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19945, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388854, "text"=>"8-ми цветовой тест Люшера\n\n8-ми цветовой тест Люшера поможет вам оценить ваше психоэмоциональное состояние. Тест состоит из выбора цветов в порядке предпочтения.\n\nПримерное время прохождения: 3-5 минут.", "entities"=>[{"offset"=>0, "length"=>25, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_luscher_test"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:40:55 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934970044325
+I, [2026-02-06T17:40:55.539548 #53997]  INFO -- : [a0e104aa-4af2-4321-b2a4-5a7a443a2a55] [CallbackQueryProcessor] Processing callback: start_luscher_test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:40:55.539600 #53997]  INFO -- : [a0e104aa-4af2-4321-b2a4-5a7a443a2a55] [CallbackHandlerFactory] Looking for handler for: start_luscher_test
+I, [2026-02-06T17:40:55.539666 #53997]  INFO -- : [a0e104aa-4af2-4321-b2a4-5a7a443a2a55] [CallbackHandlerFactory] Found string match: LuscherTestStartHandler
+I, [2026-02-06T17:40:55.539687 #53997]  INFO -- : [a0e104aa-4af2-4321-b2a4-5a7a443a2a55] [CallbackHandlerFactory] Selected handler: LuscherTestStartHandler
+I, [2026-02-06T17:40:55.539744 #53997]  INFO -- : [a0e104aa-4af2-4321-b2a4-5a7a443a2a55] [Telegram::Handlers::LuscherTestStartHandler] Starting Luscher test - {}
+I, [2026-02-06T17:40:55.547521 #53997]  INFO -- : [a0e104aa-4af2-4321-b2a4-5a7a443a2a55] [LuscherTestService] Cleaned up incomplete Luscher tests - User: 617053577, {}
+I, [2026-02-06T17:40:55.550140 #53997]  INFO -- : [a0e104aa-4af2-4321-b2a4-5a7a443a2a55] [LuscherTestService] Created test result: 17 - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:40:58.152489 #53997]  INFO -- : [a0e104aa-4af2-4321-b2a4-5a7a443a2a55] Completed 200 OK in 2955ms (Views: 0.1ms | ActiveRecord: 4.2ms | Allocations: 11507)
+I, [2026-02-06T17:41:26.480509 #54000]  INFO -- : [ffb89e29-b082-4b1d-949a-75538724b2e7] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:41:26 +0300
+I, [2026-02-06T17:41:26.481297 #54000]  INFO -- : [ffb89e29-b082-4b1d-949a-75538724b2e7] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:41:26.481409 #54000]  INFO -- : [ffb89e29-b082-4b1d-949a-75538724b2e7]   Parameters: {"update_id"=>165325965, "callback_query"=>{"id"=>"2650224935594452184", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19955, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388858, "text"=>"Выберите наиболее приятный для вас цвет, нажав на кнопку ниже:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_dark_blue_17"}, "telegram_webhook"=>{"update_id"=>165325965, "callback_query"=>{"id"=>"2650224935594452184", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19955, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388858, "text"=>"Выберите наиболее приятный для вас цвет, нажав на кнопку ниже:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_dark_blue_17"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:41:26 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935594452184
+I, [2026-02-06T17:41:26.779411 #54000]  INFO -- : [ffb89e29-b082-4b1d-949a-75538724b2e7] [CallbackQueryProcessor] Processing callback: luscher_color_dark_blue_17 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:41:26.779479 #54000]  INFO -- : [ffb89e29-b082-4b1d-949a-75538724b2e7] [CallbackHandlerFactory] Looking for handler for: luscher_color_dark_blue_17
+I, [2026-02-06T17:41:26.779572 #54000]  INFO -- : [ffb89e29-b082-4b1d-949a-75538724b2e7] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:41:26.779599 #54000]  INFO -- : [ffb89e29-b082-4b1d-949a-75538724b2e7] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:41:26.779723 #54000]  INFO -- : [ffb89e29-b082-4b1d-949a-75538724b2e7] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"dark_blue", :test_result_id=>17, :matches_size=>3}
+I, [2026-02-06T17:41:26.787971 #54000]  INFO -- : [ffb89e29-b082-4b1d-949a-75538724b2e7] [LuscherTestService] Added color choice: dark_blue, choices: ["dark_blue"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:41:28.691025 #54000]  INFO -- : [ffb89e29-b082-4b1d-949a-75538724b2e7] Completed 200 OK in 2209ms (Views: 0.1ms | ActiveRecord: 3.2ms | Allocations: 9288)
+I, [2026-02-06T17:41:30.675412 #54000]  INFO -- : [0835b260-2b00-4c9b-8559-d32bd28735aa] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:41:30 +0300
+I, [2026-02-06T17:41:30.676765 #54000]  INFO -- : [0835b260-2b00-4c9b-8559-d32bd28735aa] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:41:30.676961 #54000]  INFO -- : [0835b260-2b00-4c9b-8559-d32bd28735aa]   Parameters: {"update_id"=>165325966, "callback_query"=>{"id"=>"2650224934511656244", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19963, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388888, "text"=>"Выбрано цветов: 1/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_green_17"}, "telegram_webhook"=>{"update_id"=>165325966, "callback_query"=>{"id"=>"2650224934511656244", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19963, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388888, "text"=>"Выбрано цветов: 1/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_green_17"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:41:30 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934511656244
+I, [2026-02-06T17:41:30.932365 #54000]  INFO -- : [0835b260-2b00-4c9b-8559-d32bd28735aa] [CallbackQueryProcessor] Processing callback: luscher_color_green_17 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:41:30.932423 #54000]  INFO -- : [0835b260-2b00-4c9b-8559-d32bd28735aa] [CallbackHandlerFactory] Looking for handler for: luscher_color_green_17
+I, [2026-02-06T17:41:30.932509 #54000]  INFO -- : [0835b260-2b00-4c9b-8559-d32bd28735aa] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:41:30.932535 #54000]  INFO -- : [0835b260-2b00-4c9b-8559-d32bd28735aa] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:41:30.932614 #54000]  INFO -- : [0835b260-2b00-4c9b-8559-d32bd28735aa] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"green", :test_result_id=>17, :matches_size=>3}
+I, [2026-02-06T17:41:30.937221 #54000]  INFO -- : [0835b260-2b00-4c9b-8559-d32bd28735aa] [LuscherTestService] Added color choice: green, choices: ["dark_blue", "green"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:41:32.226360 #54000]  INFO -- : [0835b260-2b00-4c9b-8559-d32bd28735aa] Completed 200 OK in 1549ms (Views: 0.2ms | ActiveRecord: 2.3ms | Allocations: 7991)
+I, [2026-02-06T17:41:36.511327 #54000]  INFO -- : [e0dcbdac-3aec-47bc-8ddf-26f07d55b71c] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:41:36 +0300
+I, [2026-02-06T17:41:36.512804 #54000]  INFO -- : [e0dcbdac-3aec-47bc-8ddf-26f07d55b71c] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:41:36.513009 #54000]  INFO -- : [e0dcbdac-3aec-47bc-8ddf-26f07d55b71c]   Parameters: {"update_id"=>165325967, "callback_query"=>{"id"=>"2650224934302228159", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19970, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388892, "text"=>"Выбрано цветов: 2/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_purple_17"}, "telegram_webhook"=>{"update_id"=>165325967, "callback_query"=>{"id"=>"2650224934302228159", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19970, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388892, "text"=>"Выбрано цветов: 2/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_purple_17"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:41:36 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934302228159
+I, [2026-02-06T17:41:36.765244 #54000]  INFO -- : [e0dcbdac-3aec-47bc-8ddf-26f07d55b71c] [CallbackQueryProcessor] Processing callback: luscher_color_purple_17 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:41:36.765290 #54000]  INFO -- : [e0dcbdac-3aec-47bc-8ddf-26f07d55b71c] [CallbackHandlerFactory] Looking for handler for: luscher_color_purple_17
+I, [2026-02-06T17:41:36.765346 #54000]  INFO -- : [e0dcbdac-3aec-47bc-8ddf-26f07d55b71c] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:41:36.765363 #54000]  INFO -- : [e0dcbdac-3aec-47bc-8ddf-26f07d55b71c] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:41:36.765419 #54000]  INFO -- : [e0dcbdac-3aec-47bc-8ddf-26f07d55b71c] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"purple", :test_result_id=>17, :matches_size=>3}
+I, [2026-02-06T17:41:36.771190 #54000]  INFO -- : [e0dcbdac-3aec-47bc-8ddf-26f07d55b71c] [LuscherTestService] Added color choice: purple, choices: ["dark_blue", "green", "purple"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:41:37.926754 #54000]  INFO -- : [e0dcbdac-3aec-47bc-8ddf-26f07d55b71c] Completed 200 OK in 1414ms (Views: 0.1ms | ActiveRecord: 2.5ms | Allocations: 7276)
+I, [2026-02-06T17:41:42.635338 #54000]  INFO -- : [9a067a53-a299-4d2b-9007-ec27dbb4e15d] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:41:42 +0300
+I, [2026-02-06T17:41:42.636238 #54000]  INFO -- : [9a067a53-a299-4d2b-9007-ec27dbb4e15d] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:41:42.636367 #54000]  INFO -- : [9a067a53-a299-4d2b-9007-ec27dbb4e15d]   Parameters: {"update_id"=>165325968, "callback_query"=>{"id"=>"2650224935187449571", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19976, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388897, "text"=>"Выбрано цветов: 3/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_17"}, "telegram_webhook"=>{"update_id"=>165325968, "callback_query"=>{"id"=>"2650224935187449571", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19976, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388897, "text"=>"Выбрано цветов: 3/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_17"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:41:42 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935187449571
+I, [2026-02-06T17:41:42.984420 #54000]  INFO -- : [9a067a53-a299-4d2b-9007-ec27dbb4e15d] [CallbackQueryProcessor] Processing callback: luscher_color_red_17 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:41:42.984472 #54000]  INFO -- : [9a067a53-a299-4d2b-9007-ec27dbb4e15d] [CallbackHandlerFactory] Looking for handler for: luscher_color_red_17
+I, [2026-02-06T17:41:42.984528 #54000]  INFO -- : [9a067a53-a299-4d2b-9007-ec27dbb4e15d] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:41:42.984559 #54000]  INFO -- : [9a067a53-a299-4d2b-9007-ec27dbb4e15d] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:41:42.984622 #54000]  INFO -- : [9a067a53-a299-4d2b-9007-ec27dbb4e15d] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"red", :test_result_id=>17, :matches_size=>3}
+I, [2026-02-06T17:41:42.988969 #54000]  INFO -- : [9a067a53-a299-4d2b-9007-ec27dbb4e15d] [LuscherTestService] Added color choice: red, choices: ["dark_blue", "green", "purple", "red"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:41:43.822215 #54000]  INFO -- : [9a067a53-a299-4d2b-9007-ec27dbb4e15d] Completed 200 OK in 1186ms (Views: 0.1ms | ActiveRecord: 2.3ms | Allocations: 6564)
+I, [2026-02-06T17:41:46.558175 #53997]  INFO -- : [48dc45c0-f13c-4bf0-8114-46ce718bcef4] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:41:46 +0300
+I, [2026-02-06T17:41:46.558977 #53997]  INFO -- : [48dc45c0-f13c-4bf0-8114-46ce718bcef4] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:41:46.559118 #53997]  INFO -- : [48dc45c0-f13c-4bf0-8114-46ce718bcef4]   Parameters: {"update_id"=>165325969, "callback_query"=>{"id"=>"2650224934766951685", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19981, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388903, "text"=>"Выбрано цветов: 4/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_brown_17"}, "telegram_webhook"=>{"update_id"=>165325969, "callback_query"=>{"id"=>"2650224934766951685", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19981, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388903, "text"=>"Выбрано цветов: 4/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_brown_17"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:41:46 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934766951685
+I, [2026-02-06T17:41:46.802487 #53997]  INFO -- : [48dc45c0-f13c-4bf0-8114-46ce718bcef4] [CallbackQueryProcessor] Processing callback: luscher_color_brown_17 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:41:46.802534 #53997]  INFO -- : [48dc45c0-f13c-4bf0-8114-46ce718bcef4] [CallbackHandlerFactory] Looking for handler for: luscher_color_brown_17
+I, [2026-02-06T17:41:46.802592 #53997]  INFO -- : [48dc45c0-f13c-4bf0-8114-46ce718bcef4] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:41:46.802608 #53997]  INFO -- : [48dc45c0-f13c-4bf0-8114-46ce718bcef4] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:41:46.802715 #53997]  INFO -- : [48dc45c0-f13c-4bf0-8114-46ce718bcef4] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"brown", :test_result_id=>17, :matches_size=>3}
+I, [2026-02-06T17:41:46.807802 #53997]  INFO -- : [48dc45c0-f13c-4bf0-8114-46ce718bcef4] [LuscherTestService] Added color choice: brown, choices: ["dark_blue", "green", "purple", "red", "brown"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:41:47.556850 #53997]  INFO -- : [48dc45c0-f13c-4bf0-8114-46ce718bcef4] Completed 200 OK in 998ms (Views: 0.1ms | ActiveRecord: 2.6ms | Allocations: 5951)
+I, [2026-02-06T17:41:49.674779 #54000]  INFO -- : [36e00060-cafa-49d5-a912-71e0c224b742] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:41:49 +0300
+I, [2026-02-06T17:41:49.675543 #54000]  INFO -- : [36e00060-cafa-49d5-a912-71e0c224b742] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:41:49.675637 #54000]  INFO -- : [36e00060-cafa-49d5-a912-71e0c224b742]   Parameters: {"update_id"=>165325970, "callback_query"=>{"id"=>"2650224933711473239", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19985, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388907, "text"=>"Выбрано цветов: 5/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_yellow_17"}, "telegram_webhook"=>{"update_id"=>165325970, "callback_query"=>{"id"=>"2650224933711473239", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19985, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388907, "text"=>"Выбрано цветов: 5/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_yellow_17"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:41:49 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224933711473239
+I, [2026-02-06T17:41:49.924966 #54000]  INFO -- : [36e00060-cafa-49d5-a912-71e0c224b742] [CallbackQueryProcessor] Processing callback: luscher_color_red_yellow_17 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:41:49.925060 #54000]  INFO -- : [36e00060-cafa-49d5-a912-71e0c224b742] [CallbackHandlerFactory] Looking for handler for: luscher_color_red_yellow_17
+I, [2026-02-06T17:41:49.925143 #54000]  INFO -- : [36e00060-cafa-49d5-a912-71e0c224b742] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:41:49.925166 #54000]  INFO -- : [36e00060-cafa-49d5-a912-71e0c224b742] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:41:49.925240 #54000]  INFO -- : [36e00060-cafa-49d5-a912-71e0c224b742] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"red_yellow", :test_result_id=>17, :matches_size=>3}
+I, [2026-02-06T17:41:49.930468 #54000]  INFO -- : [36e00060-cafa-49d5-a912-71e0c224b742] [LuscherTestService] Added color choice: red_yellow, choices: ["dark_blue", "green", "purple", "red", "brown", "red_yellow"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:41:50.392234 #54000]  INFO -- : [36e00060-cafa-49d5-a912-71e0c224b742] Completed 200 OK in 717ms (Views: 0.1ms | ActiveRecord: 2.7ms | Allocations: 5113)
+I, [2026-02-06T17:41:51.832653 #54000]  INFO -- : [1306571a-20ab-4e91-80dc-6665a021cc93] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:41:51 +0300
+I, [2026-02-06T17:41:51.833427 #54000]  INFO -- : [1306571a-20ab-4e91-80dc-6665a021cc93] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:41:51.833536 #54000]  INFO -- : [1306571a-20ab-4e91-80dc-6665a021cc93]   Parameters: {"update_id"=>165325971, "callback_query"=>{"id"=>"2650224934625904064", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19988, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388910, "text"=>"Выбрано цветов: 6/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_blue_green_17"}, "telegram_webhook"=>{"update_id"=>165325971, "callback_query"=>{"id"=>"2650224934625904064", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19988, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388910, "text"=>"Выбрано цветов: 6/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_blue_green_17"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:41:51 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934625904064
+I, [2026-02-06T17:41:52.054002 #54000]  INFO -- : [1306571a-20ab-4e91-80dc-6665a021cc93] [CallbackQueryProcessor] Processing callback: luscher_color_blue_green_17 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:41:52.054052 #54000]  INFO -- : [1306571a-20ab-4e91-80dc-6665a021cc93] [CallbackHandlerFactory] Looking for handler for: luscher_color_blue_green_17
+I, [2026-02-06T17:41:52.054109 #54000]  INFO -- : [1306571a-20ab-4e91-80dc-6665a021cc93] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:41:52.054126 #54000]  INFO -- : [1306571a-20ab-4e91-80dc-6665a021cc93] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:41:52.054184 #54000]  INFO -- : [1306571a-20ab-4e91-80dc-6665a021cc93] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"blue_green", :test_result_id=>17, :matches_size=>3}
+I, [2026-02-06T17:41:52.059161 #54000]  INFO -- : [1306571a-20ab-4e91-80dc-6665a021cc93] [LuscherTestService] Added color choice: blue_green, choices: ["dark_blue", "green", "purple", "red", "brown", "red_yellow", "blue_green"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:41:52.342639 #54000]  INFO -- : [1306571a-20ab-4e91-80dc-6665a021cc93] Completed 200 OK in 509ms (Views: 0.1ms | ActiveRecord: 2.6ms | Allocations: 4384)
+I, [2026-02-06T17:41:53.752510 #54000]  INFO -- : [205da841-eab9-4c9b-9daf-8149a5ac9f25] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:41:53 +0300
+I, [2026-02-06T17:41:53.753331 #54000]  INFO -- : [205da841-eab9-4c9b-9daf-8149a5ac9f25] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:41:53.753441 #54000]  INFO -- : [205da841-eab9-4c9b-9daf-8149a5ac9f25]   Parameters: {"update_id"=>165325972, "callback_query"=>{"id"=>"2650224935012913094", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19990, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388912, "text"=>"Выбрано цветов: 7/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_yellow_17"}, "telegram_webhook"=>{"update_id"=>165325972, "callback_query"=>{"id"=>"2650224935012913094", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19990, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388912, "text"=>"Выбрано цветов: 7/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_yellow_17"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:41:53 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935012913094
+I, [2026-02-06T17:41:54.031251 #54000]  INFO -- : [205da841-eab9-4c9b-9daf-8149a5ac9f25] [CallbackQueryProcessor] Processing callback: luscher_color_yellow_17 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:41:54.031313 #54000]  INFO -- : [205da841-eab9-4c9b-9daf-8149a5ac9f25] [CallbackHandlerFactory] Looking for handler for: luscher_color_yellow_17
+I, [2026-02-06T17:41:54.031444 #54000]  INFO -- : [205da841-eab9-4c9b-9daf-8149a5ac9f25] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:41:54.031477 #54000]  INFO -- : [205da841-eab9-4c9b-9daf-8149a5ac9f25] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:41:54.031560 #54000]  INFO -- : [205da841-eab9-4c9b-9daf-8149a5ac9f25] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"yellow", :test_result_id=>17, :matches_size=>3}
+I, [2026-02-06T17:41:54.038928 #54000]  INFO -- : [205da841-eab9-4c9b-9daf-8149a5ac9f25] [LuscherTestService] Added color choice: yellow, choices: ["dark_blue", "green", "purple", "red", "brown", "red_yellow", "blue_green", "yellow"] - User: 617053577, {}
+I, [2026-02-06T17:41:54.145242 #54000]  INFO -- : [205da841-eab9-4c9b-9daf-8149a5ac9f25] [LuscherTestService] Test completed: 17 - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:41:54.227640 #54000]  INFO -- : [205da841-eab9-4c9b-9daf-8149a5ac9f25] Completed 200 OK in 474ms (Views: 0.1ms | ActiveRecord: 5.0ms | Allocations: 4991)
+I, [2026-02-06T17:41:56.525247 #53997]  INFO -- : [4c14b256-a1eb-4f6a-afe9-0a4146b1db28] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:41:56 +0300
+I, [2026-02-06T17:41:56.526046 #53997]  INFO -- : [4c14b256-a1eb-4f6a-afe9-0a4146b1db28] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:41:56.526157 #53997]  INFO -- : [4c14b256-a1eb-4f6a-afe9-0a4146b1db28]   Parameters: {"update_id"=>165325973, "callback_query"=>{"id"=>"2650224934231974330", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19991, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388914, "text"=>"✅ Отлично! Вы завершили выбор цветов.\n\nТеперь я попробую дать вам небольшую интерпретацию ваших результатов.", "entities"=>[{"offset"=>2, "length"=>35, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_luscher_interpretation"}, "telegram_webhook"=>{"update_id"=>165325973, "callback_query"=>{"id"=>"2650224934231974330", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19991, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388914, "text"=>"✅ Отлично! Вы завершили выбор цветов.\n\nТеперь я попробую дать вам небольшую интерпретацию ваших результатов.", "entities"=>[{"offset"=>2, "length"=>35, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_luscher_interpretation"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:41:56 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934231974330
+I, [2026-02-06T17:41:56.822107 #53997]  INFO -- : [4c14b256-a1eb-4f6a-afe9-0a4146b1db28] [CallbackQueryProcessor] Processing callback: show_luscher_interpretation - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:41:56.822155 #53997]  INFO -- : [4c14b256-a1eb-4f6a-afe9-0a4146b1db28] [CallbackHandlerFactory] Looking for handler for: show_luscher_interpretation
+I, [2026-02-06T17:41:56.822207 #53997]  INFO -- : [4c14b256-a1eb-4f6a-afe9-0a4146b1db28] [CallbackHandlerFactory] Found string match: LuscherInterpretationHandler
+I, [2026-02-06T17:41:56.822223 #53997]  INFO -- : [4c14b256-a1eb-4f6a-afe9-0a4146b1db28] [CallbackHandlerFactory] Selected handler: LuscherInterpretationHandler
+I, [2026-02-06T17:41:56.822268 #53997]  INFO -- : [4c14b256-a1eb-4f6a-afe9-0a4146b1db28] [Telegram::Handlers::LuscherInterpretationHandler] Showing Luscher interpretation - {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:41:57.010509 #53997]  INFO -- : [4c14b256-a1eb-4f6a-afe9-0a4146b1db28] Completed 200 OK in 484ms (Views: 0.1ms | ActiveRecord: 1.1ms | Allocations: 6118)
+I, [2026-02-06T17:42:33.529524 #54000]  INFO -- : [ef002a70-788d-4d6d-b0cb-e2a25fe860fd] Started GET "/wordpress/wp-admin/setup-config.php" for 104.23.239.16 at 2026-02-06 17:42:33 +0300
+E, [2026-02-06T17:42:33.529962 #54000] ERROR -- : [ef002a70-788d-4d6d-b0cb-e2a25fe860fd]   
+[ef002a70-788d-4d6d-b0cb-e2a25fe860fd] ActionController::RoutingError (No route matches [GET] "/wordpress/wp-admin/setup-config.php"):
+[ef002a70-788d-4d6d-b0cb-e2a25fe860fd]   
+I, [2026-02-06T17:42:33.661709 #53997]  INFO -- : [5a0ec390-f155-4548-9365-fb7e4f86cf24] Started GET "/wordpress/wp-admin/setup-config.php" for 172.70.248.48 at 2026-02-06 17:42:33 +0300
+E, [2026-02-06T17:42:33.662114 #53997] ERROR -- : [5a0ec390-f155-4548-9365-fb7e4f86cf24]   
+[5a0ec390-f155-4548-9365-fb7e4f86cf24] ActionController::RoutingError (No route matches [GET] "/wordpress/wp-admin/setup-config.php"):
+[5a0ec390-f155-4548-9365-fb7e4f86cf24]   
+I, [2026-02-06T17:42:52.220062 #53997]  INFO -- : [760f57a3-d90d-40b3-b9e9-ecc7b2d8341c] Started GET "/wp-admin/setup-config.php" for 172.71.172.68 at 2026-02-06 17:42:52 +0300
+E, [2026-02-06T17:42:52.220540 #53997] ERROR -- : [760f57a3-d90d-40b3-b9e9-ecc7b2d8341c]   
+[760f57a3-d90d-40b3-b9e9-ecc7b2d8341c] ActionController::RoutingError (No route matches [GET] "/wp-admin/setup-config.php"):
+[760f57a3-d90d-40b3-b9e9-ecc7b2d8341c]   
+I, [2026-02-06T17:44:33.120343 #53997]  INFO -- : [b23f1328-08c5-4168-9e46-5192af0ddf33] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:44:33 +0300
+I, [2026-02-06T17:44:33.121142 #53997]  INFO -- : [b23f1328-08c5-4168-9e46-5192af0ddf33] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:44:33.121331 #53997]  INFO -- : [b23f1328-08c5-4168-9e46-5192af0ddf33]   Parameters: {"update_id"=>165325974, "callback_query"=>{"id"=>"2650224934456809431", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19992, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388916, "text"=>"✨ Ваши результаты 8-ми цветового теста Люшера ✨\n\nПервый выбранный цвет: Темно-синий\nВаша потребность в покое и удовлетворенности реализована. Вы не стремитесь к изменениям и довольны существующим положением дел. Если этот цвет был выбран одним из первых, это указывает на стремление к комфорту, порядку и эмоциональной стабильности. Вы ищете гармонии и защищенности.\n\nПоследний выбранный цвет: Желтый\nВы ощущаете тревогу, страх перед неизвестностью или отсутствие надежды. Возможно, вам не хватает оптимизма или вы чувствуете себя запертым в текущей ситуации. Это может указывать на пессимистический взгляд на будущее или нежелание что-либо менять.\n\n---\nПримечание: Это упрощенная интерпретация. Для полного анализа рекомендуется консультация психолога.", "entities"=>[{"offset"=>49, "length"=>34, "type"=>"bold"}, {"offset"=>368, "length"=>32, "type"=>"bold"}, {"offset"=>654, "length"=>11, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"back_to_main_menu"}, "telegram_webhook"=>{"update_id"=>165325974, "callback_query"=>{"id"=>"2650224934456809431", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19992, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770388916, "text"=>"✨ Ваши результаты 8-ми цветового теста Люшера ✨\n\nПервый выбранный цвет: Темно-синий\nВаша потребность в покое и удовлетворенности реализована. Вы не стремитесь к изменениям и довольны существующим положением дел. Если этот цвет был выбран одним из первых, это указывает на стремление к комфорту, порядку и эмоциональной стабильности. Вы ищете гармонии и защищенности.\n\nПоследний выбранный цвет: Желтый\nВы ощущаете тревогу, страх перед неизвестностью или отсутствие надежды. Возможно, вам не хватает оптимизма или вы чувствуете себя запертым в текущей ситуации. Это может указывать на пессимистический взгляд на будущее или нежелание что-либо менять.\n\n---\nПримечание: Это упрощенная интерпретация. Для полного анализа рекомендуется консультация психолога.", "entities"=>[{"offset"=>49, "length"=>34, "type"=>"bold"}, {"offset"=>368, "length"=>32, "type"=>"bold"}, {"offset"=>654, "length"=>11, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"back_to_main_menu"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:44:33 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934456809431
+I, [2026-02-06T17:44:33.790880 #53997]  INFO -- : [b23f1328-08c5-4168-9e46-5192af0ddf33] [CallbackQueryProcessor] Processing callback: back_to_main_menu - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:33.790928 #53997]  INFO -- : [b23f1328-08c5-4168-9e46-5192af0ddf33] [CallbackHandlerFactory] Looking for handler for: back_to_main_menu
+I, [2026-02-06T17:44:33.790961 #53997]  INFO -- : [b23f1328-08c5-4168-9e46-5192af0ddf33] [CallbackHandlerFactory] Found string match: MainMenuHandler
+I, [2026-02-06T17:44:33.791008 #53997]  INFO -- : [b23f1328-08c5-4168-9e46-5192af0ddf33] [CallbackHandlerFactory] Selected handler: MainMenuHandler
+I, [2026-02-06T17:44:33.791051 #53997]  INFO -- : [b23f1328-08c5-4168-9e46-5192af0ddf33] [Telegram::Handlers::MainMenuHandler] Showing main menu - {}
+[2026-02-06 17:44:33 +0300] 📤 SENDING: text='Главное меню. Выберите действие:...' | reply_markup=YES
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:44:34.071816 #53997]  INFO -- : [b23f1328-08c5-4168-9e46-5192af0ddf33] Completed 200 OK in 950ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 2963)
+I, [2026-02-06T17:44:35.691634 #53997]  INFO -- : [f76dc493-1f9d-480b-9c6e-fb53a38fa3d1] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:44:35 +0300
+I, [2026-02-06T17:44:35.692340 #53997]  INFO -- : [f76dc493-1f9d-480b-9c6e-fb53a38fa3d1] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:44:35.692434 #53997]  INFO -- : [f76dc493-1f9d-480b-9c6e-fb53a38fa3d1]   Parameters: {"update_id"=>165325975, "callback_query"=>{"id"=>"2650224936829089402", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19993, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389073, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325975, "callback_query"=>{"id"=>"2650224936829089402", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19993, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389073, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:44:35 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224936829089402
+I, [2026-02-06T17:44:36.359870 #53997]  INFO -- : [f76dc493-1f9d-480b-9c6e-fb53a38fa3d1] [CallbackQueryProcessor] Processing callback: show_test_categories - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:36.359927 #53997]  INFO -- : [f76dc493-1f9d-480b-9c6e-fb53a38fa3d1] [CallbackHandlerFactory] Looking for handler for: show_test_categories
+I, [2026-02-06T17:44:36.359987 #53997]  INFO -- : [f76dc493-1f9d-480b-9c6e-fb53a38fa3d1] [CallbackHandlerFactory] Found string match: TestManagerHandler
+I, [2026-02-06T17:44:36.360014 #53997]  INFO -- : [f76dc493-1f9d-480b-9c6e-fb53a38fa3d1] [CallbackHandlerFactory] Selected handler: TestManagerHandler
+I, [2026-02-06T17:44:36.360081 #53997]  INFO -- : [f76dc493-1f9d-480b-9c6e-fb53a38fa3d1] [Telegram::Handlers::TestManagerHandler] TestManagerHandler: Processing show_test_categories - {}
+[2026-02-06 17:44:36 +0300] 📤 SENDING: text='📋 *Список тестов:*
+
+Выберите тест для прохождения:...' | reply_markup=YES
+I, [2026-02-06T17:44:36.669101 #53997]  INFO -- : [f76dc493-1f9d-480b-9c6e-fb53a38fa3d1] [Telegram::Handlers::TestManagerHandler] TestManagerHandler: Completed successfully - {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:44:36.669589 #53997]  INFO -- : [f76dc493-1f9d-480b-9c6e-fb53a38fa3d1] Completed 200 OK in 977ms (Views: 0.1ms | ActiveRecord: 0.4ms | Allocations: 3296)
+I, [2026-02-06T17:44:37.817673 #54000]  INFO -- : [c22559c2-4ab4-4e71-975b-23cdaeb3f2db] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:44:37 +0300
+I, [2026-02-06T17:44:37.818581 #54000]  INFO -- : [c22559c2-4ab4-4e71-975b-23cdaeb3f2db] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:44:37.818705 #54000]  INFO -- : [c22559c2-4ab4-4e71-975b-23cdaeb3f2db]   Parameters: {"update_id"=>165325976, "callback_query"=>{"id"=>"2650224936494105180", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19994, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389076, "text"=>"📋 Список тестов:\n\nВыберите тест для прохождения:", "entities"=>[{"offset"=>3, "length"=>14, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"prepare_anxiety_test"}, "telegram_webhook"=>{"update_id"=>165325976, "callback_query"=>{"id"=>"2650224936494105180", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19994, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389076, "text"=>"📋 Список тестов:\n\nВыберите тест для прохождения:", "entities"=>[{"offset"=>3, "length"=>14, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"prepare_anxiety_test"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:44:37 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224936494105180
+I, [2026-02-06T17:44:38.360206 #54000]  INFO -- : [c22559c2-4ab4-4e71-975b-23cdaeb3f2db] [CallbackQueryProcessor] Processing callback: prepare_anxiety_test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:38.360259 #54000]  INFO -- : [c22559c2-4ab4-4e71-975b-23cdaeb3f2db] [CallbackHandlerFactory] Looking for handler for: prepare_anxiety_test
+I, [2026-02-06T17:44:38.360310 #54000]  INFO -- : [c22559c2-4ab4-4e71-975b-23cdaeb3f2db] [CallbackHandlerFactory] Found regex match: TestPreparationHandler
+I, [2026-02-06T17:44:38.360326 #54000]  INFO -- : [c22559c2-4ab4-4e71-975b-23cdaeb3f2db] [CallbackHandlerFactory] Selected handler: TestPreparationHandler
+I, [2026-02-06T17:44:38.360439 #54000]  INFO -- : [c22559c2-4ab4-4e71-975b-23cdaeb3f2db] [TestPreparationHandler] Preparing test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:38.360470 #54000]  INFO -- : [c22559c2-4ab4-4e71-975b-23cdaeb3f2db] [TestPreparationHandler] Preparing test: anxiety - User: 617053577, Chat: 617053577
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:44:38.546613 #54000]  INFO -- : [c22559c2-4ab4-4e71-975b-23cdaeb3f2db] Completed 200 OK in 728ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 3195)
+I, [2026-02-06T17:44:39.572659 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:44:39 +0300
+I, [2026-02-06T17:44:39.573738 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:44:39.573926 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b]   Parameters: {"update_id"=>165325977, "callback_query"=>{"id"=>"2650224934295746789", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19995, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389078, "text"=>"Тест Тревожности\n\nТест Тревожности поможет вам оценить уровень тревожности. Ответьте на вопросы, чтобы получить результат.\n\nПримерное время прохождения: 5-10 минут.", "entities"=>[{"offset"=>0, "length"=>16, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_anxiety_test"}, "telegram_webhook"=>{"update_id"=>165325977, "callback_query"=>{"id"=>"2650224934295746789", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19995, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389078, "text"=>"Тест Тревожности\n\nТест Тревожности поможет вам оценить уровень тревожности. Ответьте на вопросы, чтобы получить результат.\n\nПримерное время прохождения: 5-10 минут.", "entities"=>[{"offset"=>0, "length"=>16, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_anxiety_test"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:44:39 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934295746789
+I, [2026-02-06T17:44:39.976853 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b] [CallbackQueryProcessor] Processing callback: start_anxiety_test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:39.976915 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b] [CallbackHandlerFactory] Looking for handler for: start_anxiety_test
+I, [2026-02-06T17:44:39.976996 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b] [CallbackHandlerFactory] Found regex match: TestStartHandler
+I, [2026-02-06T17:44:39.977018 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b] [CallbackHandlerFactory] Selected handler: TestStartHandler
+I, [2026-02-06T17:44:39.977147 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b] [TestStartHandler] Starting test from tests list - {:test_type=>"anxiety", :user_id=>3, :self_help_state=>"taking_depression_test", :telegram_id=>617053577}
+I, [2026-02-06T17:44:39.977846 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b] [QuizRunner] QuizRunner initialized - User: 3, {:user_id=>3, :telegram_id=>617053577, :in_program_context=>false, :self_help_state=>"taking_depression_test", :current_test_type=>nil}
+I, [2026-02-06T17:44:39.981718 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b] [QuizRunner] Starting quiz - User: 3, {:test_name=>"Тест Тревожности", :test_type=>"anxiety", :test_result_id=>18, :in_program_context=>false, :current_test_type=>nil}
+I, [2026-02-06T17:44:39.983381 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b] [QuizRunner] Test session created - User: 3, {:test_type=>"anxiety", :test_result_id=>18}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:44:40.219879 #53997]  INFO -- : [21cbca6d-a373-4ad1-b5d6-71547f8e0d9b] Completed 200 OK in 646ms (Views: 0.1ms | ActiveRecord: 3.7ms | Allocations: 5239)
+I, [2026-02-06T17:44:43.504597 #53997]  INFO -- : [070f7e29-ba5e-481e-bae0-36ee2ad07b56] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:44:43 +0300
+I, [2026-02-06T17:44:43.505609 #53997]  INFO -- : [070f7e29-ba5e-481e-bae0-36ee2ad07b56] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:44:43.505793 #53997]  INFO -- : [070f7e29-ba5e-481e-bae0-36ee2ad07b56]   Parameters: {"update_id"=>165325978, "callback_query"=>{"id"=>"2650224935248075345", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19994, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389076, "text"=>"📋 Список тестов:\n\nВыберите тест для прохождения:", "entities"=>[{"offset"=>3, "length"=>14, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"back_to_main_menu"}, "telegram_webhook"=>{"update_id"=>165325978, "callback_query"=>{"id"=>"2650224935248075345", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19994, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389076, "text"=>"📋 Список тестов:\n\nВыберите тест для прохождения:", "entities"=>[{"offset"=>3, "length"=>14, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"back_to_main_menu"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:44:43 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935248075345
+I, [2026-02-06T17:44:43.835803 #53997]  INFO -- : [070f7e29-ba5e-481e-bae0-36ee2ad07b56] [CallbackQueryProcessor] Processing callback: back_to_main_menu - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:43.835871 #53997]  INFO -- : [070f7e29-ba5e-481e-bae0-36ee2ad07b56] [CallbackHandlerFactory] Looking for handler for: back_to_main_menu
+I, [2026-02-06T17:44:43.835922 #53997]  INFO -- : [070f7e29-ba5e-481e-bae0-36ee2ad07b56] [CallbackHandlerFactory] Found string match: MainMenuHandler
+I, [2026-02-06T17:44:43.835948 #53997]  INFO -- : [070f7e29-ba5e-481e-bae0-36ee2ad07b56] [CallbackHandlerFactory] Selected handler: MainMenuHandler
+I, [2026-02-06T17:44:43.836039 #53997]  INFO -- : [070f7e29-ba5e-481e-bae0-36ee2ad07b56] [Telegram::Handlers::MainMenuHandler] Showing main menu - {}
+[2026-02-06 17:44:43 +0300] 📤 SENDING: text='Главное меню. Выберите действие:...' | reply_markup=YES
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:44:44.019220 #53997]  INFO -- : [070f7e29-ba5e-481e-bae0-36ee2ad07b56] Completed 200 OK in 513ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 2948)
+I, [2026-02-06T17:44:45.520948 #54000]  INFO -- : [62415a24-a997-4ec9-a417-13e93fb8296b] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:44:45 +0300
+I, [2026-02-06T17:44:45.521819 #54000]  INFO -- : [62415a24-a997-4ec9-a417-13e93fb8296b] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:44:45.521963 #54000]  INFO -- : [62415a24-a997-4ec9-a417-13e93fb8296b]   Parameters: {"update_id"=>165325979, "callback_query"=>{"id"=>"2650224936567782472", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19997, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389083, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325979, "callback_query"=>{"id"=>"2650224936567782472", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19997, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389083, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:44:45 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224936567782472
+I, [2026-02-06T17:44:45.839307 #54000]  INFO -- : [62415a24-a997-4ec9-a417-13e93fb8296b] [CallbackQueryProcessor] Processing callback: show_test_categories - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:45.839473 #54000]  INFO -- : [62415a24-a997-4ec9-a417-13e93fb8296b] [CallbackHandlerFactory] Looking for handler for: show_test_categories
+I, [2026-02-06T17:44:45.840091 #54000]  INFO -- : [62415a24-a997-4ec9-a417-13e93fb8296b] [CallbackHandlerFactory] Found string match: TestManagerHandler
+I, [2026-02-06T17:44:45.840238 #54000]  INFO -- : [62415a24-a997-4ec9-a417-13e93fb8296b] [CallbackHandlerFactory] Selected handler: TestManagerHandler
+I, [2026-02-06T17:44:45.840340 #54000]  INFO -- : [62415a24-a997-4ec9-a417-13e93fb8296b] [Telegram::Handlers::TestManagerHandler] TestManagerHandler: Processing show_test_categories - {}
+[2026-02-06 17:44:45 +0300] 📤 SENDING: text='📋 *Список тестов:*
+
+Выберите тест для прохождения:...' | reply_markup=YES
+I, [2026-02-06T17:44:45.994182 #54000]  INFO -- : [62415a24-a997-4ec9-a417-13e93fb8296b] [Telegram::Handlers::TestManagerHandler] TestManagerHandler: Completed successfully - {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:44:45.994630 #54000]  INFO -- : [62415a24-a997-4ec9-a417-13e93fb8296b] Completed 200 OK in 473ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 3296)
+I, [2026-02-06T17:44:47.493549 #54000]  INFO -- : [3a14a196-efc4-4184-8a65-0125aa01c748] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:44:47 +0300
+I, [2026-02-06T17:44:47.494526 #54000]  INFO -- : [3a14a196-efc4-4184-8a65-0125aa01c748] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:44:47.494707 #54000]  INFO -- : [3a14a196-efc4-4184-8a65-0125aa01c748]   Parameters: {"update_id"=>165325980, "callback_query"=>{"id"=>"2650224936343359441", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19998, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389085, "text"=>"📋 Список тестов:\n\nВыберите тест для прохождения:", "entities"=>[{"offset"=>3, "length"=>14, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"prepare_luscher_test"}, "telegram_webhook"=>{"update_id"=>165325980, "callback_query"=>{"id"=>"2650224936343359441", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19998, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389085, "text"=>"📋 Список тестов:\n\nВыберите тест для прохождения:", "entities"=>[{"offset"=>3, "length"=>14, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"prepare_luscher_test"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:44:47 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224936343359441
+I, [2026-02-06T17:44:47.750563 #54000]  INFO -- : [3a14a196-efc4-4184-8a65-0125aa01c748] [CallbackQueryProcessor] Processing callback: prepare_luscher_test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:47.750607 #54000]  INFO -- : [3a14a196-efc4-4184-8a65-0125aa01c748] [CallbackHandlerFactory] Looking for handler for: prepare_luscher_test
+I, [2026-02-06T17:44:47.750653 #54000]  INFO -- : [3a14a196-efc4-4184-8a65-0125aa01c748] [CallbackHandlerFactory] Found regex match: TestPreparationHandler
+I, [2026-02-06T17:44:47.750669 #54000]  INFO -- : [3a14a196-efc4-4184-8a65-0125aa01c748] [CallbackHandlerFactory] Selected handler: TestPreparationHandler
+I, [2026-02-06T17:44:47.750762 #54000]  INFO -- : [3a14a196-efc4-4184-8a65-0125aa01c748] [TestPreparationHandler] Preparing test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:47.750787 #54000]  INFO -- : [3a14a196-efc4-4184-8a65-0125aa01c748] [TestPreparationHandler] Preparing test: luscher - User: 617053577, Chat: 617053577
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:44:47.948825 #54000]  INFO -- : [3a14a196-efc4-4184-8a65-0125aa01c748] Completed 200 OK in 454ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 3374)
+I, [2026-02-06T17:44:48.964279 #53997]  INFO -- : [1f32685e-eca6-45f8-b903-15bac243a0ce] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:44:48 +0300
+I, [2026-02-06T17:44:48.965111 #53997]  INFO -- : [1f32685e-eca6-45f8-b903-15bac243a0ce] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:44:48.965261 #53997]  INFO -- : [1f32685e-eca6-45f8-b903-15bac243a0ce]   Parameters: {"update_id"=>165325981, "callback_query"=>{"id"=>"2650224934881475349", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19999, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389087, "text"=>"8-ми цветовой тест Люшера\n\n8-ми цветовой тест Люшера поможет вам оценить ваше психоэмоциональное состояние. Тест состоит из выбора цветов в порядке предпочтения.\n\nПримерное время прохождения: 3-5 минут.", "entities"=>[{"offset"=>0, "length"=>25, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_luscher_test"}, "telegram_webhook"=>{"update_id"=>165325981, "callback_query"=>{"id"=>"2650224934881475349", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>19999, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389087, "text"=>"8-ми цветовой тест Люшера\n\n8-ми цветовой тест Люшера поможет вам оценить ваше психоэмоциональное состояние. Тест состоит из выбора цветов в порядке предпочтения.\n\nПримерное время прохождения: 3-5 минут.", "entities"=>[{"offset"=>0, "length"=>25, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_luscher_test"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:44:48 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934881475349
+I, [2026-02-06T17:44:49.219747 #53997]  INFO -- : [1f32685e-eca6-45f8-b903-15bac243a0ce] [CallbackQueryProcessor] Processing callback: start_luscher_test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:49.219797 #53997]  INFO -- : [1f32685e-eca6-45f8-b903-15bac243a0ce] [CallbackHandlerFactory] Looking for handler for: start_luscher_test
+I, [2026-02-06T17:44:49.219848 #53997]  INFO -- : [1f32685e-eca6-45f8-b903-15bac243a0ce] [CallbackHandlerFactory] Found string match: LuscherTestStartHandler
+I, [2026-02-06T17:44:49.219863 #53997]  INFO -- : [1f32685e-eca6-45f8-b903-15bac243a0ce] [CallbackHandlerFactory] Selected handler: LuscherTestStartHandler
+I, [2026-02-06T17:44:49.219902 #53997]  INFO -- : [1f32685e-eca6-45f8-b903-15bac243a0ce] [Telegram::Handlers::LuscherTestStartHandler] Starting Luscher test - {}
+I, [2026-02-06T17:44:49.221579 #53997]  INFO -- : [1f32685e-eca6-45f8-b903-15bac243a0ce] [LuscherTestService] Cleaned up incomplete Luscher tests - User: 617053577, {}
+I, [2026-02-06T17:44:49.223860 #53997]  INFO -- : [1f32685e-eca6-45f8-b903-15bac243a0ce] [LuscherTestService] Created test result: 19 - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:44:50.961423 #53997]  INFO -- : [1f32685e-eca6-45f8-b903-15bac243a0ce] Completed 200 OK in 1996ms (Views: 0.1ms | ActiveRecord: 2.2ms | Allocations: 10847)
+I, [2026-02-06T17:44:55.620561 #54000]  INFO -- : [569340f4-b29f-416c-ab02-78876ee30659] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:44:55 +0300
+I, [2026-02-06T17:44:55.621431 #54000]  INFO -- : [569340f4-b29f-416c-ab02-78876ee30659] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:44:55.621563 #54000]  INFO -- : [569340f4-b29f-416c-ab02-78876ee30659]   Parameters: {"update_id"=>165325982, "callback_query"=>{"id"=>"2650224934929615278", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20009, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389090, "text"=>"Выберите наиболее приятный для вас цвет, нажав на кнопку ниже:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_brown_19"}, "telegram_webhook"=>{"update_id"=>165325982, "callback_query"=>{"id"=>"2650224934929615278", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20009, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389090, "text"=>"Выберите наиболее приятный для вас цвет, нажав на кнопку ниже:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_brown_19"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:44:55 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934929615278
+I, [2026-02-06T17:44:55.880374 #54000]  INFO -- : [569340f4-b29f-416c-ab02-78876ee30659] [CallbackQueryProcessor] Processing callback: luscher_color_brown_19 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:55.880428 #54000]  INFO -- : [569340f4-b29f-416c-ab02-78876ee30659] [CallbackHandlerFactory] Looking for handler for: luscher_color_brown_19
+I, [2026-02-06T17:44:55.880780 #54000]  INFO -- : [569340f4-b29f-416c-ab02-78876ee30659] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:44:55.880810 #54000]  INFO -- : [569340f4-b29f-416c-ab02-78876ee30659] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:44:55.880874 #54000]  INFO -- : [569340f4-b29f-416c-ab02-78876ee30659] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"brown", :test_result_id=>19, :matches_size=>3}
+I, [2026-02-06T17:44:55.885408 #54000]  INFO -- : [569340f4-b29f-416c-ab02-78876ee30659] [LuscherTestService] Added color choice: brown, choices: ["brown"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:44:56.931273 #54000]  INFO -- : [569340f4-b29f-416c-ab02-78876ee30659] Completed 200 OK in 1310ms (Views: 0.1ms | ActiveRecord: 2.5ms | Allocations: 8711)
+I, [2026-02-06T17:44:57.961730 #53997]  INFO -- : [c08ec823-ab95-4280-b40c-bd4c675d2fb8] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:44:57 +0300
+I, [2026-02-06T17:44:57.962481 #53997]  INFO -- : [c08ec823-ab95-4280-b40c-bd4c675d2fb8] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:44:57.962627 #53997]  INFO -- : [c08ec823-ab95-4280-b40c-bd4c675d2fb8]   Parameters: {"update_id"=>165325983, "callback_query"=>{"id"=>"2650224935872913171", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20017, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389096, "text"=>"Выбрано цветов: 1/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_green_19"}, "telegram_webhook"=>{"update_id"=>165325983, "callback_query"=>{"id"=>"2650224935872913171", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20017, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389096, "text"=>"Выбрано цветов: 1/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_green_19"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:44:57 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935872913171
+I, [2026-02-06T17:44:58.247990 #53997]  INFO -- : [c08ec823-ab95-4280-b40c-bd4c675d2fb8] [CallbackQueryProcessor] Processing callback: luscher_color_green_19 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:44:58.248042 #53997]  INFO -- : [c08ec823-ab95-4280-b40c-bd4c675d2fb8] [CallbackHandlerFactory] Looking for handler for: luscher_color_green_19
+I, [2026-02-06T17:44:58.248101 #53997]  INFO -- : [c08ec823-ab95-4280-b40c-bd4c675d2fb8] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:44:58.248119 #53997]  INFO -- : [c08ec823-ab95-4280-b40c-bd4c675d2fb8] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:44:58.248184 #53997]  INFO -- : [c08ec823-ab95-4280-b40c-bd4c675d2fb8] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"green", :test_result_id=>19, :matches_size=>3}
+I, [2026-02-06T17:44:58.253658 #53997]  INFO -- : [c08ec823-ab95-4280-b40c-bd4c675d2fb8] [LuscherTestService] Added color choice: green, choices: ["brown", "green"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:44:59.954574 #53997]  INFO -- : [c08ec823-ab95-4280-b40c-bd4c675d2fb8] Completed 200 OK in 1992ms (Views: 0.1ms | ActiveRecord: 2.5ms | Allocations: 8023)
+I, [2026-02-06T17:45:00.855483 #54000]  INFO -- : [73cc7f77-2583-4d0d-bb77-581609e30bd1] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:00 +0300
+I, [2026-02-06T17:45:00.856271 #54000]  INFO -- : [73cc7f77-2583-4d0d-bb77-581609e30bd1] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:00.856377 #54000]  INFO -- : [73cc7f77-2583-4d0d-bb77-581609e30bd1]   Parameters: {"update_id"=>165325984, "callback_query"=>{"id"=>"2650224935165684365", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20024, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389099, "text"=>"Выбрано цветов: 2/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_blue_green_19"}, "telegram_webhook"=>{"update_id"=>165325984, "callback_query"=>{"id"=>"2650224935165684365", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20024, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389099, "text"=>"Выбрано цветов: 2/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_blue_green_19"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:00 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935165684365
+I, [2026-02-06T17:45:01.103077 #54000]  INFO -- : [73cc7f77-2583-4d0d-bb77-581609e30bd1] [CallbackQueryProcessor] Processing callback: luscher_color_blue_green_19 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:01.103138 #54000]  INFO -- : [73cc7f77-2583-4d0d-bb77-581609e30bd1] [CallbackHandlerFactory] Looking for handler for: luscher_color_blue_green_19
+I, [2026-02-06T17:45:01.103214 #54000]  INFO -- : [73cc7f77-2583-4d0d-bb77-581609e30bd1] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:01.103236 #54000]  INFO -- : [73cc7f77-2583-4d0d-bb77-581609e30bd1] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:01.103300 #54000]  INFO -- : [73cc7f77-2583-4d0d-bb77-581609e30bd1] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"blue_green", :test_result_id=>19, :matches_size=>3}
+I, [2026-02-06T17:45:01.108174 #54000]  INFO -- : [73cc7f77-2583-4d0d-bb77-581609e30bd1] [LuscherTestService] Added color choice: blue_green, choices: ["brown", "green", "blue_green"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:02.060358 #54000]  INFO -- : [73cc7f77-2583-4d0d-bb77-581609e30bd1] Completed 200 OK in 1204ms (Views: 0.1ms | ActiveRecord: 2.4ms | Allocations: 7271)
+I, [2026-02-06T17:45:03.151840 #54000]  INFO -- : [88abe570-4d31-469c-88c8-a4fd3ff5ddb7] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:03 +0300
+I, [2026-02-06T17:45:03.152638 #54000]  INFO -- : [88abe570-4d31-469c-88c8-a4fd3ff5ddb7] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:03.152745 #54000]  INFO -- : [88abe570-4d31-469c-88c8-a4fd3ff5ddb7]   Parameters: {"update_id"=>165325985, "callback_query"=>{"id"=>"2650224934589980418", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20030, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389101, "text"=>"Выбрано цветов: 3/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_yellow_19"}, "telegram_webhook"=>{"update_id"=>165325985, "callback_query"=>{"id"=>"2650224934589980418", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20030, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389101, "text"=>"Выбрано цветов: 3/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_yellow_19"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:03 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934589980418
+I, [2026-02-06T17:45:03.455683 #54000]  INFO -- : [88abe570-4d31-469c-88c8-a4fd3ff5ddb7] [CallbackQueryProcessor] Processing callback: luscher_color_yellow_19 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:03.455780 #54000]  INFO -- : [88abe570-4d31-469c-88c8-a4fd3ff5ddb7] [CallbackHandlerFactory] Looking for handler for: luscher_color_yellow_19
+I, [2026-02-06T17:45:03.455883 #54000]  INFO -- : [88abe570-4d31-469c-88c8-a4fd3ff5ddb7] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:03.455914 #54000]  INFO -- : [88abe570-4d31-469c-88c8-a4fd3ff5ddb7] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:03.456031 #54000]  INFO -- : [88abe570-4d31-469c-88c8-a4fd3ff5ddb7] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"yellow", :test_result_id=>19, :matches_size=>3}
+I, [2026-02-06T17:45:03.463064 #54000]  INFO -- : [88abe570-4d31-469c-88c8-a4fd3ff5ddb7] [LuscherTestService] Added color choice: yellow, choices: ["brown", "green", "blue_green", "yellow"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:04.214590 #54000]  INFO -- : [88abe570-4d31-469c-88c8-a4fd3ff5ddb7] Completed 200 OK in 1062ms (Views: 0.1ms | ActiveRecord: 2.5ms | Allocations: 6584)
+I, [2026-02-06T17:45:05.293593 #53997]  INFO -- : [5f1182f1-45ed-40a9-a81a-2dca9c4fff0a] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:05 +0300
+I, [2026-02-06T17:45:05.294531 #53997]  INFO -- : [5f1182f1-45ed-40a9-a81a-2dca9c4fff0a] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:05.294679 #53997]  INFO -- : [5f1182f1-45ed-40a9-a81a-2dca9c4fff0a]   Parameters: {"update_id"=>165325986, "callback_query"=>{"id"=>"2650224935873631974", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20035, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389104, "text"=>"Выбрано цветов: 4/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_19"}, "telegram_webhook"=>{"update_id"=>165325986, "callback_query"=>{"id"=>"2650224935873631974", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20035, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389104, "text"=>"Выбрано цветов: 4/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_19"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:05 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935873631974
+I, [2026-02-06T17:45:05.567520 #53997]  INFO -- : [5f1182f1-45ed-40a9-a81a-2dca9c4fff0a] [CallbackQueryProcessor] Processing callback: luscher_color_red_19 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:05.567590 #53997]  INFO -- : [5f1182f1-45ed-40a9-a81a-2dca9c4fff0a] [CallbackHandlerFactory] Looking for handler for: luscher_color_red_19
+I, [2026-02-06T17:45:05.567681 #53997]  INFO -- : [5f1182f1-45ed-40a9-a81a-2dca9c4fff0a] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:05.567711 #53997]  INFO -- : [5f1182f1-45ed-40a9-a81a-2dca9c4fff0a] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:05.567795 #53997]  INFO -- : [5f1182f1-45ed-40a9-a81a-2dca9c4fff0a] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"red", :test_result_id=>19, :matches_size=>3}
+I, [2026-02-06T17:45:05.574063 #53997]  INFO -- : [5f1182f1-45ed-40a9-a81a-2dca9c4fff0a] [LuscherTestService] Added color choice: red, choices: ["brown", "green", "blue_green", "yellow", "red"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:06.295033 #53997]  INFO -- : [5f1182f1-45ed-40a9-a81a-2dca9c4fff0a] Completed 200 OK in 1000ms (Views: 0.1ms | ActiveRecord: 3.2ms | Allocations: 5856)
+I, [2026-02-06T17:45:07.296436 #54000]  INFO -- : [214951e6-0964-475e-8b72-db54744fad78] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:07 +0300
+I, [2026-02-06T17:45:07.300221 #54000]  INFO -- : [214951e6-0964-475e-8b72-db54744fad78] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:07.300415 #54000]  INFO -- : [214951e6-0964-475e-8b72-db54744fad78]   Parameters: {"update_id"=>165325987, "callback_query"=>{"id"=>"2650224934941080335", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20039, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389106, "text"=>"Выбрано цветов: 5/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_purple_19"}, "telegram_webhook"=>{"update_id"=>165325987, "callback_query"=>{"id"=>"2650224934941080335", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20039, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389106, "text"=>"Выбрано цветов: 5/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_purple_19"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:07 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934941080335
+I, [2026-02-06T17:45:07.544174 #54000]  INFO -- : [214951e6-0964-475e-8b72-db54744fad78] [CallbackQueryProcessor] Processing callback: luscher_color_purple_19 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:07.544226 #54000]  INFO -- : [214951e6-0964-475e-8b72-db54744fad78] [CallbackHandlerFactory] Looking for handler for: luscher_color_purple_19
+I, [2026-02-06T17:45:07.544284 #54000]  INFO -- : [214951e6-0964-475e-8b72-db54744fad78] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:07.544302 #54000]  INFO -- : [214951e6-0964-475e-8b72-db54744fad78] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:07.544360 #54000]  INFO -- : [214951e6-0964-475e-8b72-db54744fad78] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"purple", :test_result_id=>19, :matches_size=>3}
+I, [2026-02-06T17:45:07.548618 #54000]  INFO -- : [214951e6-0964-475e-8b72-db54744fad78] [LuscherTestService] Added color choice: purple, choices: ["brown", "green", "blue_green", "yellow", "red", "purple"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:08.033003 #54000]  INFO -- : [214951e6-0964-475e-8b72-db54744fad78] Completed 200 OK in 732ms (Views: 0.1ms | ActiveRecord: 2.1ms | Allocations: 5148)
+I, [2026-02-06T17:45:09.161241 #53997]  INFO -- : [be8f174c-6cce-4f92-81db-a7b5ae510559] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:09 +0300
+I, [2026-02-06T17:45:09.162201 #53997]  INFO -- : [be8f174c-6cce-4f92-81db-a7b5ae510559] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:09.162302 #53997]  INFO -- : [be8f174c-6cce-4f92-81db-a7b5ae510559]   Parameters: {"update_id"=>165325988, "callback_query"=>{"id"=>"2650224937310006222", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20042, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389107, "text"=>"Выбрано цветов: 6/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_yellow_19"}, "telegram_webhook"=>{"update_id"=>165325988, "callback_query"=>{"id"=>"2650224937310006222", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20042, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389107, "text"=>"Выбрано цветов: 6/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_yellow_19"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:09 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224937310006222
+I, [2026-02-06T17:45:09.483551 #53997]  INFO -- : [be8f174c-6cce-4f92-81db-a7b5ae510559] [CallbackQueryProcessor] Processing callback: luscher_color_red_yellow_19 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:09.483624 #53997]  INFO -- : [be8f174c-6cce-4f92-81db-a7b5ae510559] [CallbackHandlerFactory] Looking for handler for: luscher_color_red_yellow_19
+I, [2026-02-06T17:45:09.483697 #53997]  INFO -- : [be8f174c-6cce-4f92-81db-a7b5ae510559] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:09.483715 #53997]  INFO -- : [be8f174c-6cce-4f92-81db-a7b5ae510559] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:09.483783 #53997]  INFO -- : [be8f174c-6cce-4f92-81db-a7b5ae510559] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"red_yellow", :test_result_id=>19, :matches_size=>3}
+I, [2026-02-06T17:45:09.487815 #53997]  INFO -- : [be8f174c-6cce-4f92-81db-a7b5ae510559] [LuscherTestService] Added color choice: red_yellow, choices: ["brown", "green", "blue_green", "yellow", "red", "purple", "red_yellow"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:09.859880 #53997]  INFO -- : [be8f174c-6cce-4f92-81db-a7b5ae510559] Completed 200 OK in 697ms (Views: 0.1ms | ActiveRecord: 2.2ms | Allocations: 4407)
+I, [2026-02-06T17:45:10.859871 #54000]  INFO -- : [0a46cf50-8029-4b4d-aca7-61367c9010f2] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:10 +0300
+I, [2026-02-06T17:45:10.860927 #54000]  INFO -- : [0a46cf50-8029-4b4d-aca7-61367c9010f2] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:10.861134 #54000]  INFO -- : [0a46cf50-8029-4b4d-aca7-61367c9010f2]   Parameters: {"update_id"=>165325989, "callback_query"=>{"id"=>"2650224935603408145", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20044, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389109, "text"=>"Выбрано цветов: 7/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_dark_blue_19"}, "telegram_webhook"=>{"update_id"=>165325989, "callback_query"=>{"id"=>"2650224935603408145", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20044, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389109, "text"=>"Выбрано цветов: 7/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_dark_blue_19"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:10 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935603408145
+I, [2026-02-06T17:45:11.129892 #54000]  INFO -- : [0a46cf50-8029-4b4d-aca7-61367c9010f2] [CallbackQueryProcessor] Processing callback: luscher_color_dark_blue_19 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:11.129948 #54000]  INFO -- : [0a46cf50-8029-4b4d-aca7-61367c9010f2] [CallbackHandlerFactory] Looking for handler for: luscher_color_dark_blue_19
+I, [2026-02-06T17:45:11.130043 #54000]  INFO -- : [0a46cf50-8029-4b4d-aca7-61367c9010f2] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:11.130070 #54000]  INFO -- : [0a46cf50-8029-4b4d-aca7-61367c9010f2] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:11.130151 #54000]  INFO -- : [0a46cf50-8029-4b4d-aca7-61367c9010f2] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"dark_blue", :test_result_id=>19, :matches_size=>3}
+I, [2026-02-06T17:45:11.137750 #54000]  INFO -- : [0a46cf50-8029-4b4d-aca7-61367c9010f2] [LuscherTestService] Added color choice: dark_blue, choices: ["brown", "green", "blue_green", "yellow", "red", "purple", "red_yellow", "dark_blue"] - User: 617053577, {}
+I, [2026-02-06T17:45:11.229448 #54000]  INFO -- : [0a46cf50-8029-4b4d-aca7-61367c9010f2] [LuscherTestService] Test completed: 19 - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:11.290561 #54000]  INFO -- : [0a46cf50-8029-4b4d-aca7-61367c9010f2] Completed 200 OK in 429ms (Views: 0.1ms | ActiveRecord: 5.6ms | Allocations: 4960)
+I, [2026-02-06T17:45:13.180787 #53997]  INFO -- : [95626f7d-6014-4665-a778-dea4e3a9ec1d] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:13 +0300
+I, [2026-02-06T17:45:13.181750 #53997]  INFO -- : [95626f7d-6014-4665-a778-dea4e3a9ec1d] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:13.181958 #53997]  INFO -- : [95626f7d-6014-4665-a778-dea4e3a9ec1d]   Parameters: {"update_id"=>165325990, "callback_query"=>{"id"=>"2650224935013934266", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20045, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389111, "text"=>"✅ Отлично! Вы завершили выбор цветов.\n\nТеперь я попробую дать вам небольшую интерпретацию ваших результатов.", "entities"=>[{"offset"=>2, "length"=>35, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_luscher_interpretation"}, "telegram_webhook"=>{"update_id"=>165325990, "callback_query"=>{"id"=>"2650224935013934266", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20045, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389111, "text"=>"✅ Отлично! Вы завершили выбор цветов.\n\nТеперь я попробую дать вам небольшую интерпретацию ваших результатов.", "entities"=>[{"offset"=>2, "length"=>35, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_luscher_interpretation"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:13 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935013934266
+I, [2026-02-06T17:45:13.401440 #53997]  INFO -- : [95626f7d-6014-4665-a778-dea4e3a9ec1d] [CallbackQueryProcessor] Processing callback: show_luscher_interpretation - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:13.401502 #53997]  INFO -- : [95626f7d-6014-4665-a778-dea4e3a9ec1d] [CallbackHandlerFactory] Looking for handler for: show_luscher_interpretation
+I, [2026-02-06T17:45:13.401562 #53997]  INFO -- : [95626f7d-6014-4665-a778-dea4e3a9ec1d] [CallbackHandlerFactory] Found string match: LuscherInterpretationHandler
+I, [2026-02-06T17:45:13.401601 #53997]  INFO -- : [95626f7d-6014-4665-a778-dea4e3a9ec1d] [CallbackHandlerFactory] Selected handler: LuscherInterpretationHandler
+I, [2026-02-06T17:45:13.401664 #53997]  INFO -- : [95626f7d-6014-4665-a778-dea4e3a9ec1d] [Telegram::Handlers::LuscherInterpretationHandler] Showing Luscher interpretation - {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:13.537928 #53997]  INFO -- : [95626f7d-6014-4665-a778-dea4e3a9ec1d] Completed 200 OK in 356ms (Views: 0.1ms | ActiveRecord: 1.1ms | Allocations: 5754)
+I, [2026-02-06T17:45:27.632135 #54000]  INFO -- : [71e98abe-47a0-420f-844d-0c4904b72fd5] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:27 +0300
+I, [2026-02-06T17:45:27.632943 #54000]  INFO -- : [71e98abe-47a0-420f-844d-0c4904b72fd5] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:27.633164 #54000]  INFO -- : [71e98abe-47a0-420f-844d-0c4904b72fd5]   Parameters: {"update_id"=>165325991, "message"=>{"message_id"=>20047, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389127, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}, "telegram_webhook"=>{"update_id"=>165325991, "message"=>{"message_id"=>20047, "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389127, "text"=>"/start", "entities"=>[{"offset"=>0, "length"=>6, "type"=>"bot_command"}]}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:27 +0300] 👤 User: 617053577 | Команда: /start
+[BOT] 📱 Received: /start from 617053577
+[BOT] 💬 Processing: '/start' for chat 617053577
+[BOT] 👤 User: 617053577 (Ларченков)
+I, [2026-02-06T17:45:27.635058 #54000]  INFO -- : [71e98abe-47a0-420f-844d-0c4904b72fd5] [MessageProcessor] Processing message: /start - User: 617053577, Chat: 617053577 - User: 617053577, Chat: 617053577
+[BOT] ✅ Message processed successfully
+I, [2026-02-06T17:45:27.995210 #54000]  INFO -- : [71e98abe-47a0-420f-844d-0c4904b72fd5] Completed 200 OK in 362ms (Views: 0.2ms | ActiveRecord: 0.2ms | Allocations: 6823)
+I, [2026-02-06T17:45:29.218693 #53997]  INFO -- : [1d36a1fc-8b57-44f3-9f3b-3f54900d2dd6] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:29 +0300
+I, [2026-02-06T17:45:29.220125 #53997]  INFO -- : [1d36a1fc-8b57-44f3-9f3b-3f54900d2dd6] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:29.220321 #53997]  INFO -- : [1d36a1fc-8b57-44f3-9f3b-3f54900d2dd6]   Parameters: {"update_id"=>165325992, "callback_query"=>{"id"=>"2650224936257556309", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20049, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389127, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}, "telegram_webhook"=>{"update_id"=>165325992, "callback_query"=>{"id"=>"2650224936257556309", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20049, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389127, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_emotion_diary"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:29 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224936257556309
+I, [2026-02-06T17:45:29.496467 #53997]  INFO -- : [1d36a1fc-8b57-44f3-9f3b-3f54900d2dd6] [CallbackQueryProcessor] Processing callback: start_emotion_diary - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:29.496540 #53997]  INFO -- : [1d36a1fc-8b57-44f3-9f3b-3f54900d2dd6] [CallbackHandlerFactory] Looking for handler for: start_emotion_diary
+I, [2026-02-06T17:45:29.496646 #53997]  INFO -- : [1d36a1fc-8b57-44f3-9f3b-3f54900d2dd6] [CallbackHandlerFactory] Found string match: EmotionDiaryStartHandler
+I, [2026-02-06T17:45:29.496677 #53997]  INFO -- : [1d36a1fc-8b57-44f3-9f3b-3f54900d2dd6] [CallbackHandlerFactory] Selected handler: EmotionDiaryStartHandler
+I, [2026-02-06T17:45:29.496815 #53997]  INFO -- : [1d36a1fc-8b57-44f3-9f3b-3f54900d2dd6] [Telegram::Handlers::EmotionDiaryStartHandler] Starting emotion diary - {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:29.689403 #53997]  INFO -- : [1d36a1fc-8b57-44f3-9f3b-3f54900d2dd6] Completed 200 OK in 469ms (Views: 0.2ms | ActiveRecord: 0.4ms | Allocations: 3058)
+I, [2026-02-06T17:45:31.640175 #54000]  INFO -- : [802e185b-f365-4176-a91f-c008f7ba90b5] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:31 +0300
+I, [2026-02-06T17:45:31.641250 #54000]  INFO -- : [802e185b-f365-4176-a91f-c008f7ba90b5] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:31.641402 #54000]  INFO -- : [802e185b-f365-4176-a91f-c008f7ba90b5]   Parameters: {"update_id"=>165325993, "callback_query"=>{"id"=>"2650224937160945694", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20049, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389127, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}, "telegram_webhook"=>{"update_id"=>165325993, "callback_query"=>{"id"=>"2650224937160945694", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20049, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389127, "text"=>"Главное меню. Выберите действие:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_test_categories"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:31 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224937160945694
+I, [2026-02-06T17:45:31.907934 #54000]  INFO -- : [802e185b-f365-4176-a91f-c008f7ba90b5] [CallbackQueryProcessor] Processing callback: show_test_categories - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:31.908012 #54000]  INFO -- : [802e185b-f365-4176-a91f-c008f7ba90b5] [CallbackHandlerFactory] Looking for handler for: show_test_categories
+I, [2026-02-06T17:45:31.908051 #54000]  INFO -- : [802e185b-f365-4176-a91f-c008f7ba90b5] [CallbackHandlerFactory] Found string match: TestManagerHandler
+I, [2026-02-06T17:45:31.908081 #54000]  INFO -- : [802e185b-f365-4176-a91f-c008f7ba90b5] [CallbackHandlerFactory] Selected handler: TestManagerHandler
+I, [2026-02-06T17:45:31.908125 #54000]  INFO -- : [802e185b-f365-4176-a91f-c008f7ba90b5] [Telegram::Handlers::TestManagerHandler] TestManagerHandler: Processing show_test_categories - {}
+[2026-02-06 17:45:31 +0300] 📤 SENDING: text='📋 *Список тестов:*
+
+Выберите тест для прохождения:...' | reply_markup=YES
+I, [2026-02-06T17:45:32.058296 #54000]  INFO -- : [802e185b-f365-4176-a91f-c008f7ba90b5] [Telegram::Handlers::TestManagerHandler] TestManagerHandler: Completed successfully - {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:32.058692 #54000]  INFO -- : [802e185b-f365-4176-a91f-c008f7ba90b5] Completed 200 OK in 417ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 3296)
+I, [2026-02-06T17:45:33.715630 #53997]  INFO -- : [5224c14f-f680-45d2-b470-0b5096cf4aae] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:33 +0300
+I, [2026-02-06T17:45:33.716625 #53997]  INFO -- : [5224c14f-f680-45d2-b470-0b5096cf4aae] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:33.716776 #53997]  INFO -- : [5224c14f-f680-45d2-b470-0b5096cf4aae]   Parameters: {"update_id"=>165325994, "callback_query"=>{"id"=>"2650224936457100602", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20051, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389131, "text"=>"📋 Список тестов:\n\nВыберите тест для прохождения:", "entities"=>[{"offset"=>3, "length"=>14, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"prepare_luscher_test"}, "telegram_webhook"=>{"update_id"=>165325994, "callback_query"=>{"id"=>"2650224936457100602", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20051, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389131, "text"=>"📋 Список тестов:\n\nВыберите тест для прохождения:", "entities"=>[{"offset"=>3, "length"=>14, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"prepare_luscher_test"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:33 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224936457100602
+I, [2026-02-06T17:45:33.989657 #53997]  INFO -- : [5224c14f-f680-45d2-b470-0b5096cf4aae] [CallbackQueryProcessor] Processing callback: prepare_luscher_test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:33.989709 #53997]  INFO -- : [5224c14f-f680-45d2-b470-0b5096cf4aae] [CallbackHandlerFactory] Looking for handler for: prepare_luscher_test
+I, [2026-02-06T17:45:33.989756 #53997]  INFO -- : [5224c14f-f680-45d2-b470-0b5096cf4aae] [CallbackHandlerFactory] Found regex match: TestPreparationHandler
+I, [2026-02-06T17:45:33.989772 #53997]  INFO -- : [5224c14f-f680-45d2-b470-0b5096cf4aae] [CallbackHandlerFactory] Selected handler: TestPreparationHandler
+I, [2026-02-06T17:45:33.989868 #53997]  INFO -- : [5224c14f-f680-45d2-b470-0b5096cf4aae] [TestPreparationHandler] Preparing test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:33.989911 #53997]  INFO -- : [5224c14f-f680-45d2-b470-0b5096cf4aae] [TestPreparationHandler] Preparing test: luscher - User: 617053577, Chat: 617053577
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:34.149134 #53997]  INFO -- : [5224c14f-f680-45d2-b470-0b5096cf4aae] Completed 200 OK in 432ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 3391)
+I, [2026-02-06T17:45:35.147123 #54000]  INFO -- : [938f3e32-fdb4-4dec-ba66-3e5bc5266d3d] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:35 +0300
+I, [2026-02-06T17:45:35.148052 #54000]  INFO -- : [938f3e32-fdb4-4dec-ba66-3e5bc5266d3d] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:35.148246 #54000]  INFO -- : [938f3e32-fdb4-4dec-ba66-3e5bc5266d3d]   Parameters: {"update_id"=>165325995, "callback_query"=>{"id"=>"2650224935284385595", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20052, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389134, "text"=>"8-ми цветовой тест Люшера\n\n8-ми цветовой тест Люшера поможет вам оценить ваше психоэмоциональное состояние. Тест состоит из выбора цветов в порядке предпочтения.\n\nПримерное время прохождения: 3-5 минут.", "entities"=>[{"offset"=>0, "length"=>25, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_luscher_test"}, "telegram_webhook"=>{"update_id"=>165325995, "callback_query"=>{"id"=>"2650224935284385595", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20052, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389134, "text"=>"8-ми цветовой тест Люшера\n\n8-ми цветовой тест Люшера поможет вам оценить ваше психоэмоциональное состояние. Тест состоит из выбора цветов в порядке предпочтения.\n\nПримерное время прохождения: 3-5 минут.", "entities"=>[{"offset"=>0, "length"=>25, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"start_luscher_test"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:35 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935284385595
+I, [2026-02-06T17:45:35.407661 #54000]  INFO -- : [938f3e32-fdb4-4dec-ba66-3e5bc5266d3d] [CallbackQueryProcessor] Processing callback: start_luscher_test - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:35.407719 #54000]  INFO -- : [938f3e32-fdb4-4dec-ba66-3e5bc5266d3d] [CallbackHandlerFactory] Looking for handler for: start_luscher_test
+I, [2026-02-06T17:45:35.407788 #54000]  INFO -- : [938f3e32-fdb4-4dec-ba66-3e5bc5266d3d] [CallbackHandlerFactory] Found string match: LuscherTestStartHandler
+I, [2026-02-06T17:45:35.407810 #54000]  INFO -- : [938f3e32-fdb4-4dec-ba66-3e5bc5266d3d] [CallbackHandlerFactory] Selected handler: LuscherTestStartHandler
+I, [2026-02-06T17:45:35.407870 #54000]  INFO -- : [938f3e32-fdb4-4dec-ba66-3e5bc5266d3d] [Telegram::Handlers::LuscherTestStartHandler] Starting Luscher test - {}
+I, [2026-02-06T17:45:35.412565 #54000]  INFO -- : [938f3e32-fdb4-4dec-ba66-3e5bc5266d3d] [LuscherTestService] Cleaned up incomplete Luscher tests - User: 617053577, {}
+I, [2026-02-06T17:45:35.415636 #54000]  INFO -- : [938f3e32-fdb4-4dec-ba66-3e5bc5266d3d] [LuscherTestService] Created test result: 20 - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:36.958849 #54000]  INFO -- : [938f3e32-fdb4-4dec-ba66-3e5bc5266d3d] Completed 200 OK in 1810ms (Views: 0.1ms | ActiveRecord: 3.2ms | Allocations: 10998)
+I, [2026-02-06T17:45:40.280453 #54000]  INFO -- : [6b9ba484-64b5-423d-a279-3b0e30448928] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:40 +0300
+I, [2026-02-06T17:45:40.281176 #54000]  INFO -- : [6b9ba484-64b5-423d-a279-3b0e30448928] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:40.281277 #54000]  INFO -- : [6b9ba484-64b5-423d-a279-3b0e30448928]   Parameters: {"update_id"=>165325996, "callback_query"=>{"id"=>"2650224935158282203", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20062, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389136, "text"=>"Выберите наиболее приятный для вас цвет, нажав на кнопку ниже:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_green_20"}, "telegram_webhook"=>{"update_id"=>165325996, "callback_query"=>{"id"=>"2650224935158282203", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20062, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389136, "text"=>"Выберите наиболее приятный для вас цвет, нажав на кнопку ниже:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_green_20"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:40 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935158282203
+I, [2026-02-06T17:45:40.523592 #54000]  INFO -- : [6b9ba484-64b5-423d-a279-3b0e30448928] [CallbackQueryProcessor] Processing callback: luscher_color_green_20 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:40.523643 #54000]  INFO -- : [6b9ba484-64b5-423d-a279-3b0e30448928] [CallbackHandlerFactory] Looking for handler for: luscher_color_green_20
+I, [2026-02-06T17:45:40.523699 #54000]  INFO -- : [6b9ba484-64b5-423d-a279-3b0e30448928] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:40.523715 #54000]  INFO -- : [6b9ba484-64b5-423d-a279-3b0e30448928] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:40.523776 #54000]  INFO -- : [6b9ba484-64b5-423d-a279-3b0e30448928] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"green", :test_result_id=>20, :matches_size=>3}
+I, [2026-02-06T17:45:40.528302 #54000]  INFO -- : [6b9ba484-64b5-423d-a279-3b0e30448928] [LuscherTestService] Added color choice: green, choices: ["green"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:41.663018 #54000]  INFO -- : [6b9ba484-64b5-423d-a279-3b0e30448928] Completed 200 OK in 1382ms (Views: 0.1ms | ActiveRecord: 2.2ms | Allocations: 8716)
+I, [2026-02-06T17:45:42.868001 #54000]  INFO -- : [cbe0fc11-1403-4a53-9b82-3e0830ba5e6e] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:42 +0300
+I, [2026-02-06T17:45:42.868959 #54000]  INFO -- : [cbe0fc11-1403-4a53-9b82-3e0830ba5e6e] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:42.869133 #54000]  INFO -- : [cbe0fc11-1403-4a53-9b82-3e0830ba5e6e]   Parameters: {"update_id"=>165325997, "callback_query"=>{"id"=>"2650224936363643093", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20070, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389141, "text"=>"Выбрано цветов: 1/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_purple_20"}, "telegram_webhook"=>{"update_id"=>165325997, "callback_query"=>{"id"=>"2650224936363643093", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20070, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389141, "text"=>"Выбрано цветов: 1/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_purple_20"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:42 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224936363643093
+I, [2026-02-06T17:45:43.120407 #54000]  INFO -- : [cbe0fc11-1403-4a53-9b82-3e0830ba5e6e] [CallbackQueryProcessor] Processing callback: luscher_color_purple_20 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:43.120460 #54000]  INFO -- : [cbe0fc11-1403-4a53-9b82-3e0830ba5e6e] [CallbackHandlerFactory] Looking for handler for: luscher_color_purple_20
+I, [2026-02-06T17:45:43.120518 #54000]  INFO -- : [cbe0fc11-1403-4a53-9b82-3e0830ba5e6e] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:43.120534 #54000]  INFO -- : [cbe0fc11-1403-4a53-9b82-3e0830ba5e6e] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:43.120593 #54000]  INFO -- : [cbe0fc11-1403-4a53-9b82-3e0830ba5e6e] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"purple", :test_result_id=>20, :matches_size=>3}
+I, [2026-02-06T17:45:43.125252 #54000]  INFO -- : [cbe0fc11-1403-4a53-9b82-3e0830ba5e6e] [LuscherTestService] Added color choice: purple, choices: ["green", "purple"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:44.503115 #54000]  INFO -- : [cbe0fc11-1403-4a53-9b82-3e0830ba5e6e] Completed 200 OK in 1634ms (Views: 0.2ms | ActiveRecord: 2.3ms | Allocations: 8025)
+I, [2026-02-06T17:45:45.517413 #54000]  INFO -- : [ee85df2b-45d3-4299-96dd-da16ac7f533f] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:45 +0300
+I, [2026-02-06T17:45:45.518174 #54000]  INFO -- : [ee85df2b-45d3-4299-96dd-da16ac7f533f] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:45.518313 #54000]  INFO -- : [ee85df2b-45d3-4299-96dd-da16ac7f533f]   Parameters: {"update_id"=>165325998, "callback_query"=>{"id"=>"2650224935696394327", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20077, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389144, "text"=>"Выбрано цветов: 2/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_yellow_20"}, "telegram_webhook"=>{"update_id"=>165325998, "callback_query"=>{"id"=>"2650224935696394327", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20077, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389144, "text"=>"Выбрано цветов: 2/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_yellow_20"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:45 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935696394327
+I, [2026-02-06T17:45:45.847501 #54000]  INFO -- : [ee85df2b-45d3-4299-96dd-da16ac7f533f] [CallbackQueryProcessor] Processing callback: luscher_color_yellow_20 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:45.847643 #54000]  INFO -- : [ee85df2b-45d3-4299-96dd-da16ac7f533f] [CallbackHandlerFactory] Looking for handler for: luscher_color_yellow_20
+I, [2026-02-06T17:45:45.847733 #54000]  INFO -- : [ee85df2b-45d3-4299-96dd-da16ac7f533f] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:45.847752 #54000]  INFO -- : [ee85df2b-45d3-4299-96dd-da16ac7f533f] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:45.847845 #54000]  INFO -- : [ee85df2b-45d3-4299-96dd-da16ac7f533f] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"yellow", :test_result_id=>20, :matches_size=>3}
+I, [2026-02-06T17:45:45.853902 #54000]  INFO -- : [ee85df2b-45d3-4299-96dd-da16ac7f533f] [LuscherTestService] Added color choice: yellow, choices: ["green", "purple", "yellow"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:47.582048 #54000]  INFO -- : [ee85df2b-45d3-4299-96dd-da16ac7f533f] Completed 200 OK in 2064ms (Views: 0.1ms | ActiveRecord: 3.2ms | Allocations: 7305)
+I, [2026-02-06T17:45:48.490282 #53997]  INFO -- : [b4e946cd-b3d2-4959-a399-5c85815b689d] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:48 +0300
+I, [2026-02-06T17:45:48.491311 #53997]  INFO -- : [b4e946cd-b3d2-4959-a399-5c85815b689d] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:48.491500 #53997]  INFO -- : [b4e946cd-b3d2-4959-a399-5c85815b689d]   Parameters: {"update_id"=>165325999, "callback_query"=>{"id"=>"2650224934843383347", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20083, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389147, "text"=>"Выбрано цветов: 3/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_yellow_20"}, "telegram_webhook"=>{"update_id"=>165325999, "callback_query"=>{"id"=>"2650224934843383347", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20083, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389147, "text"=>"Выбрано цветов: 3/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_yellow_20"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:48 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934843383347
+I, [2026-02-06T17:45:48.773931 #53997]  INFO -- : [b4e946cd-b3d2-4959-a399-5c85815b689d] [CallbackQueryProcessor] Processing callback: luscher_color_red_yellow_20 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:48.773997 #53997]  INFO -- : [b4e946cd-b3d2-4959-a399-5c85815b689d] [CallbackHandlerFactory] Looking for handler for: luscher_color_red_yellow_20
+I, [2026-02-06T17:45:48.774058 #53997]  INFO -- : [b4e946cd-b3d2-4959-a399-5c85815b689d] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:48.774079 #53997]  INFO -- : [b4e946cd-b3d2-4959-a399-5c85815b689d] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:48.774148 #53997]  INFO -- : [b4e946cd-b3d2-4959-a399-5c85815b689d] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"red_yellow", :test_result_id=>20, :matches_size=>3}
+I, [2026-02-06T17:45:48.778933 #53997]  INFO -- : [b4e946cd-b3d2-4959-a399-5c85815b689d] [LuscherTestService] Added color choice: red_yellow, choices: ["green", "purple", "yellow", "red_yellow"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:49.650674 #53997]  INFO -- : [b4e946cd-b3d2-4959-a399-5c85815b689d] Completed 200 OK in 1159ms (Views: 0.2ms | ActiveRecord: 2.1ms | Allocations: 6575)
+I, [2026-02-06T17:45:51.062484 #54000]  INFO -- : [2a01dcdf-35b4-40fd-84f5-931fa9ddfe24] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:51 +0300
+I, [2026-02-06T17:45:51.063444 #54000]  INFO -- : [2a01dcdf-35b4-40fd-84f5-931fa9ddfe24] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:51.065298 #54000]  INFO -- : [2a01dcdf-35b4-40fd-84f5-931fa9ddfe24]   Parameters: {"update_id"=>165326000, "callback_query"=>{"id"=>"2650224933387494870", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20088, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389149, "text"=>"Выбрано цветов: 4/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_blue_green_20"}, "telegram_webhook"=>{"update_id"=>165326000, "callback_query"=>{"id"=>"2650224933387494870", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20088, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389149, "text"=>"Выбрано цветов: 4/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_blue_green_20"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:51 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224933387494870
+I, [2026-02-06T17:45:51.361249 #54000]  INFO -- : [2a01dcdf-35b4-40fd-84f5-931fa9ddfe24] [CallbackQueryProcessor] Processing callback: luscher_color_blue_green_20 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:51.361312 #54000]  INFO -- : [2a01dcdf-35b4-40fd-84f5-931fa9ddfe24] [CallbackHandlerFactory] Looking for handler for: luscher_color_blue_green_20
+I, [2026-02-06T17:45:51.361409 #54000]  INFO -- : [2a01dcdf-35b4-40fd-84f5-931fa9ddfe24] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:51.361437 #54000]  INFO -- : [2a01dcdf-35b4-40fd-84f5-931fa9ddfe24] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:51.361524 #54000]  INFO -- : [2a01dcdf-35b4-40fd-84f5-931fa9ddfe24] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"blue_green", :test_result_id=>20, :matches_size=>3}
+I, [2026-02-06T17:45:51.365858 #54000]  INFO -- : [2a01dcdf-35b4-40fd-84f5-931fa9ddfe24] [LuscherTestService] Added color choice: blue_green, choices: ["green", "purple", "yellow", "red_yellow", "blue_green"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:52.092003 #54000]  INFO -- : [2a01dcdf-35b4-40fd-84f5-931fa9ddfe24] Completed 200 OK in 1027ms (Views: 0.1ms | ActiveRecord: 2.3ms | Allocations: 5833)
+I, [2026-02-06T17:45:53.087356 #53997]  INFO -- : [c7511aea-9274-43bf-9c15-c842a0d7d501] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:53 +0300
+I, [2026-02-06T17:45:53.088240 #53997]  INFO -- : [c7511aea-9274-43bf-9c15-c842a0d7d501] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:53.088374 #53997]  INFO -- : [c7511aea-9274-43bf-9c15-c842a0d7d501]   Parameters: {"update_id"=>165326001, "callback_query"=>{"id"=>"2650224935289856691", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20092, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389151, "text"=>"Выбрано цветов: 5/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_dark_blue_20"}, "telegram_webhook"=>{"update_id"=>165326001, "callback_query"=>{"id"=>"2650224935289856691", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20092, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389151, "text"=>"Выбрано цветов: 5/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_dark_blue_20"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:53 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935289856691
+I, [2026-02-06T17:45:53.367894 #53997]  INFO -- : [c7511aea-9274-43bf-9c15-c842a0d7d501] [CallbackQueryProcessor] Processing callback: luscher_color_dark_blue_20 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:53.367938 #53997]  INFO -- : [c7511aea-9274-43bf-9c15-c842a0d7d501] [CallbackHandlerFactory] Looking for handler for: luscher_color_dark_blue_20
+I, [2026-02-06T17:45:53.368004 #53997]  INFO -- : [c7511aea-9274-43bf-9c15-c842a0d7d501] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:53.368022 #53997]  INFO -- : [c7511aea-9274-43bf-9c15-c842a0d7d501] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:53.368080 #53997]  INFO -- : [c7511aea-9274-43bf-9c15-c842a0d7d501] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"dark_blue", :test_result_id=>20, :matches_size=>3}
+I, [2026-02-06T17:45:53.371946 #53997]  INFO -- : [c7511aea-9274-43bf-9c15-c842a0d7d501] [LuscherTestService] Added color choice: dark_blue, choices: ["green", "purple", "yellow", "red_yellow", "blue_green", "dark_blue"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:53.937135 #53997]  INFO -- : [c7511aea-9274-43bf-9c15-c842a0d7d501] Completed 200 OK in 849ms (Views: 0.2ms | ActiveRecord: 1.9ms | Allocations: 5098)
+I, [2026-02-06T17:45:54.910347 #54000]  INFO -- : [b3171c44-b0dd-405d-83dc-a324625f8ba2] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:54 +0300
+I, [2026-02-06T17:45:54.912347 #54000]  INFO -- : [b3171c44-b0dd-405d-83dc-a324625f8ba2] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:54.912536 #54000]  INFO -- : [b3171c44-b0dd-405d-83dc-a324625f8ba2]   Parameters: {"update_id"=>165326002, "callback_query"=>{"id"=>"2650224935500596716", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20095, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389153, "text"=>"Выбрано цветов: 6/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_20"}, "telegram_webhook"=>{"update_id"=>165326002, "callback_query"=>{"id"=>"2650224935500596716", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20095, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389153, "text"=>"Выбрано цветов: 6/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_red_20"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:54 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224935500596716
+I, [2026-02-06T17:45:55.341277 #54000]  INFO -- : [b3171c44-b0dd-405d-83dc-a324625f8ba2] [CallbackQueryProcessor] Processing callback: luscher_color_red_20 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:55.341350 #54000]  INFO -- : [b3171c44-b0dd-405d-83dc-a324625f8ba2] [CallbackHandlerFactory] Looking for handler for: luscher_color_red_20
+I, [2026-02-06T17:45:55.341415 #54000]  INFO -- : [b3171c44-b0dd-405d-83dc-a324625f8ba2] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:55.341431 #54000]  INFO -- : [b3171c44-b0dd-405d-83dc-a324625f8ba2] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:55.341506 #54000]  INFO -- : [b3171c44-b0dd-405d-83dc-a324625f8ba2] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"red", :test_result_id=>20, :matches_size=>3}
+I, [2026-02-06T17:45:55.346525 #54000]  INFO -- : [b3171c44-b0dd-405d-83dc-a324625f8ba2] [LuscherTestService] Added color choice: red, choices: ["green", "purple", "yellow", "red_yellow", "blue_green", "dark_blue", "red"] - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:55.781060 #54000]  INFO -- : [b3171c44-b0dd-405d-83dc-a324625f8ba2] Completed 200 OK in 868ms (Views: 0.2ms | ActiveRecord: 2.6ms | Allocations: 4391)
+I, [2026-02-06T17:45:56.979796 #53997]  INFO -- : [436a06b5-76ed-421d-b5e7-fbb1c7f5cff1] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:56 +0300
+I, [2026-02-06T17:45:56.980600 #53997]  INFO -- : [436a06b5-76ed-421d-b5e7-fbb1c7f5cff1] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:56.980709 #53997]  INFO -- : [436a06b5-76ed-421d-b5e7-fbb1c7f5cff1]   Parameters: {"update_id"=>165326003, "callback_query"=>{"id"=>"2650224934387332627", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20097, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389155, "text"=>"Выбрано цветов: 7/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_brown_20"}, "telegram_webhook"=>{"update_id"=>165326003, "callback_query"=>{"id"=>"2650224934387332627", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20097, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389155, "text"=>"Выбрано цветов: 7/8\n\nВыберите следующий наиболее приятный цвет:", "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"luscher_color_brown_20"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:56 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224934387332627
+I, [2026-02-06T17:45:57.237055 #53997]  INFO -- : [436a06b5-76ed-421d-b5e7-fbb1c7f5cff1] [CallbackQueryProcessor] Processing callback: luscher_color_brown_20 - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:57.237118 #53997]  INFO -- : [436a06b5-76ed-421d-b5e7-fbb1c7f5cff1] [CallbackHandlerFactory] Looking for handler for: luscher_color_brown_20
+I, [2026-02-06T17:45:57.237218 #53997]  INFO -- : [436a06b5-76ed-421d-b5e7-fbb1c7f5cff1] [CallbackHandlerFactory] Found regex match: LuscherColorHandler
+I, [2026-02-06T17:45:57.237266 #53997]  INFO -- : [436a06b5-76ed-421d-b5e7-fbb1c7f5cff1] [CallbackHandlerFactory] Selected handler: LuscherColorHandler
+I, [2026-02-06T17:45:57.237330 #53997]  INFO -- : [436a06b5-76ed-421d-b5e7-fbb1c7f5cff1] [Telegram::Handlers::LuscherColorHandler] Processing color choice - {:color_code=>"brown", :test_result_id=>20, :matches_size=>3}
+I, [2026-02-06T17:45:57.244882 #53997]  INFO -- : [436a06b5-76ed-421d-b5e7-fbb1c7f5cff1] [LuscherTestService] Added color choice: brown, choices: ["green", "purple", "yellow", "red_yellow", "blue_green", "dark_blue", "red", "brown"] - User: 617053577, {}
+I, [2026-02-06T17:45:57.345822 #53997]  INFO -- : [436a06b5-76ed-421d-b5e7-fbb1c7f5cff1] [LuscherTestService] Test completed: 20 - User: 617053577, {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:57.421070 #53997]  INFO -- : [436a06b5-76ed-421d-b5e7-fbb1c7f5cff1] Completed 200 OK in 440ms (Views: 0.1ms | ActiveRecord: 4.2ms | Allocations: 4975)
+I, [2026-02-06T17:45:58.735878 #53997]  INFO -- : [4cccbd77-452f-4b6d-b83b-b1f6d579d5ca] Started POST "/telegram_webhooks/message" for 91.108.5.136 at 2026-02-06 17:45:58 +0300
+I, [2026-02-06T17:45:58.736606 #53997]  INFO -- : [4cccbd77-452f-4b6d-b83b-b1f6d579d5ca] Processing by TelegramWebhooksController#message as HTML
+I, [2026-02-06T17:45:58.736717 #53997]  INFO -- : [4cccbd77-452f-4b6d-b83b-b1f6d579d5ca]   Parameters: {"update_id"=>165326004, "callback_query"=>{"id"=>"2650224937101707108", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20098, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389157, "text"=>"✅ Отлично! Вы завершили выбор цветов.\n\nТеперь я попробую дать вам небольшую интерпретацию ваших результатов.", "entities"=>[{"offset"=>2, "length"=>35, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_luscher_interpretation"}, "telegram_webhook"=>{"update_id"=>165326004, "callback_query"=>{"id"=>"2650224937101707108", "from"=>{"id"=>617053577, "is_bot"=>false, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "language_code"=>"ru"}, "message"=>{"message_id"=>20098, "from"=>{"id"=>8332952831, "is_bot"=>true, "first_name"=>"Твой психолог", "username"=>"YourSelfHelperBot"}, "chat"=>{"id"=>617053577, "first_name"=>"Ларченков", "last_name"=>"Александр", "username"=>"larchenkovad", "type"=>"private"}, "date"=>1770389157, "text"=>"✅ Отлично! Вы завершили выбор цветов.\n\nТеперь я попробую дать вам небольшую интерпретацию ваших результатов.", "entities"=>[{"offset"=>2, "length"=>35, "type"=>"bold"}], "reply_markup"=>{"inline_keyboard"=>"[FILTERED]"}}, "chat_instance"=>"3052880024709784743", "data"=>"show_luscher_interpretation"}}}
+[BOT] 🤖 Bot service initialized
+[2026-02-06 17:45:58 +0300] 👤 User: 617053577 | Команда: callback
+[BOT] 📱 Received: callback from 617053577
+[BOT] 🔘 Processing callback
+[BOT] ✅ Answered callback query: 2650224937101707108
+I, [2026-02-06T17:45:59.011146 #53997]  INFO -- : [4cccbd77-452f-4b6d-b83b-b1f6d579d5ca] [CallbackQueryProcessor] Processing callback: show_luscher_interpretation - User: 617053577, Chat: 617053577
+I, [2026-02-06T17:45:59.011271 #53997]  INFO -- : [4cccbd77-452f-4b6d-b83b-b1f6d579d5ca] [CallbackHandlerFactory] Looking for handler for: show_luscher_interpretation
+I, [2026-02-06T17:45:59.011325 #53997]  INFO -- : [4cccbd77-452f-4b6d-b83b-b1f6d579d5ca] [CallbackHandlerFactory] Found string match: LuscherInterpretationHandler
+I, [2026-02-06T17:45:59.011355 #53997]  INFO -- : [4cccbd77-452f-4b6d-b83b-b1f6d579d5ca] [CallbackHandlerFactory] Selected handler: LuscherInterpretationHandler
+I, [2026-02-06T17:45:59.011441 #53997]  INFO -- : [4cccbd77-452f-4b6d-b83b-b1f6d579d5ca] [Telegram::Handlers::LuscherInterpretationHandler] Showing Luscher interpretation - {}
+[BOT] ✅ Callback processed
+I, [2026-02-06T17:45:59.173608 #53997]  INFO -- : [4cccbd77-452f-4b6d-b83b-b1f6d579d5ca] Completed 200 OK in 437ms (Views: 0.1ms | ActiveRecord: 0.9ms | Allocations: 5435)
+I, [2026-02-06T17:46:20.983519 #54000]  INFO -- : [d560b295-2722-43f2-97bd-b60209af2e29] Started POST "/" for 176.65.139.30 at 2026-02-06 17:46:20 +0300
+E, [2026-02-06T17:46:20.984440 #54000] ERROR -- : [d560b295-2722-43f2-97bd-b60209af2e29]   
+[d560b295-2722-43f2-97bd-b60209af2e29] ActionController::RoutingError (No route matches [POST] "/"):
+[d560b295-2722-43f2-97bd-b60209af2e29]   
+I, [2026-02-06T17:48:08.518644 #54000]  INFO -- : [b949dc6a-eba6-4308-9f4d-c4a160a7be38] Started POST "/" for 176.65.139.30 at 2026-02-06 17:48:08 +0300
+E, [2026-02-06T17:48:08.519078 #54000] ERROR -- : [b949dc6a-eba6-4308-9f4d-c4a160a7be38]   
+[b949dc6a-eba6-4308-9f4d-c4a160a7be38] ActionController::RoutingError (No route matches [POST] "/"):
+[b949dc6a-eba6-4308-9f4d-c4a160a7be38]   
+[53976] === puma shutdown: 2026-02-06 17:48:47 +0300 ===
+[53976] - Goodbye!
+[53976] - Gracefully shutting down workers...
+=== puma startup: 2026-02-06 17:48:52 +0300 ===
+[56007] * Starting control server on unix:///tmp/puma-status-1770389331385-56007
+[56007] - Worker 0 (PID: 56026) booted in 0.0s, phase: 0
+[56007] - Worker 1 (PID: 56029) booted in 0.0s, phase: 0
