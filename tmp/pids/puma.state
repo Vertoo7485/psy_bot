@@ -1,0 +1,5 @@
+---
+pid: 19123
+control_url: unix:///tmp/puma-status-1770311301276-19123
+control_auth_token: b96a5a9328401d76a815a53eb77a755e
+running_from: "/home/deploy/psy_bot"
