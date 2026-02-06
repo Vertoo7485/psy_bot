@@ -1,74 +1,55 @@
-# app/models/test.rb
 class Test < ApplicationRecord
-  # Enum
-  enum test_type: { standard: 0, luscher: 1 }
-
+  # Допустимые типы тестов
+  TEST_TYPES = ['standard', 'luscher', 'anxiety', 'depression', 'eq', 'quiz'].freeze
+  
   # Связи
   has_many :questions, dependent: :destroy
   has_many :test_results, dependent: :destroy
   has_many :users, through: :test_results
 
   # Валидации
-   validates :name, presence: true, uniqueness: true
-   validates :test_type, inclusion: { in: %w[quiz luscher], allow_nil: true }
+  validates :name, presence: true, uniqueness: true
+  validates :test_type, inclusion: { in: TEST_TYPES }
 
   # Scopes
   scope :by_type, ->(type) { where(test_type: type) }
-  scope :by_name, ->(name) { where(name: name) }
-  scope :quiz_tests, -> { where(test_type: 'quiz') }
-  scope :luscher_tests, -> { where(test_type: 'luscher') }
+  scope :by_name, ->(name) { where("name ILIKE ?", "%#{name}%") }
 
   # Методы класса
   class << self
-    def anxiety_test
-      find_by(name: "Тест Тревожности", test_type: :standard)
-    end
-
-    def depression_test
-      find_by(name: "Тест Депрессии (PHQ-9)", test_type: :standard)
-    end
-
-    def eq_test
-      find_by(name: "Тест EQ (Эмоциональный Интеллект)", test_type: :standard)
-    end
-
-    def quiz_test?
-      test_type == 'quiz'
-    end
-    
-    def luscher_test?
-      test_type == 'luscher'
-    end
-
-    def luscher_test
-      find_by(test_type: :luscher)
-    end
-
     def find_by_type_name(type_name)
-      case type_name.to_sym
-      when :anxiety then anxiety_test
-      when :depression then depression_test
-      when :eq then eq_test
-      when :luscher then luscher_test
-      else nil
+      type_name = type_name.to_s.downcase
+      
+      case type_name
+      when 'anxiety', 'тревожность'
+        find_by(test_type: 'anxiety') || 
+        find_by("name ILIKE ?", "%тревожности%") ||
+        find_by("name ILIKE ?", "%anxiety%")
+      when 'depression', 'депрессия'
+        find_by(test_type: 'depression') ||
+        find_by("name ILIKE ?", "%депрессии%") ||
+        find_by("name ILIKE ?", "%depression%")
+      when 'eq', 'эмоциональный интеллект'
+        find_by(test_type: 'eq') ||
+        find_by("name ILIKE ?", "%эмоциональн%интеллект%") ||
+        find_by("name ILIKE ?", "%eq%")
+      when 'standard', 'quiz'
+        where(test_type: ['standard', 'quiz']).first
+      when 'luscher', 'люшера'
+        find_by(test_type: 'luscher')
+      else
+        find_by(test_type: type_name) ||
+        find_by("name ILIKE ?", "%#{type_name}%")
       end
     end
   end
 
   # Методы экземпляра
   def first_question
-    questions.ordered.first
+    questions.order(:order_index, :id).first
   end
 
   def questions_count
     questions.count
-  end
-
-  def standard?
-    test_type == 'standard'
-  end
-
-  def luscher?
-    test_type == 'luscher'
   end
 end

@@ -77,3 +77,8 @@
 === puma startup: 2026-02-06 09:45:34 +0300 ===
 === puma startup: 2026-02-06 09:56:29 +0300 ===
 === puma startup: 2026-02-06 09:58:41 +0300 ===
+2026-02-06 13:04:03 +0300 HTTP parse error, malformed request ("GET /index.php" - (127.0.0.1)): #<Puma::HttpParserError: Invalid HTTP format, parsing fails. Bad protocol HTTP/1.0>
+=== puma startup: 2026-02-06 15:30:40 +0300 ===
+=== puma startup: 2026-02-06 16:23:05 +0300 ===
+=== puma startup: 2026-02-06 16:28:32 +0300 ===
+=== puma startup: 2026-02-06 17:04:38 +0300 ===

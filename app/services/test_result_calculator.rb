@@ -2,29 +2,29 @@
 class TestResultCalculator
   include TelegramMarkupHelper
   
-  # КОНСТАНТЫ С ПРАВИЛЬНЫМИ ДИАПАЗОНАМИ
+  # ПРАВИЛЬНЫЕ КОНСТАНТЫ С ПРАВИЛЬНЫМИ ДИАПАЗОНАМИ
   
-  # GAD-7 (Тест тревожности): 20 вопросов × 1-4 = 20-80 баллов
+  # Тест тревожности: 20 вопросов × 1-4 = 20-80 баллов
   GAD7_INTERPRETATIONS = {
-    20..35 => "Минимальная тревожность. Вероятно, ваше состояние в норме.",
-    36..50 => "Легкая тревожность. Обратите внимание на свое состояние.",
+    20..35 => "Минимальная тревожность. Ваше состояние в пределах нормы.",
+    36..50 => "Легкая тревожность. Рекомендуется обратить внимание на самочувствие.",
     51..65 => "Умеренная тревожность. Рекомендуется консультация специалиста.",
     66..80 => "Тяжелая тревожность. Срочно обратитесь к специалисту."
   }.freeze
   
-  # PHQ-9 (Тест депрессии): 9 вопросов × 1-4 = 9-36 баллов
+  # Тест депрессии PHQ-9: 9 вопросов × 0-3 = 0-27 баллов
   PHQ9_INTERPRETATIONS = {
-    9..15 => "Минимальная депрессия. Возможно, вам не требуется лечение.",
-    16..22 => "Легкая депрессия. Рекомендуется консультация специалиста.",
-    23..29 => "Умеренная депрессия. Обратитесь к специалисту.",
-    30..36 => "Тяжелая депрессия. Срочно обратитесь за профессиональной помощью."
+    0..4 => "Минимальная депрессия. Ваше состояние в норме.",
+    5..9 => "Легкая депрессия. Рекомендуется наблюдение.",
+    10..14 => "Умеренная депрессия. Рекомендуется консультация специалиста.",
+    15..27 => "Тяжелая депрессия. Срочно обратитесь за профессиональной помощью."
   }.freeze
   
-  # EQ (Эмоциональный интеллект): 20 вопросов × 1-4 = 20-80 баллов
+  # Тест EQ: 10 вопросов × 1-5 = 10-50 баллов  
   EQ_INTERPRETATIONS = {
-  10..25 => "Низкий уровень эмоционального интеллекта. Есть потенциал для развития.",
-  26..35 => "Средний уровень эмоционального интеллекта. Хорошо, но есть куда стремиться.",
-  36..50 => "Высокий уровень эмоционального интеллекта. Отличная способность понимать и управлять эмоциями."
+    10..20 => "Низкий уровень эмоционального интеллекта. Есть потенциал для развития.",
+    21..35 => "Средний уровень эмоционального интеллекта. Хорошие базовые навыки.",
+    36..50 => "Высокий уровень эмоционального интеллекта. Отличная способность понимать и управлять эмоциями."
   }.freeze
   
   attr_reader :bot_service, :chat_id, :test_result, :user
@@ -61,10 +61,10 @@ class TestResultCalculator
   
   # Подсчет общего балла
   def calculate_total_score
-  # ВАРИАНТ 1: JOIN запрос (лучший для PostgreSQL)
-  @test_result.answers
-    .joins(:answer_option)
-    .sum('answer_options.value::integer')
+    # ВАРИАНТ 1: JOIN запрос (лучший для PostgreSQL)
+    @test_result.answers
+      .joins(:answer_option)
+      .sum('answer_options.value::integer')
   end
   
   # Обновление результата теста
@@ -104,79 +104,73 @@ class TestResultCalculator
   
   # Построение сообщения с результатами
   def build_result_message(total_score, interpretation)
+    test_name = @test_result.test.name
+    
     <<~MARKDOWN
       🎯 *Тест завершен!*
 
-      *Название теста:* #{@test_result.test.name}
+      *Название теста:* #{test_name}
       *Ваш балл:* #{total_score}
 
       *Интерпретация:*
       #{interpretation}
-      
-      #{get_recommendation(@test_result.test.name, total_score)}
+
+      #{get_recommendation(test_name, total_score)}
     MARKDOWN
   end
   
-  # Получение рекомендаций
+  # Получение рекомендации
   def get_recommendation(test_name, score)
     case test_name
     when "Тест Тревожности"
-      if score >= 66
-        "💡 *Рекомендация:* Рекомендуется обратиться к психологу для консультации."
-      elsif score >= 51
-        "💡 *Рекомендация:* Попробуйте техники релаксации и дыхательные упражнения."
-      else
-        "💡 *Рекомендация:* Ваше состояние в норме. Продолжайте следить за самочувствием."
+      case score
+      when 20..35 then "💡 *Рекомендация:* Ваше состояние в норме. Продолжайте следить за самочувствием."
+      when 36..50 then "💡 *Рекомендация:* Попробуйте техники релаксации и дыхательные упражнения."
+      when 51..65 then "💡 *Рекомендация:* Рекомендуется консультация специалиста."
+      when 66..80 then "💡 *Рекомендация:* Срочно обратитесь за профессиональной помощью."
+      else "💡 *Рекомендация:* Обратитесь к специалисту для консультации."
       end
     when "Тест Депрессии (PHQ-9)"
-      if score >= 30
-        "💡 *Рекомендация:* Срочно обратитесь за профессиональной помощью."
-      elsif score >= 23
-        "💡 *Рекомендация:* Рекомендуется консультация специалиста."
-      else
-        "💡 *Рекомендация:* Ваше состояние в пределах нормы."
+      case score
+      when 0..4 then "💡 *Рекомендация:* Ваше состояние в пределах нормы."
+      when 5..9 then "💡 *Рекомендация:* Рекомендуется наблюдение за состоянием."
+      when 10..14 then "💡 *Рекомендация:* Рекомендуется консультация специалиста."
+      when 15..27 then "💡 *Рекомендация:* Срочно обратитесь за профессиональной помощью."
+      else "💡 *Рекомендация:* Обратитесь к специалисту для консультации."
+      end
+    when "Тест EQ (Эмоциональный Интеллект)"
+      case score
+      when 10..20 then "💡 *Рекомендация:* Развивайте навыки эмпатии и самоконтроля."
+      when 21..35 then "💡 *Рекомендация:* Продолжайте развивать эмоциональный интеллект."
+      when 36..50 then "💡 *Рекомендация:* Отличный результат! Продолжайте в том же духе."
+      else "💡 *Рекомендация:* Развивайте эмоциональные навыки."
       end
     else
-      ""
+      "💡 *Рекомендация:* Обратитесь к специалисту для подробной консультации."
     end
   end
   
-  # Получение разметки для кнопок
- def get_result_markup(in_program_context)
-  test_name = @test_result.test.name
-  
-  # Если пользователь в программе самопомощи
-  if in_program_context
-    case test_name
-    when "Тест Тревожности"
-      # ТОЛЬКО ОДНА КНОПКА - "Перейти к Дню 1 программы"
-      return {
+  # Получение разметки для результатов
+  def get_result_markup(in_program_context)
+    if in_program_context
+      {
         inline_keyboard: [
-          [{ text: "Перейти к Дню 1 программы", callback_data: 'test_completed_anxiety' }]
-          # Убираем "Вернуться в меню программы" - используем back_to_main_menu
-        ]
-      }.to_json
-    when "Тест Депрессии (PHQ-9)"
-      return {
-        inline_keyboard: [
-          [{ text: "Продолжить программу", callback_data: 'test_completed_depression' }]
+          [{ text: "Продолжить программу", callback_data: "continue_self_help" }],
+          [{ text: "В главное меню", callback_data: "back_to_main_menu" }]
         ]
       }.to_json
     else
-      # Для других тестов в программе - главное меню
-      return {
+      {
         inline_keyboard: [
-          [{ text: "Вернуться в главное меню", callback_data: 'back_to_main_menu' }]
+          [{ text: "В главное меню", callback_data: "back_to_main_menu" }],
+          [{ text: "Пройти еще раз", callback_data: "show_test_categories" }]
         ]
       }.to_json
     end
   end
   
-  # Если тест НЕ в программе - главное меню бота
-  TelegramMarkupHelper.main_menu_markup
-end
+  # === ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ ===
   
-  # Отправка сообщения
   def send_message(text, reply_markup = nil)
     @bot_service.send_message(
       chat_id: @chat_id,
@@ -186,18 +180,23 @@ end
     )
   end
   
-  # Отправка ошибки
   def send_error_message(text)
-    send_message(text)
+    @bot_service.send_message(
+      chat_id: @chat_id,
+      text: text,
+      parse_mode: 'Markdown'
+    )
   end
   
-  # Логирование
   def log_info(message)
-    Rails.logger.info "[TestResultCalculator] #{message}"
+    Rails.logger.info "[TestResultCalculator] #{message} - User: #{@user.telegram_id}, Test: #{@test_result.test.name}"
   end
   
   def log_error(message, error = nil)
-    Rails.logger.error "[TestResultCalculator] #{message}"
-    Rails.logger.error error.message if error
+    Rails.logger.error "[TestResultCalculator] #{message} - User: #{@user.telegram_id}, Test: #{@test_result.test.name}"
+    if error
+      Rails.logger.error "Error: #{error.message}"
+      Rails.logger.error "Backtrace:\n#{error.backtrace.join("\n")}" if error.respond_to?(:backtrace)
+    end
   end
 end
