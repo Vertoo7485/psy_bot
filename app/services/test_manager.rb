@@ -149,6 +149,7 @@ class TestManager
     true
   rescue => e
     log_error("Failed to start standard test: #{test_type}", e)
+    STDERR.puts "ERROR in start_standard_test: #{e.message}"; STDERR.puts e.backtrace.join("\n")
     send_error_message("Ошибка при запуске теста. Пожалуйста, попробуйте позже.")
     false
   end
