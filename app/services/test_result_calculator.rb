@@ -153,9 +153,20 @@ class TestResultCalculator
   # Получение разметки для результатов
   def get_result_markup(in_program_context)
     if in_program_context
+      # Определяем тип теста для программы самопомощи
+      test_type = @test_result.test.test_type
+      callback_data = case test_type
+                     when "depression"
+                       "test_completed_depression"
+                     when "anxiety"
+                       "test_completed_anxiety"
+                     else
+                       "continue_self_help" # fallback
+                     end
+      
       {
         inline_keyboard: [
-          [{ text: "Продолжить программу", callback_data: "continue_self_help" }],
+          [{ text: "Продолжить программу", callback_data: callback_data }],
           [{ text: "В главное меню", callback_data: "back_to_main_menu" }]
         ]
       }.to_json
