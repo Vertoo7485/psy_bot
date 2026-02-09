@@ -26,7 +26,7 @@ module Telegram
             
           rescue => e
             log_error("Error in Day2Handler", e)
-            answer_callback_query("Произошла ошибка. Попробуйте еще раз.", show_alert: true)
+            answer_callback_query("Произошла ошибка. Попробуйте еще раз.")
           end
           
           private
@@ -36,7 +36,7 @@ module Telegram
             
             # Проверяем, завершен ли день 1 (ИСПРАВЛЕНО!)
             unless @user.completed_days&.include?(1)
-              answer_callback_query("❌ Сначала завершите День 1", show_alert: true)
+              answer_callback_query("❌ Сначала завершите День 1")
               return
             end
             
@@ -46,7 +46,7 @@ module Telegram
             if can_start_result != true
               error_message = can_start_result.is_a?(Array) ? can_start_result.join("\n") : can_start_result
               log_warn("User cannot start day 2", reason: error_message)
-              answer_callback_query(error_message, show_alert: true)
+              answer_callback_query(error_message)
               return
             end
             

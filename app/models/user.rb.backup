@@ -561,14 +561,7 @@ class User < ApplicationRecord
       
       if time_passed < 12.hours
         hours_left = ((12.hours - time_passed) / 1.hour).ceil
-        hours_left_int = ((12.hours - time_passed) / 1.hour).floor
-        minutes_left = (((12.hours - time_passed) % 1.hour) / 1.minute).ceil
-        
-        if hours_left_int > 0
-          error_msg = "⏱️ До начала следующего дня осталось: #{hours_left_int} часов #{minutes_left} минут\n\nНовый день откроется через указанное время."
-        else
-          error_msg = "⏱️ До начала следующего дня осталось: #{minutes_left} минут\n\nНовый день откроется через указанное время."
-        end
+        error_msg = "С момента начала текущего дня прошло недостаточно времени. Подождите #{hours_left} часов."
         errors << error_msg
         Rails.logger.debug "[DEBUG] Time restriction: #{hours_left} hours left"
       else
