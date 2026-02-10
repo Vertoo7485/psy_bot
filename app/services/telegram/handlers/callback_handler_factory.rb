@@ -37,10 +37,11 @@ module Telegram
         # Ответы да/нет
         'yes' => 'YesResponseHandler',
         'no' => 'NoResponseHandler',
-        
-        # Завершение тестов (для программы)
-        'test_completed_depression' => 'TestCompletedHandler',
-        'start_anxiety_test_from_sequence' => 'AnxietyTestSequenceHandler',
+        # Платежи
+        'payment_premium' => 'PaymentHandler',
+        'premium_not_ready' => 'PaymentHandler',
+	/^payment_check_\d+$/ => 'PaymentHandler',
+        "test_completed_depression" => "TestCompletedHandler",
         'test_completed_anxiety' => 'TestCompletedHandler',
         'no_anxiety_test_sequence' => 'NoAnxietyTestHandler',
         

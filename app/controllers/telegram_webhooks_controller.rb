@@ -1,57 +1,59 @@
 require_relative "../../app/services/telegram_markup_helper"
 
-
 class TelegramWebhooksController < ApplicationController
   before_action :initialize_bot_service
-  
-  
+
   def message
+    # Сначала проверяем, не уведомление ли это от ЮKassa
+    if handle_yookassa_notification
+      return head :ok
+    end
     # ЛОГИРОВАНИЕ ДЛЯ ОТЛАДКИ
     user_id = params.dig(:message, :from, :id) || params.dig(:callback_query, :from, :id) || 'unknown'
     message_text = params.dig(:message, :text) || 'callback'
-    
+
     log_entry = "[#{Time.now}] 👤 User: #{user_id} | Команда: #{message_text}"
     File.write('/home/deploy/bot_requests.log', log_entry + "\n", mode: 'a')
     puts log_entry  # В systemd логи
-    
+
     # Логируем в файл
     log_message("📱 Received: #{message_text} from #{user_id}")
-    
+
     process_telegram_update(params)
     render plain: 'OK'
   rescue => e
     log_message("🔥 ERROR: #{e.message}\n#{e.backtrace.first}")
     render plain: 'OK'
   end
-  
-    def callback_query
+
+  def callback_query
     # ЛОГИРОВАНИЕ CALLBACK ДЛЯ ОТЛАДКИ
     callback_data = params.dig(:callback_query, :data)
     user_id = params.dig(:callback_query, :from, :id)
     callback_id = params.dig(:callback_query, :id)
-    
+
     log_entry = "[#{Time.now}] 🔘 CALLBACK User: #{user_id} | Data: #{callback_data} | ID: #{callback_id}"
     File.write('/home/deploy/bot_requests.log', log_entry + "\n", mode: 'a')
     puts log_entry
-    
+
     begin
       # ИНИЦИАЛИЗИРУЕМ БОТ СЕРВИС
       log_message("1. Инициализация бот сервиса...")
       initialize_bot_service
       log_message("2. Бот сервис инициализирован")
-      
+
       if @bot_service
         log_message("3. Бот сервис доступен")
         # Отвечаем на callback (чтобы кнопка перестала "светиться")
         log_message("4. Отвечаем на callback: #{callback_id}")
         @bot_service.answer_callback_query(callback_query_id: callback_id, text: "Обрабатываю...")
         log_message("5. Ответ отправлен")
-        
+
         # Обрабатываем данные callback
         log_message("6. Обрабатываем данные: #{callback_data}")
         process_callback_data(user_id, callback_data)
         log_message("7. Данные обработаны")
-        
+
         render json: { status: 'ok' }
       else
         log_message("🔥 Bot service not initialized")
@@ -71,15 +73,56 @@ class TelegramWebhooksController < ApplicationController
       render json: { status: 'error', message: e.message }, status: 500
     end
   end
+
+  # Обработка уведомлений от ЮKassa
+  def handle_yookassa_notification
+    # Проверяем, это уведомление от ЮKassa (имеет поле event или type)
+    if params[:event].present? || params[:type].present?
+      Rails.logger.info "=== YOOKASSA WEBHOOK RECEIVED ==="
+      Rails.logger.info "Event: #{params[:event]}" if params[:event]
+      Rails.logger.info "Type: #{params[:type]}" if params[:type]
+      Rails.logger.info "Payment ID: #{params.dig(:object, :id)}" if params.dig(:object, :id)
+      Rails.logger.info "Status: #{params.dig(:object, :status)}" if params.dig(:object, :status)
+      Rails.logger.info "Paid: #{params.dig(:object, :paid)}" if params.dig(:object, :paid)
+      Rails.logger.info "=== END YOOKASSA WEBHOOK ==="
+
+      # Обновляем статус платежа в базе
+      if params[:event] == 'payment.succeeded' && params.dig(:object, :id)
+        payment_id = params.dig(:object, :metadata, :payment_id)
+        if payment_id
+          payment = Payment.find_by(id: payment_id)
+          if payment
+            payment.update(status: 'succeeded')
+            Rails.logger.info "Payment #{payment_id} marked as succeeded"
+            
+            # TODO: Активировать премиум подписку для пользователя
+            # user = User.find_by(id: payment.user_id)
+            # if user
+            #   user.update(premium_active: true, premium_until: 1.month.from_now)
+            # end
+          else
+            Rails.logger.error "Payment not found: #{payment_id}"
+          end
+        else
+          Rails.logger.error "No payment_id in metadata"
+        end
+      end
+
+      head :ok
+    else
+      false # Это не уведомление ЮKassa
+    end
+  end
+
   private
-  
+
   def initialize_bot_service
     @bot_service = Telegram::TelegramBotService.new(ENV['TELEGRAM_BOT_TOKEN'])
     log_message("🤖 Bot service initialized")
   rescue => e
     log_message("🔥 Bot init ERROR: #{e.message}")
   end
-  
+
   def process_telegram_update(update_params)
     if update_params[:message]
       handle_message(update_params[:message])
@@ -87,29 +130,27 @@ class TelegramWebhooksController < ApplicationController
       handle_callback_query(update_params[:callback_query])
     end
   end
-  
+
   def handle_message(message_data)
     chat_id = message_data.dig(:chat, :id)
     text = message_data[:text]
-    
+
     log_message("💬 Processing: '#{text}' for chat #{chat_id}")
-    
+
     # Находим или создаем пользователя
     user = User.find_or_create_from_telegram_message(message_data[:from])
     log_message("👤 User: #{user.telegram_id} (#{user.first_name})")
-    
+
     # Обрабатываем сообщение
     Telegram::MessageProcessor.new(@bot_service.bot, user, message_data).process
     log_message("✅ Message processed successfully")
-    
   rescue => e
     log_message("🔥 Message processing ERROR: #{e.message}\n#{e.backtrace.first(3).join('\n')}")
   end
-  
-  
+
   def handle_callback_query(callback_query_data)
     log_message("🔘 Processing callback")
-    
+
     # Сначала отвечаем Telegram чтобы кнопка перестала светиться
     callback_id = callback_query_data[:id]
     if callback_id && @bot_service
@@ -120,22 +161,23 @@ class TelegramWebhooksController < ApplicationController
         log_message("⚠️  Failed to answer callback: #{e.message}")
       end
     end
-    
+
     # Затем обрабатываем callback
     user = find_user_from_callback(callback_query_data)
     return unless user
-    
+
     Telegram::CallbackQueryProcessor.new(@bot_service, user, callback_query_data).process
     log_message("✅ Callback processed")
   rescue => e
     log_message("🔥 Callback ERROR: #{e.message}")
   end
+
   def find_user_from_callback(callback_query_data)
     telegram_id = callback_query_data.dig(:from, :id)
     return nil unless telegram_id
     User.find_by(telegram_id: telegram_id)
   end
-  
+
   def log_message(msg)
     # Пишем в файл
     File.open("/home/deploy/bot_activity.log", "a") do |f|
@@ -144,20 +186,15 @@ class TelegramWebhooksController < ApplicationController
     # И в STDOUT на всякий случай
     puts "[BOT] #{msg}"
   end
-  
-  private
-  
-  
 
   def process_callback_data(user_id, data)
     log_message("🔧 Processing callback data: #{data} for user #{user_id}")
-    
+
     case data
     when 'show_test_categories'
-      # Используем хелпер для создания меню тестов
       markup_helper = TelegramMarkupHelper
       keyboard = markup_helper.test_categories_markup
-      
+
       @bot_service.send_message(
         chat_id: user_id,
         text: "#{markup_helper::EMOJI[:tests]} *Список тестов:*\n\nВыберите тест для прохождения:",
@@ -166,7 +203,7 @@ class TelegramWebhooksController < ApplicationController
       )
     when 'start_emotion_diary'
       @bot_service.send_message(
-        chat_id: user_id, 
+        chat_id: user_id,
         text: "#{TelegramMarkupHelper::EMOJI[:diary]} *Дневник эмоций запущен!*\n\nОпишите ваше текущее состояние или эмоцию:",
         parse_mode: 'Markdown'
       )
@@ -174,12 +211,6 @@ class TelegramWebhooksController < ApplicationController
       @bot_service.send_message(
         chat_id: user_id,
         text: "#{TelegramMarkupHelper::EMOJI[:self_help]} *Программа самопомощи*\n\nЭта функция в разработке.",
-        parse_mode: 'Markdown'
-      )
-    when 'help'
-      @bot_service.send_message(
-        chat_id: user_id,
-        text: "#{TelegramMarkupHelper::EMOJI[:help]} *Помощь*\n\nДоступные команды:\n/start - Начать\n/menu - Главное меню\n/tests - Список тестов\n\nИспользуйте кнопки для навигации.",
         parse_mode: 'Markdown'
       )
     when 'back_to_main_menu'
@@ -208,11 +239,11 @@ class TelegramWebhooksController < ApplicationController
       @bot_service.send_message(chat_id: user_id, text: "Команда: #{data}")
     end
   end
+
   def send_menu(user_id)
-    # Используем хелпер для создания меню
     markup_helper = TelegramMarkupHelper
     keyboard = markup_helper.main_menu_markup
-    
+
     @bot_service.send_message(
       chat_id: user_id,
       text: "#{markup_helper::EMOJI[:home]} *Главное меню*\n\nВыберите опцию:",
@@ -220,7 +251,4 @@ class TelegramWebhooksController < ApplicationController
       parse_mode: 'Markdown'
     )
   end
-  
-  private
-  
 end
