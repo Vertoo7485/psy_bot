@@ -208,19 +208,5 @@ class TelegramWebhooksController < ApplicationController
       @bot_service.send_message(chat_id: user_id, text: "Команда: #{data}")
     end
   end
-  def send_menu(user_id)
-    # Используем хелпер для создания меню
-    markup_helper = TelegramMarkupHelper
-    keyboard = markup_helper.main_menu_markup
-    
-    @bot_service.send_message(
-      chat_id: user_id,
-      text: "#{markup_helper::EMOJI[:home]} *Главное меню*\n\nВыберите опцию:",
-      reply_markup: keyboard.to_json,
-      parse_mode: 'Markdown'
-    )
-  end
-  
-  private
   
 end

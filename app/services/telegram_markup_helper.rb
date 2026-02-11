@@ -47,6 +47,9 @@ module TelegramMarkupHelper
           { text: "#{EMOJI[:self_help]} Программа самопомощи", callback_data: 'start_self_help_program' }
         ],
         [
+          { text: "⭐ ПРЕМИУМ ПОДПИСКА - 499₽/месяц", callback_data: 'payment_premium' }
+        ],
+        [
           { text: "#{EMOJI[:help]} Помощь", callback_data: 'help' }
         ]
       ]

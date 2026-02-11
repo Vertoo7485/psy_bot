@@ -132,19 +132,24 @@ class User < ApplicationRecord
   # === АКТИВАЦИЯ/ДЕАКТИВАЦИЯ ===
   
   # Активация premium доступа
-  def activate_premium!(days: SUBSCRIPTION_DAYS)
-    update!(
-      access_level: 'premium',
-      subscription_ends_at: Time.current + days.days,
-      premium_activated_at: Time.current,
-      is_active: true,
-      trial_ends_at: nil # Сбрасываем trial если был
-    )
-    
-    Rails.logger.info "User #{id} activated premium for #{days} days"
-    true
+def activate_premium!(days: SUBSCRIPTION_DAYS)
+  new_ends_at = if subscription_ends_at && subscription_ends_at > Time.current
+    subscription_ends_at + days.days
+  else
+    Time.current + days.days
   end
   
+  update!(
+    access_level: 'premium',
+    subscription_ends_at: new_ends_at,
+    premium_activated_at: Time.current,
+    is_active: true,
+    trial_ends_at: nil
+  )
+  
+  Rails.logger.info "User #{id} activated premium for #{days} days, now ends at #{new_ends_at}"
+  true
+end  
   # Активация trial периода
   def activate_trial!(days: TRIAL_DAYS)
     update!(

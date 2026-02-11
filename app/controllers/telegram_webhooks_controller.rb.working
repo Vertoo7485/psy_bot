@@ -71,6 +71,11 @@ class TelegramWebhooksController < ApplicationController
       render json: { status: 'error', message: e.message }, status: 500
     end
   end
+  def yookassa_notification
+    Rails.logger.info "Yookassa webhook received"
+    head :ok
+  end
+
   private
   
   def initialize_bot_service
@@ -219,6 +224,11 @@ class TelegramWebhooksController < ApplicationController
       reply_markup: keyboard.to_json,
       parse_mode: 'Markdown'
     )
+  end
+
+  def yookassa_notification
+    Rails.logger.info "Yookassa webhook received"
+    head :ok
   end
   
   private

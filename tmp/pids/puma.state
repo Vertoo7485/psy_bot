@@ -1,5 +1,5 @@
 ---
-pid: 73096
-control_url: unix:///tmp/puma-status-1770659051858-73096
-control_auth_token: 7da17d60b50c7d88be9cf97d80f8ddf1
+pid: 166298
+control_url: unix:///tmp/puma-status-1770792740842-166298
+control_auth_token: cf6099433dd260093b2a2d47f8cc0c1c
 running_from: "/home/deploy/psy_bot"

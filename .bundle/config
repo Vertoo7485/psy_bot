@@ -1,3 +1,2 @@
 ---
-BUNDLE_DEPLOYMENT: "true"
 BUNDLE_WITHOUT: "development:test"

@@ -92,7 +92,7 @@ class TelegramWebhooksController < ApplicationController
           if payment_id
             payment = Payment.find_by(id: payment_id)
             if payment
-              payment.update(status: 'succeeded', paid_at: Time.current)
+              payment.update(status: 'succeeded')
               Rails.logger.info "Payment #{payment_id} marked as succeeded"
     
               # Активировать премиум подписку для пользователя
@@ -104,21 +104,8 @@ class TelegramWebhooksController < ApplicationController
                 Rails.logger.info "✅ Premium activated for user #{user.id}, payment #{payment.id}"
                 
                 # Отправляем уведомление пользователю
-                begin
-                  telegram_service = TelegramService.new
-                  telegram_service.send_message(
-                    chat_id: user.telegram_id,
-                    text: "🎉 Поздравляем! Ваш премиум-доступ активирован на 30 дней!\n\n" \
-                          "Теперь вам доступны все функции:\n" \
-                          "• Безлимитные запросы к GPT-4\n" \
-                          "• Расширенная история диалогов\n" \
-                          "• Приоритетная обработка запросов\n\n" \
-                          "Спасибо за покупку! 🚀"
-                  )
-                  Rails.logger.info "✅ Success notification sent to user #{user.id}"
-                rescue => e
-                  Rails.logger.error "❌ Failed to send success notification: #{e.message}"
-                end
+# TODO: Отправить уведомление пользователю
+Rails.logger.info "✅ Premium activated for user #{user.id}, но уведомление не отправлено (нужно реализовать отправку)"
             else
               Rails.logger.error "User not found for payment #{payment.id}"
             end

@@ -6,6 +6,10 @@ class TelegramWebhooksController < ApplicationController
   
   
   def message
+    # Сначала проверяем, не уведомление ли это от ЮKassa
+    if handle_yookassa_notification
+      return head :ok
+    end
     # ЛОГИРОВАНИЕ ДЛЯ ОТЛАДКИ
     user_id = params.dig(:message, :from, :id) || params.dig(:callback_query, :from, :id) || 'unknown'
     message_text = params.dig(:message, :text) || 'callback'
@@ -71,6 +75,13 @@ class TelegramWebhooksController < ApplicationController
       render json: { status: 'error', message: e.message }, status: 500
     end
   end
+
+  def yookassa_notification
+    Rails.logger.info "Yookassa webhook received"
+      
+      head :ok
+  end
+
   private
   
   def initialize_bot_service
@@ -220,7 +231,52 @@ class TelegramWebhooksController < ApplicationController
       parse_mode: 'Markdown'
     )
   end
+
+  def yookassa_notification
+    Rails.logger.info "Yookassa webhook received"
+    head :ok
+  end
   
   private
   
 end
+
+  # Обработка уведомлений от ЮKassa
+  def handle_yookassa_notification
+    # Проверяем, это уведомление от ЮKassa (имеет поле event или type)
+    if params[:event].present? || params[:type].present?
+      Rails.logger.info "=== YOOKASSA WEBHOOK RECEIVED ==="
+      Rails.logger.info "Event: #{params[:event]}" if params[:event]
+      Rails.logger.info "Type: #{params[:type]}" if params[:type]
+      Rails.logger.info "Payment ID: #{params.dig(:object, :id)}" if params.dig(:object, :id)
+      Rails.logger.info "Status: #{params.dig(:object, :status)}" if params.dig(:object, :status)
+      Rails.logger.info "Paid: #{params.dig(:object, :paid)}" if params.dig(:object, :paid)
+      Rails.logger.info "=== END YOOKASSA WEBHOOK ==="
+      
+                      # Обновляем статус платежа в базе
+      if params[:event] == 'payment.succeeded' && params.dig(:object, :id)
+        payment_id = params.dig(:object, :metadata, :payment_id)
+        if payment_id
+          payment = Payment.find_by(id: payment_id)
+          if payment
+            payment.update(status: 'succeeded')
+            Rails.logger.info "Payment #{payment_id} marked as succeeded"
+
+            # TODO: Активировать премиум подписку для пользователя
+            # user = User.find_by(id: payment.user_id)
+            # if user
+            #   user.update(premium_active: true, premium_until: 1.month.from_now)
+            # end
+          else
+            Rails.logger.error "Payment not found: #{payment_id}"
+          end
+        else
+          Rails.logger.error "No payment_id in metadata"
+        end
+      end
+
+      head :ok
+    else
+      false # Это не уведомление ЮKassa
+    end
+  end
