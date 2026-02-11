@@ -13,7 +13,8 @@ module Telegram
       '/program' => :handle_program,
       '/progress' => :handle_progress,
       '/admin' => :handle_admin,          # ← ДОБАВЛЯЕМ
-      '/access' => :handle_access
+      '/access' => :handle_access,
+      '/my_subscription' => :handle_my_subscription
     }.freeze
     
     attr_reader :bot, :user, :message_data
@@ -250,6 +251,29 @@ end
   send_message(text: help_text, parse_mode: 'Markdown', reply_markup: markup)
 end
 
+
+    def handle_my_subscription
+      user.reload
+      
+      if user.has_active_premium?
+        days_left = (user.subscription_ends_at.to_date - Date.today).to_i
+        send_message(
+          text: "🌟 У вас активна премиум-подписка!\n" \
+                "📅 Действует до: #{user.subscription_ends_at.strftime('%d.%m.%Y')}\n" \
+                "⏳ Осталось дней: #{days_left}\n\n" \
+                "Спасибо, что с нами! 🚀"
+        )
+      else
+        send_message(
+          text: "У вас нет активной премиум-подписки.\n\n" \
+                "🚀 Премиум-подписка дает:\n" \
+                "• Безлимитные запросы к GPT-4\n" \
+                "• Расширенную историю диалогов\n" \
+                "• Приоритетная обработку\n\n" \
+                "Нажмите /premium для оформления!"
+        )
+      end
+    end
     # Обработка текстовых сообщений
     def process_text_message
       # Проверяем активные сессии пользователя

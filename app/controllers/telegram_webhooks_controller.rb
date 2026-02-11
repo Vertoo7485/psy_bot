@@ -75,180 +75,227 @@ class TelegramWebhooksController < ApplicationController
   end
 
   # Обработка уведомлений от ЮKassa
-  def handle_yookassa_notification
-    # Проверяем, это уведомление от ЮKassa (имеет поле event или type)
-    if params[:event].present? || params[:type].present?
-      Rails.logger.info "=== YOOKASSA WEBHOOK RECEIVED ==="
-      Rails.logger.info "Event: #{params[:event]}" if params[:event]
-      Rails.logger.info "Type: #{params[:type]}" if params[:type]
-      Rails.logger.info "Payment ID: #{params.dig(:object, :id)}" if params.dig(:object, :id)
-      Rails.logger.info "Status: #{params.dig(:object, :status)}" if params.dig(:object, :status)
-      Rails.logger.info "Paid: #{params.dig(:object, :paid)}" if params.dig(:object, :paid)
-      Rails.logger.info "=== END YOOKASSA WEBHOOK ==="
-
-      # Обновляем статус платежа в базе
-      if params[:event] == 'payment.succeeded' && params.dig(:object, :id)
-        payment_id = params.dig(:object, :metadata, :payment_id)
-        if payment_id
-          payment = Payment.find_by(id: payment_id)
-          if payment
-            payment.update(status: 'succeeded')
-            Rails.logger.info "Payment #{payment_id} marked as succeeded"
-            
-            # TODO: Активировать премиум подписку для пользователя
-            # user = User.find_by(id: payment.user_id)
-            # if user
-            #   user.update(premium_active: true, premium_until: 1.month.from_now)
-            # end
+    def handle_yookassa_notification
+      # Проверяем, это уведомление от ЮKassa (имеет поле event или type)
+      if params[:event].present? || params[:type].present?
+        Rails.logger.info "=== YOOKASSA WEBHOOK RECEIVED ==="
+        Rails.logger.info "Event: #{params[:event]}" if params[:event]
+        Rails.logger.info "Type: #{params[:type]}" if params[:type]
+        Rails.logger.info "Payment ID: #{params.dig(:object, :id)}" if params.dig(:object, :id)
+        Rails.logger.info "Status: #{params.dig(:object, :status)}" if params.dig(:object, :status)
+        Rails.logger.info "Paid: #{params.dig(:object, :paid)}" if params.dig(:object, :paid)
+        Rails.logger.info "=== END YOOKASSA WEBHOOK ==="
+    
+        # Обновляем статус платежа в базе
+        if params[:event] == 'payment.succeeded' && params.dig(:object, :id)
+          payment_id = params.dig(:object, :metadata, :payment_id)
+          if payment_id
+            payment = Payment.find_by(id: payment_id)
+            if payment
+              payment.update(status: 'succeeded', paid_at: Time.current)
+              Rails.logger.info "Payment #{payment_id} marked as succeeded"
+    
+              # Активировать премиум подписку для пользователя
+              user = payment.user
+              if user
+                # Активируем подписку на 30 дней
+                user.activate_premium!(days: 30)
+                
+                Rails.logger.info "✅ Premium activated for user #{user.id}, payment #{payment.id}"
+                
+                # Отправляем уведомление пользователю
+                begin
+                  telegram_service = TelegramService.new
+                  telegram_service.send_message(
+                    chat_id: user.telegram_id,
+                    text: "🎉 Поздравляем! Ваш премиум-доступ активирован на 30 дней!\n\n" \
+                          "Теперь вам доступны все функции:\n" \
+                          "• Безлимитные запросы к GPT-4\n" \
+                          "• Расширенная история диалогов\n" \
+                          "• Приоритетная обработка запросов\n\n" \
+                          "Спасибо за покупку! 🚀"
+                  )
+                  Rails.logger.info "✅ Success notification sent to user #{user.id}"
+                rescue => e
+                  Rails.logger.error "❌ Failed to send success notification: #{e.message}"
+                end
+            else
+              Rails.logger.error "User not found for payment #{payment.id}"
+            end
           else
             Rails.logger.error "Payment not found: #{payment_id}"
           end
         else
           Rails.logger.error "No payment_id in metadata"
         end
+        
+      elsif params[:event] == 'payment.canceled' && params.dig(:object, :id)
+        payment_id = params.dig(:object, :metadata, :payment_id)
+        if payment_id
+          payment = Payment.find_by(id: payment_id)
+          if payment
+            payment.update(status: 'canceled')
+            Rails.logger.info "Payment #{payment_id} marked as canceled"
+            
+            # Уведомляем пользователя об отмене
+            user = payment.user
+            if user
+              begin
+                telegram_service = TelegramService.new
+                telegram_service.send_message(
+                  chat_id: user.telegram_id,
+                  text: "❌ Ваш платеж был отменен.\n\n" \
+                        "Если это ошибка, вы можете создать новый платеж через /premium"
+                )
+              rescue => e
+                Rails.logger.error "Failed to send cancel notification: #{e.message}"
+              end
+            end
+          end
+        end
       end
-
+  
       head :ok
     else
       false # Это не уведомление ЮKassa
     end
   end
-
-  private
-
-  def initialize_bot_service
-    @bot_service = Telegram::TelegramBotService.new(ENV['TELEGRAM_BOT_TOKEN'])
-    log_message("🤖 Bot service initialized")
-  rescue => e
-    log_message("🔥 Bot init ERROR: #{e.message}")
-  end
-
-  def process_telegram_update(update_params)
-    if update_params[:message]
-      handle_message(update_params[:message])
-    elsif update_params[:callback_query]
-      handle_callback_query(update_params[:callback_query])
+  
+    private
+  
+    def initialize_bot_service
+      @bot_service = Telegram::TelegramBotService.new(ENV['TELEGRAM_BOT_TOKEN'])
+      log_message("🤖 Bot service initialized")
+    rescue => e
+      log_message("🔥 Bot init ERROR: #{e.message}")
     end
-  end
-
-  def handle_message(message_data)
-    chat_id = message_data.dig(:chat, :id)
-    text = message_data[:text]
-
-    log_message("💬 Processing: '#{text}' for chat #{chat_id}")
-
-    # Находим или создаем пользователя
-    user = User.find_or_create_from_telegram_message(message_data[:from])
-    log_message("👤 User: #{user.telegram_id} (#{user.first_name})")
-
-    # Обрабатываем сообщение
-    Telegram::MessageProcessor.new(@bot_service.bot, user, message_data).process
-    log_message("✅ Message processed successfully")
-  rescue => e
-    log_message("🔥 Message processing ERROR: #{e.message}\n#{e.backtrace.first(3).join('\n')}")
-  end
-
-  def handle_callback_query(callback_query_data)
-    log_message("🔘 Processing callback")
-
-    # Сначала отвечаем Telegram чтобы кнопка перестала светиться
-    callback_id = callback_query_data[:id]
-    if callback_id && @bot_service
-      begin
-        @bot_service.answer_callback_query(callback_query_id: callback_id, text: "Обрабатываю...")
-        log_message("✅ Answered callback query: #{callback_id}")
-      rescue => e
-        log_message("⚠️  Failed to answer callback: #{e.message}")
+  
+    def process_telegram_update(update_params)
+      if update_params[:message]
+        handle_message(update_params[:message])
+      elsif update_params[:callback_query]
+        handle_callback_query(update_params[:callback_query])
       end
     end
-
-    # Затем обрабатываем callback
-    user = find_user_from_callback(callback_query_data)
-    return unless user
-
-    Telegram::CallbackQueryProcessor.new(@bot_service, user, callback_query_data).process
-    log_message("✅ Callback processed")
-  rescue => e
-    log_message("🔥 Callback ERROR: #{e.message}")
-  end
-
-  def find_user_from_callback(callback_query_data)
-    telegram_id = callback_query_data.dig(:from, :id)
-    return nil unless telegram_id
-    User.find_by(telegram_id: telegram_id)
-  end
-
-  def log_message(msg)
-    # Пишем в файл
-    File.open("/home/deploy/bot_activity.log", "a") do |f|
-      f.puts "[#{Time.now.strftime('%H:%M:%S')}] #{msg}"
+  
+    def handle_message(message_data)
+      chat_id = message_data.dig(:chat, :id)
+      text = message_data[:text]
+  
+      log_message("💬 Processing: '#{text}' for chat #{chat_id}")
+  
+      # Находим или создаем пользователя
+      user = User.find_or_create_from_telegram_message(message_data[:from])
+      log_message("👤 User: #{user.telegram_id} (#{user.first_name})")
+  
+      # Обрабатываем сообщение
+      Telegram::MessageProcessor.new(@bot_service.bot, user, message_data).process
+      log_message("✅ Message processed successfully")
+    rescue => e
+      log_message("🔥 Message processing ERROR: #{e.message}\n#{e.backtrace.first(3).join('\n')}")
     end
-    # И в STDOUT на всякий случай
-    puts "[BOT] #{msg}"
-  end
-
-  def process_callback_data(user_id, data)
-    log_message("🔧 Processing callback data: #{data} for user #{user_id}")
-
-    case data
-    when 'show_test_categories'
+  
+    def handle_callback_query(callback_query_data)
+      log_message("🔘 Processing callback")
+  
+      # Сначала отвечаем Telegram чтобы кнопка перестала светиться
+      callback_id = callback_query_data[:id]
+      if callback_id && @bot_service
+        begin
+          @bot_service.answer_callback_query(callback_query_id: callback_id, text: "Обрабатываю...")
+          log_message("✅ Answered callback query: #{callback_id}")
+        rescue => e
+          log_message("⚠️  Failed to answer callback: #{e.message}")
+        end
+      end
+  
+      # Затем обрабатываем callback
+      user = find_user_from_callback(callback_query_data)
+      return unless user
+  
+      Telegram::CallbackQueryProcessor.new(@bot_service, user, callback_query_data).process
+      log_message("✅ Callback processed")
+    rescue => e
+      log_message("🔥 Callback ERROR: #{e.message}")
+    end
+  
+    def find_user_from_callback(callback_query_data)
+      telegram_id = callback_query_data.dig(:from, :id)
+      return nil unless telegram_id
+      User.find_by(telegram_id: telegram_id)
+    end
+  
+    def log_message(msg)
+      # Пишем в файл
+      File.open("/home/deploy/bot_activity.log", "a") do |f|
+        f.puts "[#{Time.now.strftime('%H:%M:%S')}] #{msg}"
+      end
+      # И в STDOUT на всякий случай
+      puts "[BOT] #{msg}"
+    end
+  
+    def process_callback_data(user_id, data)
+      log_message("🔧 Processing callback data: #{data} for user #{user_id}")
+  
+      case data
+      when 'show_test_categories'
+        markup_helper = TelegramMarkupHelper
+        keyboard = markup_helper.test_categories_markup
+  
+        @bot_service.send_message(
+          chat_id: user_id,
+          text: "#{markup_helper::EMOJI[:tests]} *Список тестов:*\n\nВыберите тест для прохождения:",
+          reply_markup: keyboard.to_json,
+          parse_mode: 'Markdown'
+        )
+      when 'start_emotion_diary'
+        @bot_service.send_message(
+          chat_id: user_id,
+          text: "#{TelegramMarkupHelper::EMOJI[:diary]} *Дневник эмоций запущен!*\n\nОпишите ваше текущее состояние или эмоцию:",
+          parse_mode: 'Markdown'
+        )
+      when 'start_self_help_program'
+        @bot_service.send_message(
+          chat_id: user_id,
+          text: "#{TelegramMarkupHelper::EMOJI[:self_help]} *Программа самопомощи*\n\nЭта функция в разработке.",
+          parse_mode: 'Markdown'
+        )
+      when 'back_to_main_menu'
+        send_menu(user_id)
+      when 'prepare_anxiety_test', 'prepare_depression_test', 'prepare_eq_test', 'prepare_luscher_test'
+        test_name = case data
+          when 'prepare_anxiety_test' then "Тест Тревожности"
+          when 'prepare_depression_test' then "Тест Депрессии (PHQ-9)"
+          when 'prepare_eq_test' then "Тест EQ (Эмоциональный Интеллект)"
+          when 'prepare_luscher_test' then "Тест Люшера (8 цветов)"
+          else "Неизвестный тест"
+        end
+        emoji = case data
+          when 'prepare_anxiety_test' then TelegramMarkupHelper::EMOJI[:brain]
+          when 'prepare_depression_test' then TelegramMarkupHelper::EMOJI[:heart]
+          when 'prepare_eq_test' then TelegramMarkupHelper::EMOJI[:brain]
+          when 'prepare_luscher_test' then TelegramMarkupHelper::EMOJI[:yoga]
+          else "🧪"
+        end
+        @bot_service.send_message(
+          chat_id: user_id,
+          text: "#{emoji} *Начинаем: #{test_name}*\n\nТест будет запущен в следующем сообщении.",
+          parse_mode: 'Markdown'
+        )
+      else
+        @bot_service.send_message(chat_id: user_id, text: "Команда: #{data}")
+      end
+    end
+  
+    def send_menu(user_id)
       markup_helper = TelegramMarkupHelper
-      keyboard = markup_helper.test_categories_markup
-
+      keyboard = markup_helper.main_menu_markup
+  
       @bot_service.send_message(
         chat_id: user_id,
-        text: "#{markup_helper::EMOJI[:tests]} *Список тестов:*\n\nВыберите тест для прохождения:",
+        text: "#{markup_helper::EMOJI[:home]} *Главное меню*\n\nВыберите опцию:",
         reply_markup: keyboard.to_json,
         parse_mode: 'Markdown'
       )
-    when 'start_emotion_diary'
-      @bot_service.send_message(
-        chat_id: user_id,
-        text: "#{TelegramMarkupHelper::EMOJI[:diary]} *Дневник эмоций запущен!*\n\nОпишите ваше текущее состояние или эмоцию:",
-        parse_mode: 'Markdown'
-      )
-    when 'start_self_help_program'
-      @bot_service.send_message(
-        chat_id: user_id,
-        text: "#{TelegramMarkupHelper::EMOJI[:self_help]} *Программа самопомощи*\n\nЭта функция в разработке.",
-        parse_mode: 'Markdown'
-      )
-    when 'back_to_main_menu'
-      send_menu(user_id)
-    when 'prepare_anxiety_test', 'prepare_depression_test', 'prepare_eq_test', 'prepare_luscher_test'
-      test_name = case data
-        when 'prepare_anxiety_test' then "Тест Тревожности"
-        when 'prepare_depression_test' then "Тест Депрессии (PHQ-9)"
-        when 'prepare_eq_test' then "Тест EQ (Эмоциональный Интеллект)"
-        when 'prepare_luscher_test' then "Тест Люшера (8 цветов)"
-        else "Неизвестный тест"
-      end
-      emoji = case data
-        when 'prepare_anxiety_test' then TelegramMarkupHelper::EMOJI[:brain]
-        when 'prepare_depression_test' then TelegramMarkupHelper::EMOJI[:heart]
-        when 'prepare_eq_test' then TelegramMarkupHelper::EMOJI[:brain]
-        when 'prepare_luscher_test' then TelegramMarkupHelper::EMOJI[:yoga]
-        else "🧪"
-      end
-      @bot_service.send_message(
-        chat_id: user_id,
-        text: "#{emoji} *Начинаем: #{test_name}*\n\nТест будет запущен в следующем сообщении.",
-        parse_mode: 'Markdown'
-      )
-    else
-      @bot_service.send_message(chat_id: user_id, text: "Команда: #{data}")
     end
   end
-
-  def send_menu(user_id)
-    markup_helper = TelegramMarkupHelper
-    keyboard = markup_helper.main_menu_markup
-
-    @bot_service.send_message(
-      chat_id: user_id,
-      text: "#{markup_helper::EMOJI[:home]} *Главное меню*\n\nВыберите опцию:",
-      reply_markup: keyboard.to_json,
-      parse_mode: 'Markdown'
-    )
-  end
-end

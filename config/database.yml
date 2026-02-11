@@ -13,7 +13,7 @@ default: &default
   timeout: 5000
   host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
   port: <%= ENV.fetch("DATABASE_PORT", 5432) %>
-  username: <%= ENV.fetch("DATABASE_USERNAME", "psy_bot_app") %>
+  username: <%= ENV.fetch("DATABASE_USERNAME", "psy_bot") %>
   password: <%= ENV.fetch("DATABASE_PASSWORD", "secure_password_123") %>
 
 development:
